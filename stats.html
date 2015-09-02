@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cppcheck - HTML report - [project name]</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+    <script language="javascript">
+      function getStyle(el,styleProp) {
+        if (el.currentStyle)
+          var y = el.currentStyle[styleProp];
+        else if (window.getComputedStyle)
+          var y = document.defaultView.getComputedStyle(el,null).getPropertyValue(styleProp);
+        return y;
+      }
+      function toggle() {
+        var el = this.expandable_content;
+        var mark = this.expandable_marker;
+        if (el.style.display == "block") {
+          el.style.display = "none";
+          mark.innerHTML = "[+]";
+        } else {
+          el.style.display = "block";
+          mark.innerHTML = "[-]";
+        }
+      }
+      function init_expandables() {
+        var elts = document.getElementsByClassName("expandable");
+        for (var i = 0; i < elts.length; i++) {
+          var el = elts[i];
+          var clickable = el.getElementsByTagName("span")[0];
+          var marker = clickable.getElementsByClassName("marker")[0];
+          var content = el.getElementsByClassName("content")[0];
+          var width = clickable.clientWidth - parseInt(getStyle(content, "padding-left")) - parseInt(getStyle(content, "padding-right"));
+          content.style.width = width + "px";
+          clickable.expandable_content = content;
+          clickable.expandable_marker = marker;
+          clickable.onclick = toggle;
+        }
+      }
+    </script>
+  </head>
+  <body onload="init_expandables()">
+      <div id="header">
+        <h1>Cppcheck report - [project name]: Statistics </h1>
+      </div>
+      <div id="menu_index">
+       <p id="filename"><a href="index.html">Back to summary</a> </p>
+
+      </div>
+      <div id="content_index">
+<p>Top 10 files for error severity, total findings: 175</br>
+&#160;&#160;&#160;23&#160;<a href="1019.html">  tools/freetype/freetype/src/truetype/ttinterp.c</a></br>
+&#160;&#160;&#160;13&#160;<a href="929.html">  tools/freetype/freetype/src/base/ftobjs.c</a></br>
+&#160;&#160;&#160;9&#160;&#160;<a href="520.html">  drivers/png/pngget.c</a></br>
+&#160;&#160;&#160;8&#160;&#160;<a href="790.html">  servers/physics/body_pair_sw.cpp</a></br>
+&#160;&#160;&#160;8&#160;&#160;<a href="574.html">  drivers/theora/tokenize.c</a></br>
+&#160;&#160;&#160;6&#160;&#160;<a href="1004.html">  tools/freetype/freetype/src/sfnt/sfobjs.c</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="932.html">  tools/freetype/freetype/src/base/ftrfork.c</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="916.html">  tools/editor/progress_dialog.cpp</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="542.html">  drivers/speex/fixed_debug.h</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="405.html">  drivers/builtin_openssl2/crypto/x509v3/v3_cpols.c</a></br>
+</p>
+<p>Top 10 files for warning severity, total findings: 1306</br>
+&#160;&#160;&#160;90&#160;<a href="472.html">  drivers/chibi/cp_player_data.h</a></br>
+&#160;&#160;&#160;63&#160;<a href="502.html">  drivers/gles2/rasterizer_gles2.cpp</a></br>
+&#160;&#160;&#160;30&#160;<a href="809.html">  servers/physics_2d/collision_solver_2d_sat.cpp</a></br>
+&#160;&#160;&#160;30&#160;<a href="687.html">  platform/flash/rasterizer_flash.cpp</a></br>
+&#160;&#160;&#160;30&#160;<a href="51.html">  core/rid.h</a></br>
+&#160;&#160;&#160;28&#160;<a href="721.html">  platform/x11/os_x11.cpp</a></br>
+&#160;&#160;&#160;26&#160;<a href="161.html">  scene/main/scene_main_loop.h</a></br>
+&#160;&#160;&#160;24&#160;<a href="27.html">  core/method_bind.inc</a></br>
+&#160;&#160;&#160;23&#160;<a href="167.html">  scene/2d/canvas_item.h</a></br>
+&#160;&#160;&#160;22&#160;<a href="713.html">  platform/windows/os_windows.cpp</a></br>
+</p>
+<p>Top 10 files for portability severity, total findings: 20</br>
+&#160;&#160;&#160;14&#160;<a href="538.html">  drivers/rtaudio/RtAudio.cpp</a></br>
+&#160;&#160;&#160;2&#160;&#160;<a href="26.html">  core/vector.h</a></br>
+&#160;&#160;&#160;2&#160;&#160;<a href="30.html">  core/dvector.h</a></br>
+&#160;&#160;&#160;1&#160;&#160;<a href="622.html">  drivers/webp/utils/huffman.h</a></br>
+&#160;&#160;&#160;1&#160;&#160;<a href="99.html">  core/math/math_funcs.h</a></br>
+</p>
+<p>Top 10 files for performance severity, total findings: 142</br>
+&#160;&#160;&#160;12&#160;<a href="121.html">  core/object.cpp</a></br>
+&#160;&#160;&#160;8&#160;&#160;<a href="109.html">  core/math/math_2d.h</a></br>
+&#160;&#160;&#160;6&#160;&#160;<a href="682.html">  servers/visual/visual_server_raster.h</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="502.html">  drivers/gles2/rasterizer_gles2.cpp</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="328.html">  drivers/builtin_openssl2/crypto/o_time.c</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="49.html">  core/object.h</a></br>
+&#160;&#160;&#160;4&#160;&#160;<a href="55.html">  core/globals.h</a></br>
+&#160;&#160;&#160;3&#160;&#160;<a href="840.html">  tools/editor/editor_node.cpp</a></br>
+&#160;&#160;&#160;3&#160;&#160;<a href="154.html">  servers/visual_server.h</a></br>
+&#160;&#160;&#160;3&#160;&#160;<a href="8.html">  servers/visual/shader_language.h</a></br>
+</p>
+<p>Top 10 files for style severity, total findings: 3150</br>
+&#160;&#160;&#160;147&#160;<a href="28.html">  core/reference.h</a></br>
+&#160;&#160;&#160;98&#160;&#160;<a href="26.html">  core/vector.h</a></br>
+&#160;&#160;&#160;95&#160;&#160;<a href="43.html">  core/hash_map.h</a></br>
+&#160;&#160;&#160;70&#160;&#160;<a href="48.html">  core/map.h</a></br>
+&#160;&#160;&#160;54&#160;&#160;<a href="47.html">  core/variant.h</a></br>
+&#160;&#160;&#160;54&#160;&#160;<a href="32.html">  core/list.h</a></br>
+&#160;&#160;&#160;36&#160;&#160;<a href="525.html">  drivers/png/pngrtran.c</a></br>
+&#160;&#160;&#160;32&#160;&#160;<a href="555.html">  drivers/speex/sb_celp.c</a></br>
+&#160;&#160;&#160;31&#160;&#160;<a href="564.html">  drivers/theora/analyze.c</a></br>
+&#160;&#160;&#160;31&#160;&#160;<a href="553.html">  drivers/speex/nb_celp.c</a></br>
+</p>
