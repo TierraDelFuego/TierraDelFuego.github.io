@@ -5,18 +5,30 @@
 
 <body>
 <table class="neat">
+<tbody>
 <tr><td><a class="nice" href="troubleshoot.html">Troubleshooting</a></td></tr>
-<tr><td><a class="nice" href="gotchas.html">Gotchas</a>(things that make you go "What the??")
+<tr><td><a class="nice" href="gotchas.html">Gotchas</a>
+(things that make you go "What the??")
 </table>
 
 <table class="neat">
 <caption>Important Files</caption>
+<tbody>
 <tr>
 <th>Filename/location
 <th>Purpose
 <tr><td>~steam/.local/share/Steam/config/config.vdf<td>DRM, Account data, decryption keys
 <tr><td>~steam/.xsession-errors<td>Text file log of various X errors
-<tr><td>/tmp/dumps/assert_<timestamp>_<index>.dmp<td>MDMP crash report data - minidump, uploaded to Valve automatically
+<tr><td>/tmp/dumps/assert_timestamp_index.dmp<td>MDMP crash report data - minidump, uploaded to Valve automatically
+<tr><td>/tmp/dumps/crash_timestamp_index.dmp<td>MDMP crash report data - minidump, uploaded to Valve automatically
 </table>
-
+<pre>
+It is not known what, if anything, is done with the files that are
+automatically uploaded to Valve when a game crashes/asserts. Some
+games that are written by one developer and ported by another will
+have the files uploaded to the original developer and the developer that
+ported the game will not have access to the dump files/data. And the
+developer that created the game won't care about the dumps since the
+developer that ported the game is responsible for that game.
+</pre>
 </body>
