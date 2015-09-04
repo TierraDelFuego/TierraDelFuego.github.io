@@ -1,10 +1,7 @@
-.nice
-{
-font-family: "Lucida Sans Unicode", "Lucida
-Grande", sans-serif;
+.nice {
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 font-size: 1.2em;
-text-shadow: 2px 2px 2px #0f49d4;
-}
+text-shadow: 2px 2px 2px #0f49d4; }
 
 ul, ol { margin-bottom: 20px; }
 ul { list-style: none outside; }
@@ -14,3 +11,33 @@ ul.square { list-style: square outside; }
 ul.circle { list-style: circle outside; }
 ul.disc { list-style: disc outside; }
 li { margin-bottom: 10px; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+.neat
+{
+text-align: center;
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.neat th, .neat td { padding: 0.5em; }
+.neat th, .neat td
+{
+border: 1px dotted #0b49d4;
+border-radius: 0.1em;
+}
+
+.neat th {color: #0c49d4;text-shadow: 2px 2px 2px #c0c0c0;}
+
+.neat td { color:#0c49d4; border-collapse: collapse;}
+
+.neat caption
+{
+caption-side: bottom;
+font-size: 0.9em;
+font-style: italic;
+text-align:
+center;
+padding: 0.5em 0;
+}
+
