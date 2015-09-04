@@ -31,13 +31,12 @@ border-radius: 0.1em;
 
 .neat td { color:#0c49d4; border-collapse: collapse;}
 
-.neat caption
+caption
 {
-caption-side: bottom;
-font-size: 0.9em;
+caption-side: top;
+font-size: 1.1em;
 font-style: italic;
-text-align:
-center;
+text-align: center;
 padding: 0.5em 0;
 }
 
