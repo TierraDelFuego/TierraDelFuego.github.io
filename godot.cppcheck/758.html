@@ -107,104 +107,125 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: scene/gui/margin_container.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/editor/plugins/sprite_frames_editor_plugin.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> margin_container.cpp</p>
-<a href='758.html#line-80'> unreadVariable 80</a>
+       <p id="filename"><a href="index.html">Defects:</a> sprite_frames_editor_plugin.h</p>
+<a href='758.html#line-106'> noExplicitConstructor 106</a>
       </div>
       <div id="content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  margin_container.cpp                                                 */</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  sprite_frames_editor_plugin.h                                        */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -231,68 +252,89 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;margin_container.h&quot;</span>
-<a name="line-30"></a>
+<a name="line-29"></a><span class="cp">#ifndef SPRITE_FRAMES_EDITOR_PLUGIN_H</span>
+<a name="line-30"></a><span class="cp">#define SPRITE_FRAMES_EDITOR_PLUGIN_H</span>
 <a name="line-31"></a>
-<a name="line-32"></a><span class="n">Size2</span> <span class="n">MarginContainer</span><span class="o">::</span><span class="n">get_minimum_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-33"></a>
-<a name="line-34"></a>	<span class="kt">int</span> <span class="n">margin</span> <span class="o">=</span> <span class="n">get_constant</span><span class="p">(</span><span class="s">&quot;margin&quot;</span><span class="p">);</span>
-<a name="line-35"></a>
-<a name="line-36"></a>	<span class="n">Size2</span> <span class="n">max</span><span class="p">;</span>
-<a name="line-37"></a>
-<a name="line-38"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">get_child_count</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-32"></a>
+<a name="line-33"></a><span class="cp">#include &quot;tools/editor/editor_plugin.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;tools/editor/editor_node.h&quot;</span>
+<a name="line-35"></a><span class="cp">#include &quot;scene/gui/tree.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;scene/2d/animated_sprite.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;scene/gui/file_dialog.h&quot;</span>
+<a name="line-38"></a><span class="cp">#include &quot;scene/gui/dialogs.h&quot;</span>
 <a name="line-39"></a>
-<a name="line-40"></a>		<span class="n">Control</span> <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="n">get_child</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">Control</span><span class="o">&gt;</span><span class="p">();</span>
-<a name="line-41"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span>
-<a name="line-42"></a>			<span class="k">continue</span><span class="p">;</span>
-<a name="line-43"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_set_as_toplevel</span><span class="p">())</span>
-<a name="line-44"></a>			<span class="k">continue</span><span class="p">;</span>
-<a name="line-45"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_hidden</span><span class="p">())</span>
-<a name="line-46"></a>			<span class="k">continue</span><span class="p">;</span>
-<a name="line-47"></a>
-<a name="line-48"></a>		<span class="n">Size2</span> <span class="n">s</span> <span class="o">=</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">get_combined_minimum_size</span><span class="p">();</span>
-<a name="line-49"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">width</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">.</span><span class="n">width</span><span class="p">)</span>
-<a name="line-50"></a>			<span class="n">max</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
-<a name="line-51"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">height</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">.</span><span class="n">height</span><span class="p">)</span>
-<a name="line-52"></a>			<span class="n">max</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
-<a name="line-53"></a>	<span class="p">}</span>
-<a name="line-54"></a>
-<a name="line-55"></a>	<span class="n">max</span><span class="p">.</span><span class="n">width</span> <span class="o">+=</span> <span class="n">margin</span><span class="p">;</span>
-<a name="line-56"></a>	<span class="k">return</span> <span class="n">max</span><span class="p">;</span>
-<a name="line-57"></a>
+<a name="line-40"></a>
+<a name="line-41"></a><span class="n">class</span> <span class="nl">SpriteFramesEditor</span> <span class="p">:</span> <span class="n">public</span> <span class="n">PanelContainer</span> <span class="p">{</span>
+<a name="line-42"></a>
+<a name="line-43"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">SpriteFramesEditor</span><span class="p">,</span> <span class="n">PanelContainer</span> <span class="p">);</span>
+<a name="line-44"></a>
+<a name="line-45"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">load</span><span class="p">;</span>
+<a name="line-46"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">_delete</span><span class="p">;</span>
+<a name="line-47"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">paste</span><span class="p">;</span>
+<a name="line-48"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">empty</span><span class="p">;</span>
+<a name="line-49"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">empty2</span><span class="p">;</span>
+<a name="line-50"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">move_up</span><span class="p">;</span>
+<a name="line-51"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">move_down</span><span class="p">;</span>
+<a name="line-52"></a>	<span class="n">Tree</span> <span class="o">*</span><span class="n">tree</span><span class="p">;</span>
+<a name="line-53"></a>	<span class="kt">bool</span> <span class="n">loading_scene</span><span class="p">;</span>
+<a name="line-54"></a>	<span class="kt">int</span> <span class="n">sel</span><span class="p">;</span>
+<a name="line-55"></a>
+<a name="line-56"></a>
+<a name="line-57"></a>	<span class="n">EditorFileDialog</span> <span class="o">*</span><span class="n">file</span><span class="p">;</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="p">}</span>
+<a name="line-59"></a>	<span class="n">AcceptDialog</span> <span class="o">*</span><span class="n">dialog</span><span class="p">;</span>
 <a name="line-60"></a>
-<a name="line-61"></a><span class="kt">void</span> <span class="n">MarginContainer</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-61"></a>	<span class="n">SpriteFrames</span> <span class="o">*</span><span class="n">frames</span><span class="p">;</span>
 <a name="line-62"></a>
-<a name="line-63"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_SORT_CHILDREN</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-64"></a>
-<a name="line-65"></a>		<span class="kt">int</span> <span class="n">margin</span> <span class="o">=</span> <span class="n">get_constant</span><span class="p">(</span><span class="s">&quot;margin&quot;</span><span class="p">);</span>
-<a name="line-66"></a>
-<a name="line-67"></a>		<span class="n">Size2</span> <span class="n">s</span> <span class="o">=</span> <span class="n">get_size</span><span class="p">();</span>
-<a name="line-68"></a>
-<a name="line-69"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">get_child_count</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-70"></a>
-<a name="line-71"></a>			<span class="n">Control</span> <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="n">get_child</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">Control</span><span class="o">&gt;</span><span class="p">();</span>
-<a name="line-72"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span>
-<a name="line-73"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-74"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">is_set_as_toplevel</span><span class="p">())</span>
-<a name="line-75"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-76"></a>			<span class="kt">int</span> <span class="n">w</span><span class="p">;</span>
-<a name="line-77"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">get_h_size_flags</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">Control</span><span class="o">::</span><span class="n">SIZE_EXPAND</span><span class="p">)</span>
-<a name="line-78"></a>				<span class="n">w</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">width</span><span class="o">-</span><span class="n">margin</span><span class="p">;</span>
-<a name="line-79"></a>			<span class="k">else</span>
-<a name="line-80"></a><span class="hll">				<span class="n">w</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">get_combined_minimum_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'w' is assigned a value that is never used.</span>
-</span><a name="line-81"></a>
-<a name="line-82"></a>			<span class="n">fit_child_in_rect</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">Rect2</span><span class="p">(</span><span class="n">margin</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">s</span><span class="p">.</span><span class="n">width</span><span class="o">-</span><span class="n">margin</span><span class="p">,</span><span class="n">s</span><span class="p">.</span><span class="n">height</span><span class="p">));</span>
-<a name="line-83"></a>		<span class="p">}</span>
+<a name="line-63"></a>
+<a name="line-64"></a>	<span class="kt">void</span> <span class="nf">_load_pressed</span><span class="p">();</span>
+<a name="line-65"></a>	<span class="kt">void</span> <span class="nf">_load_scene_pressed</span><span class="p">();</span>
+<a name="line-66"></a>	<span class="kt">void</span> <span class="nf">_file_load_request</span><span class="p">(</span><span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&amp;</span> <span class="n">p_path</span><span class="p">);</span>
+<a name="line-67"></a>	<span class="kt">void</span> <span class="nf">_paste_pressed</span><span class="p">();</span>
+<a name="line-68"></a>	<span class="kt">void</span> <span class="nf">_empty_pressed</span><span class="p">();</span>
+<a name="line-69"></a>	<span class="kt">void</span> <span class="nf">_empty2_pressed</span><span class="p">();</span>
+<a name="line-70"></a>	<span class="kt">void</span> <span class="nf">_delete_pressed</span><span class="p">();</span>
+<a name="line-71"></a>	<span class="kt">void</span> <span class="nf">_delete_confirm_pressed</span><span class="p">();</span>
+<a name="line-72"></a>	<span class="kt">void</span> <span class="nf">_up_pressed</span><span class="p">();</span>
+<a name="line-73"></a>	<span class="kt">void</span> <span class="nf">_down_pressed</span><span class="p">();</span>
+<a name="line-74"></a>	<span class="kt">void</span> <span class="nf">_update_library</span><span class="p">();</span>
+<a name="line-75"></a>	<span class="kt">void</span> <span class="nf">_item_edited</span><span class="p">();</span>
+<a name="line-76"></a>
+<a name="line-77"></a>	<span class="n">UndoRedo</span> <span class="o">*</span><span class="n">undo_redo</span><span class="p">;</span>
+<a name="line-78"></a>
+<a name="line-79"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-80"></a>	<span class="kt">void</span> <span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">);</span>
+<a name="line-81"></a>	<span class="kt">void</span> <span class="nf">_input_event</span><span class="p">(</span><span class="n">InputEvent</span> <span class="n">p_event</span><span class="p">);</span>
+<a name="line-82"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
+<a name="line-83"></a><span class="nl">public</span><span class="p">:</span>
 <a name="line-84"></a>
-<a name="line-85"></a>	<span class="p">}</span>
-<a name="line-86"></a><span class="p">}</span>
-<a name="line-87"></a>
-<a name="line-88"></a><span class="n">MarginContainer</span><span class="o">::</span><span class="n">MarginContainer</span><span class="p">()</span>
-<a name="line-89"></a><span class="p">{</span>
-<a name="line-90"></a><span class="p">}</span>
+<a name="line-85"></a>	<span class="kt">void</span> <span class="n">set_undo_redo</span><span class="p">(</span><span class="n">UndoRedo</span> <span class="o">*</span><span class="n">p_undo_redo</span><span class="p">)</span> <span class="p">{</span><span class="n">undo_redo</span><span class="o">=</span><span class="n">p_undo_redo</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-86"></a>
+<a name="line-87"></a>	<span class="kt">void</span> <span class="n">edit</span><span class="p">(</span><span class="n">SpriteFrames</span><span class="o">*</span> <span class="n">p_frames</span><span class="p">);</span>
+<a name="line-88"></a>	<span class="n">SpriteFramesEditor</span><span class="p">();</span>
+<a name="line-89"></a><span class="p">};</span>
+<a name="line-90"></a>
+<a name="line-91"></a><span class="n">class</span> <span class="nl">SpriteFramesEditorPlugin</span> <span class="p">:</span> <span class="n">public</span> <span class="n">EditorPlugin</span> <span class="p">{</span>
+<a name="line-92"></a>
+<a name="line-93"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">SpriteFramesEditorPlugin</span><span class="p">,</span> <span class="n">EditorPlugin</span> <span class="p">);</span>
+<a name="line-94"></a>
+<a name="line-95"></a>	<span class="n">SpriteFramesEditor</span> <span class="o">*</span><span class="n">frames_editor</span><span class="p">;</span>
+<a name="line-96"></a>	<span class="n">EditorNode</span> <span class="o">*</span><span class="n">editor</span><span class="p">;</span>
+<a name="line-97"></a>
+<a name="line-98"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-99"></a>
+<a name="line-100"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;SpriteFrames&quot;</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-101"></a>	<span class="kt">bool</span> <span class="n">has_main_screen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-102"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">edit</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_node</span><span class="p">);</span>
+<a name="line-103"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">handles</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-104"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">make_visible</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_visible</span><span class="p">);</span>
+<a name="line-105"></a>
+<a name="line-106"></a><span class="hll">	<span class="n">SpriteFramesEditorPlugin</span><span class="p">(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="n">p_node</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'SpriteFramesEditorPlugin' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;SpriteFramesEditorPlugin&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
+</span><a name="line-107"></a>	<span class="o">~</span><span class="n">SpriteFramesEditorPlugin</span><span class="p">();</span>
+<a name="line-108"></a>
+<a name="line-109"></a><span class="p">};</span>
+<a name="line-110"></a>
+<a name="line-111"></a><span class="cp">#endif </span><span class="c1">// SPRITE_FRAMES_EDITOR_PLUGIN_H</span>
 </pre></div>
 </td></tr></table>
       </div>

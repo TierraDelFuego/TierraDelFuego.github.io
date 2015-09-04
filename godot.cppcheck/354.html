@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/rc4/rc4_enc.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/x509v3/v3_ncons.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> rc4_enc.c</p>
-<a href='354.html#line-1'> ConfigurationNotChecked 1</a>
+       <p id="filename"><a href="index.html">Defects:</a> v3_ncons.c</p>
+<a href='354.html#line-180'> variableScope 180</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -428,321 +428,713 @@
 312
 313
 314
-315</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/rc4/rc4_enc.c */</span><span class='error2'>&lt;--- Skipping configuration 'RC4_CHUNK' since the value of 'RC4_CHUNK' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
-</span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
-<a name="line-3"></a><span class="cm"> * All rights reserved.</span>
-<a name="line-4"></a><span class="cm"> *</span>
-<a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
-<a name="line-6"></a><span class="cm"> * by Eric Young (eay@cryptsoft.com).</span>
-<a name="line-7"></a><span class="cm"> * The implementation was written so as to conform with Netscapes SSL.</span>
-<a name="line-8"></a><span class="cm"> * </span>
-<a name="line-9"></a><span class="cm"> * This library is free for commercial and non-commercial use as long as</span>
-<a name="line-10"></a><span class="cm"> * the following conditions are aheared to.  The following conditions</span>
-<a name="line-11"></a><span class="cm"> * apply to all code found in this distribution, be it the RC4, RSA,</span>
-<a name="line-12"></a><span class="cm"> * lhash, DES, etc., code; not just the SSL code.  The SSL documentation</span>
-<a name="line-13"></a><span class="cm"> * included with this distribution is covered by the same copyright terms</span>
-<a name="line-14"></a><span class="cm"> * except that the holder is Tim Hudson (tjh@cryptsoft.com).</span>
-<a name="line-15"></a><span class="cm"> * </span>
-<a name="line-16"></a><span class="cm"> * Copyright remains Eric Young&#39;s, and as such any Copyright notices in</span>
-<a name="line-17"></a><span class="cm"> * the code are not to be removed.</span>
-<a name="line-18"></a><span class="cm"> * If this package is used in a product, Eric Young should be given attribution</span>
-<a name="line-19"></a><span class="cm"> * as the author of the parts of the library used.</span>
-<a name="line-20"></a><span class="cm"> * This can be in the form of a textual message at program startup or</span>
-<a name="line-21"></a><span class="cm"> * in documentation (online or textual) provided with the package.</span>
-<a name="line-22"></a><span class="cm"> * </span>
-<a name="line-23"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
-<a name="line-24"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
-<a name="line-25"></a><span class="cm"> * are met:</span>
-<a name="line-26"></a><span class="cm"> * 1. Redistributions of source code must retain the copyright</span>
-<a name="line-27"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer.</span>
-<a name="line-28"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
-<a name="line-29"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in the</span>
-<a name="line-30"></a><span class="cm"> *    documentation and/or other materials provided with the distribution.</span>
-<a name="line-31"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this software</span>
-<a name="line-32"></a><span class="cm"> *    must display the following acknowledgement:</span>
-<a name="line-33"></a><span class="cm"> *    &quot;This product includes cryptographic software written by</span>
-<a name="line-34"></a><span class="cm"> *     Eric Young (eay@cryptsoft.com)&quot;</span>
-<a name="line-35"></a><span class="cm"> *    The word &#39;cryptographic&#39; can be left out if the rouines from the library</span>
-<a name="line-36"></a><span class="cm"> *    being used are not cryptographic related :-).</span>
-<a name="line-37"></a><span class="cm"> * 4. If you include any Windows specific code (or a derivative thereof) from </span>
-<a name="line-38"></a><span class="cm"> *    the apps directory (application code) you must include an acknowledgement:</span>
-<a name="line-39"></a><span class="cm"> *    &quot;This product includes software written by Tim Hudson (tjh@cryptsoft.com)&quot;</span>
-<a name="line-40"></a><span class="cm"> * </span>
-<a name="line-41"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS&#39;&#39; AND</span>
-<a name="line-42"></a><span class="cm"> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
-<a name="line-43"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
-<a name="line-44"></a><span class="cm"> * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE</span>
-<a name="line-45"></a><span class="cm"> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
-<a name="line-46"></a><span class="cm"> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</span>
-<a name="line-47"></a><span class="cm"> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
-<a name="line-48"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</span>
-<a name="line-49"></a><span class="cm"> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</span>
-<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
-<a name="line-51"></a><span class="cm"> * SUCH DAMAGE.</span>
-<a name="line-52"></a><span class="cm"> * </span>
-<a name="line-53"></a><span class="cm"> * The licence and distribution terms for any publically available version or</span>
-<a name="line-54"></a><span class="cm"> * derivative of this code cannot be changed.  i.e. this code cannot simply be</span>
-<a name="line-55"></a><span class="cm"> * copied and put under another distribution licence</span>
-<a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* v3_ncons.c */</span>
+<a name="line-2"></a><span class="cm">/* Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL</span>
+<a name="line-3"></a><span class="cm"> * project.</span>
+<a name="line-4"></a><span class="cm"> */</span>
+<a name="line-5"></a><span class="cm">/* ====================================================================</span>
+<a name="line-6"></a><span class="cm"> * Copyright (c) 2003 The OpenSSL Project.  All rights reserved.</span>
+<a name="line-7"></a><span class="cm"> *</span>
+<a name="line-8"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-9"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-10"></a><span class="cm"> * are met:</span>
+<a name="line-11"></a><span class="cm"> *</span>
+<a name="line-12"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
+<a name="line-13"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
+<a name="line-14"></a><span class="cm"> *</span>
+<a name="line-15"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-16"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
+<a name="line-17"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
+<a name="line-18"></a><span class="cm"> *    distribution.</span>
+<a name="line-19"></a><span class="cm"> *</span>
+<a name="line-20"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
+<a name="line-21"></a><span class="cm"> *    software must display the following acknowledgment:</span>
+<a name="line-22"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-23"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-24"></a><span class="cm"> *</span>
+<a name="line-25"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
+<a name="line-26"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
+<a name="line-27"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
+<a name="line-28"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
+<a name="line-29"></a><span class="cm"> *</span>
+<a name="line-30"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
+<a name="line-31"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
+<a name="line-32"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
+<a name="line-33"></a><span class="cm"> *</span>
+<a name="line-34"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
+<a name="line-35"></a><span class="cm"> *    acknowledgment:</span>
+<a name="line-36"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-37"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-38"></a><span class="cm"> *</span>
+<a name="line-39"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
+<a name="line-40"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-41"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
+<a name="line-42"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
+<a name="line-43"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<a name="line-44"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
+<a name="line-45"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<a name="line-46"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-47"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
+<a name="line-48"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
+<a name="line-49"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
+<a name="line-50"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<a name="line-51"></a><span class="cm"> * ====================================================================</span>
+<a name="line-52"></a><span class="cm"> *</span>
+<a name="line-53"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
+<a name="line-54"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
+<a name="line-55"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
+<a name="line-56"></a><span class="cm"> *</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;openssl/rc4.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &quot;rc4_locl.h&quot;</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class="cm">/* RC4 as implemented from a posting from</span>
-<a name="line-63"></a><span class="cm"> * Newsgroups: sci.crypt</span>
-<a name="line-64"></a><span class="cm"> * From: sterndark@netcom.com (David Sterndark)</span>
-<a name="line-65"></a><span class="cm"> * Subject: RC4 Algorithm revealed.</span>
-<a name="line-66"></a><span class="cm"> * Message-ID: &lt;sternCvKL4B.Hyy@netcom.com&gt;</span>
-<a name="line-67"></a><span class="cm"> * Date: Wed, 14 Sep 1994 06:35:31 GMT</span>
-<a name="line-68"></a><span class="cm"> */</span>
-<a name="line-69"></a>
-<a name="line-70"></a><span class="kt">void</span> <span class="nf">RC4</span><span class="p">(</span><span class="n">RC4_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">indata</span><span class="p">,</span>
-<a name="line-71"></a>	     <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">outdata</span><span class="p">)</span>
-<a name="line-72"></a>	<span class="p">{</span>
-<a name="line-73"></a>        <span class="k">register</span> <span class="n">RC4_INT</span> <span class="o">*</span><span class="n">d</span><span class="p">;</span>
-<a name="line-74"></a>        <span class="k">register</span> <span class="n">RC4_INT</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tx</span><span class="p">,</span><span class="n">ty</span><span class="p">;</span>
-<a name="line-75"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-76"></a>        
-<a name="line-77"></a>        <span class="n">x</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">;</span>     
-<a name="line-78"></a>        <span class="n">y</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">;</span>     
-<a name="line-79"></a>        <span class="n">d</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span> 
-<a name="line-80"></a>
-<a name="line-81"></a><span class="cp">#if defined(RC4_CHUNK)</span>
-<a name="line-82"></a>	<span class="cm">/*</span>
-<a name="line-83"></a><span class="cm">	 * The original reason for implementing this(*) was the fact that</span>
-<a name="line-84"></a><span class="cm">	 * pre-21164a Alpha CPUs don&#39;t have byte load/store instructions</span>
-<a name="line-85"></a><span class="cm">	 * and e.g. a byte store has to be done with 64-bit load, shift,</span>
-<a name="line-86"></a><span class="cm">	 * and, or and finally 64-bit store. Peaking data and operating</span>
-<a name="line-87"></a><span class="cm">	 * at natural word size made it possible to reduce amount of</span>
-<a name="line-88"></a><span class="cm">	 * instructions as well as to perform early read-ahead without</span>
-<a name="line-89"></a><span class="cm">	 * suffering from RAW (read-after-write) hazard. This resulted</span>
-<a name="line-90"></a><span class="cm">	 * in ~40%(**) performance improvement on 21064 box with gcc.</span>
-<a name="line-91"></a><span class="cm">	 * But it&#39;s not only Alpha users who win here:-) Thanks to the</span>
-<a name="line-92"></a><span class="cm">	 * early-n-wide read-ahead this implementation also exhibits</span>
-<a name="line-93"></a><span class="cm">	 * &gt;40% speed-up on SPARC and 20-30% on 64-bit MIPS (depending</span>
-<a name="line-94"></a><span class="cm">	 * on sizeof(RC4_INT)).</span>
-<a name="line-95"></a><span class="cm">	 *</span>
-<a name="line-96"></a><span class="cm">	 * (*)	&quot;this&quot; means code which recognizes the case when input</span>
-<a name="line-97"></a><span class="cm">	 *	and output pointers appear to be aligned at natural CPU</span>
-<a name="line-98"></a><span class="cm">	 *	word boundary</span>
-<a name="line-99"></a><span class="cm">	 * (**)	i.e. according to &#39;apps/openssl speed rc4&#39; benchmark,</span>
-<a name="line-100"></a><span class="cm">	 *	crypto/rc4/rc4speed.c exhibits almost 70% speed-up...</span>
-<a name="line-101"></a><span class="cm">	 *</span>
-<a name="line-102"></a><span class="cm">	 * Cavets.</span>
-<a name="line-103"></a><span class="cm">	 *</span>
-<a name="line-104"></a><span class="cm">	 * - RC4_CHUNK=&quot;unsigned long long&quot; should be a #1 choice for</span>
-<a name="line-105"></a><span class="cm">	 *   UltraSPARC. Unfortunately gcc generates very slow code</span>
-<a name="line-106"></a><span class="cm">	 *   (2.5-3 times slower than one generated by Sun&#39;s WorkShop</span>
-<a name="line-107"></a><span class="cm">	 *   C) and therefore gcc (at least 2.95 and earlier) should</span>
-<a name="line-108"></a><span class="cm">	 *   always be told that RC4_CHUNK=&quot;unsigned long&quot;.</span>
-<a name="line-109"></a><span class="cm">	 *</span>
-<a name="line-110"></a><span class="cm">	 *					&lt;appro@fy.chalmers.se&gt;</span>
-<a name="line-111"></a><span class="cm">	 */</span>
-<a name="line-112"></a>
-<a name="line-113"></a><span class="cp"># define RC4_STEP	( \</span>
-<a name="line-114"></a><span class="cp">			x=(x+1) &amp;0xff,	\</span>
-<a name="line-115"></a><span class="cp">			tx=d[x],	\</span>
-<a name="line-116"></a><span class="cp">			y=(tx+y)&amp;0xff,	\</span>
-<a name="line-117"></a><span class="cp">			ty=d[y],	\</span>
-<a name="line-118"></a><span class="cp">			d[y]=tx,	\</span>
-<a name="line-119"></a><span class="cp">			d[x]=ty,	\</span>
-<a name="line-120"></a><span class="cp">			(RC4_CHUNK)d[(tx+ty)&amp;0xff]\</span>
-<a name="line-121"></a><span class="cp">			)</span>
-<a name="line-122"></a>
-<a name="line-123"></a>	<span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="n">indata</span>  <span class="o">&amp;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">|</span> 
-<a name="line-124"></a>	       <span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="n">outdata</span> <span class="o">&amp;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
-<a name="line-125"></a>		<span class="p">{</span>
-<a name="line-126"></a>		<span class="n">RC4_CHUNK</span> <span class="n">ichunk</span><span class="p">,</span><span class="n">otp</span><span class="p">;</span>
-<a name="line-127"></a>		<span class="k">const</span> <span class="k">union</span> <span class="p">{</span> <span class="kt">long</span> <span class="n">one</span><span class="p">;</span> <span class="kt">char</span> <span class="n">little</span><span class="p">;</span> <span class="p">}</span> <span class="n">is_endian</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span>
-<a name="line-128"></a>
-<a name="line-129"></a>		<span class="cm">/*</span>
-<a name="line-130"></a><span class="cm">		 * I reckon we can afford to implement both endian</span>
-<a name="line-131"></a><span class="cm">		 * cases and to decide which way to take at run-time</span>
-<a name="line-132"></a><span class="cm">		 * because the machine code appears to be very compact</span>
-<a name="line-133"></a><span class="cm">		 * and redundant 1-2KB is perfectly tolerable (i.e.</span>
-<a name="line-134"></a><span class="cm">		 * in case the compiler fails to eliminate it:-). By</span>
-<a name="line-135"></a><span class="cm">		 * suggestion from Terrel Larson &lt;terr@terralogic.net&gt;</span>
-<a name="line-136"></a><span class="cm">		 * who also stands for the is_endian union:-)</span>
-<a name="line-137"></a><span class="cm">		 *</span>
-<a name="line-138"></a><span class="cm">		 * Special notes.</span>
-<a name="line-139"></a><span class="cm">		 *</span>
-<a name="line-140"></a><span class="cm">		 * - is_endian is declared automatic as doing otherwise</span>
-<a name="line-141"></a><span class="cm">		 *   (declaring static) prevents gcc from eliminating</span>
-<a name="line-142"></a><span class="cm">		 *   the redundant code;</span>
-<a name="line-143"></a><span class="cm">		 * - compilers (those I&#39;ve tried) don&#39;t seem to have</span>
-<a name="line-144"></a><span class="cm">		 *   problems eliminating either the operators guarded</span>
-<a name="line-145"></a><span class="cm">		 *   by &quot;if (sizeof(RC4_CHUNK)==8)&quot; or the condition</span>
-<a name="line-146"></a><span class="cm">		 *   expressions themselves so I&#39;ve got &#39;em to replace</span>
-<a name="line-147"></a><span class="cm">		 *   corresponding #ifdefs from the previous version;</span>
-<a name="line-148"></a><span class="cm">		 * - I chose to let the redundant switch cases when</span>
-<a name="line-149"></a><span class="cm">		 *   sizeof(RC4_CHUNK)!=8 be (were also #ifdefed</span>
-<a name="line-150"></a><span class="cm">		 *   before);</span>
-<a name="line-151"></a><span class="cm">		 * - in case you wonder &quot;&amp;(sizeof(RC4_CHUNK)*8-1)&quot; in</span>
-<a name="line-152"></a><span class="cm">		 *   [LB]ESHFT guards against &quot;shift is out of range&quot;</span>
-<a name="line-153"></a><span class="cm">		 *   warnings when sizeof(RC4_CHUNK)!=8 </span>
-<a name="line-154"></a><span class="cm">		 *</span>
-<a name="line-155"></a><span class="cm">		 *			&lt;appro@fy.chalmers.se&gt;</span>
-<a name="line-156"></a><span class="cm">		 */</span>
-<a name="line-157"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">is_endian</span><span class="p">.</span><span class="n">little</span><span class="p">)</span>
-<a name="line-158"></a>			<span class="p">{</span>	<span class="cm">/* BIG-ENDIAN CASE */</span>
-<a name="line-159"></a><span class="cp"># define BESHFT(c)	(((sizeof(RC4_CHUNK)-(c)-1)*8)&amp;(sizeof(RC4_CHUNK)*8-1))</span>
-<a name="line-160"></a>			<span class="k">for</span> <span class="p">(;</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">0</span><span class="o">-</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">));</span><span class="n">len</span><span class="o">-=</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">))</span>
-<a name="line-161"></a>				<span class="p">{</span>
-<a name="line-162"></a>				<span class="n">ichunk</span>  <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
-<a name="line-163"></a>				<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-164"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-165"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-166"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-167"></a>				<span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">==</span><span class="mi">8</span><span class="p">)</span>
-<a name="line-168"></a>					<span class="p">{</span>
-<a name="line-169"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-<a name="line-170"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-<a name="line-171"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-<a name="line-172"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-173"></a>					<span class="p">}</span>
-<a name="line-174"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">;</span>
-<a name="line-175"></a>				<span class="n">indata</span>  <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
-<a name="line-176"></a>				<span class="n">outdata</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
-<a name="line-177"></a>				<span class="p">}</span>
-<a name="line-178"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="p">)</span>
-<a name="line-179"></a>				<span class="p">{</span>
-<a name="line-180"></a>				<span class="n">RC4_CHUNK</span> <span class="n">mask</span><span class="o">=</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ochunk</span><span class="p">;</span>
-<a name="line-181"></a>
-<a name="line-182"></a>				<span class="n">ichunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
-<a name="line-183"></a>				<span class="n">ochunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span><span class="p">;</span>
-<a name="line-184"></a>				<span class="n">otp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-185"></a>				<span class="n">i</span> <span class="o">=</span> <span class="n">BESHFT</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-186"></a>				<span class="n">mask</span> <span class="o">&lt;&lt;=</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="n">len</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-187"></a>				<span class="k">switch</span> <span class="p">(</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<a name="line-188"></a>					<span class="p">{</span>
-<a name="line-189"></a>					<span class="k">case</span> <span class="mi">7</span><span class="o">:</span>	<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-190"></a>					<span class="k">case</span> <span class="mi">6</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-191"></a>					<span class="k">case</span> <span class="mi">5</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-192"></a>					<span class="k">case</span> <span class="mi">4</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-193"></a>					<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-194"></a>					<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-195"></a>					<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-196"></a>					<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="p">;</span> <span class="cm">/*</span>
-<a name="line-197"></a><span class="cm">						   * it&#39;s never the case,</span>
-<a name="line-198"></a><span class="cm">						   * but it has to be here</span>
-<a name="line-199"></a><span class="cm">						   * for ultrix?</span>
-<a name="line-200"></a><span class="cm">						   */</span>
-<a name="line-201"></a>					<span class="p">}</span>
-<a name="line-202"></a>				<span class="n">ochunk</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">mask</span><span class="p">;</span>
-<a name="line-203"></a>				<span class="n">ochunk</span> <span class="o">|=</span> <span class="p">(</span><span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">;</span>
-<a name="line-204"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">ochunk</span><span class="p">;</span>
-<a name="line-205"></a>				<span class="p">}</span>
-<a name="line-206"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>     
-<a name="line-207"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
-<a name="line-208"></a>			<span class="k">return</span><span class="p">;</span>
-<a name="line-209"></a>			<span class="p">}</span>
-<a name="line-210"></a>		<span class="k">else</span>
-<a name="line-211"></a>			<span class="p">{</span>	<span class="cm">/* LITTLE-ENDIAN CASE */</span>
-<a name="line-212"></a><span class="cp"># define LESHFT(c)	(((c)*8)&amp;(sizeof(RC4_CHUNK)*8-1))</span>
-<a name="line-213"></a>			<span class="k">for</span> <span class="p">(;</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">0</span><span class="o">-</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">));</span><span class="n">len</span><span class="o">-=</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">))</span>
-<a name="line-214"></a>				<span class="p">{</span>
-<a name="line-215"></a>				<span class="n">ichunk</span>  <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
-<a name="line-216"></a>				<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="p">;</span>
-<a name="line-217"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-218"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">;</span>
-<a name="line-219"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="mi">24</span><span class="p">;</span>
-<a name="line-220"></a>				<span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">==</span><span class="mi">8</span><span class="p">)</span>
-<a name="line-221"></a>					<span class="p">{</span>
-<a name="line-222"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-<a name="line-223"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-<a name="line-224"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-<a name="line-225"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-226"></a>					<span class="p">}</span>
-<a name="line-227"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">;</span>
-<a name="line-228"></a>				<span class="n">indata</span>  <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
-<a name="line-229"></a>				<span class="n">outdata</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
-<a name="line-230"></a>				<span class="p">}</span>
-<a name="line-231"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="p">)</span>
-<a name="line-232"></a>				<span class="p">{</span>
-<a name="line-233"></a>				<span class="n">RC4_CHUNK</span> <span class="n">mask</span><span class="o">=</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ochunk</span><span class="p">;</span>
-<a name="line-234"></a>
-<a name="line-235"></a>				<span class="n">ichunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
-<a name="line-236"></a>				<span class="n">ochunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span><span class="p">;</span>
-<a name="line-237"></a>				<span class="n">otp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-238"></a>				<span class="n">i</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-239"></a>				<span class="n">mask</span> <span class="o">&gt;&gt;=</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="n">len</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-240"></a>				<span class="k">switch</span> <span class="p">(</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<a name="line-241"></a>					<span class="p">{</span>
-<a name="line-242"></a>					<span class="k">case</span> <span class="mi">7</span><span class="o">:</span>	<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="p">,</span>    <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-243"></a>					<span class="k">case</span> <span class="mi">6</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-244"></a>					<span class="k">case</span> <span class="mi">5</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-245"></a>					<span class="k">case</span> <span class="mi">4</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-246"></a>					<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-247"></a>					<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-248"></a>					<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-249"></a>					<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="p">;</span> <span class="cm">/*</span>
-<a name="line-250"></a><span class="cm">						   * it&#39;s never the case,</span>
-<a name="line-251"></a><span class="cm">						   * but it has to be here</span>
-<a name="line-252"></a><span class="cm">						   * for ultrix?</span>
-<a name="line-253"></a><span class="cm">						   */</span>
-<a name="line-254"></a>					<span class="p">}</span>
-<a name="line-255"></a>				<span class="n">ochunk</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">mask</span><span class="p">;</span>
-<a name="line-256"></a>				<span class="n">ochunk</span> <span class="o">|=</span> <span class="p">(</span><span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">;</span>
-<a name="line-257"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">ochunk</span><span class="p">;</span>
-<a name="line-258"></a>				<span class="p">}</span>
-<a name="line-259"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>     
-<a name="line-260"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
-<a name="line-261"></a>			<span class="k">return</span><span class="p">;</span>
-<a name="line-262"></a>			<span class="p">}</span>
-<a name="line-263"></a>		<span class="p">}</span>
-<a name="line-264"></a><span class="cp">#endif</span>
-<a name="line-265"></a><span class="cp">#define LOOP(in,out) \</span>
-<a name="line-266"></a><span class="cp">		x=((x+1)&amp;0xff); \</span>
-<a name="line-267"></a><span class="cp">		tx=d[x]; \</span>
-<a name="line-268"></a><span class="cp">		y=(tx+y)&amp;0xff; \</span>
-<a name="line-269"></a><span class="cp">		d[x]=ty=d[y]; \</span>
-<a name="line-270"></a><span class="cp">		d[y]=tx; \</span>
-<a name="line-271"></a><span class="cp">		(out) = d[(tx+ty)&amp;0xff]^ (in);</span>
-<a name="line-272"></a>
-<a name="line-273"></a><span class="cp">#ifndef RC4_INDEX</span>
-<a name="line-274"></a><span class="cp">#define RC4_LOOP(a,b,i)	LOOP(*((a)++),*((b)++))</span>
-<a name="line-275"></a><span class="cp">#else</span>
-<a name="line-276"></a><span class="cp">#define RC4_LOOP(a,b,i)	LOOP(a[i],b[i])</span>
-<a name="line-277"></a><span class="cp">#endif</span>
-<a name="line-278"></a>
-<a name="line-279"></a>	<span class="n">i</span><span class="o">=</span><span class="n">len</span><span class="o">&gt;&gt;</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-280"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<a name="line-281"></a>		<span class="p">{</span>
-<a name="line-282"></a>		<span class="k">for</span> <span class="p">(;;)</span>
-<a name="line-283"></a>			<span class="p">{</span>
-<a name="line-284"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-285"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-286"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-287"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-288"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
-<a name="line-289"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
-<a name="line-290"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
-<a name="line-291"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-292"></a><span class="cp">#ifdef RC4_INDEX</span>
-<a name="line-293"></a>			<span class="n">indata</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-294"></a>			<span class="n">outdata</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-295"></a><span class="cp">#endif</span>
-<a name="line-296"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-297"></a>			<span class="p">}</span>
-<a name="line-298"></a>		<span class="p">}</span>
-<a name="line-299"></a>	<span class="n">i</span><span class="o">=</span><span class="n">len</span><span class="o">&amp;</span><span class="mh">0x07</span><span class="p">;</span>
-<a name="line-300"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<a name="line-301"></a>		<span class="p">{</span>
-<a name="line-302"></a>		<span class="k">for</span> <span class="p">(;;)</span>
-<a name="line-303"></a>			<span class="p">{</span>
-<a name="line-304"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-305"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-306"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-307"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-308"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-309"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-310"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-311"></a>			<span class="p">}</span>
-<a name="line-312"></a>		<span class="p">}</span>               
-<a name="line-313"></a>	<span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>     
-<a name="line-314"></a>	<span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
-<a name="line-315"></a>	<span class="p">}</span>
+<a name="line-59"></a>
+<a name="line-60"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-61"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-62"></a><span class="cp">#include &lt;openssl/asn1t.h&gt;</span>
+<a name="line-63"></a><span class="cp">#include &lt;openssl/conf.h&gt;</span>
+<a name="line-64"></a><span class="cp">#include &lt;openssl/x509v3.h&gt;</span>
+<a name="line-65"></a>
+<a name="line-66"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">v2i_NAME_CONSTRAINTS</span><span class="p">(</span><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="o">*</span><span class="n">method</span><span class="p">,</span>
+<a name="line-67"></a>				  <span class="n">X509V3_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">CONF_VALUE</span><span class="p">)</span> <span class="o">*</span><span class="n">nval</span><span class="p">);</span>
+<a name="line-68"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">i2r_NAME_CONSTRAINTS</span><span class="p">(</span><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="o">*</span><span class="n">method</span><span class="p">,</span> 
+<a name="line-69"></a>				<span class="kt">void</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ind</span><span class="p">);</span>
+<a name="line-70"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">do_i2r_name_constraints</span><span class="p">(</span><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="o">*</span><span class="n">method</span><span class="p">,</span>
+<a name="line-71"></a>				   <span class="n">STACK_OF</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">)</span> <span class="o">*</span><span class="n">trees</span><span class="p">,</span>
+<a name="line-72"></a>				   <span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ind</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<a name="line-73"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">print_nc_ipadd</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="n">ASN1_OCTET_STRING</span> <span class="o">*</span><span class="n">ip</span><span class="p">);</span>
+<a name="line-74"></a>
+<a name="line-75"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">nc_match</span><span class="p">(</span><span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">gen</span><span class="p">,</span> <span class="n">NAME_CONSTRAINTS</span> <span class="o">*</span><span class="n">nc</span><span class="p">);</span>
+<a name="line-76"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">nc_match_single</span><span class="p">(</span><span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">sub</span><span class="p">,</span> <span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">gen</span><span class="p">);</span>
+<a name="line-77"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">nc_dn</span><span class="p">(</span><span class="n">X509_NAME</span> <span class="o">*</span><span class="n">sub</span><span class="p">,</span> <span class="n">X509_NAME</span> <span class="o">*</span><span class="n">nm</span><span class="p">);</span>
+<a name="line-78"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">nc_dns</span><span class="p">(</span><span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">sub</span><span class="p">,</span> <span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">dns</span><span class="p">);</span>
+<a name="line-79"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">nc_email</span><span class="p">(</span><span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">sub</span><span class="p">,</span> <span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">eml</span><span class="p">);</span>
+<a name="line-80"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">nc_uri</span><span class="p">(</span><span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">uri</span><span class="p">,</span> <span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">base</span><span class="p">);</span>
+<a name="line-81"></a>
+<a name="line-82"></a><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="n">v3_name_constraints</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-83"></a>	<span class="n">NID_name_constraints</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a name="line-84"></a>	<span class="n">ASN1_ITEM_ref</span><span class="p">(</span><span class="n">NAME_CONSTRAINTS</span><span class="p">),</span>
+<a name="line-85"></a>	<span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
+<a name="line-86"></a>	<span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
+<a name="line-87"></a>	<span class="mi">0</span><span class="p">,</span> <span class="n">v2i_NAME_CONSTRAINTS</span><span class="p">,</span>
+<a name="line-88"></a>	<span class="n">i2r_NAME_CONSTRAINTS</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
+<a name="line-89"></a>	<span class="nb">NULL</span>
+<a name="line-90"></a><span class="p">};</span>
+<a name="line-91"></a>
+<a name="line-92"></a><span class="n">ASN1_SEQUENCE</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-93"></a>	<span class="n">ASN1_SIMPLE</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">GENERAL_NAME</span><span class="p">),</span>
+<a name="line-94"></a>	<span class="n">ASN1_IMP_OPT</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">,</span> <span class="n">minimum</span><span class="p">,</span> <span class="n">ASN1_INTEGER</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-95"></a>	<span class="n">ASN1_IMP_OPT</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">,</span> <span class="n">maximum</span><span class="p">,</span> <span class="n">ASN1_INTEGER</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-96"></a><span class="p">}</span> <span class="n">ASN1_SEQUENCE_END</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">)</span>
+<a name="line-97"></a>
+<a name="line-98"></a><span class="n">ASN1_SEQUENCE</span><span class="p">(</span><span class="n">NAME_CONSTRAINTS</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-99"></a>	<span class="n">ASN1_IMP_SEQUENCE_OF_OPT</span><span class="p">(</span><span class="n">NAME_CONSTRAINTS</span><span class="p">,</span> <span class="n">permittedSubtrees</span><span class="p">,</span>
+<a name="line-100"></a>							<span class="n">GENERAL_SUBTREE</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-101"></a>	<span class="n">ASN1_IMP_SEQUENCE_OF_OPT</span><span class="p">(</span><span class="n">NAME_CONSTRAINTS</span><span class="p">,</span> <span class="n">excludedSubtrees</span><span class="p">,</span>
+<a name="line-102"></a>							<span class="n">GENERAL_SUBTREE</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<a name="line-103"></a><span class="p">}</span> <span class="n">ASN1_SEQUENCE_END</span><span class="p">(</span><span class="n">NAME_CONSTRAINTS</span><span class="p">)</span>
+<a name="line-104"></a>	
+<a name="line-105"></a>
+<a name="line-106"></a><span class="n">IMPLEMENT_ASN1_ALLOC_FUNCTIONS</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">)</span>
+<a name="line-107"></a><span class="n">IMPLEMENT_ASN1_ALLOC_FUNCTIONS</span><span class="p">(</span><span class="n">NAME_CONSTRAINTS</span><span class="p">)</span>
+<a name="line-108"></a>
+<a name="line-109"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2i_NAME_CONSTRAINTS</span><span class="p">(</span><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="o">*</span><span class="n">method</span><span class="p">,</span>
+<a name="line-110"></a>				  <span class="n">X509V3_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">CONF_VALUE</span><span class="p">)</span> <span class="o">*</span><span class="n">nval</span><span class="p">)</span>
+<a name="line-111"></a>	<span class="p">{</span>
+<a name="line-112"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-113"></a>	<span class="n">CONF_VALUE</span> <span class="n">tval</span><span class="p">,</span> <span class="o">*</span><span class="n">val</span><span class="p">;</span>
+<a name="line-114"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">)</span> <span class="o">**</span><span class="n">ptree</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-115"></a>	<span class="n">NAME_CONSTRAINTS</span> <span class="o">*</span><span class="n">ncons</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-116"></a>	<span class="n">GENERAL_SUBTREE</span> <span class="o">*</span><span class="n">sub</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-117"></a>	<span class="n">ncons</span> <span class="o">=</span> <span class="n">NAME_CONSTRAINTS_new</span><span class="p">();</span>
+<a name="line-118"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ncons</span><span class="p">)</span>
+<a name="line-119"></a>		<span class="k">goto</span> <span class="n">memerr</span><span class="p">;</span>
+<a name="line-120"></a>	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_CONF_VALUE_num</span><span class="p">(</span><span class="n">nval</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-121"></a>		<span class="p">{</span>
+<a name="line-122"></a>		<span class="n">val</span> <span class="o">=</span> <span class="n">sk_CONF_VALUE_value</span><span class="p">(</span><span class="n">nval</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-123"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strncmp</span><span class="p">(</span><span class="n">val</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;permitted&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">val</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">[</span><span class="mi">9</span><span class="p">])</span>
+<a name="line-124"></a>			<span class="p">{</span>
+<a name="line-125"></a>			<span class="n">ptree</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ncons</span><span class="o">-&gt;</span><span class="n">permittedSubtrees</span><span class="p">;</span>
+<a name="line-126"></a>			<span class="n">tval</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">val</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>
+<a name="line-127"></a>			<span class="p">}</span>
+<a name="line-128"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strncmp</span><span class="p">(</span><span class="n">val</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;excluded&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">val</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+<a name="line-129"></a>			<span class="p">{</span>
+<a name="line-130"></a>			<span class="n">ptree</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ncons</span><span class="o">-&gt;</span><span class="n">excludedSubtrees</span><span class="p">;</span>
+<a name="line-131"></a>			<span class="n">tval</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">val</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">+</span> <span class="mi">9</span><span class="p">;</span>
+<a name="line-132"></a>			<span class="p">}</span>
+<a name="line-133"></a>		<span class="k">else</span>
+<a name="line-134"></a>			<span class="p">{</span>
+<a name="line-135"></a>			<span class="n">X509V3err</span><span class="p">(</span><span class="n">X509V3_F_V2I_NAME_CONSTRAINTS</span><span class="p">,</span> <span class="n">X509V3_R_INVALID_SYNTAX</span><span class="p">);</span>
+<a name="line-136"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-137"></a>			<span class="p">}</span>
+<a name="line-138"></a>		<span class="n">tval</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+<a name="line-139"></a>		<span class="n">sub</span> <span class="o">=</span> <span class="n">GENERAL_SUBTREE_new</span><span class="p">();</span>
+<a name="line-140"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">v2i_GENERAL_NAME_ex</span><span class="p">(</span><span class="n">sub</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tval</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<a name="line-141"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-142"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">ptree</span><span class="p">)</span>
+<a name="line-143"></a>			<span class="o">*</span><span class="n">ptree</span> <span class="o">=</span> <span class="n">sk_GENERAL_SUBTREE_new_null</span><span class="p">();</span>
+<a name="line-144"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">ptree</span> <span class="o">||</span> <span class="o">!</span><span class="n">sk_GENERAL_SUBTREE_push</span><span class="p">(</span><span class="o">*</span><span class="n">ptree</span><span class="p">,</span> <span class="n">sub</span><span class="p">))</span>
+<a name="line-145"></a>			<span class="k">goto</span> <span class="n">memerr</span><span class="p">;</span>
+<a name="line-146"></a>		<span class="n">sub</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-147"></a>		<span class="p">}</span>
+<a name="line-148"></a>
+<a name="line-149"></a>	<span class="k">return</span> <span class="n">ncons</span><span class="p">;</span>
+<a name="line-150"></a>
+<a name="line-151"></a>	<span class="nl">memerr</span><span class="p">:</span>
+<a name="line-152"></a>	<span class="n">X509V3err</span><span class="p">(</span><span class="n">X509V3_F_V2I_NAME_CONSTRAINTS</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
+<a name="line-153"></a>	<span class="nl">err</span><span class="p">:</span>
+<a name="line-154"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ncons</span><span class="p">)</span>
+<a name="line-155"></a>		<span class="n">NAME_CONSTRAINTS_free</span><span class="p">(</span><span class="n">ncons</span><span class="p">);</span>
+<a name="line-156"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+<a name="line-157"></a>		<span class="n">GENERAL_SUBTREE_free</span><span class="p">(</span><span class="n">sub</span><span class="p">);</span>
+<a name="line-158"></a>
+<a name="line-159"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-160"></a>	<span class="p">}</span>
+<a name="line-161"></a>			
+<a name="line-162"></a>
+<a name="line-163"></a>	
+<a name="line-164"></a>
+<a name="line-165"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">i2r_NAME_CONSTRAINTS</span><span class="p">(</span><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="o">*</span><span class="n">method</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span>
+<a name="line-166"></a>				<span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ind</span><span class="p">)</span>
+<a name="line-167"></a>	<span class="p">{</span>
+<a name="line-168"></a>	<span class="n">NAME_CONSTRAINTS</span> <span class="o">*</span><span class="n">ncons</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+<a name="line-169"></a>	<span class="n">do_i2r_name_constraints</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">ncons</span><span class="o">-&gt;</span><span class="n">permittedSubtrees</span><span class="p">,</span>
+<a name="line-170"></a>					<span class="n">bp</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="s">&quot;Permitted&quot;</span><span class="p">);</span>
+<a name="line-171"></a>	<span class="n">do_i2r_name_constraints</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">ncons</span><span class="o">-&gt;</span><span class="n">excludedSubtrees</span><span class="p">,</span>
+<a name="line-172"></a>					<span class="n">bp</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="s">&quot;Excluded&quot;</span><span class="p">);</span>
+<a name="line-173"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-174"></a>	<span class="p">}</span>
+<a name="line-175"></a>
+<a name="line-176"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">do_i2r_name_constraints</span><span class="p">(</span><span class="k">const</span> <span class="n">X509V3_EXT_METHOD</span> <span class="o">*</span><span class="n">method</span><span class="p">,</span>
+<a name="line-177"></a>				   <span class="n">STACK_OF</span><span class="p">(</span><span class="n">GENERAL_SUBTREE</span><span class="p">)</span> <span class="o">*</span><span class="n">trees</span><span class="p">,</span>
+<a name="line-178"></a>				   <span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ind</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
+<a name="line-179"></a>	<span class="p">{</span>
+<a name="line-180"></a><span class="hll">	<span class="n">GENERAL_SUBTREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'tree' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;tree&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-181"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-182"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sk_GENERAL_SUBTREE_num</span><span class="p">(</span><span class="n">trees</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-183"></a>		<span class="n">BIO_printf</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;%*s%s:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+<a name="line-184"></a>	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_GENERAL_SUBTREE_num</span><span class="p">(</span><span class="n">trees</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-185"></a>		<span class="p">{</span>
+<a name="line-186"></a>		<span class="n">tree</span> <span class="o">=</span> <span class="n">sk_GENERAL_SUBTREE_value</span><span class="p">(</span><span class="n">trees</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-187"></a>		<span class="n">BIO_printf</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;%*s&quot;</span><span class="p">,</span> <span class="n">ind</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<a name="line-188"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">==</span> <span class="n">GEN_IPADD</span><span class="p">)</span>
+<a name="line-189"></a>			<span class="n">print_nc_ipadd</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">ip</span><span class="p">);</span>
+<a name="line-190"></a>		<span class="k">else</span>
+<a name="line-191"></a>			<span class="nf">GENERAL_NAME_print</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">);</span>
+<a name="line-192"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-193"></a>		<span class="p">}</span>
+<a name="line-194"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-195"></a>	<span class="p">}</span>
+<a name="line-196"></a>
+<a name="line-197"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">print_nc_ipadd</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="n">ASN1_OCTET_STRING</span> <span class="o">*</span><span class="n">ip</span><span class="p">)</span>
+<a name="line-198"></a>	<span class="p">{</span>
+<a name="line-199"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">len</span><span class="p">;</span>
+<a name="line-200"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<a name="line-201"></a>	<span class="n">p</span> <span class="o">=</span> <span class="n">ip</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-202"></a>	<span class="n">len</span> <span class="o">=</span> <span class="n">ip</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<a name="line-203"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;IP:&quot;</span><span class="p">);</span>
+<a name="line-204"></a>	<span class="k">if</span><span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span>
+<a name="line-205"></a>		<span class="p">{</span>
+<a name="line-206"></a>		<span class="n">BIO_printf</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;%d.%d.%d.%d/%d.%d.%d.%d&quot;</span><span class="p">,</span>
+<a name="line-207"></a>				<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+<a name="line-208"></a>				<span class="n">p</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">7</span><span class="p">]);</span>
+<a name="line-209"></a>		<span class="p">}</span>
+<a name="line-210"></a>	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="mi">32</span><span class="p">)</span>
+<a name="line-211"></a>		<span class="p">{</span>
+<a name="line-212"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-213"></a>			<span class="p">{</span>
+<a name="line-214"></a>			<span class="n">BIO_printf</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;%X&quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">|</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<a name="line-215"></a>			<span class="n">p</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-216"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">7</span><span class="p">)</span>
+<a name="line-217"></a>				<span class="n">BIO_puts</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
+<a name="line-218"></a>			<span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">15</span><span class="p">)</span>
+<a name="line-219"></a>				<span class="n">BIO_puts</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">);</span>
+<a name="line-220"></a>			<span class="p">}</span>
+<a name="line-221"></a>		<span class="p">}</span>
+<a name="line-222"></a>	<span class="k">else</span>
+<a name="line-223"></a>		<span class="n">BIO_printf</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="s">&quot;IP Address:&lt;invalid&gt;&quot;</span><span class="p">);</span>
+<a name="line-224"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-225"></a>	<span class="p">}</span>
+<a name="line-226"></a>
+<a name="line-227"></a><span class="cm">/* Check a certificate conforms to a specified set of constraints.</span>
+<a name="line-228"></a><span class="cm"> * Return values:</span>
+<a name="line-229"></a><span class="cm"> *  X509_V_OK: All constraints obeyed.</span>
+<a name="line-230"></a><span class="cm"> *  X509_V_ERR_PERMITTED_VIOLATION: Permitted subtree violation.</span>
+<a name="line-231"></a><span class="cm"> *  X509_V_ERR_EXCLUDED_VIOLATION: Excluded subtree violation.</span>
+<a name="line-232"></a><span class="cm"> *  X509_V_ERR_SUBTREE_MINMAX: Min or max values present and matching type.</span>
+<a name="line-233"></a><span class="cm"> *  X509_V_ERR_UNSUPPORTED_CONSTRAINT_TYPE:  Unsupported constraint type.</span>
+<a name="line-234"></a><span class="cm"> *  X509_V_ERR_UNSUPPORTED_CONSTRAINT_SYNTAX: bad unsupported constraint syntax.</span>
+<a name="line-235"></a><span class="cm"> *  X509_V_ERR_UNSUPPORTED_NAME_SYNTAX: bad or unsupported syntax of name</span>
+<a name="line-236"></a>
+<a name="line-237"></a><span class="cm"> */</span>
+<a name="line-238"></a>
+<a name="line-239"></a><span class="kt">int</span> <span class="n">NAME_CONSTRAINTS_check</span><span class="p">(</span><span class="n">X509</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">NAME_CONSTRAINTS</span> <span class="o">*</span><span class="n">nc</span><span class="p">)</span>
+<a name="line-240"></a>	<span class="p">{</span>
+<a name="line-241"></a>	<span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-242"></a>	<span class="n">X509_NAME</span> <span class="o">*</span><span class="n">nm</span><span class="p">;</span>
+<a name="line-243"></a>
+<a name="line-244"></a>	<span class="n">nm</span> <span class="o">=</span> <span class="n">X509_get_subject_name</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<a name="line-245"></a>
+<a name="line-246"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">X509_NAME_entry_count</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-247"></a>		<span class="p">{</span>
+<a name="line-248"></a>		<span class="n">GENERAL_NAME</span> <span class="n">gntmp</span><span class="p">;</span>
+<a name="line-249"></a>		<span class="n">gntmp</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">GEN_DIRNAME</span><span class="p">;</span>
+<a name="line-250"></a>		<span class="n">gntmp</span><span class="p">.</span><span class="n">d</span><span class="p">.</span><span class="n">directoryName</span> <span class="o">=</span> <span class="n">nm</span><span class="p">;</span>
+<a name="line-251"></a>
+<a name="line-252"></a>		<span class="n">r</span> <span class="o">=</span> <span class="n">nc_match</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gntmp</span><span class="p">,</span> <span class="n">nc</span><span class="p">);</span>
+<a name="line-253"></a>
+<a name="line-254"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">!=</span> <span class="n">X509_V_OK</span><span class="p">)</span>
+<a name="line-255"></a>			<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<a name="line-256"></a>
+<a name="line-257"></a>		<span class="n">gntmp</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">GEN_EMAIL</span><span class="p">;</span>
+<a name="line-258"></a>
+<a name="line-259"></a>
+<a name="line-260"></a>		<span class="cm">/* Process any email address attributes in subject name */</span>
+<a name="line-261"></a>
+<a name="line-262"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;;)</span>
+<a name="line-263"></a>			<span class="p">{</span>
+<a name="line-264"></a>			<span class="n">X509_NAME_ENTRY</span> <span class="o">*</span><span class="n">ne</span><span class="p">;</span>
+<a name="line-265"></a>			<span class="n">i</span> <span class="o">=</span> <span class="n">X509_NAME_get_index_by_NID</span><span class="p">(</span><span class="n">nm</span><span class="p">,</span>
+<a name="line-266"></a>						       <span class="n">NID_pkcs9_emailAddress</span><span class="p">,</span>
+<a name="line-267"></a>						       <span class="n">i</span><span class="p">);</span>
+<a name="line-268"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-269"></a>				<span class="k">break</span><span class="p">;</span>
+<a name="line-270"></a>			<span class="n">ne</span> <span class="o">=</span> <span class="n">X509_NAME_get_entry</span><span class="p">(</span><span class="n">nm</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-271"></a>			<span class="n">gntmp</span><span class="p">.</span><span class="n">d</span><span class="p">.</span><span class="n">rfc822Name</span> <span class="o">=</span> <span class="n">X509_NAME_ENTRY_get_data</span><span class="p">(</span><span class="n">ne</span><span class="p">);</span>
+<a name="line-272"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">gntmp</span><span class="p">.</span><span class="n">d</span><span class="p">.</span><span class="n">rfc822Name</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">!=</span> <span class="n">V_ASN1_IA5STRING</span><span class="p">)</span>
+<a name="line-273"></a>				<span class="k">return</span> <span class="n">X509_V_ERR_UNSUPPORTED_NAME_SYNTAX</span><span class="p">;</span>
+<a name="line-274"></a>
+<a name="line-275"></a>			<span class="n">r</span> <span class="o">=</span> <span class="n">nc_match</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gntmp</span><span class="p">,</span> <span class="n">nc</span><span class="p">);</span>
+<a name="line-276"></a>
+<a name="line-277"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">!=</span> <span class="n">X509_V_OK</span><span class="p">)</span>
+<a name="line-278"></a>				<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<a name="line-279"></a>			<span class="p">}</span>
+<a name="line-280"></a>		
+<a name="line-281"></a>		<span class="p">}</span>
+<a name="line-282"></a>
+<a name="line-283"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_GENERAL_NAME_num</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">altname</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-284"></a>		<span class="p">{</span>
+<a name="line-285"></a>		<span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">gen</span> <span class="o">=</span> <span class="n">sk_GENERAL_NAME_value</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">altname</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-286"></a>		<span class="n">r</span> <span class="o">=</span> <span class="n">nc_match</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">nc</span><span class="p">);</span>
+<a name="line-287"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">!=</span> <span class="n">X509_V_OK</span><span class="p">)</span>
+<a name="line-288"></a>			<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<a name="line-289"></a>		<span class="p">}</span>
+<a name="line-290"></a>
+<a name="line-291"></a>	<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-292"></a>
+<a name="line-293"></a>	<span class="p">}</span>
+<a name="line-294"></a>
+<a name="line-295"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">nc_match</span><span class="p">(</span><span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">gen</span><span class="p">,</span> <span class="n">NAME_CONSTRAINTS</span> <span class="o">*</span><span class="n">nc</span><span class="p">)</span>
+<a name="line-296"></a>	<span class="p">{</span>
+<a name="line-297"></a>	<span class="n">GENERAL_SUBTREE</span> <span class="o">*</span><span class="n">sub</span><span class="p">;</span>
+<a name="line-298"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">match</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-299"></a>
+<a name="line-300"></a>	<span class="cm">/* Permitted subtrees: if any subtrees exist of matching the type</span>
+<a name="line-301"></a><span class="cm">	 * at least one subtree must match.</span>
+<a name="line-302"></a><span class="cm">	 */</span>
+<a name="line-303"></a>
+<a name="line-304"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_GENERAL_SUBTREE_num</span><span class="p">(</span><span class="n">nc</span><span class="o">-&gt;</span><span class="n">permittedSubtrees</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-305"></a>		<span class="p">{</span>
+<a name="line-306"></a>		<span class="n">sub</span> <span class="o">=</span> <span class="n">sk_GENERAL_SUBTREE_value</span><span class="p">(</span><span class="n">nc</span><span class="o">-&gt;</span><span class="n">permittedSubtrees</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-307"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">gen</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">!=</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">)</span>
+<a name="line-308"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-309"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">sub</span><span class="o">-&gt;</span><span class="n">minimum</span> <span class="o">||</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">maximum</span><span class="p">)</span>
+<a name="line-310"></a>			<span class="k">return</span> <span class="n">X509_V_ERR_SUBTREE_MINMAX</span><span class="p">;</span>
+<a name="line-311"></a>		<span class="cm">/* If we already have a match don&#39;t bother trying any more */</span>
+<a name="line-312"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<a name="line-313"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-314"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-315"></a>			<span class="n">match</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-316"></a>		<span class="n">r</span> <span class="o">=</span> <span class="n">nc_match_single</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">);</span>
+<a name="line-317"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="n">X509_V_OK</span><span class="p">)</span>
+<a name="line-318"></a>			<span class="n">match</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-319"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">!=</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">)</span>
+<a name="line-320"></a>			<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<a name="line-321"></a>		<span class="p">}</span>
+<a name="line-322"></a>
+<a name="line-323"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-324"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-325"></a>
+<a name="line-326"></a>	<span class="cm">/* Excluded subtrees: must not match any of these */</span>
+<a name="line-327"></a>
+<a name="line-328"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_GENERAL_SUBTREE_num</span><span class="p">(</span><span class="n">nc</span><span class="o">-&gt;</span><span class="n">excludedSubtrees</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-329"></a>		<span class="p">{</span>
+<a name="line-330"></a>		<span class="n">sub</span> <span class="o">=</span> <span class="n">sk_GENERAL_SUBTREE_value</span><span class="p">(</span><span class="n">nc</span><span class="o">-&gt;</span><span class="n">excludedSubtrees</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-331"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">gen</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">!=</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">)</span>
+<a name="line-332"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-333"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">sub</span><span class="o">-&gt;</span><span class="n">minimum</span> <span class="o">||</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">maximum</span><span class="p">)</span>
+<a name="line-334"></a>			<span class="k">return</span> <span class="n">X509_V_ERR_SUBTREE_MINMAX</span><span class="p">;</span>
+<a name="line-335"></a>
+<a name="line-336"></a>		<span class="n">r</span> <span class="o">=</span> <span class="n">nc_match_single</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">);</span>
+<a name="line-337"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="n">X509_V_OK</span><span class="p">)</span>
+<a name="line-338"></a>			<span class="k">return</span> <span class="n">X509_V_ERR_EXCLUDED_VIOLATION</span><span class="p">;</span>
+<a name="line-339"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">!=</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">)</span>
+<a name="line-340"></a>			<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<a name="line-341"></a>
+<a name="line-342"></a>		<span class="p">}</span>
+<a name="line-343"></a>
+<a name="line-344"></a>	<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-345"></a>
+<a name="line-346"></a>	<span class="p">}</span>
+<a name="line-347"></a>
+<a name="line-348"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">nc_match_single</span><span class="p">(</span><span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">gen</span><span class="p">,</span> <span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">base</span><span class="p">)</span>
+<a name="line-349"></a>	<span class="p">{</span>
+<a name="line-350"></a>	<span class="k">switch</span><span class="p">(</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">)</span>
+<a name="line-351"></a>		<span class="p">{</span>
+<a name="line-352"></a>		<span class="k">case</span> <span class="nl">GEN_DIRNAME</span><span class="p">:</span>
+<a name="line-353"></a>		<span class="k">return</span> <span class="n">nc_dn</span><span class="p">(</span><span class="n">gen</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">directoryName</span><span class="p">,</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">directoryName</span><span class="p">);</span>
+<a name="line-354"></a>
+<a name="line-355"></a>		<span class="k">case</span> <span class="nl">GEN_DNS</span><span class="p">:</span>
+<a name="line-356"></a>		<span class="k">return</span> <span class="n">nc_dns</span><span class="p">(</span><span class="n">gen</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">dNSName</span><span class="p">,</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">dNSName</span><span class="p">);</span>
+<a name="line-357"></a>
+<a name="line-358"></a>		<span class="k">case</span> <span class="nl">GEN_EMAIL</span><span class="p">:</span>
+<a name="line-359"></a>		<span class="k">return</span> <span class="n">nc_email</span><span class="p">(</span><span class="n">gen</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">rfc822Name</span><span class="p">,</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">rfc822Name</span><span class="p">);</span>
+<a name="line-360"></a>
+<a name="line-361"></a>		<span class="k">case</span> <span class="nl">GEN_URI</span><span class="p">:</span>
+<a name="line-362"></a>		<span class="k">return</span> <span class="n">nc_uri</span><span class="p">(</span><span class="n">gen</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">uniformResourceIdentifier</span><span class="p">,</span>
+<a name="line-363"></a>					<span class="n">base</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">uniformResourceIdentifier</span><span class="p">);</span>
+<a name="line-364"></a>
+<a name="line-365"></a>		<span class="k">default</span><span class="o">:</span>
+<a name="line-366"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_UNSUPPORTED_CONSTRAINT_TYPE</span><span class="p">;</span>
+<a name="line-367"></a>		<span class="p">}</span>
+<a name="line-368"></a>
+<a name="line-369"></a>	<span class="p">}</span>
+<a name="line-370"></a>
+<a name="line-371"></a><span class="cm">/* directoryName name constraint matching.</span>
+<a name="line-372"></a><span class="cm"> * The canonical encoding of X509_NAME makes this comparison easy. It is</span>
+<a name="line-373"></a><span class="cm"> * matched if the subtree is a subset of the name.</span>
+<a name="line-374"></a><span class="cm"> */</span>
+<a name="line-375"></a>
+<a name="line-376"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">nc_dn</span><span class="p">(</span><span class="n">X509_NAME</span> <span class="o">*</span><span class="n">nm</span><span class="p">,</span> <span class="n">X509_NAME</span> <span class="o">*</span><span class="n">base</span><span class="p">)</span>
+<a name="line-377"></a>	<span class="p">{</span>
+<a name="line-378"></a>	<span class="cm">/* Ensure canonical encodings are up to date.  */</span>
+<a name="line-379"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">nm</span><span class="o">-&gt;</span><span class="n">modified</span> <span class="o">&amp;&amp;</span> <span class="n">i2d_X509_NAME</span><span class="p">(</span><span class="n">nm</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-380"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_OUT_OF_MEM</span><span class="p">;</span>
+<a name="line-381"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">modified</span> <span class="o">&amp;&amp;</span> <span class="n">i2d_X509_NAME</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-382"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_OUT_OF_MEM</span><span class="p">;</span>
+<a name="line-383"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">canon_enclen</span> <span class="o">&gt;</span> <span class="n">nm</span><span class="o">-&gt;</span><span class="n">canon_enclen</span><span class="p">)</span>
+<a name="line-384"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-385"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">canon_enc</span><span class="p">,</span> <span class="n">nm</span><span class="o">-&gt;</span><span class="n">canon_enc</span><span class="p">,</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">canon_enclen</span><span class="p">))</span>
+<a name="line-386"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-387"></a>	<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-388"></a>	<span class="p">}</span>
+<a name="line-389"></a>
+<a name="line-390"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">nc_dns</span><span class="p">(</span><span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">dns</span><span class="p">,</span> <span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">base</span><span class="p">)</span>
+<a name="line-391"></a>	<span class="p">{</span>
+<a name="line-392"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">baseptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-393"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">dnsptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">dns</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-394"></a>	<span class="cm">/* Empty matches everything */</span>
+<a name="line-395"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">baseptr</span><span class="p">)</span>
+<a name="line-396"></a>		<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-397"></a>	<span class="cm">/* Otherwise can add zero or more components on the left so</span>
+<a name="line-398"></a><span class="cm">	 * compare RHS and if dns is longer and expect &#39;.&#39; as preceding</span>
+<a name="line-399"></a><span class="cm">	 * character.</span>
+<a name="line-400"></a><span class="cm">	 */</span>
+<a name="line-401"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">dns</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">&gt;</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">)</span>
+<a name="line-402"></a>		<span class="p">{</span>
+<a name="line-403"></a>		<span class="n">dnsptr</span> <span class="o">+=</span> <span class="n">dns</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">-</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<a name="line-404"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">dnsptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>
+<a name="line-405"></a>			<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-406"></a>		<span class="p">}</span>
+<a name="line-407"></a>
+<a name="line-408"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">strcasecmp</span><span class="p">(</span><span class="n">baseptr</span><span class="p">,</span> <span class="n">dnsptr</span><span class="p">))</span>
+<a name="line-409"></a>			<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-410"></a>
+<a name="line-411"></a>	<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-412"></a>
+<a name="line-413"></a>	<span class="p">}</span>
+<a name="line-414"></a>
+<a name="line-415"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">nc_email</span><span class="p">(</span><span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">eml</span><span class="p">,</span> <span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">base</span><span class="p">)</span>
+<a name="line-416"></a>	<span class="p">{</span>
+<a name="line-417"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">baseptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-418"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">emlptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">eml</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-419"></a>
+<a name="line-420"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">baseat</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">baseptr</span><span class="p">,</span> <span class="sc">&#39;@&#39;</span><span class="p">);</span>
+<a name="line-421"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">emlat</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">emlptr</span><span class="p">,</span> <span class="sc">&#39;@&#39;</span><span class="p">);</span>
+<a name="line-422"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">emlat</span><span class="p">)</span>
+<a name="line-423"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_UNSUPPORTED_NAME_SYNTAX</span><span class="p">;</span>
+<a name="line-424"></a>	<span class="cm">/* Special case: inital &#39;.&#39; is RHS match */</span>
+<a name="line-425"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">baseat</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">*</span><span class="n">baseptr</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">))</span>
+<a name="line-426"></a>		<span class="p">{</span>
+<a name="line-427"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">eml</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">&gt;</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">)</span>
+<a name="line-428"></a>			<span class="p">{</span>
+<a name="line-429"></a>			<span class="n">emlptr</span> <span class="o">+=</span> <span class="n">eml</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">-</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<a name="line-430"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strcasecmp</span><span class="p">(</span><span class="n">baseptr</span><span class="p">,</span> <span class="n">emlptr</span><span class="p">))</span>
+<a name="line-431"></a>				<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-432"></a>			<span class="p">}</span>
+<a name="line-433"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-434"></a>		<span class="p">}</span>
+<a name="line-435"></a>
+<a name="line-436"></a>	<span class="cm">/* If we have anything before &#39;@&#39; match local part */</span>
+<a name="line-437"></a>
+<a name="line-438"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">baseat</span><span class="p">)</span>
+<a name="line-439"></a>		<span class="p">{</span>
+<a name="line-440"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">baseat</span> <span class="o">!=</span> <span class="n">baseptr</span><span class="p">)</span>
+<a name="line-441"></a>			<span class="p">{</span>
+<a name="line-442"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">baseat</span> <span class="o">-</span> <span class="n">baseptr</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">emlat</span> <span class="o">-</span> <span class="n">emlptr</span><span class="p">))</span>
+<a name="line-443"></a>				<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-444"></a>			<span class="cm">/* Case sensitive match of local part */</span>
+<a name="line-445"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">baseptr</span><span class="p">,</span> <span class="n">emlptr</span><span class="p">,</span> <span class="n">emlat</span> <span class="o">-</span> <span class="n">emlptr</span><span class="p">))</span>
+<a name="line-446"></a>				<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-447"></a>			<span class="p">}</span>
+<a name="line-448"></a>		<span class="cm">/* Position base after &#39;@&#39; */</span>
+<a name="line-449"></a>		<span class="n">baseptr</span> <span class="o">=</span> <span class="n">baseat</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-450"></a>		<span class="p">}</span>
+<a name="line-451"></a>	<span class="n">emlptr</span> <span class="o">=</span> <span class="n">emlat</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-452"></a>	<span class="cm">/* Just have hostname left to match: case insensitive */</span>
+<a name="line-453"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">strcasecmp</span><span class="p">(</span><span class="n">baseptr</span><span class="p">,</span> <span class="n">emlptr</span><span class="p">))</span>
+<a name="line-454"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-455"></a>
+<a name="line-456"></a>	<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-457"></a>
+<a name="line-458"></a>	<span class="p">}</span>
+<a name="line-459"></a>
+<a name="line-460"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">nc_uri</span><span class="p">(</span><span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">uri</span><span class="p">,</span> <span class="n">ASN1_IA5STRING</span> <span class="o">*</span><span class="n">base</span><span class="p">)</span>
+<a name="line-461"></a>	<span class="p">{</span>
+<a name="line-462"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">baseptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-463"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hostptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">uri</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-464"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">hostptr</span><span class="p">,</span> <span class="sc">&#39;:&#39;</span><span class="p">);</span>
+<a name="line-465"></a>	<span class="kt">int</span> <span class="n">hostlen</span><span class="p">;</span>
+<a name="line-466"></a>	<span class="cm">/* Check for foo:// and skip past it */</span>
+<a name="line-467"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p</span> <span class="o">||</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span><span class="p">))</span>
+<a name="line-468"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_UNSUPPORTED_NAME_SYNTAX</span><span class="p">;</span>
+<a name="line-469"></a>	<span class="n">hostptr</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-470"></a>
+<a name="line-471"></a>	<span class="cm">/* Determine length of hostname part of URI */</span>
+<a name="line-472"></a>
+<a name="line-473"></a>	<span class="cm">/* Look for a port indicator as end of hostname first */</span>
+<a name="line-474"></a>
+<a name="line-475"></a>	<span class="n">p</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">hostptr</span><span class="p">,</span> <span class="sc">&#39;:&#39;</span><span class="p">);</span>
+<a name="line-476"></a>	<span class="cm">/* Otherwise look for trailing slash */</span>
+<a name="line-477"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p</span><span class="p">)</span>
+<a name="line-478"></a>		<span class="n">p</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="n">hostptr</span><span class="p">,</span> <span class="sc">&#39;/&#39;</span><span class="p">);</span>
+<a name="line-479"></a>
+<a name="line-480"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p</span><span class="p">)</span>
+<a name="line-481"></a>		<span class="n">hostlen</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">hostptr</span><span class="p">);</span>
+<a name="line-482"></a>	<span class="k">else</span>
+<a name="line-483"></a>		<span class="n">hostlen</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">hostptr</span><span class="p">;</span>
+<a name="line-484"></a>
+<a name="line-485"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">hostlen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-486"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_UNSUPPORTED_NAME_SYNTAX</span><span class="p">;</span>
+<a name="line-487"></a>
+<a name="line-488"></a>	<span class="cm">/* Special case: inital &#39;.&#39; is RHS match */</span>
+<a name="line-489"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">baseptr</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>
+<a name="line-490"></a>		<span class="p">{</span>
+<a name="line-491"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">hostlen</span> <span class="o">&gt;</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">)</span>
+<a name="line-492"></a>			<span class="p">{</span>
+<a name="line-493"></a>			<span class="n">p</span> <span class="o">=</span> <span class="n">hostptr</span> <span class="o">+</span> <span class="n">hostlen</span> <span class="o">-</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<a name="line-494"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strncasecmp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">baseptr</span><span class="p">,</span> <span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">))</span>
+<a name="line-495"></a>				<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-496"></a>			<span class="p">}</span>
+<a name="line-497"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-498"></a>		<span class="p">}</span>
+<a name="line-499"></a>
+<a name="line-500"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">!=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">hostlen</span><span class="p">)</span> <span class="o">||</span> <span class="n">strncasecmp</span><span class="p">(</span><span class="n">hostptr</span><span class="p">,</span> <span class="n">baseptr</span><span class="p">,</span> <span class="n">hostlen</span><span class="p">))</span>
+<a name="line-501"></a>		<span class="k">return</span> <span class="n">X509_V_ERR_PERMITTED_VIOLATION</span><span class="p">;</span>
+<a name="line-502"></a>
+<a name="line-503"></a>	<span class="k">return</span> <span class="n">X509_V_OK</span><span class="p">;</span>
+<a name="line-504"></a>
+<a name="line-505"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

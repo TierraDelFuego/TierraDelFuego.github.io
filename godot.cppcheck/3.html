@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: modules/gdscript/gd_parser.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/bin/tests/test_gui.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> gd_parser.h</p>
-<a href='3.html#line-112'> uninitMemberVar 112</a><a href='3.html#line-125'> uninitMemberVar 125</a><a href='3.html#line-151'> uninitMemberVar 151</a><a href='3.html#line-250'> uninitMemberVar 250</a><a href='3.html#line-270'> uninitMemberVar 270</a><a href='3.html#line-275'> uninitMemberVar 275</a><a href='3.html#line-279'> duplInheritedMember 279</a><a href='3.html#line-280'> uninitMemberVar 280</a>
+       <p id="filename"><a href="index.html">Defects:</a> test_gui.cpp</p>
+<a href='3.html#line-61'> noConstructor 61</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -515,78 +515,8 @@
 399
 400
 401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  gd_parser.h                                                          */</span>
+402</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  test_gui.cpp                                                         */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -613,450 +543,380 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef GD_PARSER_H</span>
-<a name="line-30"></a><span class="cp">#define GD_PARSER_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;gd_tokenizer.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;gd_functions.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;map.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;object.h&quot;</span>
-<a name="line-36"></a>
-<a name="line-37"></a><span class="n">class</span> <span class="n">GDParser</span> <span class="p">{</span>
-<a name="line-38"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-39"></a>
-<a name="line-40"></a>	<span class="k">struct</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-41"></a>
-<a name="line-42"></a>		<span class="k">enum</span> <span class="n">Type</span> <span class="p">{</span>
-<a name="line-43"></a>			<span class="n">TYPE_CLASS</span><span class="p">,</span>
-<a name="line-44"></a>			<span class="n">TYPE_FUNCTION</span><span class="p">,</span>
-<a name="line-45"></a>			<span class="n">TYPE_BUILT_IN_FUNCTION</span><span class="p">,</span>
-<a name="line-46"></a>			<span class="n">TYPE_BLOCK</span><span class="p">,</span>
-<a name="line-47"></a>			<span class="n">TYPE_IDENTIFIER</span><span class="p">,</span>
-<a name="line-48"></a>			<span class="n">TYPE_TYPE</span><span class="p">,</span>
-<a name="line-49"></a>			<span class="n">TYPE_CONSTANT</span><span class="p">,</span>
-<a name="line-50"></a>			<span class="n">TYPE_ARRAY</span><span class="p">,</span>
-<a name="line-51"></a>			<span class="n">TYPE_DICTIONARY</span><span class="p">,</span>
-<a name="line-52"></a>			<span class="n">TYPE_SELF</span><span class="p">,</span>
-<a name="line-53"></a>			<span class="n">TYPE_OPERATOR</span><span class="p">,</span>
-<a name="line-54"></a>			<span class="n">TYPE_CONTROL_FLOW</span><span class="p">,</span>
-<a name="line-55"></a>			<span class="n">TYPE_LOCAL_VAR</span><span class="p">,</span>
-<a name="line-56"></a>			<span class="n">TYPE_ASSERT</span><span class="p">,</span>
-<a name="line-57"></a>			<span class="n">TYPE_NEWLINE</span><span class="p">,</span>
-<a name="line-58"></a>		<span class="p">};</span>
+<a name="line-29"></a><span class="cp">#ifndef _3D_DISABLED</span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class="cp">#include &quot;test_gui.h&quot;</span>
+<a name="line-32"></a>
+<a name="line-33"></a><span class="cp">#include &quot;scene/main/scene_main_loop.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;os/os.h&quot;</span>
+<a name="line-35"></a><span class="cp">#include &quot;scene/gui/control.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;scene/gui/button.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;scene/gui/label.h&quot;</span>
+<a name="line-38"></a><span class="cp">#include &quot;scene/gui/line_edit.h&quot;</span>
+<a name="line-39"></a><span class="cp">#include &quot;scene/gui/scroll_bar.h&quot;</span>
+<a name="line-40"></a><span class="cp">#include &quot;scene/gui/popup_menu.h&quot;</span>
+<a name="line-41"></a><span class="cp">#include &quot;scene/gui/option_button.h&quot;</span>
+<a name="line-42"></a><span class="cp">#include &quot;scene/gui/spin_box.h&quot;</span>
+<a name="line-43"></a><span class="cp">#include &quot;scene/gui/menu_button.h&quot;</span>
+<a name="line-44"></a><span class="cp">#include &quot;scene/gui/progress_bar.h&quot;</span>
+<a name="line-45"></a><span class="cp">#include &quot;scene/gui/panel.h&quot;</span>
+<a name="line-46"></a><span class="cp">#include &quot;scene/gui/tab_container.h&quot;</span>
+<a name="line-47"></a><span class="cp">#include &quot;scene/gui/tree.h&quot;</span>
+<a name="line-48"></a><span class="cp">#include &quot;scene/gui/rich_text_label.h&quot;</span>
+<a name="line-49"></a><span class="cp">#include &quot;scene/gui/texture_frame.h&quot;</span>
+<a name="line-50"></a><span class="cp">#include &quot;io/image_loader.h&quot;</span>
+<a name="line-51"></a><span class="cp">#include &quot;print_string.h&quot;</span>
+<a name="line-52"></a><span class="cp">#include &quot;scene/2d/sprite.h&quot;</span>
+<a name="line-53"></a>
+<a name="line-54"></a><span class="cp">#include &quot;scene/main/viewport.h&quot;</span>
+<a name="line-55"></a><span class="cp">#include &quot;scene/3d/camera.h&quot;</span>
+<a name="line-56"></a><span class="cp">#include &quot;scene/3d/test_cube.h&quot;</span>
+<a name="line-57"></a>
+<a name="line-58"></a><span class="k">namespace</span> <span class="n">TestGUI</span> <span class="p">{</span>
 <a name="line-59"></a>
-<a name="line-60"></a>		<span class="n">Node</span> <span class="o">*</span> <span class="n">next</span><span class="p">;</span>
-<a name="line-61"></a>		<span class="kt">int</span> <span class="n">line</span><span class="p">;</span>
-<a name="line-62"></a>		<span class="kt">int</span> <span class="n">column</span><span class="p">;</span>
-<a name="line-63"></a>		<span class="n">Type</span> <span class="n">type</span><span class="p">;</span>
-<a name="line-64"></a>
-<a name="line-65"></a>		<span class="n">virtual</span> <span class="o">~</span><span class="n">Node</span><span class="p">()</span> <span class="p">{}</span>
-<a name="line-66"></a>	<span class="p">};</span>
+<a name="line-60"></a>
+<a name="line-61"></a><span class="hll"><span class="k">class</span> <span class="nc">TestMainLoop</span> <span class="o">:</span> <span class="k">public</span> <span class="n">SceneTree</span> <span class="p">{</span><div class='verbose expandable'><span class='error2'>&lt;--- The class 'TestMainLoop' does not have a constructor. <span class='marker'>[+]</span></span><div class='content'>The class &apos;TestMainLoop&apos; does not have a constructor although it has private member variables. Member variables of builtin types are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior.</div></div>
+</span><a name="line-62"></a>
+<a name="line-63"></a>
+<a name="line-64"></a>	<span class="n">Control</span> <span class="o">*</span><span class="n">control</span><span class="p">;</span>
+<a name="line-65"></a>	
+<a name="line-66"></a><span class="k">public</span><span class="o">:</span>
 <a name="line-67"></a>
-<a name="line-68"></a>	<span class="k">struct</span> <span class="n">FunctionNode</span><span class="p">;</span>
-<a name="line-69"></a>	<span class="k">struct</span> <span class="n">BlockNode</span><span class="p">;</span>
-<a name="line-70"></a>
-<a name="line-71"></a>	<span class="k">struct</span> <span class="nl">ClassNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-72"></a>
-<a name="line-73"></a>		<span class="kt">bool</span> <span class="n">tool</span><span class="p">;</span>
-<a name="line-74"></a>		<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-75"></a>		<span class="kt">bool</span> <span class="n">extends_used</span><span class="p">;</span>
-<a name="line-76"></a>		<span class="n">StringName</span> <span class="n">extends_file</span><span class="p">;</span>
-<a name="line-77"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">extends_class</span><span class="p">;</span>
-<a name="line-78"></a>
+<a name="line-68"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">request_quit</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-69"></a>	
+<a name="line-70"></a>		<span class="n">quit</span><span class="p">();</span>
+<a name="line-71"></a>		
+<a name="line-72"></a>	<span class="p">}</span>
+<a name="line-73"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-74"></a>	
+<a name="line-75"></a>		<span class="n">SceneTree</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
+<a name="line-76"></a>
+<a name="line-77"></a>
+<a name="line-78"></a><span class="cp">#if 0</span><span class="c"></span>
 <a name="line-79"></a>
-<a name="line-80"></a>		<span class="k">struct</span> <span class="n">Member</span> <span class="p">{</span>
-<a name="line-81"></a>			<span class="n">PropertyInfo</span> <span class="n">_export</span><span class="p">;</span>
-<a name="line-82"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
-<a name="line-83"></a>			<span class="n">Variant</span> <span class="n">default_value</span><span class="p">;</span>
-<a name="line-84"></a><span class="cp">#endif</span>
-<a name="line-85"></a>			<span class="n">StringName</span> <span class="n">identifier</span><span class="p">;</span>
-<a name="line-86"></a>			<span class="n">StringName</span> <span class="n">setter</span><span class="p">;</span>
-<a name="line-87"></a>			<span class="n">StringName</span> <span class="n">getter</span><span class="p">;</span>
-<a name="line-88"></a>			<span class="kt">int</span> <span class="n">line</span><span class="p">;</span>
-<a name="line-89"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">expression</span><span class="p">;</span>
-<a name="line-90"></a>		<span class="p">};</span>
-<a name="line-91"></a>		<span class="k">struct</span> <span class="n">Constant</span> <span class="p">{</span>
-<a name="line-92"></a>			<span class="n">StringName</span> <span class="n">identifier</span><span class="p">;</span>
-<a name="line-93"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">expression</span><span class="p">;</span>
-<a name="line-94"></a>		<span class="p">};</span>
-<a name="line-95"></a>
-<a name="line-96"></a>		<span class="k">struct</span> <span class="n">Signal</span> <span class="p">{</span>
-<a name="line-97"></a>			<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-98"></a>			<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
-<a name="line-99"></a>		<span class="p">};</span>
-<a name="line-100"></a>
-<a name="line-101"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">ClassNode</span><span class="o">*&gt;</span> <span class="n">subclasses</span><span class="p">;</span>
-<a name="line-102"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Member</span><span class="o">&gt;</span> <span class="n">variables</span><span class="p">;</span>
-<a name="line-103"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Constant</span><span class="o">&gt;</span> <span class="n">constant_expressions</span><span class="p">;</span>
-<a name="line-104"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">FunctionNode</span><span class="o">*&gt;</span> <span class="n">functions</span><span class="p">;</span>
-<a name="line-105"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">FunctionNode</span><span class="o">*&gt;</span> <span class="n">static_functions</span><span class="p">;</span>
-<a name="line-106"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Signal</span><span class="o">&gt;</span> <span class="n">_signals</span><span class="p">;</span>
-<a name="line-107"></a>		<span class="n">BlockNode</span> <span class="o">*</span><span class="n">initializer</span><span class="p">;</span>
-<a name="line-108"></a>		<span class="n">ClassNode</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
-<a name="line-109"></a>		<span class="c1">//Vector&lt;Node*&gt; initializers;</span>
-<a name="line-110"></a>		<span class="kt">int</span> <span class="n">end_line</span><span class="p">;</span>
-<a name="line-111"></a>
-<a name="line-112"></a><span class="hll">		<span class="n">ClassNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">tool</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_CLASS</span><span class="p">;</span> <span class="n">extends_used</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span> <span class="n">end_line</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span> <span class="n">owner</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;}</span><span class='error2'>&lt;--- Member variable 'ClassNode::initializer' is not initialized in the constructor.</span>
-</span><a name="line-113"></a>	<span class="p">};</span>
-<a name="line-114"></a>
-<a name="line-115"></a>
-<a name="line-116"></a>
-<a name="line-117"></a>	<span class="k">struct</span> <span class="nl">FunctionNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-118"></a>
-<a name="line-119"></a>		<span class="kt">bool</span> <span class="n">_static</span><span class="p">;</span>
-<a name="line-120"></a>		<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-121"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
-<a name="line-122"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">default_values</span><span class="p">;</span>
-<a name="line-123"></a>		<span class="n">BlockNode</span> <span class="o">*</span><span class="n">body</span><span class="p">;</span>
-<a name="line-124"></a>
-<a name="line-125"></a><span class="hll">		<span class="n">FunctionNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_FUNCTION</span><span class="p">;</span> <span class="n">_static</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span> <span class="p">}</span><span class='error2'>&lt;--- Member variable 'FunctionNode::body' is not initialized in the constructor.</span>
-</span><a name="line-126"></a>
-<a name="line-127"></a>	<span class="p">};</span>
-<a name="line-128"></a>
-<a name="line-129"></a>	<span class="k">struct</span> <span class="nl">BlockNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-130"></a>
-<a name="line-131"></a>		<span class="n">ClassNode</span> <span class="o">*</span><span class="n">parent_class</span><span class="p">;</span>
-<a name="line-132"></a>		<span class="n">BlockNode</span> <span class="o">*</span><span class="n">parent_block</span><span class="p">;</span>
-<a name="line-133"></a>		<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">locals</span><span class="p">;</span>
-<a name="line-134"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">statements</span><span class="p">;</span>
-<a name="line-135"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">variables</span><span class="p">;</span>
-<a name="line-136"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">variable_lines</span><span class="p">;</span>
+<a name="line-80"></a>
+<a name="line-81"></a><span class="c">		Viewport *vp = memnew( Viewport );</span>
+<a name="line-82"></a><span class="c">		vp-&gt;set_world( Ref&lt;World&gt;( memnew( World )));</span>
+<a name="line-83"></a><span class="c">		get_root()-&gt;add_child(vp);</span>
+<a name="line-84"></a>
+<a name="line-85"></a><span class="c">		vp-&gt;set_rect(Rect2(0,0,256,256));</span>
+<a name="line-86"></a><span class="c">		vp-&gt;set_as_render_target(true);</span>
+<a name="line-87"></a><span class="c">		vp-&gt;set_render_target_update_mode(Viewport::RENDER_TARGET_UPDATE_ALWAYS);</span>
+<a name="line-88"></a>
+<a name="line-89"></a>
+<a name="line-90"></a><span class="c">		Camera *camera = memnew( Camera );</span>
+<a name="line-91"></a><span class="c">		vp-&gt;add_child(camera);</span>
+<a name="line-92"></a><span class="c">		camera-&gt;make_current();</span>
+<a name="line-93"></a>
+<a name="line-94"></a><span class="c">		TestCube *testcube = memnew( TestCube );</span>
+<a name="line-95"></a><span class="c">		vp-&gt;add_child(testcube);</span>
+<a name="line-96"></a><span class="c">		testcube-&gt;set_transform(Transform( Matrix3().rotated(Vector3(0,1,0),Math_PI*0.25), Vector3(0,0,-8)));</span>
+<a name="line-97"></a>
+<a name="line-98"></a><span class="c">		Sprite *sp = memnew( Sprite );</span>
+<a name="line-99"></a><span class="c">		sp-&gt;set_texture( vp-&gt;get_render_target_texture() );</span>
+<a name="line-100"></a><span class="c">//		sp-&gt;set_texture( ResourceLoader::load(&quot;res://ball.png&quot;) );</span>
+<a name="line-101"></a><span class="c">		sp-&gt;set_pos(Point2(300,300));</span>
+<a name="line-102"></a><span class="c">		get_root()-&gt;add_child(sp);</span>
+<a name="line-103"></a>
+<a name="line-104"></a>
+<a name="line-105"></a><span class="c">		return;</span>
+<a name="line-106"></a><span class="cp">#endif</span>
+<a name="line-107"></a>
+<a name="line-108"></a>		<span class="n">Panel</span> <span class="o">*</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Panel</span> <span class="p">);</span>
+<a name="line-109"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">set_anchor</span><span class="p">(</span> <span class="n">MARGIN_RIGHT</span><span class="p">,</span> <span class="n">Control</span><span class="o">::</span><span class="n">ANCHOR_END</span> <span class="p">);</span>
+<a name="line-110"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">set_anchor</span><span class="p">(</span> <span class="n">MARGIN_BOTTOM</span><span class="p">,</span> <span class="n">Control</span><span class="o">::</span><span class="n">ANCHOR_END</span> <span class="p">);</span>
+<a name="line-111"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">set_end</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">);</span>
+<a name="line-112"></a>
+<a name="line-113"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Theme</span><span class="o">&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Theme</span> <span class="p">);</span>
+<a name="line-114"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">set_theme</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<a name="line-115"></a>		
+<a name="line-116"></a>		<span class="n">get_root</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span> <span class="n">frame</span> <span class="p">);</span>
+<a name="line-117"></a>
+<a name="line-118"></a>		<span class="n">Label</span> <span class="o">*</span><span class="n">label</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Label</span> <span class="p">);</span>
+<a name="line-119"></a>
+<a name="line-120"></a>		<span class="n">label</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">80</span><span class="p">,</span><span class="mi">90</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-121"></a>		<span class="n">label</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">170</span><span class="p">,</span><span class="mi">80</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-122"></a>		<span class="n">label</span><span class="o">-&gt;</span><span class="n">set_align</span><span class="p">(</span> <span class="n">Label</span><span class="o">::</span><span class="n">ALIGN_FILL</span> <span class="p">);</span>
+<a name="line-123"></a>		<span class="c1">//label-&gt;set_text(&quot;There&quot;);</span>
+<a name="line-124"></a>		<span class="n">label</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;There was once upon a time a beautiful unicorn that loved to play with little girls...&quot;</span><span class="p">);</span>
+<a name="line-125"></a>
+<a name="line-126"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">label</span><span class="p">);</span>
+<a name="line-127"></a>
+<a name="line-128"></a>		<span class="n">Button</span> <span class="o">*</span><span class="n">button</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Button</span> <span class="p">);</span>
+<a name="line-129"></a>
+<a name="line-130"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">20</span><span class="p">,</span><span class="mi">20</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-131"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-132"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;This is a biggie button&quot;</span><span class="p">);</span>
+<a name="line-133"></a>
+<a name="line-134"></a>
+<a name="line-135"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span> <span class="n">button</span> <span class="p">);</span>
+<a name="line-136"></a>
 <a name="line-137"></a>
-<a name="line-138"></a>		<span class="c1">//the following is useful for code completion</span>
-<a name="line-139"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">BlockNode</span><span class="o">*&gt;</span> <span class="n">sub_blocks</span><span class="p">;</span>
-<a name="line-140"></a>		<span class="kt">int</span> <span class="n">end_line</span><span class="p">;</span>
-<a name="line-141"></a>		<span class="n">BlockNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_BLOCK</span><span class="p">;</span> <span class="n">end_line</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span> <span class="n">parent_block</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="n">parent_class</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-142"></a>	<span class="p">};</span>
+<a name="line-138"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-139"></a><span class="c">		Sprite *tf = memnew( Sprite );</span>
+<a name="line-140"></a><span class="c">		frame-&gt;add_child(tf);</span>
+<a name="line-141"></a><span class="c">		Image img;</span>
+<a name="line-142"></a><span class="c">		ImageLoader::load_image(&quot;LarvoClub.png&quot;,&amp;img);</span>
 <a name="line-143"></a>
-<a name="line-144"></a>	<span class="k">struct</span> <span class="nl">TypeNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-145"></a>
-<a name="line-146"></a>		<span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">vtype</span><span class="p">;</span>
-<a name="line-147"></a>		<span class="n">TypeNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_TYPE</span><span class="p">;</span>  <span class="p">}</span>
-<a name="line-148"></a>	<span class="p">};</span>
-<a name="line-149"></a>	<span class="k">struct</span> <span class="nl">BuiltInFunctionNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-150"></a>		<span class="n">GDFunctions</span><span class="o">::</span><span class="n">Function</span> <span class="n">function</span><span class="p">;</span>
-<a name="line-151"></a><span class="hll">		<span class="n">BuiltInFunctionNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_BUILT_IN_FUNCTION</span><span class="p">;</span>  <span class="p">}</span><span class='error2'>&lt;--- Member variable 'BuiltInFunctionNode::function' is not initialized in the constructor.</span>
-</span><a name="line-152"></a>	<span class="p">};</span>
+<a name="line-144"></a><span class="c">		img.resize(512,512);</span>
+<a name="line-145"></a><span class="c">		img.generate_mipmaps();</span>
+<a name="line-146"></a><span class="c">		img.compress(Image::COMPRESS_PVRTC4);</span>
+<a name="line-147"></a><span class="c">		Ref&lt;ImageTexture&gt; tt = memnew( ImageTexture );</span>
+<a name="line-148"></a><span class="c">		tt-&gt;create_from_image(img);</span>
+<a name="line-149"></a><span class="c">		tf-&gt;set_texture(tt);</span>
+<a name="line-150"></a><span class="c">		tf-&gt;set_pos(Point2(50,50));</span>
+<a name="line-151"></a><span class="c">		//tf-&gt;set_scale(Point2(0.3,0.3));</span>
+<a name="line-152"></a>
 <a name="line-153"></a>
-<a name="line-154"></a>	<span class="k">struct</span> <span class="nl">IdentifierNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-155"></a>
-<a name="line-156"></a>		<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-157"></a>		<span class="n">IdentifierNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_IDENTIFIER</span><span class="p">;</span>  <span class="p">}</span>
-<a name="line-158"></a>	<span class="p">};</span>
+<a name="line-154"></a><span class="c">		return;</span>
+<a name="line-155"></a><span class="cp">#endif</span>
+<a name="line-156"></a>
+<a name="line-157"></a>		<span class="n">Tree</span> <span class="o">*</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Tree</span> <span class="p">);</span>
+<a name="line-158"></a>		<span class="n">tree</span><span class="o">-&gt;</span><span class="n">set_columns</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <a name="line-159"></a>
-<a name="line-160"></a>	<span class="k">struct</span> <span class="nl">LocalVarNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-161"></a>
-<a name="line-162"></a>		<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-163"></a>		<span class="n">Node</span> <span class="o">*</span><span class="n">assign</span><span class="p">;</span>
-<a name="line-164"></a>		<span class="n">LocalVarNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_LOCAL_VAR</span><span class="p">;</span>  <span class="n">assign</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;}</span>
-<a name="line-165"></a>	<span class="p">};</span>
-<a name="line-166"></a>
-<a name="line-167"></a>	<span class="k">struct</span> <span class="nl">ConstantNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-168"></a>		<span class="n">Variant</span> <span class="n">value</span><span class="p">;</span>
-<a name="line-169"></a>		<span class="n">ConstantNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_CONSTANT</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-170"></a>	<span class="p">};</span>
-<a name="line-171"></a>
-<a name="line-172"></a>	<span class="k">struct</span> <span class="nl">ArrayNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-173"></a>
-<a name="line-174"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">elements</span><span class="p">;</span>
-<a name="line-175"></a>		<span class="n">ArrayNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_ARRAY</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-176"></a>	<span class="p">};</span>
-<a name="line-177"></a>
-<a name="line-178"></a>
-<a name="line-179"></a>	<span class="k">struct</span> <span class="nl">DictionaryNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-180"></a>
-<a name="line-181"></a>		<span class="k">struct</span> <span class="n">Pair</span> <span class="p">{</span>
-<a name="line-182"></a>
-<a name="line-183"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
-<a name="line-184"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
-<a name="line-185"></a>		<span class="p">};</span>
-<a name="line-186"></a>
-<a name="line-187"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Pair</span><span class="o">&gt;</span> <span class="n">elements</span><span class="p">;</span>
-<a name="line-188"></a>		<span class="n">DictionaryNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_DICTIONARY</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-189"></a>	<span class="p">};</span>
+<a name="line-160"></a>		<span class="n">tree</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">230</span><span class="p">,</span><span class="mi">210</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-161"></a>		<span class="n">tree</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">150</span><span class="p">,</span><span class="mi">250</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-162"></a>
+<a name="line-163"></a>
+<a name="line-164"></a>		<span class="n">TreeItem</span> <span class="o">*</span><span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">();</span>
+<a name="line-165"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-166"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;root&quot;</span><span class="p">);</span>
+<a name="line-167"></a>		<span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">(</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_root</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-168"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_CHECK</span><span class="p">);</span>
+<a name="line-169"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-170"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;check&quot;</span><span class="p">);</span>
+<a name="line-171"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_CHECK</span><span class="p">);</span>
+<a name="line-172"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-173"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;check2&quot;</span><span class="p">);</span>
+<a name="line-174"></a>		<span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">(</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_root</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-175"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_RANGE</span><span class="p">);</span>
+<a name="line-176"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-177"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_range_config</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mf">0.1</span><span class="p">);</span>
+<a name="line-178"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a name="line-179"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">add_button</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">Theme</span><span class="o">::</span><span class="n">get_default</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;folder&quot;</span><span class="p">,</span><span class="s">&quot;FileDialog&quot;</span><span class="p">));</span>
+<a name="line-180"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_RANGE</span><span class="p">);</span>
+<a name="line-181"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-182"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_range_config</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mf">0.1</span><span class="p">);</span>
+<a name="line-183"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-184"></a>
+<a name="line-185"></a>		<span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">(</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_root</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-186"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_RANGE</span><span class="p">);</span>
+<a name="line-187"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-188"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;Have,Many,Several,Options!&quot;</span><span class="p">);</span>
+<a name="line-189"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
 <a name="line-190"></a>
-<a name="line-191"></a>	<span class="k">struct</span> <span class="nl">SelfNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-192"></a>		<span class="n">SelfNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_SELF</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-193"></a>	<span class="p">};</span>
+<a name="line-191"></a>		<span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">(</span> <span class="n">item</span> <span class="p">);</span>
+<a name="line-192"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-193"></a>		<span class="n">item</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;Gershwin!&quot;</span><span class="p">);</span>
 <a name="line-194"></a>
-<a name="line-195"></a>	<span class="k">struct</span> <span class="nl">OperatorNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-196"></a>		<span class="k">enum</span> <span class="n">Operator</span> <span class="p">{</span>
-<a name="line-197"></a>			<span class="c1">//call/constructor operator</span>
-<a name="line-198"></a>			<span class="n">OP_CALL</span><span class="p">,</span>
-<a name="line-199"></a>			<span class="n">OP_PARENT_CALL</span><span class="p">,</span>
-<a name="line-200"></a>			<span class="n">OP_YIELD</span><span class="p">,</span>
-<a name="line-201"></a>			<span class="n">OP_EXTENDS</span><span class="p">,</span>
-<a name="line-202"></a>			<span class="c1">//indexing operator</span>
-<a name="line-203"></a>			<span class="n">OP_INDEX</span><span class="p">,</span>
-<a name="line-204"></a>			<span class="n">OP_INDEX_NAMED</span><span class="p">,</span>
-<a name="line-205"></a>			<span class="c1">//unary operators</span>
-<a name="line-206"></a>			<span class="n">OP_NEG</span><span class="p">,</span>
-<a name="line-207"></a>			<span class="n">OP_NOT</span><span class="p">,</span>
-<a name="line-208"></a>			<span class="n">OP_BIT_INVERT</span><span class="p">,</span>
-<a name="line-209"></a>			<span class="n">OP_PREINC</span><span class="p">,</span>
-<a name="line-210"></a>			<span class="n">OP_PREDEC</span><span class="p">,</span>
-<a name="line-211"></a>			<span class="n">OP_INC</span><span class="p">,</span>
-<a name="line-212"></a>			<span class="n">OP_DEC</span><span class="p">,</span>
-<a name="line-213"></a>			<span class="c1">//binary operators (in precedence order)</span>
-<a name="line-214"></a>			<span class="n">OP_IN</span><span class="p">,</span>
-<a name="line-215"></a>			<span class="n">OP_EQUAL</span><span class="p">,</span>
-<a name="line-216"></a>			<span class="n">OP_NOT_EQUAL</span><span class="p">,</span>
-<a name="line-217"></a>			<span class="n">OP_LESS</span><span class="p">,</span>
-<a name="line-218"></a>			<span class="n">OP_LESS_EQUAL</span><span class="p">,</span>
-<a name="line-219"></a>			<span class="n">OP_GREATER</span><span class="p">,</span>
-<a name="line-220"></a>			<span class="n">OP_GREATER_EQUAL</span><span class="p">,</span>
-<a name="line-221"></a>			<span class="n">OP_AND</span><span class="p">,</span>
-<a name="line-222"></a>			<span class="n">OP_OR</span><span class="p">,</span>
-<a name="line-223"></a>			<span class="n">OP_ADD</span><span class="p">,</span>
-<a name="line-224"></a>			<span class="n">OP_SUB</span><span class="p">,</span>
-<a name="line-225"></a>			<span class="n">OP_MUL</span><span class="p">,</span>
-<a name="line-226"></a>			<span class="n">OP_DIV</span><span class="p">,</span>
-<a name="line-227"></a>			<span class="n">OP_MOD</span><span class="p">,</span>
-<a name="line-228"></a>			<span class="n">OP_SHIFT_LEFT</span><span class="p">,</span>
-<a name="line-229"></a>			<span class="n">OP_SHIFT_RIGHT</span><span class="p">,</span>
-<a name="line-230"></a>			<span class="n">OP_INIT_ASSIGN</span><span class="p">,</span>
-<a name="line-231"></a>			<span class="n">OP_ASSIGN</span><span class="p">,</span>
-<a name="line-232"></a>			<span class="n">OP_ASSIGN_ADD</span><span class="p">,</span>
-<a name="line-233"></a>			<span class="n">OP_ASSIGN_SUB</span><span class="p">,</span>
-<a name="line-234"></a>			<span class="n">OP_ASSIGN_MUL</span><span class="p">,</span>
-<a name="line-235"></a>			<span class="n">OP_ASSIGN_DIV</span><span class="p">,</span>
-<a name="line-236"></a>			<span class="n">OP_ASSIGN_MOD</span><span class="p">,</span>
-<a name="line-237"></a>			<span class="n">OP_ASSIGN_SHIFT_LEFT</span><span class="p">,</span>
-<a name="line-238"></a>			<span class="n">OP_ASSIGN_SHIFT_RIGHT</span><span class="p">,</span>
-<a name="line-239"></a>			<span class="n">OP_ASSIGN_BIT_AND</span><span class="p">,</span>
-<a name="line-240"></a>			<span class="n">OP_ASSIGN_BIT_OR</span><span class="p">,</span>
-<a name="line-241"></a>			<span class="n">OP_ASSIGN_BIT_XOR</span><span class="p">,</span>
-<a name="line-242"></a>			<span class="n">OP_BIT_AND</span><span class="p">,</span>
-<a name="line-243"></a>			<span class="n">OP_BIT_OR</span><span class="p">,</span>
-<a name="line-244"></a>			<span class="n">OP_BIT_XOR</span><span class="p">,</span>
-<a name="line-245"></a>		<span class="p">};</span>
-<a name="line-246"></a>
-<a name="line-247"></a>		<span class="n">Operator</span> <span class="n">op</span><span class="p">;</span>
-<a name="line-248"></a>
-<a name="line-249"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">arguments</span><span class="p">;</span>
-<a name="line-250"></a><span class="hll">		<span class="n">OperatorNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_OPERATOR</span><span class="p">;</span> <span class="p">}</span><span class='error2'>&lt;--- Member variable 'OperatorNode::op' is not initialized in the constructor.</span>
-</span><a name="line-251"></a>	<span class="p">};</span>
-<a name="line-252"></a>
-<a name="line-253"></a>	<span class="k">struct</span> <span class="nl">ControlFlowNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-254"></a>		<span class="k">enum</span> <span class="n">CFType</span> <span class="p">{</span>
-<a name="line-255"></a>			<span class="n">CF_IF</span><span class="p">,</span>
-<a name="line-256"></a>			<span class="n">CF_FOR</span><span class="p">,</span>
-<a name="line-257"></a>			<span class="n">CF_WHILE</span><span class="p">,</span>
-<a name="line-258"></a>			<span class="n">CF_SWITCH</span><span class="p">,</span>
-<a name="line-259"></a>			<span class="n">CF_BREAK</span><span class="p">,</span>
-<a name="line-260"></a>			<span class="n">CF_CONTINUE</span><span class="p">,</span>
-<a name="line-261"></a>			<span class="n">CF_RETURN</span>
-<a name="line-262"></a>		<span class="p">};</span>
-<a name="line-263"></a>
-<a name="line-264"></a>		<span class="n">CFType</span> <span class="n">cf_type</span><span class="p">;</span>
-<a name="line-265"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">arguments</span><span class="p">;</span>
-<a name="line-266"></a>		<span class="n">BlockNode</span> <span class="o">*</span><span class="n">body</span><span class="p">;</span>
-<a name="line-267"></a>		<span class="n">BlockNode</span> <span class="o">*</span><span class="n">body_else</span><span class="p">;</span>
-<a name="line-268"></a>
-<a name="line-269"></a>		<span class="n">ControlFlowNode</span> <span class="o">*</span><span class="n">_else</span><span class="p">;</span> <span class="c1">//used for if</span>
-<a name="line-270"></a><span class="hll">		<span class="n">ControlFlowNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_CONTROL_FLOW</span><span class="p">;</span> <span class="n">cf_type</span><span class="o">=</span><span class="n">CF_IF</span><span class="p">;</span> <span class="n">body</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="n">body_else</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;}</span><span class='error2'>&lt;--- Member variable 'ControlFlowNode::_else' is not initialized in the constructor.</span>
-</span><a name="line-271"></a>	<span class="p">};</span>
-<a name="line-272"></a>
-<a name="line-273"></a>	<span class="k">struct</span> <span class="nl">AssertNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-274"></a>		<span class="n">Node</span><span class="o">*</span> <span class="n">condition</span><span class="p">;</span>
-<a name="line-275"></a><span class="hll">		<span class="n">AssertNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_ASSERT</span><span class="p">;</span> <span class="p">}</span><span class='error2'>&lt;--- Member variable 'AssertNode::condition' is not initialized in the constructor.</span>
-</span><a name="line-276"></a>	<span class="p">};</span>
-<a name="line-277"></a>
-<a name="line-278"></a>	<span class="k">struct</span> <span class="nl">NewLineNode</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-279"></a><span class="hll">		<span class="kt">int</span> <span class="n">line</span><span class="p">;</span><span class='error2'>&lt;--- The struct 'NewLineNode' defines member variable with name 'line' also defined in its parent struct 'Node'.</span>
-</span><a name="line-280"></a><span class="hll">		<span class="n">NewLineNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span><span class="o">=</span><span class="n">TYPE_NEWLINE</span><span class="p">;</span> <span class="p">}</span><span class='error2'>&lt;--- Member variable 'NewLineNode::line' is not initialized in the constructor.</span>
-</span><a name="line-281"></a>	<span class="p">};</span>
-<a name="line-282"></a>
-<a name="line-283"></a>
-<a name="line-284"></a>	<span class="k">struct</span> <span class="n">Expression</span> <span class="p">{</span>
-<a name="line-285"></a>
-<a name="line-286"></a>		<span class="kt">bool</span> <span class="n">is_op</span><span class="p">;</span>
-<a name="line-287"></a>		<span class="k">union</span> <span class="p">{</span>
-<a name="line-288"></a>			<span class="n">OperatorNode</span><span class="o">::</span><span class="n">Operator</span> <span class="n">op</span><span class="p">;</span>
-<a name="line-289"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span>
-<a name="line-290"></a>		<span class="p">};</span>
-<a name="line-291"></a>	<span class="p">};</span>
+<a name="line-195"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+<a name="line-196"></a>
+<a name="line-197"></a>		<span class="c1">//control = memnew( Control );</span>
+<a name="line-198"></a>		<span class="c1">//root-&gt;add_child( control );</span>
+<a name="line-199"></a>
+<a name="line-200"></a>
+<a name="line-201"></a>		
+<a name="line-202"></a>		<span class="n">LineEdit</span> <span class="o">*</span><span class="n">line_edit</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">LineEdit</span> <span class="p">);</span>
+<a name="line-203"></a>		
+<a name="line-204"></a>		<span class="n">line_edit</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">30</span><span class="p">,</span><span class="mi">190</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-205"></a>		<span class="n">line_edit</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">180</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-206"></a>		
+<a name="line-207"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">line_edit</span><span class="p">);</span>
+<a name="line-208"></a>		
+<a name="line-209"></a>		<span class="n">HScrollBar</span> <span class="o">*</span><span class="n">hscroll</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">HScrollBar</span> <span class="p">);</span>
+<a name="line-210"></a>		
+<a name="line-211"></a>		<span class="n">hscroll</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">30</span><span class="p">,</span><span class="mi">290</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-212"></a>		<span class="n">hscroll</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">180</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-213"></a>		<span class="n">hscroll</span><span class="o">-&gt;</span><span class="n">set_max</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a name="line-214"></a>		<span class="n">hscroll</span><span class="o">-&gt;</span><span class="n">set_page</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<a name="line-215"></a>		
+<a name="line-216"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">hscroll</span><span class="p">);</span>
+<a name="line-217"></a>
+<a name="line-218"></a>
+<a name="line-219"></a>
+<a name="line-220"></a>		<span class="n">SpinBox</span> <span class="o">*</span><span class="n">spin</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">SpinBox</span> <span class="p">);</span>
+<a name="line-221"></a>
+<a name="line-222"></a>		<span class="n">spin</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">30</span><span class="p">,</span><span class="mi">260</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-223"></a>		<span class="n">spin</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">120</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-224"></a>
+<a name="line-225"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">spin</span><span class="p">);</span>
+<a name="line-226"></a>		<span class="n">hscroll</span><span class="o">-&gt;</span><span class="n">share</span><span class="p">(</span><span class="n">spin</span><span class="p">);</span>
+<a name="line-227"></a>
+<a name="line-228"></a>		<span class="n">ProgressBar</span> <span class="o">*</span><span class="n">progress</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ProgressBar</span> <span class="p">);</span>
+<a name="line-229"></a>
+<a name="line-230"></a>		<span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">30</span><span class="p">,</span><span class="mi">330</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-231"></a>		<span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">120</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-232"></a>
+<a name="line-233"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">progress</span><span class="p">);</span>
+<a name="line-234"></a>		<span class="n">hscroll</span><span class="o">-&gt;</span><span class="n">share</span><span class="p">(</span><span class="n">progress</span><span class="p">);</span>
+<a name="line-235"></a>
+<a name="line-236"></a>		<span class="n">MenuButton</span> <span class="o">*</span><span class="n">menu_button</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">MenuButton</span> <span class="p">);</span>
+<a name="line-237"></a>		
+<a name="line-238"></a>		<span class="n">menu_button</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;I&#39;m a menu!&quot;</span><span class="p">);</span>
+<a name="line-239"></a>		<span class="n">menu_button</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">30</span><span class="p">,</span><span class="mi">380</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-240"></a>		<span class="n">menu_button</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-241"></a>		
+<a name="line-242"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">menu_button</span><span class="p">);</span>		
+<a name="line-243"></a>		
+<a name="line-244"></a>		<span class="n">PopupMenu</span> <span class="o">*</span><span class="n">popup</span> <span class="o">=</span> <span class="n">menu_button</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">();</span>
+<a name="line-245"></a>		
+<a name="line-246"></a>		<span class="n">popup</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Hello, testing&quot;</span><span class="p">);</span>
+<a name="line-247"></a>		<span class="n">popup</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;My Dearest&quot;</span><span class="p">);</span>
+<a name="line-248"></a>		<span class="n">popup</span><span class="o">-&gt;</span><span class="n">add_separator</span><span class="p">();</span>
+<a name="line-249"></a>		<span class="n">popup</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Popup&quot;</span><span class="p">);</span>
+<a name="line-250"></a>		<span class="n">popup</span><span class="o">-&gt;</span><span class="n">add_check_item</span><span class="p">(</span><span class="s">&quot;Check Popup&quot;</span><span class="p">);</span>
+<a name="line-251"></a>		<span class="n">popup</span><span class="o">-&gt;</span><span class="n">set_item_checked</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>		
+<a name="line-252"></a>				
+<a name="line-253"></a>		<span class="n">OptionButton</span> <span class="o">*</span><span class="n">options</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">OptionButton</span> <span class="p">);</span>
+<a name="line-254"></a>		
+<a name="line-255"></a>		<span class="n">options</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Hello, testing&quot;</span><span class="p">);</span>
+<a name="line-256"></a>		<span class="n">options</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;My Dearest&quot;</span><span class="p">);</span>
+<a name="line-257"></a>		
+<a name="line-258"></a>		<span class="n">options</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">230</span><span class="p">,</span><span class="mi">180</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-259"></a>		<span class="n">options</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-260"></a>		
+<a name="line-261"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>		
+<a name="line-262"></a>
+<a name="line-263"></a>		<span class="cm">/*</span>
+<a name="line-264"></a><span class="cm">		Tree * tree = memnew( Tree );</span>
+<a name="line-265"></a><span class="cm">		tree-&gt;set_columns(2);</span>
+<a name="line-266"></a><span class="cm">		</span>
+<a name="line-267"></a><span class="cm">		tree-&gt;set_pos( Point2( 230,210 ) );</span>
+<a name="line-268"></a><span class="cm">		tree-&gt;set_size( Point2( 150,250 ) );</span>
+<a name="line-269"></a>
+<a name="line-270"></a>
+<a name="line-271"></a><span class="cm">		TreeItem *item = tree-&gt;create_item();</span>
+<a name="line-272"></a><span class="cm">		item-&gt;set_editable(0,true);</span>
+<a name="line-273"></a><span class="cm">		item-&gt;set_text(0,&quot;root&quot;);</span>
+<a name="line-274"></a><span class="cm">		item = tree-&gt;create_item( tree-&gt;get_root() );</span>
+<a name="line-275"></a><span class="cm">		item-&gt;set_cell_mode(0, TreeItem::CELL_MODE_CHECK);</span>
+<a name="line-276"></a><span class="cm">		item-&gt;set_editable(0,true);</span>
+<a name="line-277"></a><span class="cm">		item-&gt;set_text(0,&quot;check&quot;);</span>
+<a name="line-278"></a><span class="cm">		item = tree-&gt;create_item( tree-&gt;get_root() );</span>
+<a name="line-279"></a><span class="cm">		item-&gt;set_cell_mode(0, TreeItem::CELL_MODE_RANGE);</span>
+<a name="line-280"></a><span class="cm">		item-&gt;set_editable(0,true);</span>
+<a name="line-281"></a><span class="cm">		item-&gt;set_range_config(0,0,20,0.1);</span>
+<a name="line-282"></a><span class="cm">		item-&gt;set_range(0,2);</span>
+<a name="line-283"></a><span class="cm">		item-&gt;add_button(0,Theme::get_default()-&gt;get_icon(&quot;folder&quot;,&quot;FileDialog&quot;));</span>
+<a name="line-284"></a><span class="cm">		item = tree-&gt;create_item( tree-&gt;get_root() );</span>
+<a name="line-285"></a><span class="cm">		item-&gt;set_cell_mode(0, TreeItem::CELL_MODE_RANGE);</span>
+<a name="line-286"></a><span class="cm">		item-&gt;set_editable(0,true);</span>
+<a name="line-287"></a><span class="cm">		item-&gt;set_text(0,&quot;Have,Many,Several,Options!&quot;);</span>
+<a name="line-288"></a><span class="cm">		item-&gt;set_range(0,2);</span>
+<a name="line-289"></a><span class="cm">		</span>
+<a name="line-290"></a><span class="cm">		frame-&gt;add_child(tree);</span>
+<a name="line-291"></a><span class="cm">*/</span>
 <a name="line-292"></a>
 <a name="line-293"></a>
-<a name="line-294"></a><span class="cm">/*</span>
-<a name="line-295"></a><span class="cm">	struct OperatorNode : public Node {</span>
-<a name="line-296"></a>
-<a name="line-297"></a><span class="cm">		DataType return_cache;</span>
-<a name="line-298"></a><span class="cm">		Operator op;</span>
-<a name="line-299"></a><span class="cm">		Vector&lt;Node*&gt; arguments;</span>
-<a name="line-300"></a><span class="cm">		virtual DataType get_datatype() const { return return_cache; }</span>
+<a name="line-294"></a>		<span class="n">RichTextLabel</span> <span class="o">*</span><span class="n">richtext</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">RichTextLabel</span> <span class="p">);</span>
+<a name="line-295"></a>
+<a name="line-296"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">600</span><span class="p">,</span><span class="mi">210</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-297"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">180</span><span class="p">,</span><span class="mi">250</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-298"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">set_anchor_and_margin</span><span class="p">(</span><span class="n">MARGIN_RIGHT</span><span class="p">,</span><span class="n">Control</span><span class="o">::</span><span class="n">ANCHOR_END</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span>
+<a name="line-299"></a>
+<a name="line-300"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">richtext</span><span class="p">);</span>
 <a name="line-301"></a>
-<a name="line-302"></a><span class="cm">		OperatorNode() { type=TYPE_OPERATOR; return_cache=TYPE_VOID; }</span>
-<a name="line-303"></a><span class="cm">	};</span>
+<a name="line-302"></a>
+<a name="line-303"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;Hello, My Friends!</span><span class="se">\n\n</span><span class="s">Welcome to the amazing world of &quot;</span><span class="p">);</span>
 <a name="line-304"></a>
-<a name="line-305"></a><span class="cm">	struct VariableNode : public Node {</span>
-<a name="line-306"></a>
-<a name="line-307"></a><span class="cm">		DataType datatype_cache;</span>
-<a name="line-308"></a><span class="cm">		StringName name;</span>
-<a name="line-309"></a><span class="cm">		virtual DataType get_datatype() const { return datatype_cache; }</span>
-<a name="line-310"></a>
-<a name="line-311"></a><span class="cm">		VariableNode() { type=TYPE_VARIABLE; datatype_cache=TYPE_VOID; }</span>
-<a name="line-312"></a><span class="cm">	};</span>
-<a name="line-313"></a>
-<a name="line-314"></a><span class="cm">	struct ConstantNode : public Node {</span>
-<a name="line-315"></a>
-<a name="line-316"></a><span class="cm">		DataType datatype;</span>
-<a name="line-317"></a><span class="cm">		Variant value;</span>
-<a name="line-318"></a><span class="cm">		virtual DataType get_datatype() const { return datatype; }</span>
-<a name="line-319"></a>
-<a name="line-320"></a><span class="cm">		ConstantNode() { type=TYPE_CONSTANT; }</span>
-<a name="line-321"></a><span class="cm">	};</span>
-<a name="line-322"></a>
-<a name="line-323"></a><span class="cm">	struct BlockNode : public Node {</span>
-<a name="line-324"></a>
-<a name="line-325"></a><span class="cm">		Map&lt;StringName,DataType&gt; variables;</span>
-<a name="line-326"></a><span class="cm">		List&lt;Node*&gt; statements;</span>
-<a name="line-327"></a><span class="cm">		BlockNode() { type=TYPE_BLOCK; }</span>
-<a name="line-328"></a><span class="cm">	};</span>
-<a name="line-329"></a>
-<a name="line-330"></a><span class="cm">	struct ControlFlowNode : public Node {</span>
-<a name="line-331"></a>
-<a name="line-332"></a><span class="cm">		FlowOperation flow_op;</span>
-<a name="line-333"></a><span class="cm">		Vector&lt;Node*&gt; statements;</span>
-<a name="line-334"></a><span class="cm">		ControlFlowNode() { type=TYPE_CONTROL_FLOW; flow_op=FLOW_OP_IF;}</span>
-<a name="line-335"></a><span class="cm">	};</span>
+<a name="line-305"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_newline</span><span class="p">();</span>
+<a name="line-306"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_newline</span><span class="p">();</span>
+<a name="line-307"></a>
+<a name="line-308"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">push_color</span><span class="p">(</span><span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">));</span>
+<a name="line-309"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;leprechauns&quot;</span><span class="p">);</span>
+<a name="line-310"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
+<a name="line-311"></a>
+<a name="line-312"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot; and &quot;</span><span class="p">);</span>
+<a name="line-313"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">push_color</span><span class="p">(</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">));</span>
+<a name="line-314"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;faeries.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-315"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
+<a name="line-316"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;In this new episode, we will attemp to &quot;</span><span class="p">);</span>
+<a name="line-317"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">push_font</span><span class="p">(</span><span class="n">richtext</span><span class="o">-&gt;</span><span class="n">get_font</span><span class="p">(</span><span class="s">&quot;mono_font&quot;</span><span class="p">,</span><span class="s">&quot;Fonts&quot;</span><span class="p">));</span>
+<a name="line-318"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">push_color</span><span class="p">(</span><span class="n">Color</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.0</span><span class="p">));</span>
+<a name="line-319"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;deliver something nice&quot;</span><span class="p">);</span>
+<a name="line-320"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
+<a name="line-321"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
+<a name="line-322"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot; to all the viewers! Unfortunately, I need to &quot;</span><span class="p">);</span>
+<a name="line-323"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">push_underline</span><span class="p">();</span>
+<a name="line-324"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;keep writing a lot of text&quot;</span><span class="p">);</span>
+<a name="line-325"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
+<a name="line-326"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot; so the label control overflows and the scrollbar appears.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-327"></a>		<span class="c1">//richtext-&gt;push_indent(1);</span>
+<a name="line-328"></a>		<span class="c1">//richtext-&gt;add_text(&quot;By the way, testing indent levels! Yohohoho! Everything should appear to the right sightly here!\n&quot;);</span>
+<a name="line-329"></a>		<span class="c1">//richtext-&gt;pop();</span>
+<a name="line-330"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">push_meta</span><span class="p">(</span><span class="s">&quot;http://www.scrollingcapabilities.xz&quot;</span><span class="p">);</span>
+<a name="line-331"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;This allows to test for the scrolling capabilities &quot;</span><span class="p">);</span>
+<a name="line-332"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
+<a name="line-333"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="s">&quot;of the rich text label for huge text (not like this text will really be huge but, you know).</span><span class="se">\n</span><span class="s">As long as it is so long that it will work nicely for a test/demo, then it&#39;s welcomed in my book...</span><span class="se">\n</span><span class="s">Changing subject, the day is cloudy today and I&#39;m wondering if I&#39;ll get che chance to travel somewhere nice. Sometimes, watching the clouds from satellite images may give a nice insight about how pressure zones in our planet work, althogh it also makes it pretty obvious to see why most weather forecasts get it wrong so often.</span><span class="se">\n</span><span class="s">Clouds are so difficult to predict!</span><span class="se">\n</span><span class="s">But it&#39;s pretty cool how our civilization has adapted to having water falling from the sky each time it rains...&quot;</span><span class="p">);</span>
+<a name="line-334"></a>		<span class="c1">//richtext-&gt;add_text(&quot;Hello!\nGorgeous..&quot;);</span>
+<a name="line-335"></a>
 <a name="line-336"></a>
-<a name="line-337"></a><span class="cm">	struct MemberNode : public Node {</span>
-<a name="line-338"></a>
-<a name="line-339"></a><span class="cm">		DataType datatype;</span>
-<a name="line-340"></a><span class="cm">		StringName name;</span>
-<a name="line-341"></a><span class="cm">		Node* owner;</span>
-<a name="line-342"></a><span class="cm">		virtual DataType get_datatype() const { return datatype; }</span>
-<a name="line-343"></a><span class="cm">		MemberNode() { type=TYPE_MEMBER; }</span>
-<a name="line-344"></a><span class="cm">	};</span>
+<a name="line-337"></a>		<span class="c1">//richtext-&gt;push_meta(&quot;http://www.scrollingcapabilities.xz&quot;);</span>
+<a name="line-338"></a>		<span class="c1">///richtext-&gt;add_text(&quot;Hello!\n&quot;);</span>
+<a name="line-339"></a>		<span class="c1">//richtext-&gt;pop();</span>
+<a name="line-340"></a>
+<a name="line-341"></a>		<span class="n">richtext</span><span class="o">-&gt;</span><span class="n">set_anchor</span><span class="p">(</span><span class="n">MARGIN_RIGHT</span><span class="p">,</span><span class="n">Control</span><span class="o">::</span><span class="n">ANCHOR_END</span><span class="p">);</span>
+<a name="line-342"></a>
+<a name="line-343"></a>
+<a name="line-344"></a>		<span class="n">TabContainer</span> <span class="o">*</span> <span class="n">tabc</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">TabContainer</span> <span class="p">);</span>
 <a name="line-345"></a>
-<a name="line-346"></a>
-<a name="line-347"></a><span class="cm">	struct ProgramNode : public Node {</span>
-<a name="line-348"></a>
-<a name="line-349"></a><span class="cm">		struct Function {</span>
-<a name="line-350"></a><span class="cm">			StringName name;</span>
-<a name="line-351"></a><span class="cm">			FunctionNode*function;</span>
-<a name="line-352"></a><span class="cm">		};</span>
-<a name="line-353"></a>
-<a name="line-354"></a><span class="cm">		Map&lt;StringName,DataType&gt; builtin_variables;</span>
-<a name="line-355"></a><span class="cm">		Map&lt;StringName,DataType&gt; preexisting_variables;</span>
-<a name="line-356"></a>
-<a name="line-357"></a><span class="cm">		Vector&lt;Function&gt; functions;</span>
-<a name="line-358"></a><span class="cm">		BlockNode *body;</span>
-<a name="line-359"></a>
-<a name="line-360"></a><span class="cm">		ProgramNode() { type=TYPE_PROGRAM; }</span>
-<a name="line-361"></a><span class="cm">	};</span>
-<a name="line-362"></a><span class="cm">*/</span>
-<a name="line-363"></a>
-<a name="line-364"></a>	<span class="k">enum</span> <span class="n">CompletionType</span> <span class="p">{</span>
-<a name="line-365"></a>		<span class="n">COMPLETION_NONE</span><span class="p">,</span>
-<a name="line-366"></a>		<span class="n">COMPLETION_BUILT_IN_TYPE_CONSTANT</span><span class="p">,</span>
-<a name="line-367"></a>		<span class="n">COMPLETION_FUNCTION</span><span class="p">,</span>
-<a name="line-368"></a>		<span class="n">COMPLETION_IDENTIFIER</span><span class="p">,</span>
-<a name="line-369"></a>		<span class="n">COMPLETION_PARENT_FUNCTION</span><span class="p">,</span>
-<a name="line-370"></a>		<span class="n">COMPLETION_METHOD</span><span class="p">,</span>
-<a name="line-371"></a>		<span class="n">COMPLETION_CALL_ARGUMENTS</span><span class="p">,</span>
-<a name="line-372"></a>		<span class="n">COMPLETION_INDEX</span><span class="p">,</span>
-<a name="line-373"></a>		<span class="n">COMPLETION_VIRTUAL_FUNC</span>
-<a name="line-374"></a>	<span class="p">};</span>
+<a name="line-346"></a>		<span class="n">Control</span> <span class="o">*</span><span class="n">ctl</span><span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Control</span> <span class="p">);</span>
+<a name="line-347"></a>		<span class="n">ctl</span><span class="o">-&gt;</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;tab 1&quot;</span><span class="p">);</span>
+<a name="line-348"></a>		<span class="n">tabc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">ctl</span><span class="p">);</span>
+<a name="line-349"></a>
+<a name="line-350"></a>		<span class="n">ctl</span><span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Control</span> <span class="p">);</span>
+<a name="line-351"></a>		<span class="n">ctl</span><span class="o">-&gt;</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;tab 2&quot;</span><span class="p">);</span>
+<a name="line-352"></a>		<span class="n">tabc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">ctl</span><span class="p">);</span>
+<a name="line-353"></a>		<span class="n">label</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Label</span> <span class="p">);</span>
+<a name="line-354"></a>		<span class="n">label</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Some Label&quot;</span><span class="p">);</span>
+<a name="line-355"></a>		<span class="n">label</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span> <span class="p">);</span>
+<a name="line-356"></a>		<span class="n">ctl</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">label</span><span class="p">);;</span>
+<a name="line-357"></a>
+<a name="line-358"></a>		<span class="n">ctl</span><span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Control</span> <span class="p">);</span>
+<a name="line-359"></a>		<span class="n">ctl</span><span class="o">-&gt;</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;tab 3&quot;</span><span class="p">);</span>
+<a name="line-360"></a>		<span class="n">button</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Button</span> <span class="p">);</span>
+<a name="line-361"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Some Button&quot;</span><span class="p">);</span>
+<a name="line-362"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span> <span class="p">);</span>
+<a name="line-363"></a>		<span class="n">ctl</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">button</span><span class="p">);;</span>
+<a name="line-364"></a>
+<a name="line-365"></a>		<span class="n">tabc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">ctl</span><span class="p">);</span>
+<a name="line-366"></a>
+<a name="line-367"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">tabc</span><span class="p">);</span>
+<a name="line-368"></a>		
+<a name="line-369"></a>		<span class="n">tabc</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">400</span><span class="p">,</span><span class="mi">210</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-370"></a>		<span class="n">tabc</span><span class="o">-&gt;</span><span class="n">set_size</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span> <span class="mi">180</span><span class="p">,</span><span class="mi">250</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-371"></a>
+<a name="line-372"></a>		
+<a name="line-373"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">ImageTexture</span><span class="o">&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ImageTexture</span> <span class="p">);</span>
+<a name="line-374"></a>		<span class="n">text</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">(</span><span class="s">&quot;test_data/concave.png&quot;</span><span class="p">);</span>
 <a name="line-375"></a>
-<a name="line-376"></a>
-<a name="line-377"></a>
-<a name="line-378"></a><span class="nl">private</span><span class="p">:</span>
-<a name="line-379"></a>
-<a name="line-380"></a>
-<a name="line-381"></a>	<span class="n">GDTokenizer</span> <span class="o">*</span><span class="n">tokenizer</span><span class="p">;</span>
-<a name="line-382"></a>
-<a name="line-383"></a>
-<a name="line-384"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">head</span><span class="p">;</span>
-<a name="line-385"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">list</span><span class="p">;</span>
-<a name="line-386"></a>	<span class="n">template</span><span class="o">&lt;</span><span class="n">class</span> <span class="n">T</span><span class="o">&gt;</span>
-<a name="line-387"></a>	<span class="n">T</span><span class="o">*</span> <span class="n">alloc_node</span><span class="p">();</span>
+<a name="line-376"></a>		<span class="n">Sprite</span><span class="o">*</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">Sprite</span><span class="p">);</span>
+<a name="line-377"></a>		<span class="n">sprite</span><span class="o">-&gt;</span><span class="n">set_texture</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<a name="line-378"></a>		<span class="n">sprite</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span><span class="n">Point2</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">));</span>
+<a name="line-379"></a>		<span class="n">frame</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">sprite</span><span class="p">);</span>
+<a name="line-380"></a>		<span class="n">sprite</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">();</span>
+<a name="line-381"></a>
+<a name="line-382"></a>		<span class="n">Sprite</span><span class="o">*</span> <span class="n">sprite2</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">Sprite</span><span class="p">);</span>
+<a name="line-383"></a>		<span class="n">sprite</span><span class="o">-&gt;</span><span class="n">set_texture</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<a name="line-384"></a>		<span class="n">sprite</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">sprite2</span><span class="p">);</span>
+<a name="line-385"></a>		<span class="n">sprite2</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span><span class="n">Point2</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+<a name="line-386"></a>		<span class="n">sprite2</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">();</span>
+<a name="line-387"></a>	<span class="p">}</span>
 <a name="line-388"></a>
-<a name="line-389"></a>	<span class="kt">bool</span> <span class="n">validating</span><span class="p">;</span>
-<a name="line-390"></a>	<span class="kt">bool</span> <span class="n">for_completion</span><span class="p">;</span>
-<a name="line-391"></a>	<span class="kt">int</span> <span class="n">parenthesis</span><span class="p">;</span>
-<a name="line-392"></a>	<span class="kt">bool</span> <span class="n">error_set</span><span class="p">;</span>
-<a name="line-393"></a>	<span class="n">String</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-394"></a>	<span class="kt">int</span> <span class="n">error_line</span><span class="p">;</span>
-<a name="line-395"></a>	<span class="kt">int</span> <span class="n">error_column</span><span class="p">;</span>
-<a name="line-396"></a>
-<a name="line-397"></a>	<span class="kt">int</span> <span class="n">pending_newline</span><span class="p">;</span>
-<a name="line-398"></a>
-<a name="line-399"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">tab_level</span><span class="p">;</span>
-<a name="line-400"></a>
-<a name="line-401"></a>	<span class="n">String</span> <span class="n">base_path</span><span class="p">;</span>
-<a name="line-402"></a>	<span class="n">String</span> <span class="n">self_path</span><span class="p">;</span>
-<a name="line-403"></a>
-<a name="line-404"></a>
-<a name="line-405"></a>	<span class="n">ClassNode</span> <span class="o">*</span><span class="n">current_class</span><span class="p">;</span>
-<a name="line-406"></a>	<span class="n">FunctionNode</span> <span class="o">*</span><span class="n">current_function</span><span class="p">;</span>
-<a name="line-407"></a>	<span class="n">BlockNode</span> <span class="o">*</span><span class="n">current_block</span><span class="p">;</span>
-<a name="line-408"></a>
-<a name="line-409"></a>	<span class="kt">bool</span> <span class="nf">_get_completable_identifier</span><span class="p">(</span><span class="n">CompletionType</span> <span class="n">p_type</span><span class="p">,</span><span class="n">StringName</span><span class="o">&amp;</span> <span class="n">identifier</span><span class="p">);</span>
-<a name="line-410"></a>	<span class="kt">void</span> <span class="nf">_make_completable_call</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_arg</span><span class="p">);</span>
-<a name="line-411"></a>
-<a name="line-412"></a>	<span class="n">CompletionType</span> <span class="n">completion_type</span><span class="p">;</span>
-<a name="line-413"></a>	<span class="n">StringName</span> <span class="n">completion_cursor</span><span class="p">;</span>
-<a name="line-414"></a>	<span class="kt">bool</span> <span class="n">completion_static</span><span class="p">;</span>
-<a name="line-415"></a>	<span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">completion_built_in_constant</span><span class="p">;</span>
-<a name="line-416"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">completion_node</span><span class="p">;</span>
-<a name="line-417"></a>	<span class="n">ClassNode</span> <span class="o">*</span><span class="n">completion_class</span><span class="p">;</span>
-<a name="line-418"></a>	<span class="n">FunctionNode</span> <span class="o">*</span><span class="n">completion_function</span><span class="p">;</span>
-<a name="line-419"></a>	<span class="n">BlockNode</span> <span class="o">*</span><span class="n">completion_block</span><span class="p">;</span>
-<a name="line-420"></a>	<span class="kt">int</span> <span class="n">completion_line</span><span class="p">;</span>
-<a name="line-421"></a>	<span class="kt">int</span> <span class="n">completion_argument</span><span class="p">;</span>
-<a name="line-422"></a>	<span class="kt">bool</span> <span class="n">completion_found</span><span class="p">;</span>
-<a name="line-423"></a>
-<a name="line-424"></a>	<span class="n">PropertyInfo</span> <span class="n">current_export</span><span class="p">;</span>
-<a name="line-425"></a>
-<a name="line-426"></a>	<span class="kt">void</span> <span class="nf">_set_error</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_error</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_line</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_column</span><span class="o">=-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-427"></a>	<span class="kt">bool</span> <span class="nf">_recover_from_completion</span><span class="p">();</span>
-<a name="line-428"></a>
-<a name="line-429"></a>
-<a name="line-430"></a>	<span class="kt">bool</span> <span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_parent</span><span class="p">,</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;&amp;</span> <span class="n">p_args</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_static</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_can_codecomplete</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-431"></a>	<span class="kt">bool</span> <span class="nf">_enter_indent_block</span><span class="p">(</span><span class="n">BlockNode</span> <span class="o">*</span><span class="n">p_block</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-432"></a>	<span class="kt">bool</span> <span class="nf">_parse_newline</span><span class="p">();</span>
-<a name="line-433"></a>	<span class="n">Node</span><span class="o">*</span> <span class="nf">_parse_expression</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_parent</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_static</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_allow_assign</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-434"></a>	<span class="n">Node</span><span class="o">*</span> <span class="nf">_reduce_expression</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_to_const</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-435"></a>	<span class="n">Node</span><span class="o">*</span> <span class="nf">_parse_and_reduce_expression</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_parent</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_static</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_reduce_const</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_allow_assign</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-436"></a>
-<a name="line-437"></a>	<span class="kt">void</span> <span class="nf">_parse_block</span><span class="p">(</span><span class="n">BlockNode</span> <span class="o">*</span><span class="n">p_block</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_static</span><span class="p">);</span>
-<a name="line-438"></a>	<span class="kt">void</span> <span class="nf">_parse_extends</span><span class="p">(</span><span class="n">ClassNode</span> <span class="o">*</span><span class="n">p_class</span><span class="p">);</span>
-<a name="line-439"></a>	<span class="kt">void</span> <span class="nf">_parse_class</span><span class="p">(</span><span class="n">ClassNode</span> <span class="o">*</span><span class="n">p_class</span><span class="p">);</span>
-<a name="line-440"></a>	<span class="kt">bool</span> <span class="nf">_end_statement</span><span class="p">();</span>
-<a name="line-441"></a>
-<a name="line-442"></a>	<span class="n">Error</span> <span class="nf">_parse</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_base_path</span><span class="p">);</span>
-<a name="line-443"></a>
-<a name="line-444"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-445"></a>
-<a name="line-446"></a>	<span class="n">String</span> <span class="n">get_error</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-447"></a>	<span class="kt">int</span> <span class="n">get_error_line</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-448"></a>	<span class="kt">int</span> <span class="n">get_error_column</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-449"></a>	<span class="n">Error</span> <span class="nf">parse</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_base_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_just_validate</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_self_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_for_completion</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-450"></a>	<span class="n">Error</span> <span class="nf">parse_bytecode</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p_bytecode</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_base_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_self_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<a name="line-451"></a>
-<a name="line-452"></a>	<span class="k">const</span> <span class="n">Node</span> <span class="o">*</span><span class="n">get_parse_tree</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-453"></a>
-<a name="line-454"></a>	<span class="c1">//completion info</span>
-<a name="line-455"></a>
-<a name="line-456"></a>	<span class="n">CompletionType</span> <span class="nf">get_completion_type</span><span class="p">();</span>
-<a name="line-457"></a>	<span class="n">StringName</span> <span class="nf">get_completion_cursor</span><span class="p">();</span>
-<a name="line-458"></a>	<span class="kt">int</span> <span class="nf">get_completion_line</span><span class="p">();</span>
-<a name="line-459"></a>	<span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">get_completion_built_in_constant</span><span class="p">();</span>
-<a name="line-460"></a>	<span class="n">Node</span> <span class="o">*</span><span class="nf">get_completion_node</span><span class="p">();</span>
-<a name="line-461"></a>	<span class="n">ClassNode</span> <span class="o">*</span><span class="nf">get_completion_class</span><span class="p">();</span>
-<a name="line-462"></a>	<span class="n">BlockNode</span> <span class="o">*</span><span class="nf">get_completion_block</span><span class="p">();</span>
-<a name="line-463"></a>	<span class="n">FunctionNode</span> <span class="o">*</span><span class="nf">get_completion_function</span><span class="p">();</span>
-<a name="line-464"></a>	<span class="kt">int</span> <span class="nf">get_completion_argument_index</span><span class="p">();</span>
-<a name="line-465"></a>
-<a name="line-466"></a>
-<a name="line-467"></a>	<span class="kt">void</span> <span class="nf">clear</span><span class="p">();</span>
-<a name="line-468"></a>	<span class="n">GDParser</span><span class="p">();</span>
-<a name="line-469"></a>	<span class="o">~</span><span class="n">GDParser</span><span class="p">();</span>
-<a name="line-470"></a><span class="p">};</span>
-<a name="line-471"></a>
-<a name="line-472"></a><span class="cp">#endif </span><span class="c1">// PARSER_H</span>
+<a name="line-389"></a>
+<a name="line-390"></a>	
+<a name="line-391"></a><span class="p">};</span>
+<a name="line-392"></a>
+<a name="line-393"></a>
+<a name="line-394"></a><span class="n">MainLoop</span><span class="o">*</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-395"></a>
+<a name="line-396"></a>	
+<a name="line-397"></a>	<span class="k">return</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">TestMainLoop</span> <span class="p">);</span>
+<a name="line-398"></a><span class="p">}</span>
+<a name="line-399"></a>
+<a name="line-400"></a><span class="p">}</span>
+<a name="line-401"></a>
+<a name="line-402"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

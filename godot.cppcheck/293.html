@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/evp/encode.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/rand/randfile.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> encode.c</p>
-<a href='293.html#line-134'> variableScope 134</a><a href='293.html#line-361'> variableScope 361</a><a href='293.html#line-361'> variableScope 361</a><a href='293.html#line-361'> variableScope 361</a><a href='293.html#line-361'> variableScope 361</a><a href='293.html#line-362'> variableScope 362</a><a href='293.html#line-401'> variableScope 401</a><a href='293.html#line-419'> unreadVariable 419</a>
+       <p id="filename"><a href="index.html">Defects:</a> randfile.c</p>
+<a href='293.html#line-1'> ConfigurationNotChecked 1</a><a href='293.html#line-1'> ConfigurationNotChecked 1</a><a href='293.html#line-1'> ConfigurationNotChecked 1</a><a href='293.html#line-1'> ConfigurationNotChecked 1</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -441,126 +441,8 @@
 325
 326
 327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/evp/encode.c */</span>
-<a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+328</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/rand/randfile.c */</span><span class='error2'>&lt;--- Skipping configuration 'DEFAULT_HOME' since the value of 'DEFAULT_HOME' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'O_CREAT' since the value of 'O_CREAT' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'S_IFBLK;S_IFCHR' since the value of 'S_IFBLK' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'S_ISBLK;S_ISCHR' since the value of 'S_ISBLK' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+</span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
 <a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
@@ -617,478 +499,276 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-61"></a><span class="cp">#include &lt;openssl/evp.h&gt;</span>
-<a name="line-62"></a>
-<a name="line-63"></a><span class="cp">#ifndef CHARSET_EBCDIC</span>
-<a name="line-64"></a><span class="cp">#define conv_bin2ascii(a)	(data_bin2ascii[(a)&amp;0x3f])</span>
-<a name="line-65"></a><span class="cp">#define conv_ascii2bin(a)	(data_ascii2bin[(a)&amp;0x7f])</span>
-<a name="line-66"></a><span class="cp">#else</span>
-<a name="line-67"></a><span class="cm">/* We assume that PEM encoded files are EBCDIC files</span>
-<a name="line-68"></a><span class="cm"> * (i.e., printable text files). Convert them here while decoding.</span>
-<a name="line-69"></a><span class="cm"> * When encoding, output is EBCDIC (text) format again.</span>
-<a name="line-70"></a><span class="cm"> * (No need for conversion in the conv_bin2ascii macro, as the</span>
-<a name="line-71"></a><span class="cm"> * underlying textstring data_bin2ascii[] is already EBCDIC)</span>
-<a name="line-72"></a><span class="cm"> */</span>
-<a name="line-73"></a><span class="cp">#define conv_bin2ascii(a)	(data_bin2ascii[(a)&amp;0x3f])</span>
-<a name="line-74"></a><span class="cp">#define conv_ascii2bin(a)	(data_ascii2bin[os_toascii[a]&amp;0x7f])</span>
-<a name="line-75"></a><span class="cp">#endif</span>
-<a name="line-76"></a>
-<a name="line-77"></a><span class="cm">/* 64 char lines</span>
-<a name="line-78"></a><span class="cm"> * pad input with 0</span>
-<a name="line-79"></a><span class="cm"> * left over chars are set to =</span>
-<a name="line-80"></a><span class="cm"> * 1 byte  =&gt; xx==</span>
-<a name="line-81"></a><span class="cm"> * 2 bytes =&gt; xxx=</span>
-<a name="line-82"></a><span class="cm"> * 3 bytes =&gt; xxxx</span>
-<a name="line-83"></a><span class="cm"> */</span>
-<a name="line-84"></a><span class="cp">#define BIN_PER_LINE    (64/4*3)</span>
-<a name="line-85"></a><span class="cp">#define CHUNKS_PER_LINE (64/4)</span>
-<a name="line-86"></a><span class="cp">#define CHAR_PER_LINE   (64+1)</span>
-<a name="line-87"></a>
-<a name="line-88"></a><span class="k">static</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">data_bin2ascii</span><span class="p">[</span><span class="mi">65</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ\</span>
-<a name="line-89"></a><span class="s">abcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span><span class="p">;</span>
+<a name="line-59"></a><span class="cm">/* We need to define this to get macros like S_IFBLK and S_IFCHR */</span>
+<a name="line-60"></a><span class="cp">#if !defined(OPENSSL_SYS_VXWORKS)</span>
+<a name="line-61"></a><span class="cp">#define _XOPEN_SOURCE 500</span>
+<a name="line-62"></a><span class="cp">#endif</span>
+<a name="line-63"></a>
+<a name="line-64"></a><span class="cp">#include &lt;errno.h&gt;</span>
+<a name="line-65"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-66"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
+<a name="line-67"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-68"></a>
+<a name="line-69"></a><span class="cp">#include &quot;e_os.h&quot;</span>
+<a name="line-70"></a><span class="cp">#include &lt;openssl/crypto.h&gt;</span>
+<a name="line-71"></a><span class="cp">#include &lt;openssl/rand.h&gt;</span>
+<a name="line-72"></a><span class="cp">#include &lt;openssl/buffer.h&gt;</span>
+<a name="line-73"></a>
+<a name="line-74"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-75"></a><span class="cp">#include &lt;unixio.h&gt;</span>
+<a name="line-76"></a><span class="cp">#endif</span>
+<a name="line-77"></a><span class="cp">#ifndef NO_SYS_TYPES_H</span>
+<a name="line-78"></a><span class="cp"># include &lt;sys/types.h&gt;</span>
+<a name="line-79"></a><span class="cp">#endif</span>
+<a name="line-80"></a><span class="cp">#ifndef OPENSSL_NO_POSIX_IO</span>
+<a name="line-81"></a><span class="cp"># include &lt;sys/stat.h&gt;</span>
+<a name="line-82"></a><span class="cp">#endif</span>
+<a name="line-83"></a>
+<a name="line-84"></a><span class="cp">#ifdef _WIN32</span>
+<a name="line-85"></a><span class="cp">#define stat	_stat</span>
+<a name="line-86"></a><span class="cp">#define chmod	_chmod</span>
+<a name="line-87"></a><span class="cp">#define open	_open</span>
+<a name="line-88"></a><span class="cp">#define fdopen	_fdopen</span>
+<a name="line-89"></a><span class="cp">#endif</span>
 <a name="line-90"></a>
-<a name="line-91"></a><span class="cm">/* 0xF0 is a EOLN</span>
-<a name="line-92"></a><span class="cm"> * 0xF1 is ignore but next needs to be 0xF0 (for \r\n processing).</span>
-<a name="line-93"></a><span class="cm"> * 0xF2 is EOF</span>
-<a name="line-94"></a><span class="cm"> * 0xE0 is ignore at start of line.</span>
-<a name="line-95"></a><span class="cm"> * 0xFF is error</span>
-<a name="line-96"></a><span class="cm"> */</span>
-<a name="line-97"></a>
-<a name="line-98"></a><span class="cp">#define B64_EOLN		0xF0</span>
-<a name="line-99"></a><span class="cp">#define B64_CR			0xF1</span>
-<a name="line-100"></a><span class="cp">#define B64_EOF			0xF2</span>
-<a name="line-101"></a><span class="cp">#define B64_WS			0xE0</span>
-<a name="line-102"></a><span class="cp">#define B64_ERROR       	0xFF</span>
-<a name="line-103"></a><span class="cp">#define B64_NOT_BASE64(a)	(((a)|0x13) == 0xF3)</span>
+<a name="line-91"></a><span class="cp">#undef BUFSIZE</span>
+<a name="line-92"></a><span class="cp">#define BUFSIZE	1024</span>
+<a name="line-93"></a><span class="cp">#define RAND_DATA 1024</span>
+<a name="line-94"></a>
+<a name="line-95"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-96"></a><span class="cm">/* This declaration is a nasty hack to get around vms&#39; extension to fopen</span>
+<a name="line-97"></a><span class="cm"> * for passing in sharing options being disabled by our /STANDARD=ANSI89 */</span>
+<a name="line-98"></a><span class="k">static</span> <span class="kt">FILE</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="k">const</span> <span class="n">vms_fopen</span><span class="p">)(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="p">...)</span> <span class="o">=</span>
+<a name="line-99"></a>    <span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="p">...))</span><span class="n">fopen</span><span class="p">;</span>
+<a name="line-100"></a><span class="cp">#define VMS_OPEN_ATTRS &quot;shr=get,put,upd,del&quot;,&quot;ctx=bin,stm&quot;,&quot;rfm=stm&quot;,&quot;rat=none&quot;,&quot;mrs=0&quot;</span>
+<a name="line-101"></a><span class="cp">#endif</span>
+<a name="line-102"></a>
+<a name="line-103"></a><span class="cm">/* #define RFILE &quot;.rnd&quot; - defined in ../../e_os.h */</span>
 <a name="line-104"></a>
-<a name="line-105"></a><span class="k">static</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">data_ascii2bin</span><span class="p">[</span><span class="mi">128</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-106"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-107"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xE0</span><span class="p">,</span><span class="mh">0xF0</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xF1</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-108"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-109"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-110"></a>	<span class="mh">0xE0</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-111"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0x3E</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xF2</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0x3F</span><span class="p">,</span>
-<a name="line-112"></a>	<span class="mh">0x34</span><span class="p">,</span><span class="mh">0x35</span><span class="p">,</span><span class="mh">0x36</span><span class="p">,</span><span class="mh">0x37</span><span class="p">,</span><span class="mh">0x38</span><span class="p">,</span><span class="mh">0x39</span><span class="p">,</span><span class="mh">0x3A</span><span class="p">,</span><span class="mh">0x3B</span><span class="p">,</span>
-<a name="line-113"></a>	<span class="mh">0x3C</span><span class="p">,</span><span class="mh">0x3D</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-114"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x01</span><span class="p">,</span><span class="mh">0x02</span><span class="p">,</span><span class="mh">0x03</span><span class="p">,</span><span class="mh">0x04</span><span class="p">,</span><span class="mh">0x05</span><span class="p">,</span><span class="mh">0x06</span><span class="p">,</span>
-<a name="line-115"></a>	<span class="mh">0x07</span><span class="p">,</span><span class="mh">0x08</span><span class="p">,</span><span class="mh">0x09</span><span class="p">,</span><span class="mh">0x0A</span><span class="p">,</span><span class="mh">0x0B</span><span class="p">,</span><span class="mh">0x0C</span><span class="p">,</span><span class="mh">0x0D</span><span class="p">,</span><span class="mh">0x0E</span><span class="p">,</span>
-<a name="line-116"></a>	<span class="mh">0x0F</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mh">0x11</span><span class="p">,</span><span class="mh">0x12</span><span class="p">,</span><span class="mh">0x13</span><span class="p">,</span><span class="mh">0x14</span><span class="p">,</span><span class="mh">0x15</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span>
-<a name="line-117"></a>	<span class="mh">0x17</span><span class="p">,</span><span class="mh">0x18</span><span class="p">,</span><span class="mh">0x19</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-118"></a>	<span class="mh">0xFF</span><span class="p">,</span><span class="mh">0x1A</span><span class="p">,</span><span class="mh">0x1B</span><span class="p">,</span><span class="mh">0x1C</span><span class="p">,</span><span class="mh">0x1D</span><span class="p">,</span><span class="mh">0x1E</span><span class="p">,</span><span class="mh">0x1F</span><span class="p">,</span><span class="mh">0x20</span><span class="p">,</span>
-<a name="line-119"></a>	<span class="mh">0x21</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x23</span><span class="p">,</span><span class="mh">0x24</span><span class="p">,</span><span class="mh">0x25</span><span class="p">,</span><span class="mh">0x26</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x28</span><span class="p">,</span>
-<a name="line-120"></a>	<span class="mh">0x29</span><span class="p">,</span><span class="mh">0x2A</span><span class="p">,</span><span class="mh">0x2B</span><span class="p">,</span><span class="mh">0x2C</span><span class="p">,</span><span class="mh">0x2D</span><span class="p">,</span><span class="mh">0x2E</span><span class="p">,</span><span class="mh">0x2F</span><span class="p">,</span><span class="mh">0x30</span><span class="p">,</span>
-<a name="line-121"></a>	<span class="mh">0x31</span><span class="p">,</span><span class="mh">0x32</span><span class="p">,</span><span class="mh">0x33</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span><span class="mh">0xFF</span><span class="p">,</span>
-<a name="line-122"></a>	<span class="p">};</span>
-<a name="line-123"></a>
-<a name="line-124"></a><span class="kt">void</span> <span class="nf">EVP_EncodeInit</span><span class="p">(</span><span class="n">EVP_ENCODE_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-125"></a>	<span class="p">{</span>
-<a name="line-126"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">=</span><span class="mi">48</span><span class="p">;</span>
-<a name="line-127"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-128"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-129"></a>	<span class="p">}</span>
-<a name="line-130"></a>
-<a name="line-131"></a><span class="kt">void</span> <span class="nf">EVP_EncodeUpdate</span><span class="p">(</span><span class="n">EVP_ENCODE_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">,</span>
-<a name="line-132"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
-<a name="line-133"></a>	<span class="p">{</span>
-<a name="line-134"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-135"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">total</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-136"></a>
-<a name="line-137"></a>	<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-138"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">inl</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-<a name="line-139"></a>	<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">));</span>
-<a name="line-140"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">+</span><span class="n">inl</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">)</span>
-<a name="line-141"></a>		<span class="p">{</span>
-<a name="line-142"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">[</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
-<a name="line-143"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">+=</span><span class="n">inl</span><span class="p">;</span>
-<a name="line-144"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-145"></a>		<span class="p">}</span>
-<a name="line-146"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-147"></a>		<span class="p">{</span>
-<a name="line-148"></a>		<span class="n">i</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">-</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
-<a name="line-149"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">[</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
-<a name="line-150"></a>		<span class="n">in</span><span class="o">+=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-151"></a>		<span class="n">inl</span><span class="o">-=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-152"></a>		<span class="n">j</span><span class="o">=</span><span class="n">EVP_EncodeBlock</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">);</span>
-<a name="line-153"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-154"></a>		<span class="n">out</span><span class="o">+=</span><span class="n">j</span><span class="p">;</span>
-<a name="line-155"></a>		<span class="o">*</span><span class="p">(</span><span class="n">out</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-<a name="line-156"></a>		<span class="o">*</span><span class="n">out</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-<a name="line-157"></a>		<span class="n">total</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-158"></a>		<span class="p">}</span>
-<a name="line-159"></a>	<span class="k">while</span> <span class="p">(</span><span class="n">inl</span> <span class="o">&gt;=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">)</span>
-<a name="line-160"></a>		<span class="p">{</span>
-<a name="line-161"></a>		<span class="n">j</span><span class="o">=</span><span class="n">EVP_EncodeBlock</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">);</span>
-<a name="line-162"></a>		<span class="n">in</span><span class="o">+=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
-<a name="line-163"></a>		<span class="n">inl</span><span class="o">-=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
-<a name="line-164"></a>		<span class="n">out</span><span class="o">+=</span><span class="n">j</span><span class="p">;</span>
-<a name="line-165"></a>		<span class="o">*</span><span class="p">(</span><span class="n">out</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-<a name="line-166"></a>		<span class="o">*</span><span class="n">out</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-<a name="line-167"></a>		<span class="n">total</span><span class="o">+=</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-168"></a>		<span class="p">}</span>
-<a name="line-169"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">inl</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-170"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
-<a name="line-171"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">inl</span><span class="p">;</span>
-<a name="line-172"></a>	<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">total</span><span class="p">;</span>
-<a name="line-173"></a>	<span class="p">}</span>
-<a name="line-174"></a>
-<a name="line-175"></a><span class="kt">void</span> <span class="nf">EVP_EncodeFinal</span><span class="p">(</span><span class="n">EVP_ENCODE_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-176"></a>	<span class="p">{</span>
-<a name="line-177"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-178"></a>
-<a name="line-179"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-180"></a>		<span class="p">{</span>
-<a name="line-181"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">EVP_EncodeBlock</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">);</span>
-<a name="line-182"></a>		<span class="n">out</span><span class="p">[</span><span class="n">ret</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-<a name="line-183"></a>		<span class="n">out</span><span class="p">[</span><span class="n">ret</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-<a name="line-184"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-185"></a>		<span class="p">}</span>
-<a name="line-186"></a>	<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-187"></a>	<span class="p">}</span>
-<a name="line-188"></a>
-<a name="line-189"></a><span class="kt">int</span> <span class="nf">EVP_EncodeBlock</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dlen</span><span class="p">)</span>
-<a name="line-190"></a>	<span class="p">{</span>
-<a name="line-191"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-192"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">l</span><span class="p">;</span>
-<a name="line-193"></a>
-<a name="line-194"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">dlen</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">-=</span><span class="mi">3</span><span class="p">)</span>
-<a name="line-195"></a>		<span class="p">{</span>
-<a name="line-196"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span>
-<a name="line-197"></a>			<span class="p">{</span>
-<a name="line-198"></a>			<span class="n">l</span><span class="o">=</span>	<span class="p">(((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">&lt;&lt;</span><span class="mi">16L</span><span class="p">)</span><span class="o">|</span>
-<a name="line-199"></a>				<span class="p">(((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;&lt;</span> <span class="mi">8L</span><span class="p">)</span><span class="o">|</span><span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a name="line-200"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;&gt;</span><span class="mi">18L</span><span class="p">);</span>
-<a name="line-201"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;&gt;</span><span class="mi">12L</span><span class="p">);</span>
-<a name="line-202"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;&gt;</span> <span class="mi">6L</span><span class="p">);</span>
-<a name="line-203"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span>     <span class="p">);</span>
-<a name="line-204"></a>			<span class="p">}</span>
-<a name="line-205"></a>		<span class="k">else</span>
-<a name="line-206"></a>			<span class="p">{</span>
-<a name="line-207"></a>			<span class="n">l</span><span class="o">=</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">&lt;&lt;</span><span class="mi">16L</span><span class="p">;</span>
-<a name="line-208"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="n">l</span><span class="o">|=</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">8L</span><span class="p">);</span>
-<a name="line-209"></a>
-<a name="line-210"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;&gt;</span><span class="mi">18L</span><span class="p">);</span>
-<a name="line-211"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;&gt;</span><span class="mi">12L</span><span class="p">);</span>
-<a name="line-212"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">?</span><span class="sc">&#39;=&#39;</span><span class="o">:</span><span class="n">conv_bin2ascii</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;&gt;</span> <span class="mi">6L</span><span class="p">);</span>
-<a name="line-213"></a>			<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="sc">&#39;=&#39;</span><span class="p">;</span>
-<a name="line-214"></a>			<span class="p">}</span>
-<a name="line-215"></a>		<span class="n">ret</span><span class="o">+=</span><span class="mi">4</span><span class="p">;</span>
-<a name="line-216"></a>		<span class="n">f</span><span class="o">+=</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-217"></a>		<span class="p">}</span>
-<a name="line-218"></a>
-<a name="line-219"></a>	<span class="o">*</span><span class="n">t</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-<a name="line-220"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-221"></a>	<span class="p">}</span>
-<a name="line-222"></a>
-<a name="line-223"></a><span class="kt">void</span> <span class="nf">EVP_DecodeInit</span><span class="p">(</span><span class="n">EVP_ENCODE_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-224"></a>	<span class="p">{</span>
-<a name="line-225"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">;</span>
-<a name="line-226"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-227"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-228"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">expect_nl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-229"></a>	<span class="p">}</span>
-<a name="line-230"></a>
-<a name="line-231"></a><span class="cm">/* -1 for error</span>
-<a name="line-232"></a><span class="cm"> *  0 for last line</span>
-<a name="line-233"></a><span class="cm"> *  1 for full line</span>
-<a name="line-234"></a><span class="cm"> */</span>
-<a name="line-235"></a><span class="kt">int</span> <span class="nf">EVP_DecodeUpdate</span><span class="p">(</span><span class="n">EVP_ENCODE_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">,</span>
-<a name="line-236"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
-<a name="line-237"></a>	<span class="p">{</span>
-<a name="line-238"></a>	<span class="kt">int</span> <span class="n">seof</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">eof</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">rv</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">tmp</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">ln</span><span class="p">,</span><span class="n">exp_nl</span><span class="p">;</span>
-<a name="line-239"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">d</span><span class="p">;</span>
-<a name="line-240"></a>
-<a name="line-241"></a>	<span class="n">n</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
-<a name="line-242"></a>	<span class="n">d</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">;</span>
-<a name="line-243"></a>	<span class="n">ln</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">;</span>
-<a name="line-244"></a>	<span class="n">exp_nl</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">expect_nl</span><span class="p">;</span>
-<a name="line-245"></a>
-<a name="line-246"></a>	<span class="cm">/* last line of input. */</span>
-<a name="line-247"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">inl</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">((</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">B64_EOF</span><span class="p">)))</span>
-<a name="line-248"></a>		<span class="p">{</span> <span class="n">rv</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-249"></a>		
-<a name="line-250"></a>	<span class="cm">/* We parse the input data */</span>
-<a name="line-251"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">inl</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-105"></a><span class="cm">/* Note that these functions are intended for seed files only.</span>
+<a name="line-106"></a><span class="cm"> * Entropy devices and EGD sockets are handled in rand_unix.c */</span>
+<a name="line-107"></a>
+<a name="line-108"></a><span class="kt">int</span> <span class="nf">RAND_load_file</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">file</span><span class="p">,</span> <span class="kt">long</span> <span class="n">bytes</span><span class="p">)</span>
+<a name="line-109"></a>	<span class="p">{</span>
+<a name="line-110"></a>	<span class="cm">/* If bytes &gt;= 0, read up to &#39;bytes&#39; bytes.</span>
+<a name="line-111"></a><span class="cm">	 * if bytes == -1, read complete file. */</span>
+<a name="line-112"></a>
+<a name="line-113"></a>	<span class="n">MS_STATIC</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
+<a name="line-114"></a><span class="cp">#ifndef OPENSSL_NO_POSIX_IO</span>
+<a name="line-115"></a>	<span class="k">struct</span> <span class="n">stat</span> <span class="n">sb</span><span class="p">;</span>
+<a name="line-116"></a><span class="cp">#endif</span>
+<a name="line-117"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">;</span>
+<a name="line-118"></a>	<span class="kt">FILE</span> <span class="o">*</span><span class="n">in</span><span class="p">;</span>
+<a name="line-119"></a>
+<a name="line-120"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">file</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-121"></a>
+<a name="line-122"></a><span class="cp">#ifndef OPENSSL_NO_POSIX_IO</span>
+<a name="line-123"></a><span class="cp">#ifdef PURIFY</span>
+<a name="line-124"></a>	<span class="cm">/* struct stat can have padding and unused fields that may not be</span>
+<a name="line-125"></a><span class="cm">	 * initialized in the call to stat(). We need to clear the entire</span>
+<a name="line-126"></a><span class="cm">	 * structure before calling RAND_add() to avoid complaints from</span>
+<a name="line-127"></a><span class="cm">	 * applications such as Valgrind.</span>
+<a name="line-128"></a><span class="cm">	 */</span>
+<a name="line-129"></a>	<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sb</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">sb</span><span class="p">));</span>
+<a name="line-130"></a><span class="cp">#endif</span>
+<a name="line-131"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="o">&amp;</span><span class="n">sb</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-132"></a>	<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sb</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">sb</span><span class="p">),</span><span class="mf">0.0</span><span class="p">);</span>
+<a name="line-133"></a><span class="cp">#endif</span>
+<a name="line-134"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">bytes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-135"></a>
+<a name="line-136"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-137"></a>	<span class="n">in</span><span class="o">=</span><span class="n">vms_fopen</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="s">&quot;rb&quot;</span><span class="p">,</span><span class="n">VMS_OPEN_ATTRS</span><span class="p">);</span>
+<a name="line-138"></a><span class="cp">#else</span>
+<a name="line-139"></a>	<span class="n">in</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="s">&quot;rb&quot;</span><span class="p">);</span>
+<a name="line-140"></a><span class="cp">#endif</span>
+<a name="line-141"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">in</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-142"></a><span class="cp">#if defined(S_IFBLK) &amp;&amp; defined(S_IFCHR) &amp;&amp; !defined(OPENSSL_NO_POSIX_IO)</span>
+<a name="line-143"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sb</span><span class="p">.</span><span class="n">st_mode</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">S_IFBLK</span> <span class="o">|</span> <span class="n">S_IFCHR</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-144"></a>	  <span class="cm">/* this file is a device. we don&#39;t want read an infinite number</span>
+<a name="line-145"></a><span class="cm">	   * of bytes from a random device, nor do we want to use buffered</span>
+<a name="line-146"></a><span class="cm">	   * I/O because we will waste system entropy. </span>
+<a name="line-147"></a><span class="cm">	   */</span>
+<a name="line-148"></a>	  <span class="n">bytes</span> <span class="o">=</span> <span class="p">(</span><span class="n">bytes</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="mi">2048</span> <span class="o">:</span> <span class="n">bytes</span><span class="p">;</span> <span class="cm">/* ok, is 2048 enough? */</span>
+<a name="line-149"></a><span class="cp">#ifndef OPENSSL_NO_SETVBUF_IONBF</span>
+<a name="line-150"></a>	  <span class="n">setvbuf</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">_IONBF</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="cm">/* don&#39;t do buffered reads */</span>
+<a name="line-151"></a><span class="cp">#endif </span><span class="cm">/* ndef OPENSSL_NO_SETVBUF_IONBF */</span><span class="cp"></span>
+<a name="line-152"></a>	<span class="p">}</span>
+<a name="line-153"></a><span class="cp">#endif</span>
+<a name="line-154"></a>	<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-155"></a>		<span class="p">{</span>
+<a name="line-156"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">bytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-157"></a>			<span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">bytes</span> <span class="o">&lt;</span> <span class="n">BUFSIZE</span><span class="p">)</span><span class="o">?</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nl">bytes</span><span class="p">:</span><span class="n">BUFSIZE</span><span class="p">;</span>
+<a name="line-158"></a>		<span class="k">else</span>
+<a name="line-159"></a>			<span class="n">n</span> <span class="o">=</span> <span class="n">BUFSIZE</span><span class="p">;</span>
+<a name="line-160"></a>		<span class="n">i</span><span class="o">=</span><span class="n">fread</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">in</span><span class="p">);</span>
+<a name="line-161"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-162"></a><span class="cp">#ifdef PURIFY</span>
+<a name="line-163"></a>		<span class="n">RAND_add</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">i</span><span class="p">,(</span><span class="kt">double</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
+<a name="line-164"></a><span class="cp">#else</span>
+<a name="line-165"></a>		<span class="cm">/* even if n != i, use the full array */</span>
+<a name="line-166"></a>		<span class="n">RAND_add</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">n</span><span class="p">,(</span><span class="kt">double</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
+<a name="line-167"></a><span class="cp">#endif</span>
+<a name="line-168"></a>		<span class="n">ret</span><span class="o">+=</span><span class="n">i</span><span class="p">;</span>
+<a name="line-169"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">bytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-170"></a>			<span class="p">{</span>
+<a name="line-171"></a>			<span class="n">bytes</span><span class="o">-=</span><span class="n">n</span><span class="p">;</span>
+<a name="line-172"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">bytes</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-173"></a>			<span class="p">}</span>
+<a name="line-174"></a>		<span class="p">}</span>
+<a name="line-175"></a>	<span class="n">fclose</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+<a name="line-176"></a>	<span class="n">OPENSSL_cleanse</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">BUFSIZE</span><span class="p">);</span>
+<a name="line-177"></a><span class="nl">err</span><span class="p">:</span>
+<a name="line-178"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-179"></a>	<span class="p">}</span>
+<a name="line-180"></a>
+<a name="line-181"></a><span class="kt">int</span> <span class="nf">RAND_write_file</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">file</span><span class="p">)</span>
+<a name="line-182"></a>	<span class="p">{</span>
+<a name="line-183"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
+<a name="line-184"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">rand_err</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-185"></a>	<span class="kt">FILE</span> <span class="o">*</span><span class="n">out</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-186"></a>	<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+<a name="line-187"></a><span class="cp">#ifndef OPENSSL_NO_POSIX_IO</span>
+<a name="line-188"></a>	<span class="k">struct</span> <span class="n">stat</span> <span class="n">sb</span><span class="p">;</span>
+<a name="line-189"></a>	
+<a name="line-190"></a>	<span class="n">i</span><span class="o">=</span><span class="n">stat</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="o">&amp;</span><span class="n">sb</span><span class="p">);</span>
+<a name="line-191"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+<a name="line-192"></a><span class="cp">#if defined(S_ISBLK) &amp;&amp; defined(S_ISCHR)</span>
+<a name="line-193"></a>	  <span class="k">if</span> <span class="p">(</span><span class="n">S_ISBLK</span><span class="p">(</span><span class="n">sb</span><span class="p">.</span><span class="n">st_mode</span><span class="p">)</span> <span class="o">||</span> <span class="n">S_ISCHR</span><span class="p">(</span><span class="n">sb</span><span class="p">.</span><span class="n">st_mode</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-194"></a>	    <span class="cm">/* this file is a device. we don&#39;t write back to it. </span>
+<a name="line-195"></a><span class="cm">	     * we &quot;succeed&quot; on the assumption this is some sort </span>
+<a name="line-196"></a><span class="cm">	     * of random device. Otherwise attempting to write to </span>
+<a name="line-197"></a><span class="cm">	     * and chmod the device causes problems.</span>
+<a name="line-198"></a><span class="cm">	     */</span>
+<a name="line-199"></a>	    <span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> 
+<a name="line-200"></a>	  <span class="p">}</span>
+<a name="line-201"></a><span class="cp">#endif</span>
+<a name="line-202"></a>	<span class="p">}</span>
+<a name="line-203"></a><span class="cp">#endif</span>
+<a name="line-204"></a>
+<a name="line-205"></a><span class="cp">#if defined(O_CREAT) &amp;&amp; !defined(OPENSSL_NO_POSIX_IO) &amp;&amp; !defined(OPENSSL_SYS_VMS)</span>
+<a name="line-206"></a>	<span class="p">{</span>
+<a name="line-207"></a><span class="cp">#ifndef O_BINARY</span>
+<a name="line-208"></a><span class="cp">#define O_BINARY 0</span>
+<a name="line-209"></a><span class="cp">#endif</span>
+<a name="line-210"></a>	<span class="cm">/* chmod(..., 0600) is too late to protect the file,</span>
+<a name="line-211"></a><span class="cm">	 * permissions should be restrictive from the start */</span>
+<a name="line-212"></a>	<span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">O_WRONLY</span><span class="o">|</span><span class="n">O_CREAT</span><span class="o">|</span><span class="n">O_BINARY</span><span class="p">,</span> <span class="mo">0600</span><span class="p">);</span>
+<a name="line-213"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">fd</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-214"></a>		<span class="n">out</span> <span class="o">=</span> <span class="n">fdopen</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">);</span>
+<a name="line-215"></a>	<span class="p">}</span>
+<a name="line-216"></a><span class="cp">#endif</span>
+<a name="line-217"></a>
+<a name="line-218"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-219"></a>	<span class="cm">/* VMS NOTE: Prior versions of this routine created a _new_</span>
+<a name="line-220"></a><span class="cm">	 * version of the rand file for each call into this routine, then</span>
+<a name="line-221"></a><span class="cm">	 * deleted all existing versions named ;-1, and finally renamed</span>
+<a name="line-222"></a><span class="cm">	 * the current version as &#39;;1&#39;. Under concurrent usage, this</span>
+<a name="line-223"></a><span class="cm">	 * resulted in an RMS race condition in rename() which could</span>
+<a name="line-224"></a><span class="cm">	 * orphan files (see vms message help for RMS$_REENT). With the</span>
+<a name="line-225"></a><span class="cm">	 * fopen() calls below, openssl/VMS now shares the top-level</span>
+<a name="line-226"></a><span class="cm">	 * version of the rand file. Note that there may still be</span>
+<a name="line-227"></a><span class="cm">	 * conditions where the top-level rand file is locked. If so, this</span>
+<a name="line-228"></a><span class="cm">	 * code will then create a new version of the rand file. Without</span>
+<a name="line-229"></a><span class="cm">	 * the delete and rename code, this can result in ascending file</span>
+<a name="line-230"></a><span class="cm">	 * versions that stop at version 32767, and this routine will then</span>
+<a name="line-231"></a><span class="cm">	 * return an error. The remedy for this is to recode the calling</span>
+<a name="line-232"></a><span class="cm">	 * application to avoid concurrent use of the rand file, or</span>
+<a name="line-233"></a><span class="cm">	 * synchronize usage at the application level. Also consider</span>
+<a name="line-234"></a><span class="cm">	 * whether or not you NEED a persistent rand file in a concurrent</span>
+<a name="line-235"></a><span class="cm">	 * use situation. </span>
+<a name="line-236"></a><span class="cm">	 */</span>
+<a name="line-237"></a>
+<a name="line-238"></a>	<span class="n">out</span> <span class="o">=</span> <span class="n">vms_fopen</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="s">&quot;rb+&quot;</span><span class="p">,</span><span class="n">VMS_OPEN_ATTRS</span><span class="p">);</span>
+<a name="line-239"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">out</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-240"></a>		<span class="n">out</span> <span class="o">=</span> <span class="n">vms_fopen</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="s">&quot;wb&quot;</span><span class="p">,</span><span class="n">VMS_OPEN_ATTRS</span><span class="p">);</span>
+<a name="line-241"></a><span class="cp">#else</span>
+<a name="line-242"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">out</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-243"></a>		<span class="n">out</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="s">&quot;wb&quot;</span><span class="p">);</span>
+<a name="line-244"></a><span class="cp">#endif</span>
+<a name="line-245"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">out</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-246"></a>
+<a name="line-247"></a><span class="cp">#ifndef NO_CHMOD</span>
+<a name="line-248"></a>	<span class="n">chmod</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="mo">0600</span><span class="p">);</span>
+<a name="line-249"></a><span class="cp">#endif</span>
+<a name="line-250"></a>	<span class="n">n</span><span class="o">=</span><span class="n">RAND_DATA</span><span class="p">;</span>
+<a name="line-251"></a>	<span class="k">for</span> <span class="p">(;;)</span>
 <a name="line-252"></a>		<span class="p">{</span>
-<a name="line-253"></a>		<span class="cm">/* If the current line is &gt; 80 characters, scream alot */</span>
-<a name="line-254"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ln</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">)</span> <span class="p">{</span> <span class="n">rv</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-255"></a>
-<a name="line-256"></a>		<span class="cm">/* Get char and put it into the buffer */</span>
-<a name="line-257"></a>		<span class="n">tmp</span><span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">in</span><span class="o">++</span><span class="p">);</span>
-<a name="line-258"></a>		<span class="n">v</span><span class="o">=</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
-<a name="line-259"></a>		<span class="cm">/* only save the good data :-) */</span>
-<a name="line-260"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">B64_NOT_BASE64</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-<a name="line-261"></a>			<span class="p">{</span>
-<a name="line-262"></a>			<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">));</span>
-<a name="line-263"></a>			<span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="n">tmp</span><span class="p">;</span>
-<a name="line-264"></a>			<span class="n">ln</span><span class="o">++</span><span class="p">;</span>
-<a name="line-265"></a>			<span class="p">}</span>
-<a name="line-266"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="n">B64_ERROR</span><span class="p">)</span>
-<a name="line-267"></a>			<span class="p">{</span>
-<a name="line-268"></a>			<span class="n">rv</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-269"></a>			<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
-<a name="line-270"></a>			<span class="p">}</span>
-<a name="line-271"></a>
-<a name="line-272"></a>		<span class="cm">/* have we seen a &#39;=&#39; which is &#39;definitly&#39; the last</span>
-<a name="line-273"></a><span class="cm">		 * input line.  seof will point to the character that</span>
-<a name="line-274"></a><span class="cm">		 * holds it. and eof will hold how many characters to</span>
-<a name="line-275"></a><span class="cm">		 * chop off. */</span>
-<a name="line-276"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">tmp</span> <span class="o">==</span> <span class="sc">&#39;=&#39;</span><span class="p">)</span>
-<a name="line-277"></a>			<span class="p">{</span>
-<a name="line-278"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">seof</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">seof</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
-<a name="line-279"></a>			<span class="n">eof</span><span class="o">++</span><span class="p">;</span>
-<a name="line-280"></a>			<span class="p">}</span>
-<a name="line-281"></a>
-<a name="line-282"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="n">B64_CR</span><span class="p">)</span>
-<a name="line-283"></a>			<span class="p">{</span>
-<a name="line-284"></a>			<span class="n">ln</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-285"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">exp_nl</span><span class="p">)</span>
-<a name="line-286"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-287"></a>			<span class="p">}</span>
-<a name="line-288"></a>
-<a name="line-289"></a>		<span class="cm">/* eoln */</span>
-<a name="line-290"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="n">B64_EOLN</span><span class="p">)</span>
-<a name="line-291"></a>			<span class="p">{</span>
-<a name="line-292"></a>			<span class="n">ln</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-293"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">exp_nl</span><span class="p">)</span>
-<a name="line-294"></a>				<span class="p">{</span>
-<a name="line-295"></a>				<span class="n">exp_nl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-296"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-297"></a>				<span class="p">}</span>
-<a name="line-298"></a>			<span class="p">}</span>
-<a name="line-299"></a>		<span class="n">exp_nl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-300"></a>
-<a name="line-301"></a>		<span class="cm">/* If we are at the end of input and it looks like a</span>
-<a name="line-302"></a><span class="cm">		 * line, process it. */</span>
-<a name="line-303"></a>		<span class="k">if</span> <span class="p">(((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">inl</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">n</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">eof</span><span class="p">))</span>
-<a name="line-304"></a>			<span class="p">{</span>
-<a name="line-305"></a>			<span class="n">v</span><span class="o">=</span><span class="n">B64_EOF</span><span class="p">;</span>
-<a name="line-306"></a>			<span class="cm">/* In case things were given us in really small</span>
-<a name="line-307"></a><span class="cm">			   records (so two &#39;=&#39; were given in separate</span>
-<a name="line-308"></a><span class="cm">			   updates), eof may contain the incorrect number</span>
-<a name="line-309"></a><span class="cm">			   of ending bytes to skip, so let&#39;s redo the count */</span>
-<a name="line-310"></a>			<span class="n">eof</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-311"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;=&#39;</span><span class="p">)</span> <span class="n">eof</span><span class="o">++</span><span class="p">;</span>
-<a name="line-312"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;=&#39;</span><span class="p">)</span> <span class="n">eof</span><span class="o">++</span><span class="p">;</span>
-<a name="line-313"></a>			<span class="cm">/* There will never be more than two &#39;=&#39; */</span>
-<a name="line-314"></a>			<span class="p">}</span>
-<a name="line-315"></a>
-<a name="line-316"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">v</span> <span class="o">==</span> <span class="n">B64_EOF</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">n</span><span class="o">&amp;</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">64</span><span class="p">))</span>
-<a name="line-317"></a>			<span class="p">{</span>
-<a name="line-318"></a>			<span class="cm">/* This is needed to work correctly on 64 byte input</span>
-<a name="line-319"></a><span class="cm">			 * lines.  We process the line and then need to</span>
-<a name="line-320"></a><span class="cm">			 * accept the &#39;\n&#39; */</span>
-<a name="line-321"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">v</span> <span class="o">!=</span> <span class="n">B64_EOF</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">64</span><span class="p">))</span> <span class="n">exp_nl</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-322"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-323"></a>				<span class="p">{</span>
-<a name="line-324"></a>				<span class="n">v</span><span class="o">=</span><span class="n">EVP_DecodeBlock</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<a name="line-325"></a>				<span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-326"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">rv</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-327"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">eof</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">rv</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-328"></a>				<span class="n">ret</span><span class="o">+=</span><span class="p">(</span><span class="n">v</span><span class="o">-</span><span class="n">eof</span><span class="p">);</span>
-<a name="line-329"></a>				<span class="p">}</span>
-<a name="line-330"></a>			<span class="k">else</span>
-<a name="line-331"></a>				<span class="p">{</span>
-<a name="line-332"></a>				<span class="n">eof</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-333"></a>				<span class="n">v</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-334"></a>				<span class="p">}</span>
-<a name="line-335"></a>
-<a name="line-336"></a>			<span class="cm">/* This is the case where we have had a short</span>
-<a name="line-337"></a><span class="cm">			 * but valid input line */</span>
-<a name="line-338"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">v</span> <span class="o">&lt;</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">eof</span><span class="p">)</span>
-<a name="line-339"></a>				<span class="p">{</span>
-<a name="line-340"></a>				<span class="n">rv</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-341"></a>				<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
-<a name="line-342"></a>				<span class="p">}</span>
-<a name="line-343"></a>			<span class="k">else</span>
-<a name="line-344"></a>				<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">=</span><span class="n">v</span><span class="p">;</span>
-<a name="line-345"></a>
-<a name="line-346"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">seof</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">rv</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-347"></a>			<span class="n">out</span><span class="o">+=</span><span class="n">v</span><span class="p">;</span>
-<a name="line-348"></a>			<span class="p">}</span>
-<a name="line-349"></a>		<span class="p">}</span>
-<a name="line-350"></a>	<span class="n">rv</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-351"></a><span class="nl">end</span><span class="p">:</span>
-<a name="line-352"></a>	<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-353"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
-<a name="line-354"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="o">=</span><span class="n">ln</span><span class="p">;</span>
-<a name="line-355"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">expect_nl</span><span class="o">=</span><span class="n">exp_nl</span><span class="p">;</span>
-<a name="line-356"></a>	<span class="k">return</span><span class="p">(</span><span class="n">rv</span><span class="p">);</span>
-<a name="line-357"></a>	<span class="p">}</span>
-<a name="line-358"></a>
-<a name="line-359"></a><span class="kt">int</span> <span class="nf">EVP_DecodeBlock</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">f</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-<a name="line-360"></a>	<span class="p">{</span>
-<a name="line-361"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'a' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;a&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'b' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;b&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'c' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;c&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'd' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;d&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-362"></a><span class="hll">	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">l</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'l' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;l&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-363"></a>
-<a name="line-364"></a>	<span class="cm">/* trim white space from the start of the line. */</span>
-<a name="line-365"></a>	<span class="k">while</span> <span class="p">((</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="n">B64_WS</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
-<a name="line-366"></a>		<span class="p">{</span>
-<a name="line-367"></a>		<span class="n">f</span><span class="o">++</span><span class="p">;</span>
-<a name="line-368"></a>		<span class="n">n</span><span class="o">--</span><span class="p">;</span>
-<a name="line-369"></a>		<span class="p">}</span>
-<a name="line-370"></a>
-<a name="line-371"></a>	<span class="cm">/* strip off stuff at the end of the line</span>
-<a name="line-372"></a><span class="cm">	 * ascii2bin values B64_WS, B64_EOLN, B64_EOLN and B64_EOF */</span>
-<a name="line-373"></a>	<span class="k">while</span> <span class="p">((</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">B64_NOT_BASE64</span><span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]))))</span>
-<a name="line-374"></a>		<span class="n">n</span><span class="o">--</span><span class="p">;</span>
-<a name="line-375"></a>
-<a name="line-376"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">%</span><span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-377"></a>
-<a name="line-378"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">+=</span><span class="mi">4</span><span class="p">)</span>
-<a name="line-379"></a>		<span class="p">{</span>
-<a name="line-380"></a>		<span class="n">a</span><span class="o">=</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">++</span><span class="p">));</span>
-<a name="line-381"></a>		<span class="n">b</span><span class="o">=</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">++</span><span class="p">));</span>
-<a name="line-382"></a>		<span class="n">c</span><span class="o">=</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">++</span><span class="p">));</span>
-<a name="line-383"></a>		<span class="n">d</span><span class="o">=</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">++</span><span class="p">));</span>
-<a name="line-384"></a>		<span class="k">if</span> <span class="p">(</span>	<span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">b</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="o">||</span>
-<a name="line-385"></a>			<span class="p">(</span><span class="n">c</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">d</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">))</span>
-<a name="line-386"></a>			<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-387"></a>		<span class="n">l</span><span class="o">=</span><span class="p">(</span>	<span class="p">(((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">18L</span><span class="p">)</span><span class="o">|</span>
-<a name="line-388"></a>			<span class="p">(((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">b</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">12L</span><span class="p">)</span><span class="o">|</span>
-<a name="line-389"></a>			<span class="p">(((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">c</span><span class="p">)</span><span class="o">&lt;&lt;</span> <span class="mi">6L</span><span class="p">)</span><span class="o">|</span>
-<a name="line-390"></a>			<span class="p">(((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">d</span><span class="p">)</span>     <span class="p">));</span>
-<a name="line-391"></a>		<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)(</span><span class="n">l</span><span class="o">&gt;&gt;</span><span class="mi">16L</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">;</span>
-<a name="line-392"></a>		<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)(</span><span class="n">l</span><span class="o">&gt;&gt;</span> <span class="mi">8L</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">;</span>
-<a name="line-393"></a>		<span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)(</span><span class="n">l</span>     <span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">;</span>
-<a name="line-394"></a>		<span class="n">ret</span><span class="o">+=</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-395"></a>		<span class="p">}</span>
-<a name="line-396"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-397"></a>	<span class="p">}</span>
-<a name="line-398"></a>
-<a name="line-399"></a><span class="kt">int</span> <span class="nf">EVP_DecodeFinal</span><span class="p">(</span><span class="n">EVP_ENCODE_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-400"></a>	<span class="p">{</span>
-<a name="line-401"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-402"></a>
-<a name="line-403"></a>	<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-404"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-405"></a>		<span class="p">{</span>
-<a name="line-406"></a>		<span class="n">i</span><span class="o">=</span><span class="n">EVP_DecodeBlock</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">);</span>
-<a name="line-407"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-408"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-409"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-410"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-411"></a>		<span class="p">}</span>
-<a name="line-412"></a>	<span class="k">else</span>
-<a name="line-413"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-414"></a>	<span class="p">}</span>
-<a name="line-415"></a>
-<a name="line-416"></a><span class="cp">#ifdef undef</span>
-<a name="line-417"></a><span class="kt">int</span> <span class="nf">EVP_DecodeValid</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-418"></a>	<span class="p">{</span>
-<a name="line-419"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">bad</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'bad' is assigned a value that is never used.</span>
-</span><a name="line-420"></a>
-<a name="line-421"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-422"></a>	<span class="k">while</span> <span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="o">*</span><span class="n">buf</span><span class="p">)</span> <span class="o">==</span> <span class="n">B64_WS</span><span class="p">)</span>
-<a name="line-423"></a>		<span class="p">{</span>
-<a name="line-424"></a>		<span class="n">buf</span><span class="o">++</span><span class="p">;</span>
-<a name="line-425"></a>		<span class="n">len</span><span class="o">--</span><span class="p">;</span>
-<a name="line-426"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-427"></a>		<span class="p">}</span>
-<a name="line-428"></a>
-<a name="line-429"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">len</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">-=</span><span class="mi">4</span><span class="p">)</span>
-<a name="line-430"></a>		<span class="p">{</span>
-<a name="line-431"></a>		<span class="k">if</span> <span class="p">(</span>	<span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mh">0x40</span><span class="p">)</span> <span class="o">||</span>
-<a name="line-432"></a>			<span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mh">0x40</span><span class="p">)</span> <span class="o">||</span>
-<a name="line-433"></a>			<span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mh">0x40</span><span class="p">)</span> <span class="o">||</span>
-<a name="line-434"></a>			<span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mh">0x40</span><span class="p">))</span>
-<a name="line-435"></a>			<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-436"></a>		<span class="n">buf</span><span class="o">+=</span><span class="mi">4</span><span class="p">;</span>
-<a name="line-437"></a>		<span class="n">num</span><span class="o">+=</span><span class="mi">1</span><span class="o">+</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;=&#39;</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;=&#39;</span><span class="p">);</span>
-<a name="line-438"></a>		<span class="p">}</span>
-<a name="line-439"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">B64_EOLN</span><span class="p">))</span>
-<a name="line-440"></a>		<span class="k">return</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
-<a name="line-441"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">B64_EOLN</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-<a name="line-442"></a>		<span class="p">(</span><span class="n">conv_ascii2bin</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">B64_EOLN</span><span class="p">))</span>
-<a name="line-443"></a>		<span class="k">return</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
-<a name="line-444"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-445"></a>	<span class="p">}</span>
-<a name="line-446"></a><span class="cp">#endif</span>
+<a name="line-253"></a>		<span class="n">i</span><span class="o">=</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="n">BUFSIZE</span><span class="p">)</span><span class="o">?</span><span class="nl">BUFSIZE</span><span class="p">:</span><span class="n">n</span><span class="p">;</span>
+<a name="line-254"></a>		<span class="n">n</span><span class="o">-=</span><span class="n">BUFSIZE</span><span class="p">;</span>
+<a name="line-255"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">RAND_bytes</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-256"></a>			<span class="n">rand_err</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-257"></a>		<span class="n">i</span><span class="o">=</span><span class="n">fwrite</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-258"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-259"></a>			<span class="p">{</span>
+<a name="line-260"></a>			<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-261"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-262"></a>			<span class="p">}</span>
+<a name="line-263"></a>		<span class="n">ret</span><span class="o">+=</span><span class="n">i</span><span class="p">;</span>
+<a name="line-264"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-265"></a>                <span class="p">}</span>
+<a name="line-266"></a>
+<a name="line-267"></a>	<span class="n">fclose</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+<a name="line-268"></a>	<span class="n">OPENSSL_cleanse</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">BUFSIZE</span><span class="p">);</span>
+<a name="line-269"></a><span class="nl">err</span><span class="p">:</span>
+<a name="line-270"></a>	<span class="k">return</span> <span class="p">(</span><span class="n">rand_err</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="n">ret</span><span class="p">);</span>
+<a name="line-271"></a>	<span class="p">}</span>
+<a name="line-272"></a>
+<a name="line-273"></a><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">RAND_file_name</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">)</span>
+<a name="line-274"></a>	<span class="p">{</span>
+<a name="line-275"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-276"></a><span class="cp">#ifdef __OpenBSD__</span>
+<a name="line-277"></a>	<span class="k">struct</span> <span class="n">stat</span> <span class="n">sb</span><span class="p">;</span>
+<a name="line-278"></a><span class="cp">#endif</span>
+<a name="line-279"></a>
+<a name="line-280"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">OPENSSL_issetugid</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-281"></a>		<span class="n">s</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;RANDFILE&quot;</span><span class="p">);</span>
+<a name="line-282"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">)</span>
+<a name="line-283"></a>		<span class="p">{</span>
+<a name="line-284"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">BUF_strlcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">)</span>
+<a name="line-285"></a>			<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-286"></a>		<span class="p">}</span>
+<a name="line-287"></a>	<span class="k">else</span>
+<a name="line-288"></a>		<span class="p">{</span>
+<a name="line-289"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">OPENSSL_issetugid</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-290"></a>			<span class="n">s</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;HOME&quot;</span><span class="p">);</span>
+<a name="line-291"></a><span class="cp">#ifdef DEFAULT_HOME</span>
+<a name="line-292"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-293"></a>			<span class="p">{</span>
+<a name="line-294"></a>			<span class="n">s</span> <span class="o">=</span> <span class="n">DEFAULT_HOME</span><span class="p">;</span>
+<a name="line-295"></a>			<span class="p">}</span>
+<a name="line-296"></a><span class="cp">#endif</span>
+<a name="line-297"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="n">strlen</span><span class="p">(</span><span class="n">RFILE</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">)</span>
+<a name="line-298"></a>			<span class="p">{</span>
+<a name="line-299"></a>			<span class="n">BUF_strlcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-300"></a><span class="cp">#ifndef OPENSSL_SYS_VMS</span>
+<a name="line-301"></a>			<span class="n">BUF_strlcat</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-302"></a><span class="cp">#endif</span>
+<a name="line-303"></a>			<span class="n">BUF_strlcat</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">RFILE</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-304"></a>			<span class="p">}</span>
+<a name="line-305"></a>		<span class="k">else</span>
+<a name="line-306"></a>		  	<span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="cm">/* no file name */</span>
+<a name="line-307"></a>		<span class="p">}</span>
+<a name="line-308"></a>
+<a name="line-309"></a><span class="cp">#ifdef __OpenBSD__</span>
+<a name="line-310"></a>	<span class="cm">/* given that all random loads just fail if the file can&#39;t be </span>
+<a name="line-311"></a><span class="cm">	 * seen on a stat, we stat the file we&#39;re returning, if it</span>
+<a name="line-312"></a><span class="cm">	 * fails, use /dev/arandom instead. this allows the user to </span>
+<a name="line-313"></a><span class="cm">	 * use their own source for good random data, but defaults</span>
+<a name="line-314"></a><span class="cm">	 * to something hopefully decent if that isn&#39;t available. </span>
+<a name="line-315"></a><span class="cm">	 */</span>
+<a name="line-316"></a>
+<a name="line-317"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<a name="line-318"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">BUF_strlcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&quot;/dev/arandom&quot;</span><span class="p">,</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-319"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-320"></a>		<span class="p">}</span>	
+<a name="line-321"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="o">&amp;</span><span class="n">sb</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-322"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">BUF_strlcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&quot;/dev/arandom&quot;</span><span class="p">,</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-323"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-324"></a>		<span class="p">}</span>	
+<a name="line-325"></a>
+<a name="line-326"></a><span class="cp">#endif</span>
+<a name="line-327"></a>	<span class="k">return</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+<a name="line-328"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

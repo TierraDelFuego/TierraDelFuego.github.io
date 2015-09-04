@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: core/io/file_access_pack.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/core/math/matrix3.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> file_access_pack.cpp</p>
-<a href='85.html#line-321'> useInitializationList 321</a>
+       <p id="filename"><a href="index.html">Defects:</a> matrix3.cpp</p>
+<a href='85.html#line-363'> variableScope 363</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -591,37 +591,8 @@
 475
 476
 477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  file_access_pack.cpp                                                 */</span>
+478</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  matrix3.cpp                                                          */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -648,485 +619,468 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;file_access_pack.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;version.h&quot;</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-33"></a>
-<a name="line-34"></a><span class="cp">#define PACK_VERSION 0</span>
+<a name="line-29"></a><span class="cp">#include &quot;matrix3.h&quot;</span>
+<a name="line-30"></a><span class="cp">#include &quot;math_funcs.h&quot;</span>
+<a name="line-31"></a><span class="cp">#include &quot;os/copymem.h&quot;</span>
+<a name="line-32"></a>
+<a name="line-33"></a><span class="cp">#define cofac(row1,col1, row2, col2)\</span>
+<a name="line-34"></a><span class="cp">	(elements[row1][col1] * elements[row2][col2] - elements[row1][col2] * elements[row2][col1])</span>
 <a name="line-35"></a>
-<a name="line-36"></a><span class="n">Error</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">add_pack</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-36"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">from_z</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_z</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-37"></a>
-<a name="line-38"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">sources</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-38"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">p_z</span><span class="p">.</span><span class="n">z</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Math_SQRT12</span> <span class="p">)</span> <span class="p">{</span>
 <a name="line-39"></a>
-<a name="line-40"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">sources</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">try_open_pack</span><span class="p">(</span><span class="n">p_path</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-41"></a>
-<a name="line-42"></a>			<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-43"></a>		<span class="p">};</span>
-<a name="line-44"></a>	<span class="p">};</span>
-<a name="line-45"></a>
-<a name="line-46"></a>	<span class="k">return</span> <span class="n">ERR_FILE_UNRECOGNIZED</span><span class="p">;</span>
-<a name="line-47"></a><span class="p">};</span>
-<a name="line-48"></a>
-<a name="line-49"></a><span class="kt">void</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">add_path</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">pkg_path</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">path</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">ofs</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">size</span><span class="p">,</span><span class="k">const</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">p_md5</span><span class="p">,</span> <span class="n">PackSource</span><span class="o">*</span> <span class="n">p_src</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-50"></a>
-<a name="line-51"></a>	<span class="n">PathMD5</span> <span class="n">pmd5</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">md5_buffer</span><span class="p">());</span>
-<a name="line-52"></a>	<span class="c1">//printf(&quot;adding path %ls, %lli, %lli\n&quot;, path.c_str(), pmd5.a, pmd5.b);</span>
-<a name="line-53"></a>
-<a name="line-54"></a>	<span class="kt">bool</span> <span class="n">exists</span> <span class="o">=</span> <span class="n">files</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">pmd5</span><span class="p">);</span>
+<a name="line-40"></a>		<span class="c1">// choose p in y-z plane</span>
+<a name="line-41"></a>		<span class="kt">real_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">p_z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p_z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">p_z</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-42"></a>		<span class="kt">real_t</span> <span class="n">k</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<a name="line-43"></a>		<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="n">p_z</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="n">p_z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">);</span>
+<a name="line-44"></a>		<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="o">-</span><span class="n">p_z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">p_z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<a name="line-45"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-46"></a>
+<a name="line-47"></a>		<span class="c1">// choose p in x-y plane</span>
+<a name="line-48"></a>		<span class="kt">real_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">p_z</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">p_z</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">p_z</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">p_z</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<a name="line-49"></a>		<span class="kt">real_t</span> <span class="n">k</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<a name="line-50"></a>		<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="o">-</span><span class="n">p_z</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="n">p_z</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-51"></a>		<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="o">-</span><span class="n">p_z</span><span class="p">.</span><span class="n">z</span><span class="o">*</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">y</span><span class="p">,</span><span class="n">p_z</span><span class="p">.</span><span class="n">z</span><span class="o">*</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="o">*</span><span class="n">k</span><span class="p">);</span>
+<a name="line-52"></a>	<span class="p">}</span>
+<a name="line-53"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">p_z</span><span class="p">;</span>
+<a name="line-54"></a><span class="p">}</span>
 <a name="line-55"></a>
-<a name="line-56"></a>	<span class="n">PackedFile</span> <span class="n">pf</span><span class="p">;</span>
-<a name="line-57"></a>	<span class="n">pf</span><span class="p">.</span><span class="n">pack</span><span class="o">=</span><span class="n">pkg_path</span><span class="p">;</span>
-<a name="line-58"></a>	<span class="n">pf</span><span class="p">.</span><span class="n">offset</span><span class="o">=</span><span class="n">ofs</span><span class="p">;</span>
-<a name="line-59"></a>	<span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">;</span>
-<a name="line-60"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-61"></a>		<span class="n">pf</span><span class="p">.</span><span class="n">md5</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">p_md5</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-62"></a>	<span class="n">pf</span><span class="p">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">p_src</span><span class="p">;</span>
-<a name="line-63"></a>
-<a name="line-64"></a>	<span class="n">files</span><span class="p">[</span><span class="n">pmd5</span><span class="p">]</span><span class="o">=</span><span class="n">pf</span><span class="p">;</span>
-<a name="line-65"></a>
-<a name="line-66"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">exists</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-67"></a>		<span class="c1">//search for dir</span>
-<a name="line-68"></a>		<span class="n">String</span> <span class="n">p</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">replace_first</span><span class="p">(</span><span class="s">&quot;res://&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<a name="line-69"></a>		<span class="n">PackedDir</span> <span class="o">*</span><span class="n">cd</span><span class="o">=</span><span class="n">root</span><span class="p">;</span>
-<a name="line-70"></a>
-<a name="line-71"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//in a subdir</span>
+<a name="line-56"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">invert</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-57"></a>
+<a name="line-58"></a>
+<a name="line-59"></a>	<span class="kt">real_t</span> <span class="n">co</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
+<a name="line-60"></a>		<span class="n">cofac</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-61"></a>	<span class="p">};</span>
+<a name="line-62"></a>	<span class="kt">real_t</span> <span class="n">det</span> <span class="o">=</span>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">co</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span>
+<a name="line-63"></a>			<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">co</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span>
+<a name="line-64"></a>			<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">co</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-65"></a>	
+<a name="line-66"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">det</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">);</span>
+<a name="line-67"></a>	<span class="kt">real_t</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">det</span><span class="p">;</span>
+<a name="line-68"></a>	
+<a name="line-69"></a>	<span class="n">set</span><span class="p">(</span>  <span class="n">co</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> 
+<a name="line-70"></a>	      <span class="n">co</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span>
+<a name="line-71"></a>	      <span class="n">co</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">cofac</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span> <span class="p">);</span>
 <a name="line-72"></a>
-<a name="line-73"></a>			<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ds</span><span class="o">=</span><span class="n">p</span><span class="p">.</span><span class="n">get_base_dir</span><span class="p">().</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
+<a name="line-73"></a><span class="p">}</span>
 <a name="line-74"></a>
-<a name="line-75"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">ds</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-75"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">orthonormalize</span><span class="p">()</span> <span class="p">{</span>
 <a name="line-76"></a>
-<a name="line-77"></a>				<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cd</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="p">{</span>
+<a name="line-77"></a>	<span class="c1">// Gram-Schmidt Process</span>
 <a name="line-78"></a>
-<a name="line-79"></a>					<span class="n">PackedDir</span> <span class="o">*</span><span class="n">pd</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">PackedDir</span> <span class="p">);</span>
-<a name="line-80"></a>					<span class="n">pd</span><span class="o">-&gt;</span><span class="n">name</span><span class="o">=</span><span class="n">ds</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<a name="line-81"></a>					<span class="n">pd</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">=</span><span class="n">cd</span><span class="p">;</span>
-<a name="line-82"></a>					<span class="n">cd</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">[</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="p">;</span>
-<a name="line-83"></a>					<span class="n">cd</span><span class="o">=</span><span class="n">pd</span><span class="p">;</span>
-<a name="line-84"></a>				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-85"></a>					<span class="n">cd</span><span class="o">=</span><span class="n">cd</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">[</span><span class="n">ds</span><span class="p">[</span><span class="n">j</span><span class="p">]];</span>
-<a name="line-86"></a>				<span class="p">}</span>
-<a name="line-87"></a>			<span class="p">}</span>
-<a name="line-88"></a>		<span class="p">}</span>
-<a name="line-89"></a>		<span class="n">cd</span><span class="o">-&gt;</span><span class="n">files</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">get_file</span><span class="p">());</span>
-<a name="line-90"></a>	<span class="p">}</span>
-<a name="line-91"></a><span class="p">}</span>
+<a name="line-79"></a>	<span class="n">Vector3</span> <span class="n">x</span><span class="o">=</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-80"></a>	<span class="n">Vector3</span> <span class="n">y</span><span class="o">=</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-81"></a>	<span class="n">Vector3</span> <span class="n">z</span><span class="o">=</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a name="line-82"></a>
+<a name="line-83"></a>	<span class="n">x</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+<a name="line-84"></a>	<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">)));</span>
+<a name="line-85"></a>	<span class="n">y</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+<a name="line-86"></a>	<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">z</span><span class="p">))</span><span class="o">-</span><span class="n">y</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">z</span><span class="p">)));</span>
+<a name="line-87"></a>	<span class="n">z</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+<a name="line-88"></a>
+<a name="line-89"></a>	<span class="n">set_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<a name="line-90"></a>	<span class="n">set_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
+<a name="line-91"></a>	<span class="n">set_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">z</span><span class="p">);</span>
 <a name="line-92"></a>
-<a name="line-93"></a><span class="kt">void</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">add_pack_source</span><span class="p">(</span><span class="n">PackSource</span> <span class="o">*</span><span class="n">p_source</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-93"></a><span class="p">}</span>
 <a name="line-94"></a>
-<a name="line-95"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_source</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-96"></a>		<span class="n">sources</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p_source</span><span class="p">);</span>
-<a name="line-97"></a>	<span class="p">}</span>
-<a name="line-98"></a><span class="p">};</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class="n">PackedData</span> <span class="o">*</span><span class="n">PackedData</span><span class="o">::</span><span class="n">singleton</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-95"></a><span class="n">Matrix3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">orthonormalized</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-96"></a>
+<a name="line-97"></a>	<span class="n">Matrix3</span> <span class="n">c</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-98"></a>	<span class="n">c</span><span class="p">.</span><span class="n">orthonormalize</span><span class="p">();</span>
+<a name="line-99"></a>	<span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+<a name="line-100"></a><span class="p">}</span>
 <a name="line-101"></a>
-<a name="line-102"></a><span class="n">PackedData</span><span class="o">::</span><span class="n">PackedData</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-103"></a>
-<a name="line-104"></a>	<span class="n">singleton</span><span class="o">=</span><span class="k">this</span><span class="p">;</span>
-<a name="line-105"></a>	<span class="n">root</span><span class="o">=</span><span class="n">memnew</span><span class="p">(</span><span class="n">PackedDir</span><span class="p">);</span>
-<a name="line-106"></a>	<span class="n">root</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-107"></a>	<span class="n">disabled</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-108"></a>
-<a name="line-109"></a>	<span class="n">add_pack_source</span><span class="p">(</span><span class="n">memnew</span><span class="p">(</span><span class="n">PackedSourcePCK</span><span class="p">));</span>
-<a name="line-110"></a><span class="p">}</span>
+<a name="line-102"></a>
+<a name="line-103"></a><span class="n">Matrix3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">inverse</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-104"></a>
+<a name="line-105"></a>	<span class="n">Matrix3</span> <span class="n">inv</span><span class="o">=*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-106"></a>	<span class="n">inv</span><span class="p">.</span><span class="n">invert</span><span class="p">();</span>
+<a name="line-107"></a>	<span class="k">return</span> <span class="n">inv</span><span class="p">;</span>
+<a name="line-108"></a><span class="p">}</span>
+<a name="line-109"></a>
+<a name="line-110"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">transpose</span><span class="p">()</span> <span class="p">{</span>
 <a name="line-111"></a>
-<a name="line-112"></a><span class="kt">void</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">_free_packed_dirs</span><span class="p">(</span><span class="n">PackedDir</span> <span class="o">*</span><span class="n">p_dir</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-113"></a>
-<a name="line-114"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">PackedDir</span><span class="o">*&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">p_dir</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">.</span><span class="n">front</span><span class="p">();</span><span class="n">E</span><span class="p">;</span><span class="n">E</span><span class="o">=</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">())</span>
-<a name="line-115"></a>		<span class="n">_free_packed_dirs</span><span class="p">(</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">());</span>
-<a name="line-116"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="n">p_dir</span><span class="p">);</span>
-<a name="line-117"></a><span class="p">}</span>
+<a name="line-112"></a>	<span class="n">SWAP</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-113"></a>	<span class="n">SWAP</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-114"></a>	<span class="n">SWAP</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<a name="line-115"></a><span class="p">}</span>
+<a name="line-116"></a>
+<a name="line-117"></a><span class="n">Matrix3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">transposed</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
 <a name="line-118"></a>
-<a name="line-119"></a><span class="n">PackedData</span><span class="o">::~</span><span class="n">PackedData</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-120"></a>
-<a name="line-121"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">sources</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-122"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">sources</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-123"></a>	<span class="p">}</span>
-<a name="line-124"></a>	<span class="n">_free_packed_dirs</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a name="line-125"></a><span class="p">}</span>
-<a name="line-126"></a>
-<a name="line-127"></a>
-<a name="line-128"></a><span class="c1">//////////////////////////////////////////////////////////////////</span>
-<a name="line-129"></a>
-<a name="line-130"></a><span class="kt">bool</span> <span class="n">PackedSourcePCK</span><span class="o">::</span><span class="n">try_open_pack</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-131"></a>
-<a name="line-132"></a>	<span class="n">FileAccess</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">p_path</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">READ</span><span class="p">);</span>
-<a name="line-133"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span>
-<a name="line-134"></a>		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-135"></a>
-<a name="line-136"></a>	<span class="c1">//printf(&quot;try open %ls!\n&quot;, p_path.c_str());</span>
-<a name="line-137"></a>
-<a name="line-138"></a>	<span class="kt">uint32_t</span> <span class="n">magic</span><span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-139"></a>
-<a name="line-140"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">magic</span> <span class="o">!=</span> <span class="mh">0x43504447</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-141"></a>		<span class="c1">//maybe at he end.... self contained exe</span>
-<a name="line-142"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">seek_end</span><span class="p">();</span>
-<a name="line-143"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">-</span><span class="mi">4</span> <span class="p">);</span>
-<a name="line-144"></a>		<span class="n">magic</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-145"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">magic</span> <span class="o">!=</span> <span class="mh">0x43504447</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-146"></a>
-<a name="line-147"></a>			<span class="n">memdelete</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-148"></a>			<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-149"></a>		<span class="p">}</span>
-<a name="line-150"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">-</span><span class="mi">12</span> <span class="p">);</span>
-<a name="line-151"></a>
-<a name="line-152"></a>
-<a name="line-153"></a>		<span class="kt">uint64_t</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_64</span><span class="p">();</span>
-<a name="line-154"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="mi">8</span> <span class="p">);</span>
-<a name="line-155"></a>
-<a name="line-156"></a>		<span class="n">magic</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-157"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">magic</span> <span class="o">!=</span> <span class="mh">0x43504447</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-158"></a>
-<a name="line-159"></a>			<span class="n">memdelete</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-160"></a>			<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-161"></a>		<span class="p">}</span>
-<a name="line-162"></a>
-<a name="line-163"></a>	<span class="p">}</span>
-<a name="line-164"></a>
-<a name="line-165"></a>	<span class="kt">uint32_t</span> <span class="n">version</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-166"></a>	<span class="kt">uint32_t</span> <span class="n">ver_major</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-167"></a>	<span class="kt">uint32_t</span> <span class="n">ver_minor</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-168"></a>	<span class="kt">uint32_t</span> <span class="n">ver_rev</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
+<a name="line-119"></a>	<span class="n">Matrix3</span> <span class="n">tr</span><span class="o">=*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-120"></a>	<span class="n">tr</span><span class="p">.</span><span class="n">transpose</span><span class="p">();</span>
+<a name="line-121"></a>	<span class="k">return</span> <span class="n">tr</span><span class="p">;</span>
+<a name="line-122"></a><span class="p">}</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">scale</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_scale</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-125"></a>
+<a name="line-126"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<a name="line-127"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<a name="line-128"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<a name="line-129"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<a name="line-130"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<a name="line-131"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<a name="line-132"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<a name="line-133"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<a name="line-134"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">*=</span><span class="n">p_scale</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<a name="line-135"></a><span class="p">}</span>
+<a name="line-136"></a>
+<a name="line-137"></a><span class="n">Matrix3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">scaled</span><span class="p">(</span> <span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_scale</span> <span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-138"></a>
+<a name="line-139"></a>	<span class="n">Matrix3</span> <span class="n">m</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-140"></a>	<span class="n">m</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">p_scale</span><span class="p">);</span>
+<a name="line-141"></a>	<span class="k">return</span> <span class="n">m</span><span class="p">;</span>
+<a name="line-142"></a><span class="p">}</span>
+<a name="line-143"></a>
+<a name="line-144"></a><span class="n">Vector3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">get_scale</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-145"></a>
+<a name="line-146"></a>	<span class="k">return</span> <span class="n">Vector3</span><span class="p">(</span>
+<a name="line-147"></a>		<span class="n">Vector3</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]).</span><span class="n">length</span><span class="p">(),</span>
+<a name="line-148"></a>		<span class="n">Vector3</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]).</span><span class="n">length</span><span class="p">(),</span>
+<a name="line-149"></a>		<span class="n">Vector3</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]).</span><span class="n">length</span><span class="p">()</span>
+<a name="line-150"></a>	<span class="p">);</span>
+<a name="line-151"></a>		
+<a name="line-152"></a><span class="p">}</span>
+<a name="line-153"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">rotate</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_axis</span><span class="p">,</span> <span class="kt">real_t</span> <span class="n">p_phi</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-154"></a>
+<a name="line-155"></a>	<span class="o">*</span><span class="k">this</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span> <span class="o">*</span> <span class="n">Matrix3</span><span class="p">(</span><span class="n">p_axis</span><span class="p">,</span> <span class="n">p_phi</span><span class="p">);</span>
+<a name="line-156"></a><span class="p">}</span>
+<a name="line-157"></a>
+<a name="line-158"></a><span class="n">Matrix3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">rotated</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_axis</span><span class="p">,</span> <span class="kt">real_t</span> <span class="n">p_phi</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-159"></a>
+<a name="line-160"></a>	<span class="k">return</span> <span class="o">*</span><span class="k">this</span> <span class="o">*</span> <span class="n">Matrix3</span><span class="p">(</span><span class="n">p_axis</span><span class="p">,</span> <span class="n">p_phi</span><span class="p">);</span>
+<a name="line-161"></a>
+<a name="line-162"></a><span class="p">}</span>
+<a name="line-163"></a>
+<a name="line-164"></a><span class="n">Vector3</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">get_euler</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-165"></a>
+<a name="line-166"></a>	<span class="c1">// rot =  cy*cz          -cy*sz           sy</span>
+<a name="line-167"></a>	    <span class="c1">//        cz*sx*sy+cx*sz  cx*cz-sx*sy*sz -cy*sx</span>
+<a name="line-168"></a>	    <span class="c1">//       -cx*cz*sy+sx*sz  cz*sx+cx*sy*sz  cx*cy</span>
 <a name="line-169"></a>
-<a name="line-170"></a>	<span class="n">ERR_EXPLAIN</span><span class="p">(</span><span class="s">&quot;Pack version newer than supported by engine: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">version</span><span class="p">));</span>
-<a name="line-171"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span> <span class="n">version</span> <span class="o">&gt;</span> <span class="n">PACK_VERSION</span><span class="p">,</span> <span class="n">ERR_INVALID_DATA</span><span class="p">);</span>
-<a name="line-172"></a>	<span class="n">ERR_EXPLAIN</span><span class="p">(</span><span class="s">&quot;Pack created with a newer version of the engine: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">ver_major</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">ver_minor</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">ver_rev</span><span class="p">));</span>
-<a name="line-173"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span> <span class="n">ver_major</span> <span class="o">&gt;</span> <span class="n">VERSION_MAJOR</span> <span class="o">||</span> <span class="p">(</span><span class="n">ver_major</span> <span class="o">==</span> <span class="n">VERSION_MAJOR</span> <span class="o">&amp;&amp;</span> <span class="n">ver_minor</span> <span class="o">&gt;</span> <span class="n">VERSION_MINOR</span><span class="p">),</span> <span class="n">ERR_INVALID_DATA</span><span class="p">);</span>
+<a name="line-170"></a>	<span class="n">Matrix3</span> <span class="n">m</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-171"></a>	<span class="n">m</span><span class="p">.</span><span class="n">orthonormalize</span><span class="p">();</span>
+<a name="line-172"></a>
+<a name="line-173"></a>	<span class="n">Vector3</span> <span class="n">euler</span><span class="p">;</span>
 <a name="line-174"></a>
-<a name="line-175"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-176"></a>		<span class="c1">//reserved</span>
-<a name="line-177"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-178"></a>	<span class="p">}</span>
-<a name="line-179"></a>
-<a name="line-180"></a>	<span class="kt">int</span> <span class="n">file_count</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-181"></a>
-<a name="line-182"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">file_count</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-183"></a>
-<a name="line-184"></a>		<span class="kt">uint32_t</span> <span class="n">sl</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_32</span><span class="p">();</span>
-<a name="line-185"></a>		<span class="n">CharString</span> <span class="n">cs</span><span class="p">;</span>
-<a name="line-186"></a>		<span class="n">cs</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">sl</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-187"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">get_buffer</span><span class="p">((</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">cs</span><span class="p">.</span><span class="n">ptr</span><span class="p">(),</span><span class="n">sl</span><span class="p">);</span>
-<a name="line-188"></a>		<span class="n">cs</span><span class="p">[</span><span class="n">sl</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-189"></a>
-<a name="line-190"></a>		<span class="n">String</span> <span class="n">path</span><span class="p">;</span>
-<a name="line-191"></a>		<span class="n">path</span><span class="p">.</span><span class="n">parse_utf8</span><span class="p">(</span><span class="n">cs</span><span class="p">.</span><span class="n">ptr</span><span class="p">());</span>
+<a name="line-175"></a>	<span class="n">euler</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">asin</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+<a name="line-176"></a>	<span class="k">if</span> <span class="p">(</span> <span class="n">euler</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">Math_PI</span><span class="o">*</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-177"></a>		<span class="k">if</span> <span class="p">(</span> <span class="n">euler</span><span class="p">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">Math_PI</span><span class="o">*</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-178"></a>			<span class="n">euler</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">atan2</span><span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+<a name="line-179"></a>			<span class="n">euler</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">atan2</span><span class="p">(</span><span class="o">-</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-180"></a>
+<a name="line-181"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-182"></a>			<span class="kt">real_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">atan2</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<a name="line-183"></a>			<span class="n">euler</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<a name="line-184"></a>			<span class="n">euler</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">euler</span><span class="p">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">r</span><span class="p">;</span>
+<a name="line-185"></a>
+<a name="line-186"></a>		<span class="p">}</span>
+<a name="line-187"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-188"></a>		<span class="kt">real_t</span> <span class="n">r</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">atan2</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<a name="line-189"></a>		<span class="n">euler</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-190"></a>		<span class="n">euler</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">euler</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<a name="line-191"></a>	<span class="p">}</span>
 <a name="line-192"></a>
-<a name="line-193"></a>		<span class="kt">uint64_t</span> <span class="n">ofs</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_64</span><span class="p">();</span>
-<a name="line-194"></a>		<span class="kt">uint64_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_64</span><span class="p">();</span>
-<a name="line-195"></a>		<span class="kt">uint8_t</span> <span class="n">md5</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
-<a name="line-196"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">get_buffer</span><span class="p">(</span><span class="n">md5</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
-<a name="line-197"></a>		<span class="n">PackedData</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_path</span><span class="p">(</span><span class="n">p_path</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">ofs</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">md5</span><span class="p">,</span><span class="k">this</span><span class="p">);</span>
-<a name="line-198"></a>	<span class="p">};</span>
+<a name="line-193"></a>	<span class="k">return</span> <span class="n">euler</span><span class="p">;</span>
+<a name="line-194"></a>
+<a name="line-195"></a>
+<a name="line-196"></a><span class="p">}</span>
+<a name="line-197"></a>
+<a name="line-198"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">set_euler</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_euler</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-199"></a>
-<a name="line-200"></a>	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-201"></a><span class="p">};</span>
-<a name="line-202"></a>
-<a name="line-203"></a><span class="n">FileAccess</span><span class="o">*</span> <span class="n">PackedSourcePCK</span><span class="o">::</span><span class="n">get_file</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">PackedFile</span><span class="o">*</span> <span class="n">p_file</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-204"></a>
-<a name="line-205"></a>	<span class="k">return</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">FileAccessPack</span><span class="p">(</span><span class="n">p_path</span><span class="p">,</span> <span class="o">*</span><span class="n">p_file</span><span class="p">));</span>
-<a name="line-206"></a><span class="p">};</span>
-<a name="line-207"></a>
-<a name="line-208"></a><span class="c1">//////////////////////////////////////////////////////////////////</span>
+<a name="line-200"></a>	<span class="kt">real_t</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-201"></a>
+<a name="line-202"></a>	<span class="n">c</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="n">p_euler</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<a name="line-203"></a>	<span class="n">s</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span><span class="n">p_euler</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<a name="line-204"></a>	<span class="n">Matrix3</span> <span class="nf">xmat</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="o">-</span><span class="n">s</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
+<a name="line-205"></a>
+<a name="line-206"></a>	<span class="n">c</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="n">p_euler</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<a name="line-207"></a>	<span class="n">s</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span><span class="n">p_euler</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<a name="line-208"></a>	<span class="n">Matrix3</span> <span class="nf">ymat</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="o">-</span><span class="n">s</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
 <a name="line-209"></a>
-<a name="line-210"></a>
-<a name="line-211"></a><span class="n">Error</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">_open</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_mode_flags</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-212"></a>
-<a name="line-213"></a>	<span class="n">ERR_FAIL_V</span><span class="p">(</span><span class="n">ERR_UNAVAILABLE</span><span class="p">);</span>
-<a name="line-214"></a>	<span class="k">return</span> <span class="n">ERR_UNAVAILABLE</span><span class="p">;</span>
-<a name="line-215"></a><span class="p">}</span>
-<a name="line-216"></a>
-<a name="line-217"></a><span class="kt">void</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">close</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-218"></a>
-<a name="line-219"></a>	<span class="n">f</span><span class="o">-&gt;</span><span class="n">close</span><span class="p">();</span>
-<a name="line-220"></a><span class="p">}</span>
-<a name="line-221"></a>
-<a name="line-222"></a><span class="kt">bool</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">is_open</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-223"></a>
-<a name="line-224"></a>	<span class="k">return</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">is_open</span><span class="p">();</span>
-<a name="line-225"></a><span class="p">}</span>
-<a name="line-226"></a>
-<a name="line-227"></a><span class="kt">void</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">seek</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">p_position</span><span class="p">){</span>
-<a name="line-228"></a>
-<a name="line-229"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_position</span><span class="o">&gt;</span><span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-230"></a>		<span class="n">eof</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-231"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-232"></a>		<span class="n">eof</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-233"></a>	<span class="p">}</span>
-<a name="line-234"></a>
-<a name="line-235"></a>	<span class="n">f</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">offset</span><span class="o">+</span><span class="n">p_position</span><span class="p">);</span>
-<a name="line-236"></a>	<span class="n">pos</span><span class="o">=</span><span class="n">p_position</span><span class="p">;</span>
-<a name="line-237"></a><span class="p">}</span>
-<a name="line-238"></a><span class="kt">void</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">seek_end</span><span class="p">(</span><span class="kt">int64_t</span> <span class="n">p_position</span><span class="p">){</span>
-<a name="line-239"></a>
-<a name="line-240"></a>	<span class="n">seek</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="o">+</span><span class="n">p_position</span><span class="p">);</span>
-<a name="line-241"></a>
-<a name="line-242"></a><span class="p">}</span>
-<a name="line-243"></a><span class="kt">size_t</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">get_pos</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-244"></a>
-<a name="line-245"></a>	<span class="k">return</span> <span class="n">pos</span><span class="p">;</span>
-<a name="line-246"></a><span class="p">}</span>
-<a name="line-247"></a><span class="kt">size_t</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">get_len</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-248"></a>
-<a name="line-249"></a>	<span class="k">return</span> <span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="p">;</span>
-<a name="line-250"></a><span class="p">}</span>
-<a name="line-251"></a>
-<a name="line-252"></a><span class="kt">bool</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">eof_reached</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-253"></a>
-<a name="line-254"></a>	<span class="k">return</span> <span class="n">eof</span><span class="p">;</span>
-<a name="line-255"></a><span class="p">}</span>
-<a name="line-256"></a>
-<a name="line-257"></a><span class="kt">uint8_t</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">get_8</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-258"></a>
-<a name="line-259"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="o">&gt;=</span><span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-260"></a>		<span class="n">eof</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-261"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-262"></a>	<span class="p">}</span>
-<a name="line-263"></a>
-<a name="line-264"></a>	<span class="n">pos</span><span class="o">++</span><span class="p">;</span>
-<a name="line-265"></a>	<span class="k">return</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_8</span><span class="p">();</span>
-<a name="line-266"></a><span class="p">}</span>
-<a name="line-267"></a>
-<a name="line-268"></a>
-<a name="line-269"></a><span class="kt">int</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">get_buffer</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">p_dst</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_length</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-270"></a>
-<a name="line-271"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">eof</span><span class="p">)</span>
-<a name="line-272"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-273"></a>
-<a name="line-274"></a>	<span class="kt">int64_t</span> <span class="n">to_read</span><span class="o">=</span><span class="n">p_length</span><span class="p">;</span>
-<a name="line-275"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">to_read</span><span class="o">+</span><span class="n">pos</span> <span class="o">&gt;</span> <span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-276"></a>		<span class="n">eof</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-277"></a>		<span class="n">to_read</span><span class="o">=</span><span class="kt">int64_t</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">size</span><span class="p">)</span><span class="o">-</span><span class="kt">int64_t</span><span class="p">(</span><span class="n">pos</span><span class="p">);</span>
-<a name="line-278"></a>	<span class="p">}</span>
-<a name="line-279"></a>
-<a name="line-280"></a>	<span class="n">pos</span><span class="o">+=</span><span class="n">p_length</span><span class="p">;</span>
-<a name="line-281"></a>
-<a name="line-282"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">to_read</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-283"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-284"></a>	<span class="n">f</span><span class="o">-&gt;</span><span class="n">get_buffer</span><span class="p">(</span><span class="n">p_dst</span><span class="p">,</span><span class="n">to_read</span><span class="p">);</span>
-<a name="line-285"></a>
-<a name="line-286"></a>	<span class="k">return</span> <span class="n">to_read</span><span class="p">;</span>
-<a name="line-287"></a><span class="p">}</span>
-<a name="line-288"></a>
-<a name="line-289"></a><span class="kt">void</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">set_endian_swap</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_swap</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-290"></a>	<span class="n">FileAccess</span><span class="o">::</span><span class="n">set_endian_swap</span><span class="p">(</span><span class="n">p_swap</span><span class="p">);</span>
-<a name="line-291"></a>	<span class="n">f</span><span class="o">-&gt;</span><span class="n">set_endian_swap</span><span class="p">(</span><span class="n">p_swap</span><span class="p">);</span>
-<a name="line-292"></a><span class="p">}</span>
-<a name="line-293"></a>
-<a name="line-294"></a><span class="n">Error</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">get_error</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-295"></a>
-<a name="line-296"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">eof</span><span class="p">)</span>
-<a name="line-297"></a>		<span class="k">return</span> <span class="n">ERR_FILE_EOF</span><span class="p">;</span>
-<a name="line-298"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-299"></a><span class="p">}</span>
-<a name="line-300"></a>
-<a name="line-301"></a><span class="kt">void</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">store_8</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">p_dest</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-302"></a>
-<a name="line-303"></a>	<span class="n">ERR_FAIL</span><span class="p">();</span>
-<a name="line-304"></a>
-<a name="line-305"></a><span class="p">}</span>
-<a name="line-306"></a>
-<a name="line-307"></a><span class="kt">void</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">store_buffer</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">p_src</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_length</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-308"></a>
-<a name="line-309"></a>	<span class="n">ERR_FAIL</span><span class="p">();</span>
-<a name="line-310"></a>
-<a name="line-311"></a><span class="p">}</span>
-<a name="line-312"></a>
-<a name="line-313"></a><span class="kt">bool</span> <span class="n">FileAccessPack</span><span class="o">::</span><span class="n">file_exists</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-314"></a>
-<a name="line-315"></a>	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-316"></a><span class="p">}</span>
-<a name="line-317"></a>
+<a name="line-210"></a>	<span class="n">c</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="n">p_euler</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<a name="line-211"></a>	<span class="n">s</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span><span class="n">p_euler</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<a name="line-212"></a>	<span class="n">Matrix3</span> <span class="nf">zmat</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="o">-</span><span class="n">s</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">);</span>
+<a name="line-213"></a>
+<a name="line-214"></a>	<span class="c1">//optimizer will optimize away all this anyway</span>
+<a name="line-215"></a>	<span class="o">*</span><span class="k">this</span> <span class="o">=</span> <span class="n">xmat</span><span class="o">*</span><span class="p">(</span><span class="n">ymat</span><span class="o">*</span><span class="n">zmat</span><span class="p">);</span>
+<a name="line-216"></a><span class="p">}</span>
+<a name="line-217"></a>
+<a name="line-218"></a><span class="kt">bool</span> <span class="n">Matrix3</span><span class="o">::</span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">Matrix3</span><span class="o">&amp;</span> <span class="n">p_matrix</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-219"></a>
+<a name="line-220"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-221"></a>		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-222"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">!=</span><span class="n">p_matrix</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+<a name="line-223"></a>				<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-224"></a>		<span class="p">}</span>
+<a name="line-225"></a>	<span class="p">}</span>
+<a name="line-226"></a>	
+<a name="line-227"></a>	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-228"></a><span class="p">}</span>
+<a name="line-229"></a><span class="kt">bool</span> <span class="n">Matrix3</span><span class="o">::</span><span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="k">const</span> <span class="n">Matrix3</span><span class="o">&amp;</span> <span class="n">p_matrix</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-230"></a>
+<a name="line-231"></a>	<span class="k">return</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="o">==</span><span class="n">p_matrix</span><span class="p">));</span>
+<a name="line-232"></a><span class="p">}</span>
+<a name="line-233"></a>
+<a name="line-234"></a><span class="n">Matrix3</span><span class="o">::</span><span class="k">operator</span> <span class="n">String</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-235"></a>
+<a name="line-236"></a>	<span class="n">String</span> <span class="n">mtx</span><span class="p">;</span>
+<a name="line-237"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-238"></a>	
+<a name="line-239"></a>		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-240"></a>	
+<a name="line-241"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">!=</span><span class="mi">0</span> <span class="o">||</span> <span class="n">j</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+<a name="line-242"></a>				<span class="n">mtx</span><span class="o">+=</span><span class="s">&quot;, &quot;</span><span class="p">;</span>
+<a name="line-243"></a>				
+<a name="line-244"></a>			<span class="n">mtx</span><span class="o">+=</span><span class="n">rtos</span><span class="p">(</span> <span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="p">);</span>
+<a name="line-245"></a>		<span class="p">}</span>
+<a name="line-246"></a>	<span class="p">}</span>
+<a name="line-247"></a>	
+<a name="line-248"></a>	<span class="k">return</span> <span class="n">mtx</span><span class="p">;</span>
+<a name="line-249"></a><span class="p">}</span>
+<a name="line-250"></a>
+<a name="line-251"></a><span class="n">Matrix3</span><span class="o">::</span><span class="k">operator</span> <span class="n">Quat</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-252"></a>
+<a name="line-253"></a>	<span class="n">Matrix3</span> <span class="n">m</span><span class="o">=*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-254"></a>	<span class="n">m</span><span class="p">.</span><span class="n">orthonormalize</span><span class="p">();</span>
+<a name="line-255"></a>
+<a name="line-256"></a>	<span class="kt">real_t</span> <span class="n">trace</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-257"></a>	<span class="kt">real_t</span> <span class="n">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<a name="line-258"></a>	
+<a name="line-259"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">trace</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">)</span> 
+<a name="line-260"></a>	<span class="p">{</span>
+<a name="line-261"></a>		<span class="kt">real_t</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">trace</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">);</span>
+<a name="line-262"></a>		<span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">);</span>
+<a name="line-263"></a>		<span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-264"></a>		
+<a name="line-265"></a>		<span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">s</span><span class="p">);</span>
+<a name="line-266"></a>		<span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">s</span><span class="p">);</span>
+<a name="line-267"></a>		<span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="p">((</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">s</span><span class="p">);</span>
+<a name="line-268"></a>	<span class="p">}</span> 
+<a name="line-269"></a>	<span class="k">else</span> 
+<a name="line-270"></a>	<span class="p">{</span>
+<a name="line-271"></a>		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">?</span>
+<a name="line-272"></a>			<span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">?</span> <span class="mi">2</span> <span class="o">:</span> <span class="mi">1</span><span class="p">)</span> <span class="o">:</span>
+<a name="line-273"></a>			<span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">?</span> <span class="mi">2</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-274"></a>		<span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span><span class="p">;</span>  
+<a name="line-275"></a>		<span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-276"></a>		
+<a name="line-277"></a>		<span class="kt">real_t</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">);</span>
+<a name="line-278"></a>		<span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">;</span>
+<a name="line-279"></a>		<span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-280"></a>		
+<a name="line-281"></a>		<span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-282"></a>		<span class="n">temp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="o">*</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-283"></a>		<span class="n">temp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">m</span><span class="p">.</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-284"></a>	<span class="p">}</span>
+<a name="line-285"></a>	
+<a name="line-286"></a>	<span class="k">return</span> <span class="n">Quat</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">temp</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<a name="line-287"></a>
+<a name="line-288"></a><span class="p">}</span>
+<a name="line-289"></a>
+<a name="line-290"></a><span class="k">static</span> <span class="k">const</span> <span class="n">Matrix3</span> <span class="n">_ortho_bases</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
+<a name="line-291"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<a name="line-292"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<a name="line-293"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<a name="line-294"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<a name="line-295"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-296"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-297"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-298"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-299"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+<a name="line-300"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+<a name="line-301"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+<a name="line-302"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+<a name="line-303"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-304"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-305"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-306"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-307"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-308"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-309"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-310"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-311"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-312"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-313"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<a name="line-314"></a>	<span class="n">Matrix3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-315"></a><span class="p">};</span>
+<a name="line-316"></a>
+<a name="line-317"></a><span class="kt">int</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">get_orthogonal_index</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
 <a name="line-318"></a>
-<a name="line-319"></a><span class="n">FileAccessPack</span><span class="o">::</span><span class="n">FileAccessPack</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span> <span class="k">const</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">PackedFile</span><span class="o">&amp;</span> <span class="n">p_file</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-320"></a>
-<a name="line-321"></a><span class="hll">	<span class="n">pf</span><span class="o">=</span><span class="n">p_file</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- Variable 'pf' is assigned in constructor body. Consider performing initialization in initialization list. <span class='marker'>[+]</span></span><div class='content'>When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;pf&apos; a value by passing the value to the constructor in the initialization list.</div></div>
-</span><a name="line-322"></a>	<span class="n">f</span><span class="o">=</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">pack</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">READ</span><span class="p">);</span>
-<a name="line-323"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-324"></a>		<span class="n">ERR_EXPLAIN</span><span class="p">(</span><span class="s">&quot;Can&#39;t open pack-referenced file: &quot;</span><span class="o">+</span><span class="n">String</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">pack</span><span class="p">));</span>
-<a name="line-325"></a>		<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">);</span>
-<a name="line-326"></a>	<span class="p">}</span>
-<a name="line-327"></a>	<span class="n">f</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">offset</span><span class="p">);</span>
-<a name="line-328"></a>	<span class="n">pos</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-329"></a>	<span class="n">eof</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-330"></a><span class="p">}</span>
+<a name="line-319"></a>	<span class="c1">//could be sped up if i come up with a way</span>
+<a name="line-320"></a>	<span class="n">Matrix3</span> <span class="n">orth</span><span class="o">=*</span><span class="k">this</span><span class="p">;</span>
+<a name="line-321"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-322"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-323"></a>
+<a name="line-324"></a>			<span class="kt">float</span> <span class="n">v</span> <span class="o">=</span> <span class="n">orth</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+<a name="line-325"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span>
+<a name="line-326"></a>				<span class="n">v</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span>
+<a name="line-327"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="o">&lt;-</span><span class="mf">0.5</span><span class="p">)</span>
+<a name="line-328"></a>				<span class="n">v</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">;</span>
+<a name="line-329"></a>			<span class="k">else</span>
+<a name="line-330"></a>				<span class="n">v</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <a name="line-331"></a>
-<a name="line-332"></a><span class="n">FileAccessPack</span><span class="o">::~</span><span class="n">FileAccessPack</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-333"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<a name="line-334"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-335"></a><span class="p">}</span>
-<a name="line-336"></a>
+<a name="line-332"></a>			<span class="n">orth</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">v</span><span class="p">;</span>
+<a name="line-333"></a>		<span class="p">}</span>
+<a name="line-334"></a>	<span class="p">}</span>
+<a name="line-335"></a>
+<a name="line-336"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">24</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-337"></a>
-<a name="line-338"></a><span class="c1">//////////////////////////////////////////////////////////////////////////////////</span>
-<a name="line-339"></a><span class="c1">// DIR ACCESS</span>
-<a name="line-340"></a><span class="c1">//////////////////////////////////////////////////////////////////////////////////</span>
+<a name="line-338"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">_ortho_bases</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">orth</span><span class="p">)</span>
+<a name="line-339"></a>			<span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-340"></a>
 <a name="line-341"></a>
-<a name="line-342"></a>
-<a name="line-343"></a><span class="kt">bool</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">list_dir_begin</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-344"></a>
-<a name="line-345"></a>
-<a name="line-346"></a>	<span class="n">list_dirs</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-347"></a>	<span class="n">list_files</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<a name="line-342"></a>	<span class="p">}</span>
+<a name="line-343"></a>
+<a name="line-344"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-345"></a><span class="p">}</span>
+<a name="line-346"></a>
+<a name="line-347"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">set_orthogonal_index</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_index</span><span class="p">){</span>
 <a name="line-348"></a>
-<a name="line-349"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">PackedData</span><span class="o">::</span><span class="n">PackedDir</span><span class="o">*&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">.</span><span class="n">front</span><span class="p">();</span><span class="n">E</span><span class="p">;</span><span class="n">E</span><span class="o">=</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-350"></a>
-<a name="line-351"></a>		<span class="n">list_dirs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">());</span>
-<a name="line-352"></a>	<span class="p">}</span>
-<a name="line-353"></a>
-<a name="line-354"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">files</span><span class="p">.</span><span class="n">front</span><span class="p">();</span><span class="n">E</span><span class="p">;</span><span class="n">E</span><span class="o">=</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-355"></a>
-<a name="line-356"></a>		<span class="n">list_files</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">());</span>
-<a name="line-357"></a>	<span class="p">}</span>
-<a name="line-358"></a>
-<a name="line-359"></a>	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-360"></a><span class="p">}</span>
-<a name="line-361"></a>
-<a name="line-362"></a><span class="n">String</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">get_next</span><span class="p">(){</span>
-<a name="line-363"></a>
-<a name="line-364"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">list_dirs</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-365"></a>		<span class="n">cdir</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-366"></a>		<span class="n">String</span> <span class="n">d</span> <span class="o">=</span> <span class="n">list_dirs</span><span class="p">.</span><span class="n">front</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">();</span>
-<a name="line-367"></a>		<span class="n">list_dirs</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
-<a name="line-368"></a>		<span class="k">return</span> <span class="n">d</span><span class="p">;</span>
-<a name="line-369"></a>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">list_files</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-370"></a>		<span class="n">cdir</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-371"></a>		<span class="n">String</span> <span class="n">f</span> <span class="o">=</span> <span class="n">list_files</span><span class="p">.</span><span class="n">front</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">();</span>
-<a name="line-372"></a>		<span class="n">list_files</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
-<a name="line-373"></a>		<span class="k">return</span> <span class="n">f</span><span class="p">;</span>
-<a name="line-374"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-375"></a>		<span class="k">return</span> <span class="n">String</span><span class="p">();</span>
-<a name="line-376"></a>	<span class="p">}</span>
-<a name="line-377"></a><span class="p">}</span>
-<a name="line-378"></a><span class="kt">bool</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">current_is_dir</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-379"></a>
-<a name="line-380"></a>	<span class="k">return</span> <span class="n">cdir</span><span class="p">;</span>
-<a name="line-381"></a><span class="p">}</span>
-<a name="line-382"></a><span class="kt">bool</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">current_is_hidden</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-383"></a>
-<a name="line-384"></a>	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-385"></a><span class="p">}</span>
-<a name="line-386"></a><span class="kt">void</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">list_dir_end</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-387"></a>
-<a name="line-388"></a>	<span class="n">list_dirs</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-389"></a>	<span class="n">list_files</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-390"></a><span class="p">}</span>
-<a name="line-391"></a>
-<a name="line-392"></a><span class="kt">int</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">get_drive_count</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-393"></a>
-<a name="line-394"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-395"></a><span class="p">}</span>
-<a name="line-396"></a><span class="n">String</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">get_drive</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_drive</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-397"></a>
-<a name="line-398"></a>	<span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-<a name="line-399"></a><span class="p">}</span>
-<a name="line-400"></a>
-<a name="line-401"></a><span class="n">Error</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">change_dir</span><span class="p">(</span><span class="n">String</span> <span class="n">p_dir</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-402"></a>
-<a name="line-403"></a>	<span class="n">String</span> <span class="n">nd</span> <span class="o">=</span> <span class="n">p_dir</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
-<a name="line-404"></a>	<span class="kt">bool</span> <span class="n">absolute</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-405"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">nd</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;res://&quot;</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-406"></a>		<span class="n">nd</span><span class="o">=</span><span class="n">nd</span><span class="p">.</span><span class="n">replace_first</span><span class="p">(</span><span class="s">&quot;res://&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<a name="line-407"></a>		<span class="n">absolute</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-408"></a>	<span class="p">}</span>
-<a name="line-409"></a>
-<a name="line-410"></a>	<span class="n">nd</span><span class="o">=</span><span class="n">nd</span><span class="p">.</span><span class="n">simplify_path</span><span class="p">();</span>
-<a name="line-411"></a>
-<a name="line-412"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">nd</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-413"></a>		<span class="n">nd</span><span class="o">=</span><span class="n">nd</span><span class="p">.</span><span class="n">replace_first</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">)</span>	<span class="p">;</span>
-<a name="line-414"></a>		<span class="n">absolute</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-415"></a>	<span class="p">}</span>
-<a name="line-416"></a>
-<a name="line-417"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">nd</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
-<a name="line-418"></a>
-<a name="line-419"></a>	<span class="n">PackedData</span><span class="o">::</span><span class="n">PackedDir</span> <span class="o">*</span><span class="n">pd</span><span class="p">;</span>
-<a name="line-420"></a>
-<a name="line-421"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">absolute</span><span class="p">)</span>
-<a name="line-422"></a>		<span class="n">pd</span> <span class="o">=</span> <span class="n">PackedData</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">root</span><span class="p">;</span>
-<a name="line-423"></a>	<span class="k">else</span>
-<a name="line-424"></a>		<span class="n">pd</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
-<a name="line-425"></a>
-<a name="line-426"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">paths</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-427"></a>
-<a name="line-428"></a>		<span class="n">String</span> <span class="n">p</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-429"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-430"></a>			<span class="k">continue</span><span class="p">;</span>
-<a name="line-431"></a>		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="s">&quot;..&quot;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-432"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-433"></a>				<span class="n">pd</span><span class="o">=</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">;</span>
-<a name="line-434"></a>			<span class="p">}</span>
-<a name="line-435"></a>		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-436"></a>
-<a name="line-437"></a>			<span class="n">pd</span><span class="o">=</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>
+<a name="line-349"></a>	<span class="c1">//there only exist 24 orthogonal bases in r3</span>
+<a name="line-350"></a>	<span class="n">ERR_FAIL_INDEX</span><span class="p">(</span><span class="n">p_index</span><span class="p">,</span><span class="mi">24</span><span class="p">);</span>
+<a name="line-351"></a>
+<a name="line-352"></a>
+<a name="line-353"></a>	<span class="o">*</span><span class="k">this</span><span class="o">=</span><span class="n">_ortho_bases</span><span class="p">[</span><span class="n">p_index</span><span class="p">];</span>
+<a name="line-354"></a>
+<a name="line-355"></a><span class="p">}</span>
+<a name="line-356"></a>
+<a name="line-357"></a>
+<a name="line-358"></a><span class="kt">void</span> <span class="n">Matrix3</span><span class="o">::</span><span class="n">get_axis_and_angle</span><span class="p">(</span><span class="n">Vector3</span> <span class="o">&amp;</span><span class="n">r_axis</span><span class="p">,</span><span class="kt">real_t</span><span class="o">&amp;</span> <span class="n">r_angle</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-359"></a>
+<a name="line-360"></a>
+<a name="line-361"></a>	<span class="kt">double</span> <span class="n">angle</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">;</span> <span class="c1">// variables for result</span>
+<a name="line-362"></a>		<span class="kt">double</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">;</span> <span class="c1">// margin to allow for rounding errors</span>
+<a name="line-363"></a><span class="hll">		<span class="kt">double</span> <span class="n">epsilon2</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span> <span class="c1">// margin to distinguish between 0 and 180 degrees</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'epsilon2' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;epsilon2&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-364"></a>
+<a name="line-365"></a>	<span class="k">if</span> <span class="p">(</span>	<span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span>
+<a name="line-366"></a>		<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span><span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span>
+<a name="line-367"></a>		<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span><span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-368"></a>			<span class="c1">// singularity found</span>
+<a name="line-369"></a>			<span class="c1">// first check for identity matrix which must have +1 for all terms</span>
+<a name="line-370"></a>			<span class="c1">//  in leading diagonaland zero in other terms</span>
+<a name="line-371"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">epsilon2</span><span class="p">)</span>
+<a name="line-372"></a>		  <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">epsilon2</span><span class="p">)</span>
+<a name="line-373"></a>		  <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">epsilon2</span><span class="p">)</span>
+<a name="line-374"></a>		  <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">epsilon2</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-375"></a>			<span class="c1">// this singularity is identity matrix so angle = 0</span>
+<a name="line-376"></a>			<span class="n">r_axis</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-377"></a>			<span class="n">r_angle</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-378"></a>			<span class="k">return</span><span class="p">;</span>
+<a name="line-379"></a>		<span class="p">}</span>
+<a name="line-380"></a>		<span class="c1">// otherwise this singularity is angle = 180</span>
+<a name="line-381"></a>		<span class="n">angle</span> <span class="o">=</span> <span class="n">Math_PI</span><span class="p">;</span>
+<a name="line-382"></a>		<span class="kt">double</span> <span class="n">xx</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<a name="line-383"></a>		<span class="kt">double</span> <span class="n">yy</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<a name="line-384"></a>		<span class="kt">double</span> <span class="n">zz</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<a name="line-385"></a>		<span class="kt">double</span> <span class="n">xy</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">4</span><span class="p">;</span>
+<a name="line-386"></a>		<span class="kt">double</span> <span class="n">xz</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="mi">4</span><span class="p">;</span>
+<a name="line-387"></a>		<span class="kt">double</span> <span class="n">yz</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="mi">4</span><span class="p">;</span>
+<a name="line-388"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">xx</span> <span class="o">&gt;</span> <span class="n">yy</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">xx</span> <span class="o">&gt;</span> <span class="n">zz</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// elements[0][0] is the largest diagonal term</span>
+<a name="line-389"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">xx</span><span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-390"></a>				<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-391"></a>				<span class="n">y</span> <span class="o">=</span> <span class="mf">0.7071</span><span class="p">;</span>
+<a name="line-392"></a>				<span class="n">z</span> <span class="o">=</span> <span class="mf">0.7071</span><span class="p">;</span>
+<a name="line-393"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-394"></a>				<span class="n">x</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xx</span><span class="p">);</span>
+<a name="line-395"></a>				<span class="n">y</span> <span class="o">=</span> <span class="n">xy</span><span class="o">/</span><span class="n">x</span><span class="p">;</span>
+<a name="line-396"></a>				<span class="n">z</span> <span class="o">=</span> <span class="n">xz</span><span class="o">/</span><span class="n">x</span><span class="p">;</span>
+<a name="line-397"></a>			<span class="p">}</span>
+<a name="line-398"></a>		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&gt;</span> <span class="n">zz</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// elements[1][1] is the largest diagonal term</span>
+<a name="line-399"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">yy</span><span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-400"></a>				<span class="n">x</span> <span class="o">=</span> <span class="mf">0.7071</span><span class="p">;</span>
+<a name="line-401"></a>				<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-402"></a>				<span class="n">z</span> <span class="o">=</span> <span class="mf">0.7071</span><span class="p">;</span>
+<a name="line-403"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-404"></a>				<span class="n">y</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">yy</span><span class="p">);</span>
+<a name="line-405"></a>				<span class="n">x</span> <span class="o">=</span> <span class="n">xy</span><span class="o">/</span><span class="n">y</span><span class="p">;</span>
+<a name="line-406"></a>				<span class="n">z</span> <span class="o">=</span> <span class="n">yz</span><span class="o">/</span><span class="n">y</span><span class="p">;</span>
+<a name="line-407"></a>			<span class="p">}</span>
+<a name="line-408"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// elements[2][2] is the largest diagonal term so base result on this</span>
+<a name="line-409"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">zz</span><span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-410"></a>				<span class="n">x</span> <span class="o">=</span> <span class="mf">0.7071</span><span class="p">;</span>
+<a name="line-411"></a>				<span class="n">y</span> <span class="o">=</span> <span class="mf">0.7071</span><span class="p">;</span>
+<a name="line-412"></a>				<span class="n">z</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-413"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-414"></a>				<span class="n">z</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">zz</span><span class="p">);</span>
+<a name="line-415"></a>				<span class="n">x</span> <span class="o">=</span> <span class="n">xz</span><span class="o">/</span><span class="n">z</span><span class="p">;</span>
+<a name="line-416"></a>				<span class="n">y</span> <span class="o">=</span> <span class="n">yz</span><span class="o">/</span><span class="n">z</span><span class="p">;</span>
+<a name="line-417"></a>			<span class="p">}</span>
+<a name="line-418"></a>		<span class="p">}</span>
+<a name="line-419"></a>		<span class="n">r_axis</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">);</span>
+<a name="line-420"></a>		<span class="n">r_angle</span><span class="o">=</span><span class="n">angle</span><span class="p">;</span>
+<a name="line-421"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-422"></a>	<span class="p">}</span>
+<a name="line-423"></a>	<span class="c1">// as we have reached here there are no singularities so we can handle normally</span>
+<a name="line-424"></a>	<span class="kt">double</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">((</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<a name="line-425"></a>		<span class="o">+</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<a name="line-426"></a>		<span class="o">+</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]));</span> <span class="c1">// used to normalise</span>
+<a name="line-427"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">)</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-428"></a>		<span class="c1">// prevent divide by zero, should not happen if matrix is orthogonal and should be</span>
+<a name="line-429"></a>		<span class="c1">// caught by singularity test above, but I&#39;ve left it in just in case</span>
+<a name="line-430"></a>	<span class="n">angle</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">acos</span><span class="p">((</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+<a name="line-431"></a>	<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a name="line-432"></a>	<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a name="line-433"></a>	<span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a name="line-434"></a>
+<a name="line-435"></a>	<span class="n">r_axis</span><span class="o">=</span><span class="n">Vector3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">);</span>
+<a name="line-436"></a>	<span class="n">r_angle</span><span class="o">=</span><span class="n">angle</span><span class="p">;</span>
+<a name="line-437"></a><span class="p">}</span>
 <a name="line-438"></a>
-<a name="line-439"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-439"></a><span class="n">Matrix3</span><span class="o">::</span><span class="n">Matrix3</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_euler</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-440"></a>
-<a name="line-441"></a>			<span class="k">return</span> <span class="n">ERR_INVALID_PARAMETER</span><span class="p">;</span>
-<a name="line-442"></a>		<span class="p">}</span>
-<a name="line-443"></a>	<span class="p">}</span>
+<a name="line-441"></a>	<span class="n">set_euler</span><span class="p">(</span> <span class="n">p_euler</span> <span class="p">);</span>
+<a name="line-442"></a>		
+<a name="line-443"></a><span class="p">}</span>
 <a name="line-444"></a>
-<a name="line-445"></a>	<span class="n">current</span><span class="o">=</span><span class="n">pd</span><span class="p">;</span>
+<a name="line-445"></a><span class="n">Matrix3</span><span class="o">::</span><span class="n">Matrix3</span><span class="p">(</span><span class="k">const</span> <span class="n">Quat</span><span class="o">&amp;</span> <span class="n">p_quat</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-446"></a>
-<a name="line-447"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-448"></a>
-<a name="line-449"></a>
-<a name="line-450"></a><span class="p">}</span>
-<a name="line-451"></a>
-<a name="line-452"></a><span class="n">String</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">get_current_dir</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-453"></a>
-<a name="line-454"></a>	<span class="n">String</span> <span class="n">p</span><span class="p">;</span>
-<a name="line-455"></a>	<span class="n">PackedData</span><span class="o">::</span><span class="n">PackedDir</span> <span class="o">*</span><span class="n">pd</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
-<a name="line-456"></a>	<span class="k">while</span><span class="p">(</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-457"></a>
-<a name="line-458"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">pd</span><span class="o">!=</span><span class="n">current</span><span class="p">)</span>
-<a name="line-459"></a>			<span class="n">p</span><span class="o">=</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">p</span><span class="p">;</span>
-<a name="line-460"></a>		<span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">+</span><span class="n">pd</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
-<a name="line-461"></a>	<span class="p">}</span>
+<a name="line-447"></a>	<span class="kt">real_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">length_squared</span><span class="p">();</span>
+<a name="line-448"></a>	<span class="kt">real_t</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="n">d</span><span class="p">;</span>
+<a name="line-449"></a>	<span class="kt">real_t</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span>   <span class="n">ys</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span>   <span class="n">zs</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">s</span><span class="p">;</span>
+<a name="line-450"></a>	<span class="kt">real_t</span> <span class="n">wx</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">xs</span><span class="p">,</span>  <span class="n">wy</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">ys</span><span class="p">,</span>  <span class="n">wz</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">zs</span><span class="p">;</span>
+<a name="line-451"></a>	<span class="kt">real_t</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">xs</span><span class="p">,</span>  <span class="n">xy</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">ys</span><span class="p">,</span>  <span class="n">xz</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">zs</span><span class="p">;</span>
+<a name="line-452"></a>	<span class="kt">real_t</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">ys</span><span class="p">,</span>  <span class="n">yz</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">zs</span><span class="p">,</span>  <span class="n">zz</span> <span class="o">=</span> <span class="n">p_quat</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">zs</span><span class="p">;</span>
+<a name="line-453"></a>	<span class="n">set</span><span class="p">(</span>	<span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">yy</span> <span class="o">+</span> <span class="n">zz</span><span class="p">),</span> <span class="n">xy</span> <span class="o">-</span> <span class="n">wz</span><span class="p">,</span> <span class="n">xz</span> <span class="o">+</span> <span class="n">wy</span><span class="p">,</span> 	
+<a name="line-454"></a>		<span class="n">xy</span> <span class="o">+</span> <span class="n">wz</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">xx</span> <span class="o">+</span> <span class="n">zz</span><span class="p">),</span> <span class="n">yz</span> <span class="o">-</span> <span class="n">wx</span><span class="p">,</span> 
+<a name="line-455"></a>		<span class="n">xz</span> <span class="o">-</span> <span class="n">wy</span><span class="p">,</span> <span class="n">yz</span> <span class="o">+</span> <span class="n">wx</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">xx</span> <span class="o">+</span> <span class="n">yy</span><span class="p">))</span>	<span class="p">;</span>
+<a name="line-456"></a>
+<a name="line-457"></a><span class="p">}</span>
+<a name="line-458"></a>
+<a name="line-459"></a><span class="n">Matrix3</span><span class="o">::</span><span class="n">Matrix3</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_axis</span><span class="p">,</span> <span class="kt">real_t</span> <span class="n">p_phi</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-460"></a>
+<a name="line-461"></a>	<span class="n">Vector3</span> <span class="n">axis_sq</span><span class="p">(</span><span class="n">p_axis</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">p_axis</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="n">p_axis</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">p_axis</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="n">p_axis</span><span class="p">.</span><span class="n">z</span><span class="o">*</span><span class="n">p_axis</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
 <a name="line-462"></a>
-<a name="line-463"></a>	<span class="k">return</span> <span class="s">&quot;res://&quot;</span><span class="o">+</span><span class="n">p</span><span class="p">;</span>
-<a name="line-464"></a>
-<a name="line-465"></a><span class="p">}</span>
-<a name="line-466"></a>
-<a name="line-467"></a><span class="kt">bool</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">file_exists</span><span class="p">(</span><span class="n">String</span> <span class="n">p_file</span><span class="p">){</span>
-<a name="line-468"></a>
-<a name="line-469"></a>	<span class="k">return</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">files</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_file</span><span class="p">);</span>
-<a name="line-470"></a><span class="p">}</span>
-<a name="line-471"></a>
-<a name="line-472"></a><span class="kt">bool</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">dir_exists</span><span class="p">(</span><span class="n">String</span> <span class="n">p_dir</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-463"></a>	<span class="kt">real_t</span> <span class="n">cosine</span><span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">cos</span><span class="p">(</span><span class="n">p_phi</span><span class="p">);</span>
+<a name="line-464"></a>	<span class="kt">real_t</span> <span class="n">sine</span><span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sin</span><span class="p">(</span><span class="n">p_phi</span><span class="p">);</span>
+<a name="line-465"></a>
+<a name="line-466"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis_sq</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">cosine</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">axis_sq</span><span class="p">.</span><span class="n">x</span> <span class="p">);</span>
+<a name="line-467"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span>  <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine</span> <span class="p">)</span> <span class="o">+</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">sine</span><span class="p">;</span>
+<a name="line-468"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine</span> <span class="p">)</span> <span class="o">-</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">sine</span><span class="p">;</span>
+<a name="line-469"></a>
+<a name="line-470"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine</span> <span class="p">)</span> <span class="o">-</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">sine</span><span class="p">;</span>
+<a name="line-471"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis_sq</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">cosine</span>  <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">axis_sq</span><span class="p">.</span><span class="n">y</span> <span class="p">);</span>
+<a name="line-472"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine</span> <span class="p">)</span> <span class="o">+</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">sine</span><span class="p">;</span>
 <a name="line-473"></a>
-<a name="line-474"></a>	<span class="k">return</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">subdirs</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_dir</span><span class="p">);</span>
-<a name="line-475"></a><span class="p">}</span>
-<a name="line-476"></a>
-<a name="line-477"></a><span class="n">Error</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">make_dir</span><span class="p">(</span><span class="n">String</span> <span class="n">p_dir</span><span class="p">){</span>
-<a name="line-478"></a>
-<a name="line-479"></a>	<span class="k">return</span> <span class="n">ERR_UNAVAILABLE</span><span class="p">;</span>
-<a name="line-480"></a><span class="p">}</span>
-<a name="line-481"></a>
-<a name="line-482"></a><span class="n">Error</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">rename</span><span class="p">(</span><span class="n">String</span> <span class="n">p_from</span><span class="p">,</span> <span class="n">String</span> <span class="n">p_to</span><span class="p">){</span>
-<a name="line-483"></a>
-<a name="line-484"></a>	<span class="k">return</span> <span class="n">ERR_UNAVAILABLE</span><span class="p">;</span>
-<a name="line-485"></a>
-<a name="line-486"></a><span class="p">}</span>
-<a name="line-487"></a><span class="n">Error</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">remove</span><span class="p">(</span><span class="n">String</span> <span class="n">p_name</span><span class="p">){</span>
-<a name="line-488"></a>
-<a name="line-489"></a>	<span class="k">return</span> <span class="n">ERR_UNAVAILABLE</span><span class="p">;</span>
-<a name="line-490"></a>
-<a name="line-491"></a><span class="p">}</span>
-<a name="line-492"></a>
-<a name="line-493"></a><span class="kt">size_t</span> <span class="n">DirAccessPack</span><span class="o">::</span><span class="n">get_space_left</span><span class="p">(){</span>
-<a name="line-494"></a>
-<a name="line-495"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-496"></a><span class="p">}</span>
-<a name="line-497"></a>
-<a name="line-498"></a><span class="n">DirAccessPack</span><span class="o">::</span><span class="n">DirAccessPack</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-499"></a>
-<a name="line-500"></a>	<span class="n">current</span><span class="o">=</span><span class="n">PackedData</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">root</span><span class="p">;</span>
-<a name="line-501"></a>	<span class="n">cdir</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-502"></a><span class="p">}</span>
-<a name="line-503"></a>
-<a name="line-504"></a><span class="n">DirAccessPack</span><span class="o">::~</span><span class="n">DirAccessPack</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-505"></a>
-<a name="line-506"></a>
-<a name="line-507"></a><span class="p">}</span>
+<a name="line-474"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine</span> <span class="p">)</span> <span class="o">+</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">sine</span><span class="p">;</span>
+<a name="line-475"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">cosine</span> <span class="p">)</span> <span class="o">-</span> <span class="n">p_axis</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">sine</span><span class="p">;</span>
+<a name="line-476"></a>	<span class="n">elements</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis_sq</span><span class="p">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">cosine</span>  <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">axis_sq</span><span class="p">.</span><span class="n">z</span> <span class="p">);</span>
+<a name="line-477"></a>
+<a name="line-478"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

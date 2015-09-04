@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: servers/audio_server.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/bf/bf_enc.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> audio_server.h</p>
-<a href='155.html#line-109'> cstyleCast 109</a><a href='155.html#line-109'> operatorEqVarError 109</a><a href='155.html#line-109'> functionStatic 109</a>
+       <p id="filename"><a href="index.html">Defects:</a> bf_enc.c</p>
+<a href='155.html#line-302'> unreadVariable 302</a><a href='155.html#line-302'> unreadVariable 302</a><a href='155.html#line-302'> unreadVariable 302</a><a href='155.html#line-302'> unreadVariable 302</a><a href='155.html#line-303'> unreadVariable 303</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -403,296 +403,328 @@
 287
 288
 289
-290</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  audio_server.h                                                       */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef AUDIO_SERVER_H</span>
-<a name="line-30"></a><span class="cp">#define AUDIO_SERVER_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;variant.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;object.h&quot;</span>
-<a name="line-34"></a>
-<a name="line-35"></a><span class="n">class</span> <span class="n">AudioMixer</span> <span class="p">{</span>
-<a name="line-36"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-37"></a>
-<a name="line-38"></a>	<span class="kt">void</span> <span class="n">audio_mixer_chunk_call</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">);</span>
-<a name="line-39"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-40"></a>
-<a name="line-41"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-42"></a>
-<a name="line-43"></a>		<span class="n">INVALID_CHANNEL</span><span class="o">=</span><span class="mh">0xFFFFFFFF</span>
-<a name="line-44"></a>	<span class="p">};</span>
-<a name="line-45"></a>
-<a name="line-46"></a>	<span class="k">typedef</span> <span class="kt">uint32_t</span> <span class="n">ChannelID</span><span class="p">;</span>
-<a name="line-47"></a>
-<a name="line-48"></a>	<span class="cm">/* CHANNEL API */</span>
-<a name="line-49"></a>
-<a name="line-50"></a>	<span class="k">enum</span> <span class="n">FilterType</span> <span class="p">{</span>
-<a name="line-51"></a>		<span class="n">FILTER_NONE</span><span class="p">,</span>
-<a name="line-52"></a>		<span class="n">FILTER_LOWPASS</span><span class="p">,</span>
-<a name="line-53"></a>		<span class="n">FILTER_BANDPASS</span><span class="p">,</span>
-<a name="line-54"></a>		<span class="n">FILTER_HIPASS</span><span class="p">,</span>
-<a name="line-55"></a>		<span class="n">FILTER_NOTCH</span><span class="p">,</span>
-<a name="line-56"></a>		<span class="n">FILTER_PEAK</span><span class="p">,</span>
-<a name="line-57"></a>		<span class="n">FILTER_BANDLIMIT</span><span class="p">,</span> <span class="c1">///&lt; cutoff is LP resonace is HP</span>
-<a name="line-58"></a>		<span class="n">FILTER_LOW_SHELF</span><span class="p">,</span>
-<a name="line-59"></a>		<span class="n">FILTER_HIGH_SHELF</span>
-<a name="line-60"></a>
-<a name="line-61"></a>	<span class="p">};</span>
-<a name="line-62"></a>
-<a name="line-63"></a>	<span class="k">enum</span> <span class="n">ReverbRoomType</span> <span class="p">{</span>
-<a name="line-64"></a>
-<a name="line-65"></a>		<span class="n">REVERB_SMALL</span><span class="p">,</span>
-<a name="line-66"></a>		<span class="n">REVERB_MEDIUM</span><span class="p">,</span>
-<a name="line-67"></a>		<span class="n">REVERB_LARGE</span><span class="p">,</span>
-<a name="line-68"></a>		<span class="n">REVERB_HALL</span>
-<a name="line-69"></a>	<span class="p">};</span>
-<a name="line-70"></a>
-<a name="line-71"></a>	<span class="n">virtual</span> <span class="n">ChannelID</span> <span class="n">channel_alloc</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-72"></a>
-<a name="line-73"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_volume</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_gain</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-74"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_pan</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_pan</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">float</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-75"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_filter</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="n">FilterType</span> <span class="n">p_type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_cutoff</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_resonance</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_gain</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-76"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_chorus</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_chorus</span> <span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-77"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_reverb</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="n">ReverbRoomType</span> <span class="n">p_room_type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_reverb</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-78"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_mix_rate</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_mix_rate</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-79"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_set_positional</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_positional</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-80"></a>
-<a name="line-81"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_volume</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-82"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_pan</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-83"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_pan_depth</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-84"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_pan_height</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-85"></a>	<span class="n">virtual</span> <span class="n">FilterType</span> <span class="n">channel_get_filter_type</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-86"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_filter_cutoff</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-87"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_filter_resonance</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-88"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_filter_gain</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-89"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_chorus</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-90"></a>	<span class="n">virtual</span> <span class="n">ReverbRoomType</span> <span class="n">channel_get_reverb_type</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-91"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">channel_get_reverb</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-92"></a>
-<a name="line-93"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">channel_get_mix_rate</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-94"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">channel_is_positional</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-95"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">channel_is_valid</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-96"></a>
-<a name="line-97"></a>
-<a name="line-98"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">channel_free</span><span class="p">(</span><span class="n">ChannelID</span> <span class="n">p_channel</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-99"></a>
-<a name="line-100"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_mixer_volume</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-101"></a>
-<a name="line-102"></a>
-<a name="line-103"></a>	<span class="n">virtual</span> <span class="o">~</span><span class="n">AudioMixer</span><span class="p">()</span> <span class="p">{}</span>
-<a name="line-104"></a><span class="p">};</span>
-<a name="line-105"></a>
-<a name="line-106"></a>
-<a name="line-107"></a><span class="n">class</span> <span class="nl">AudioServer</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
-<a name="line-108"></a>
-<a name="line-109"></a><span class="hll">	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">AudioServer</span><span class="p">,</span> <span class="n">Object</span> <span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div><span class='error2'>&lt;--- Member variable 'AudioServer::_type_name' is not assigned a value in 'AudioServer::operator='.</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'AudioServer::*' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;AudioServer::*&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-110"></a>
-<a name="line-111"></a>	<span class="k">static</span> <span class="n">AudioServer</span> <span class="o">*</span><span class="n">singleton</span><span class="p">;</span>
-<a name="line-112"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-113"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">AudioStream</span><span class="p">;</span>
-<a name="line-114"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">EventStream</span><span class="p">;</span>
-<a name="line-115"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">AudioMixer</span><span class="p">;</span>
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/bf/bf_enc.c */</span>
+<a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+<a name="line-3"></a><span class="cm"> * All rights reserved.</span>
+<a name="line-4"></a><span class="cm"> *</span>
+<a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
+<a name="line-6"></a><span class="cm"> * by Eric Young (eay@cryptsoft.com).</span>
+<a name="line-7"></a><span class="cm"> * The implementation was written so as to conform with Netscapes SSL.</span>
+<a name="line-8"></a><span class="cm"> * </span>
+<a name="line-9"></a><span class="cm"> * This library is free for commercial and non-commercial use as long as</span>
+<a name="line-10"></a><span class="cm"> * the following conditions are aheared to.  The following conditions</span>
+<a name="line-11"></a><span class="cm"> * apply to all code found in this distribution, be it the RC4, RSA,</span>
+<a name="line-12"></a><span class="cm"> * lhash, DES, etc., code; not just the SSL code.  The SSL documentation</span>
+<a name="line-13"></a><span class="cm"> * included with this distribution is covered by the same copyright terms</span>
+<a name="line-14"></a><span class="cm"> * except that the holder is Tim Hudson (tjh@cryptsoft.com).</span>
+<a name="line-15"></a><span class="cm"> * </span>
+<a name="line-16"></a><span class="cm"> * Copyright remains Eric Young&#39;s, and as such any Copyright notices in</span>
+<a name="line-17"></a><span class="cm"> * the code are not to be removed.</span>
+<a name="line-18"></a><span class="cm"> * If this package is used in a product, Eric Young should be given attribution</span>
+<a name="line-19"></a><span class="cm"> * as the author of the parts of the library used.</span>
+<a name="line-20"></a><span class="cm"> * This can be in the form of a textual message at program startup or</span>
+<a name="line-21"></a><span class="cm"> * in documentation (online or textual) provided with the package.</span>
+<a name="line-22"></a><span class="cm"> * </span>
+<a name="line-23"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-24"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-25"></a><span class="cm"> * are met:</span>
+<a name="line-26"></a><span class="cm"> * 1. Redistributions of source code must retain the copyright</span>
+<a name="line-27"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer.</span>
+<a name="line-28"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-29"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in the</span>
+<a name="line-30"></a><span class="cm"> *    documentation and/or other materials provided with the distribution.</span>
+<a name="line-31"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this software</span>
+<a name="line-32"></a><span class="cm"> *    must display the following acknowledgement:</span>
+<a name="line-33"></a><span class="cm"> *    &quot;This product includes cryptographic software written by</span>
+<a name="line-34"></a><span class="cm"> *     Eric Young (eay@cryptsoft.com)&quot;</span>
+<a name="line-35"></a><span class="cm"> *    The word &#39;cryptographic&#39; can be left out if the rouines from the library</span>
+<a name="line-36"></a><span class="cm"> *    being used are not cryptographic related :-).</span>
+<a name="line-37"></a><span class="cm"> * 4. If you include any Windows specific code (or a derivative thereof) from </span>
+<a name="line-38"></a><span class="cm"> *    the apps directory (application code) you must include an acknowledgement:</span>
+<a name="line-39"></a><span class="cm"> *    &quot;This product includes software written by Tim Hudson (tjh@cryptsoft.com)&quot;</span>
+<a name="line-40"></a><span class="cm"> * </span>
+<a name="line-41"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS&#39;&#39; AND</span>
+<a name="line-42"></a><span class="cm"> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-43"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<a name="line-44"></a><span class="cm"> * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE</span>
+<a name="line-45"></a><span class="cm"> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<a name="line-46"></a><span class="cm"> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</span>
+<a name="line-47"></a><span class="cm"> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-48"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</span>
+<a name="line-49"></a><span class="cm"> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</span>
+<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
+<a name="line-51"></a><span class="cm"> * SUCH DAMAGE.</span>
+<a name="line-52"></a><span class="cm"> * </span>
+<a name="line-53"></a><span class="cm"> * The licence and distribution terms for any publically available version or</span>
+<a name="line-54"></a><span class="cm"> * derivative of this code cannot be changed.  i.e. this code cannot simply be</span>
+<a name="line-55"></a><span class="cm"> * copied and put under another distribution licence</span>
+<a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
+<a name="line-57"></a><span class="cm"> */</span>
+<a name="line-58"></a>
+<a name="line-59"></a><span class="cp">#include &lt;openssl/blowfish.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &quot;bf_locl.h&quot;</span>
+<a name="line-61"></a>
+<a name="line-62"></a><span class="cm">/* Blowfish as implemented from &#39;Blowfish: Springer-Verlag paper&#39;</span>
+<a name="line-63"></a><span class="cm"> * (From LECTURE NOTES IN COMPUTER SCIENCE 809, FAST SOFTWARE ENCRYPTION,</span>
+<a name="line-64"></a><span class="cm"> * CAMBRIDGE SECURITY WORKSHOP, CAMBRIDGE, U.K., DECEMBER 9-11, 1993)</span>
+<a name="line-65"></a><span class="cm"> */</span>
+<a name="line-66"></a>
+<a name="line-67"></a><span class="cp">#if (BF_ROUNDS != 16) &amp;&amp; (BF_ROUNDS != 20)</span>
+<a name="line-68"></a><span class="cp">#error If you set BF_ROUNDS to some value other than 16 or 20, you will have \</span>
+<a name="line-69"></a><span class="cp">to modify the code.</span>
+<a name="line-70"></a><span class="cp">#endif</span>
+<a name="line-71"></a>
+<a name="line-72"></a><span class="kt">void</span> <span class="nf">BF_encrypt</span><span class="p">(</span><span class="n">BF_LONG</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="k">const</span> <span class="n">BF_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">)</span>
+<a name="line-73"></a>	<span class="p">{</span>
+<a name="line-74"></a><span class="cp">#ifndef BF_PTR2</span>
+<a name="line-75"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">;</span>
+<a name="line-76"></a>	<span class="k">register</span> <span class="k">const</span> <span class="n">BF_LONG</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="o">*</span><span class="n">s</span><span class="p">;</span>
+<a name="line-77"></a>
+<a name="line-78"></a>	<span class="n">p</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">P</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="n">s</span><span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-80"></a>	<span class="n">l</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-81"></a>	<span class="n">r</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-82"></a>
+<a name="line-83"></a>	<span class="n">l</span><span class="o">^=</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-84"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">1</span><span class="p">]);</span>
+<a name="line-85"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">2</span><span class="p">]);</span>
+<a name="line-86"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">3</span><span class="p">]);</span>
+<a name="line-87"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">4</span><span class="p">]);</span>
+<a name="line-88"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">5</span><span class="p">]);</span>
+<a name="line-89"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">6</span><span class="p">]);</span>
+<a name="line-90"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">7</span><span class="p">]);</span>
+<a name="line-91"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">8</span><span class="p">]);</span>
+<a name="line-92"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">9</span><span class="p">]);</span>
+<a name="line-93"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">10</span><span class="p">]);</span>
+<a name="line-94"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">11</span><span class="p">]);</span>
+<a name="line-95"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">12</span><span class="p">]);</span>
+<a name="line-96"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">13</span><span class="p">]);</span>
+<a name="line-97"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">14</span><span class="p">]);</span>
+<a name="line-98"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">15</span><span class="p">]);</span>
+<a name="line-99"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">16</span><span class="p">]);</span>
+<a name="line-100"></a><span class="cp">#if BF_ROUNDS == 20</span>
+<a name="line-101"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">17</span><span class="p">]);</span>
+<a name="line-102"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">18</span><span class="p">]);</span>
+<a name="line-103"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">19</span><span class="p">]);</span>
+<a name="line-104"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">20</span><span class="p">]);</span>
+<a name="line-105"></a><span class="cp">#endif</span>
+<a name="line-106"></a>	<span class="n">r</span><span class="o">^=</span><span class="n">p</span><span class="p">[</span><span class="n">BF_ROUNDS</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-107"></a>
+<a name="line-108"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-109"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">r</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-110"></a><span class="cp">#else</span>
+<a name="line-111"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="o">*</span><span class="n">k</span><span class="p">;</span>
+<a name="line-112"></a>
+<a name="line-113"></a>	<span class="n">l</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-114"></a>	<span class="n">r</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-115"></a>	<span class="n">k</span><span class="o">=</span><span class="p">(</span><span class="n">BF_LONG</span><span class="o">*</span><span class="p">)</span><span class="n">key</span><span class="p">;</span>
 <a name="line-116"></a>
-<a name="line-117"></a>	<span class="n">virtual</span> <span class="n">AudioMixer</span> <span class="o">*</span><span class="n">get_mixer</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-118"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">audio_mixer_chunk_callback</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
-<a name="line-121"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-122"></a>
-<a name="line-123"></a>
-<a name="line-124"></a>	<span class="n">class</span> <span class="n">EventStream</span> <span class="p">{</span>
-<a name="line-125"></a>	<span class="nl">protected</span><span class="p">:</span>
-<a name="line-126"></a>		<span class="n">AudioMixer</span> <span class="o">*</span><span class="n">get_mixer</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-127"></a>	<span class="nl">public</span><span class="p">:</span>
-<a name="line-128"></a>		<span class="n">virtual</span> <span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">p_usec</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-129"></a>
-<a name="line-130"></a>		<span class="n">virtual</span> <span class="o">~</span><span class="n">EventStream</span><span class="p">()</span> <span class="p">{}</span>
-<a name="line-131"></a>	<span class="p">};</span>
-<a name="line-132"></a>
-<a name="line-133"></a>	<span class="n">class</span> <span class="n">AudioStream</span> <span class="p">{</span>
-<a name="line-134"></a>	<span class="nl">public</span><span class="p">:</span>
-<a name="line-135"></a>		<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_channel_count</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-136"></a>		<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_mix_rate</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_rate</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//notify the stream of the mix rate</span>
-<a name="line-137"></a>		<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">mix</span><span class="p">(</span><span class="kt">int32_t</span> <span class="o">*</span><span class="n">p_buffer</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-138"></a>		<span class="n">virtual</span> <span class="kt">void</span> <span class="n">update</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-139"></a>		<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">can_update_mt</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-140"></a>		<span class="n">virtual</span> <span class="o">~</span><span class="n">AudioStream</span><span class="p">()</span> <span class="p">{}</span>
-<a name="line-141"></a>	<span class="p">};</span>
-<a name="line-142"></a>
-<a name="line-143"></a>
-<a name="line-144"></a>	<span class="k">enum</span> <span class="n">SampleFormat</span> <span class="p">{</span>
-<a name="line-145"></a>
-<a name="line-146"></a>		<span class="n">SAMPLE_FORMAT_PCM8</span><span class="p">,</span>
-<a name="line-147"></a>		<span class="n">SAMPLE_FORMAT_PCM16</span><span class="p">,</span>
-<a name="line-148"></a>		<span class="n">SAMPLE_FORMAT_IMA_ADPCM</span>
-<a name="line-149"></a>	<span class="p">};</span>
-<a name="line-150"></a>
-<a name="line-151"></a>	<span class="k">enum</span> <span class="n">SampleLoopFormat</span> <span class="p">{</span>
-<a name="line-152"></a>		<span class="n">SAMPLE_LOOP_NONE</span><span class="p">,</span>
-<a name="line-153"></a>		<span class="n">SAMPLE_LOOP_FORWARD</span><span class="p">,</span>
-<a name="line-154"></a>		<span class="n">SAMPLE_LOOP_PING_PONG</span> <span class="c1">// not supported in every platform</span>
-<a name="line-155"></a>
-<a name="line-156"></a>	<span class="p">};</span>
-<a name="line-157"></a>
-<a name="line-158"></a>	<span class="cm">/* SAMPLE API */</span>
+<a name="line-117"></a>	<span class="n">l</span><span class="o">^=</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-118"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-119"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<a name="line-120"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<a name="line-121"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<a name="line-122"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<a name="line-123"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<a name="line-124"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+<a name="line-125"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+<a name="line-126"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<a name="line-127"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<a name="line-128"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">11</span><span class="p">);</span>
+<a name="line-129"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">12</span><span class="p">);</span>
+<a name="line-130"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">13</span><span class="p">);</span>
+<a name="line-131"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+<a name="line-132"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">15</span><span class="p">);</span>
+<a name="line-133"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
+<a name="line-134"></a><span class="cp">#if BF_ROUNDS == 20</span>
+<a name="line-135"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">17</span><span class="p">);</span>
+<a name="line-136"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">18</span><span class="p">);</span>
+<a name="line-137"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">19</span><span class="p">);</span>
+<a name="line-138"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span>
+<a name="line-139"></a><span class="cp">#endif</span>
+<a name="line-140"></a>	<span class="n">r</span><span class="o">^=</span><span class="n">k</span><span class="p">[</span><span class="n">BF_ROUNDS</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-141"></a>
+<a name="line-142"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-143"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">r</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-144"></a><span class="cp">#endif</span>
+<a name="line-145"></a>	<span class="p">}</span>
+<a name="line-146"></a>
+<a name="line-147"></a><span class="cp">#ifndef BF_DEFAULT_OPTIONS</span>
+<a name="line-148"></a>
+<a name="line-149"></a><span class="kt">void</span> <span class="nf">BF_decrypt</span><span class="p">(</span><span class="n">BF_LONG</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="k">const</span> <span class="n">BF_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">)</span>
+<a name="line-150"></a>	<span class="p">{</span>
+<a name="line-151"></a><span class="cp">#ifndef BF_PTR2</span>
+<a name="line-152"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">;</span>
+<a name="line-153"></a>	<span class="k">register</span> <span class="k">const</span> <span class="n">BF_LONG</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="o">*</span><span class="n">s</span><span class="p">;</span>
+<a name="line-154"></a>
+<a name="line-155"></a>	<span class="n">p</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">P</span><span class="p">;</span>
+<a name="line-156"></a>	<span class="n">s</span><span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-157"></a>	<span class="n">l</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-158"></a>	<span class="n">r</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
 <a name="line-159"></a>
-<a name="line-160"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">sample_create</span><span class="p">(</span><span class="n">SampleFormat</span> <span class="n">p_format</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_stereo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_length</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-161"></a>
-<a name="line-162"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">sample_set_description</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_description</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-163"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">sample_get_description</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_description</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-164"></a>
-<a name="line-165"></a>	<span class="n">virtual</span> <span class="n">SampleFormat</span> <span class="n">sample_get_format</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-166"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">sample_is_stereo</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-167"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_length</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-168"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">sample_get_data_ptr</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-169"></a>
-<a name="line-170"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_signed_data</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;&amp;</span> <span class="n">p_buffer</span><span class="p">);</span>
-<a name="line-171"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">sample_set_data</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;&amp;</span> <span class="n">p_buffer</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-172"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">sample_get_data</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-173"></a>
-<a name="line-174"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">sample_set_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_rate</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-175"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-176"></a>
-<a name="line-177"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">sample_set_loop_format</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="n">SampleLoopFormat</span> <span class="n">p_format</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-178"></a>	<span class="n">virtual</span> <span class="n">SampleLoopFormat</span> <span class="n">sample_get_loop_format</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-179"></a>
-<a name="line-180"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">sample_set_loop_begin</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_pos</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-181"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_loop_begin</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-182"></a>
-<a name="line-183"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">sample_set_loop_end</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_pos</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-184"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_loop_end</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-185"></a>
-<a name="line-186"></a>
-<a name="line-187"></a>	<span class="cm">/* VOICE API */</span>
-<a name="line-188"></a>
-<a name="line-189"></a>	<span class="k">enum</span> <span class="n">FilterType</span> <span class="p">{</span>
-<a name="line-190"></a>		<span class="n">FILTER_NONE</span><span class="p">,</span>
-<a name="line-191"></a>		<span class="n">FILTER_LOWPASS</span><span class="p">,</span>
-<a name="line-192"></a>		<span class="n">FILTER_BANDPASS</span><span class="p">,</span>
-<a name="line-193"></a>		<span class="n">FILTER_HIPASS</span><span class="p">,</span>
-<a name="line-194"></a>		<span class="n">FILTER_NOTCH</span><span class="p">,</span>
-<a name="line-195"></a>		<span class="n">FILTER_PEAK</span><span class="p">,</span>
-<a name="line-196"></a>		<span class="n">FILTER_BANDLIMIT</span><span class="p">,</span> <span class="c1">///&lt; cutoff is LP resonace is HP</span>
-<a name="line-197"></a>		<span class="n">FILTER_LOW_SHELF</span><span class="p">,</span>
-<a name="line-198"></a>		<span class="n">FILTER_HIGH_SHELF</span>
-<a name="line-199"></a>	<span class="p">};</span>
-<a name="line-200"></a>
-<a name="line-201"></a>	<span class="k">enum</span> <span class="n">ReverbRoomType</span> <span class="p">{</span>
-<a name="line-202"></a>
-<a name="line-203"></a>		<span class="n">REVERB_SMALL</span><span class="p">,</span>
-<a name="line-204"></a>		<span class="n">REVERB_MEDIUM</span><span class="p">,</span>
-<a name="line-205"></a>		<span class="n">REVERB_LARGE</span><span class="p">,</span>
-<a name="line-206"></a>		<span class="n">REVERB_HALL</span>
-<a name="line-207"></a>	<span class="p">};</span>
-<a name="line-208"></a>
-<a name="line-209"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">voice_create</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-210"></a>
-<a name="line-211"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_play</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-212"></a>
-<a name="line-213"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_volume</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_gain</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-214"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_pan</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_pan</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">float</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-215"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_filter</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="n">FilterType</span> <span class="n">p_type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_cutoff</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_resonance</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_gain</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-216"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_chorus</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_chorus</span> <span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-217"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="n">ReverbRoomType</span> <span class="n">p_room_type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_reverb</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-218"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_mix_rate</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-219"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_set_positional</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_positional</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-220"></a>
-<a name="line-221"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_volume</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-222"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_pan</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-223"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_pan_depth</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-224"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_pan_height</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
-<a name="line-225"></a>	<span class="n">virtual</span> <span class="n">FilterType</span> <span class="n">voice_get_filter_type</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-226"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_filter_cutoff</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-227"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_filter_resonance</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-228"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_chorus</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-229"></a>	<span class="n">virtual</span> <span class="n">ReverbRoomType</span> <span class="n">voice_get_reverb_type</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-230"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-160"></a>	<span class="n">l</span><span class="o">^=</span><span class="n">p</span><span class="p">[</span><span class="n">BF_ROUNDS</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-161"></a><span class="cp">#if BF_ROUNDS == 20</span>
+<a name="line-162"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">20</span><span class="p">]);</span>
+<a name="line-163"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">19</span><span class="p">]);</span>
+<a name="line-164"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">18</span><span class="p">]);</span>
+<a name="line-165"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">17</span><span class="p">]);</span>
+<a name="line-166"></a><span class="cp">#endif</span>
+<a name="line-167"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">16</span><span class="p">]);</span>
+<a name="line-168"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">15</span><span class="p">]);</span>
+<a name="line-169"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">14</span><span class="p">]);</span>
+<a name="line-170"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">13</span><span class="p">]);</span>
+<a name="line-171"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">12</span><span class="p">]);</span>
+<a name="line-172"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">11</span><span class="p">]);</span>
+<a name="line-173"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="mi">10</span><span class="p">]);</span>
+<a name="line-174"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">9</span><span class="p">]);</span>
+<a name="line-175"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">8</span><span class="p">]);</span>
+<a name="line-176"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">7</span><span class="p">]);</span>
+<a name="line-177"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">6</span><span class="p">]);</span>
+<a name="line-178"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">5</span><span class="p">]);</span>
+<a name="line-179"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">4</span><span class="p">]);</span>
+<a name="line-180"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">3</span><span class="p">]);</span>
+<a name="line-181"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">2</span><span class="p">]);</span>
+<a name="line-182"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">p</span><span class="p">[</span> <span class="mi">1</span><span class="p">]);</span>
+<a name="line-183"></a>	<span class="n">r</span><span class="o">^=</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-184"></a>
+<a name="line-185"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-186"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">r</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-187"></a><span class="cp">#else</span>
+<a name="line-188"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="o">*</span><span class="n">k</span><span class="p">;</span>
+<a name="line-189"></a>
+<a name="line-190"></a>	<span class="n">l</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-191"></a>	<span class="n">r</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-192"></a>	<span class="n">k</span><span class="o">=</span><span class="p">(</span><span class="n">BF_LONG</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span><span class="p">;</span>
+<a name="line-193"></a>
+<a name="line-194"></a>	<span class="n">l</span><span class="o">^=</span><span class="n">k</span><span class="p">[</span><span class="n">BF_ROUNDS</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-195"></a><span class="cp">#if BF_ROUNDS == 20</span>
+<a name="line-196"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span>
+<a name="line-197"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">19</span><span class="p">);</span>
+<a name="line-198"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">18</span><span class="p">);</span>
+<a name="line-199"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">17</span><span class="p">);</span>
+<a name="line-200"></a><span class="cp">#endif</span>
+<a name="line-201"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
+<a name="line-202"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">15</span><span class="p">);</span>
+<a name="line-203"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">14</span><span class="p">);</span>
+<a name="line-204"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">13</span><span class="p">);</span>
+<a name="line-205"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">12</span><span class="p">);</span>
+<a name="line-206"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">11</span><span class="p">);</span>
+<a name="line-207"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<a name="line-208"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<a name="line-209"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+<a name="line-210"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+<a name="line-211"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<a name="line-212"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<a name="line-213"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<a name="line-214"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<a name="line-215"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<a name="line-216"></a>	<span class="n">BF_ENC</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-217"></a>	<span class="n">r</span><span class="o">^=</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-218"></a>
+<a name="line-219"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-220"></a>	<span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">r</span><span class="o">&amp;</span><span class="mh">0xffffffffL</span><span class="p">;</span>
+<a name="line-221"></a><span class="cp">#endif</span>
+<a name="line-222"></a>	<span class="p">}</span>
+<a name="line-223"></a>
+<a name="line-224"></a><span class="kt">void</span> <span class="nf">BF_cbc_encrypt</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">long</span> <span class="n">length</span><span class="p">,</span>
+<a name="line-225"></a>	     <span class="k">const</span> <span class="n">BF_KEY</span> <span class="o">*</span><span class="n">schedule</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ivec</span><span class="p">,</span> <span class="kt">int</span> <span class="n">encrypt</span><span class="p">)</span>
+<a name="line-226"></a>	<span class="p">{</span>
+<a name="line-227"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-228"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">tout0</span><span class="p">,</span><span class="n">tout1</span><span class="p">,</span><span class="n">xor0</span><span class="p">,</span><span class="n">xor1</span><span class="p">;</span>
+<a name="line-229"></a>	<span class="k">register</span> <span class="kt">long</span> <span class="n">l</span><span class="o">=</span><span class="n">length</span><span class="p">;</span>
+<a name="line-230"></a>	<span class="n">BF_LONG</span> <span class="n">tin</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 <a name="line-231"></a>
-<a name="line-232"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">voice_get_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-233"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">voice_is_positional</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-234"></a>
-<a name="line-235"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">voice_stop</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-236"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">voice_is_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-237"></a>
-<a name="line-238"></a>	<span class="cm">/* STREAM API */</span>
-<a name="line-239"></a>
-<a name="line-240"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">audio_stream_create</span><span class="p">(</span><span class="n">AudioStream</span> <span class="o">*</span><span class="n">p_stream</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-241"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">event_stream_create</span><span class="p">(</span><span class="n">EventStream</span> <span class="o">*</span><span class="n">p_stream</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-242"></a>
-<a name="line-243"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">stream_set_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_active</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-244"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">stream_is_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-245"></a>
-<a name="line-246"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">stream_set_volume_scale</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_scale</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-247"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">stream_set_volume_scale</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-248"></a>
-<a name="line-249"></a>	<span class="cm">/* Audio Physics API */</span>
-<a name="line-250"></a>
-<a name="line-251"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">free</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_id</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-252"></a>
-<a name="line-253"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">init</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-254"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">finish</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-255"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">update</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-256"></a>
-<a name="line-257"></a>	<span class="cm">/* MISC config */</span>
-<a name="line-258"></a>
-<a name="line-259"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">lock</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-260"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">unlock</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-261"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_default_channel_count</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-262"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_default_mix_rate</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-263"></a>
-<a name="line-264"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_stream_global_volume_scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-265"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_fx_global_volume_scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-266"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_event_voice_global_volume_scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-267"></a>
-<a name="line-268"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">get_stream_global_volume_scale</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-269"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">get_fx_global_volume_scale</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-270"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">get_event_voice_global_volume_scale</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-271"></a>
-<a name="line-272"></a>	<span class="n">virtual</span> <span class="kt">uint32_t</span> <span class="n">read_output_peak</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-273"></a>
-<a name="line-274"></a>	<span class="k">static</span> <span class="n">AudioServer</span> <span class="o">*</span><span class="nf">get_singleton</span><span class="p">();</span>
-<a name="line-275"></a>
-<a name="line-276"></a>	<span class="n">virtual</span> <span class="kt">double</span> <span class="n">get_mix_time</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//useful for video -&gt; audio sync</span>
-<a name="line-277"></a>	<span class="n">virtual</span> <span class="kt">double</span> <span class="n">get_output_delay</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-278"></a>
-<a name="line-279"></a>	<span class="n">AudioServer</span><span class="p">();</span>
-<a name="line-280"></a>	<span class="n">virtual</span> <span class="o">~</span><span class="n">AudioServer</span><span class="p">();</span>
-<a name="line-281"></a><span class="p">};</span>
-<a name="line-282"></a>
-<a name="line-283"></a><span class="n">VARIANT_ENUM_CAST</span><span class="p">(</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">SampleFormat</span> <span class="p">);</span>
-<a name="line-284"></a><span class="n">VARIANT_ENUM_CAST</span><span class="p">(</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">SampleLoopFormat</span> <span class="p">);</span>
-<a name="line-285"></a><span class="n">VARIANT_ENUM_CAST</span><span class="p">(</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">FilterType</span> <span class="p">);</span>
-<a name="line-286"></a><span class="n">VARIANT_ENUM_CAST</span><span class="p">(</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">ReverbRoomType</span> <span class="p">);</span>
-<a name="line-287"></a>
-<a name="line-288"></a><span class="k">typedef</span> <span class="n">AudioServer</span> <span class="n">AS</span><span class="p">;</span>
-<a name="line-289"></a>
-<a name="line-290"></a><span class="cp">#endif </span><span class="c1">// AUDIO_SERVER_H</span>
+<a name="line-232"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">encrypt</span><span class="p">)</span>
+<a name="line-233"></a>		<span class="p">{</span>
+<a name="line-234"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">ivec</span><span class="p">,</span><span class="n">tout0</span><span class="p">);</span>
+<a name="line-235"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">ivec</span><span class="p">,</span><span class="n">tout1</span><span class="p">);</span>
+<a name="line-236"></a>		<span class="n">ivec</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-237"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span> <span class="n">l</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-238"></a>			<span class="p">{</span>
+<a name="line-239"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span>
+<a name="line-240"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span>
+<a name="line-241"></a>			<span class="n">tin0</span><span class="o">^=</span><span class="n">tout0</span><span class="p">;</span>
+<a name="line-242"></a>			<span class="n">tin1</span><span class="o">^=</span><span class="n">tout1</span><span class="p">;</span>
+<a name="line-243"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-244"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-245"></a>			<span class="n">BF_encrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">);</span>
+<a name="line-246"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-247"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-248"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-249"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-250"></a>			<span class="p">}</span>
+<a name="line-251"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-252"></a>			<span class="p">{</span>
+<a name="line-253"></a>			<span class="n">n2ln</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">8</span><span class="p">);</span>
+<a name="line-254"></a>			<span class="n">tin0</span><span class="o">^=</span><span class="n">tout0</span><span class="p">;</span>
+<a name="line-255"></a>			<span class="n">tin1</span><span class="o">^=</span><span class="n">tout1</span><span class="p">;</span>
+<a name="line-256"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-257"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-258"></a>			<span class="n">BF_encrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">);</span>
+<a name="line-259"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-260"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-261"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-262"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-263"></a>			<span class="p">}</span>
+<a name="line-264"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">ivec</span><span class="p">);</span>
+<a name="line-265"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">ivec</span><span class="p">);</span>
+<a name="line-266"></a>		<span class="p">}</span>
+<a name="line-267"></a>	<span class="k">else</span>
+<a name="line-268"></a>		<span class="p">{</span>
+<a name="line-269"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">ivec</span><span class="p">,</span><span class="n">xor0</span><span class="p">);</span>
+<a name="line-270"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">ivec</span><span class="p">,</span><span class="n">xor1</span><span class="p">);</span>
+<a name="line-271"></a>		<span class="n">ivec</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-272"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span> <span class="n">l</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-273"></a>			<span class="p">{</span>
+<a name="line-274"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span>
+<a name="line-275"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span>
+<a name="line-276"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-277"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-278"></a>			<span class="n">BF_decrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">);</span>
+<a name="line-279"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">xor0</span><span class="p">;</span>
+<a name="line-280"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">xor1</span><span class="p">;</span>
+<a name="line-281"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-282"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-283"></a>			<span class="n">xor0</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-284"></a>			<span class="n">xor1</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-285"></a>			<span class="p">}</span>
+<a name="line-286"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-287"></a>			<span class="p">{</span>
+<a name="line-288"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span>
+<a name="line-289"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span>
+<a name="line-290"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-291"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-292"></a>			<span class="n">BF_decrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">);</span>
+<a name="line-293"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">xor0</span><span class="p">;</span>
+<a name="line-294"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">xor1</span><span class="p">;</span>
+<a name="line-295"></a>			<span class="n">l2nn</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">8</span><span class="p">);</span>
+<a name="line-296"></a>			<span class="n">xor0</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-297"></a>			<span class="n">xor1</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-298"></a>			<span class="p">}</span>
+<a name="line-299"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">xor0</span><span class="p">,</span><span class="n">ivec</span><span class="p">);</span>
+<a name="line-300"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">xor1</span><span class="p">,</span><span class="n">ivec</span><span class="p">);</span>
+<a name="line-301"></a>		<span class="p">}</span>
+<a name="line-302"></a><span class="hll">	<span class="n">tin0</span><span class="o">=</span><span class="n">tin1</span><span class="o">=</span><span class="n">tout0</span><span class="o">=</span><span class="n">tout1</span><span class="o">=</span><span class="n">xor0</span><span class="o">=</span><span class="n">xor1</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'tin0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tin1' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tout0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tout1' is assigned a value that is never used.</span>
+</span><a name="line-303"></a><span class="hll">	<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'tin' is assigned a value that is never used.</span>
+</span><a name="line-304"></a>	<span class="p">}</span>
+<a name="line-305"></a>
+<a name="line-306"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

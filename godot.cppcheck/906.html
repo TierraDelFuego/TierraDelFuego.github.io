@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: tools/editor/editor_plugin.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/freetype/freetype/src/pcf/pcfutil.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> editor_plugin.h</p>
-<a href='906.html#line-119'> unusedPrivateFunction 119</a>
+       <p id="filename"><a href="index.html">Defects:</a> pcfutil.c</p>
+<a href='906.html#line-69'> variableScope 69</a><a href='906.html#line-88'> variableScope 88</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -217,198 +217,134 @@
 101
 102
 103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  editor_plugin.h                                                      */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef EDITOR_PLUGIN_H</span>
-<a name="line-30"></a><span class="cp">#define EDITOR_PLUGIN_H</span>
+104</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*</span>
+<a name="line-2"></a>
+<a name="line-3"></a><span class="cm">Copyright 1990, 1994, 1998  The Open Group</span>
+<a name="line-4"></a>
+<a name="line-5"></a><span class="cm">Permission to use, copy, modify, distribute, and sell this software and its</span>
+<a name="line-6"></a><span class="cm">documentation for any purpose is hereby granted without fee, provided that</span>
+<a name="line-7"></a><span class="cm">the above copyright notice appear in all copies and that both that</span>
+<a name="line-8"></a><span class="cm">copyright notice and this permission notice appear in supporting</span>
+<a name="line-9"></a><span class="cm">documentation.</span>
+<a name="line-10"></a>
+<a name="line-11"></a><span class="cm">The above copyright notice and this permission notice shall be included in</span>
+<a name="line-12"></a><span class="cm">all copies or substantial portions of the Software.</span>
+<a name="line-13"></a>
+<a name="line-14"></a><span class="cm">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<a name="line-15"></a><span class="cm">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<a name="line-16"></a><span class="cm">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE</span>
+<a name="line-17"></a><span class="cm">OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN</span>
+<a name="line-18"></a><span class="cm">AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN</span>
+<a name="line-19"></a><span class="cm">CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<a name="line-20"></a>
+<a name="line-21"></a><span class="cm">Except as contained in this notice, the name of The Open Group shall not be</span>
+<a name="line-22"></a><span class="cm">used in advertising or otherwise to promote the sale, use or other dealings</span>
+<a name="line-23"></a><span class="cm">in this Software without prior written authorization from The Open Group.</span>
+<a name="line-24"></a>
+<a name="line-25"></a><span class="cm">*/</span>
+<a name="line-26"></a><span class="cm">/* $XFree86: xc/lib/font/util/utilbitmap.c,v 1.3 1999/08/22 08:58:58 dawes Exp $ */</span>
+<a name="line-27"></a>
+<a name="line-28"></a><span class="cm">/*</span>
+<a name="line-29"></a><span class="cm"> * Author:  Keith Packard, MIT X Consortium</span>
+<a name="line-30"></a><span class="cm"> */</span>
 <a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;scene/main/node.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;scene/resources/texture.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;undo_redo.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;io/config_file.h&quot;</span>
-<a name="line-36"></a><span class="cm">/**</span>
-<a name="line-37"></a><span class="cm">	@author Juan Linietsky &lt;reduzio@gmail.com&gt;</span>
-<a name="line-38"></a><span class="cm">*/</span>
-<a name="line-39"></a>
-<a name="line-40"></a><span class="n">class</span> <span class="n">EditorNode</span><span class="p">;</span>
-<a name="line-41"></a><span class="n">class</span> <span class="n">Spatial</span><span class="p">;</span>
-<a name="line-42"></a><span class="n">class</span> <span class="n">Camera</span><span class="p">;</span>
-<a name="line-43"></a>
-<a name="line-44"></a><span class="n">class</span> <span class="nl">EditorPlugin</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Node</span> <span class="p">{</span>
-<a name="line-45"></a>	
-<a name="line-46"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">EditorPlugin</span><span class="p">,</span> <span class="n">Node</span> <span class="p">);</span>
-<a name="line-47"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">EditorData</span><span class="p">;</span>
-<a name="line-48"></a>	<span class="n">UndoRedo</span> <span class="o">*</span><span class="n">undo_redo</span><span class="p">;</span>
-<a name="line-49"></a>
-<a name="line-50"></a>	<span class="n">UndoRedo</span><span class="o">*</span> <span class="nf">_get_undo_redo</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">undo_redo</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-32"></a><span class="cm">/* Modified for use with FreeType */</span>
+<a name="line-33"></a>
+<a name="line-34"></a>
+<a name="line-35"></a><span class="cp">#include &lt;ft2build.h&gt;</span>
+<a name="line-36"></a><span class="cp">#include &quot;pcfutil.h&quot;</span>
+<a name="line-37"></a>
+<a name="line-38"></a>
+<a name="line-39"></a>  <span class="cm">/*</span>
+<a name="line-40"></a><span class="cm">   *  Invert bit order within each BYTE of an array.</span>
+<a name="line-41"></a><span class="cm">   */</span>
+<a name="line-42"></a>
+<a name="line-43"></a>  <span class="n">FT_LOCAL_DEF</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<a name="line-44"></a>  <span class="n">BitOrderInvert</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span>  <span class="n">buf</span><span class="p">,</span>
+<a name="line-45"></a>                  <span class="kt">size_t</span>          <span class="n">nbytes</span> <span class="p">)</span>
+<a name="line-46"></a>  <span class="p">{</span>
+<a name="line-47"></a>    <span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="n">nbytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">nbytes</span><span class="o">--</span><span class="p">,</span> <span class="n">buf</span><span class="o">++</span> <span class="p">)</span>
+<a name="line-48"></a>    <span class="p">{</span>
+<a name="line-49"></a>      <span class="kt">unsigned</span> <span class="kt">int</span>  <span class="n">val</span> <span class="o">=</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
+<a name="line-50"></a>
 <a name="line-51"></a>
-<a name="line-52"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-53"></a>
-<a name="line-54"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
-<a name="line-55"></a>	<span class="n">UndoRedo</span><span class="o">&amp;</span> <span class="n">get_undo_redo</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">undo_redo</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-56"></a>
-<a name="line-57"></a>	<span class="kt">void</span> <span class="n">add_custom_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_base</span><span class="p">,</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Script</span><span class="o">&gt;&amp;</span> <span class="n">p_script</span><span class="p">,</span> <span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;&amp;</span> <span class="n">p_icon</span><span class="p">);</span>
-<a name="line-58"></a>	<span class="kt">void</span> <span class="nf">remove_custom_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">);</span>
+<a name="line-52"></a>      <span class="n">val</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span> <span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x55</span> <span class="p">)</span> <span class="o">|</span> <span class="p">(</span> <span class="p">(</span> <span class="n">val</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xAA</span> <span class="p">);</span>
+<a name="line-53"></a>      <span class="n">val</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span> <span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x33</span> <span class="p">)</span> <span class="o">|</span> <span class="p">(</span> <span class="p">(</span> <span class="n">val</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xCC</span> <span class="p">);</span>
+<a name="line-54"></a>      <span class="n">val</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span> <span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0F</span> <span class="p">)</span> <span class="o">|</span> <span class="p">(</span> <span class="p">(</span> <span class="n">val</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xF0</span> <span class="p">);</span>
+<a name="line-55"></a>
+<a name="line-56"></a>      <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)</span><span class="n">val</span><span class="p">;</span>
+<a name="line-57"></a>    <span class="p">}</span>
+<a name="line-58"></a>  <span class="p">}</span>
 <a name="line-59"></a>
 <a name="line-60"></a>
-<a name="line-61"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-62"></a>
-<a name="line-63"></a>	<span class="k">enum</span> <span class="n">CustomControlContainer</span> <span class="p">{</span>
-<a name="line-64"></a>		<span class="n">CONTAINER_TOOLBAR</span><span class="p">,</span>
-<a name="line-65"></a>		<span class="n">CONTAINER_SPATIAL_EDITOR_MENU</span><span class="p">,</span>
-<a name="line-66"></a>		<span class="n">CONTAINER_SPATIAL_EDITOR_SIDE</span><span class="p">,</span>
-<a name="line-67"></a>		<span class="n">CONTAINER_SPATIAL_EDITOR_BOTTOM</span><span class="p">,</span>
-<a name="line-68"></a>		<span class="n">CONTAINER_CANVAS_EDITOR_MENU</span><span class="p">,</span>
-<a name="line-69"></a>		<span class="n">CONTAINER_CANVAS_EDITOR_SIDE</span><span class="p">,</span>
-<a name="line-70"></a>		<span class="n">CONTAINER_CANVAS_EDITOR_BOTTOM</span>
-<a name="line-71"></a>	<span class="p">};</span>
-<a name="line-72"></a>
-<a name="line-73"></a>	<span class="c1">//TODO: send a resoucre for editing to the editor node?</span>
-<a name="line-74"></a>
-<a name="line-75"></a>	<span class="kt">void</span> <span class="nf">add_custom_control</span><span class="p">(</span><span class="n">CustomControlContainer</span> <span class="n">p_location</span><span class="p">,</span><span class="n">Control</span> <span class="o">*</span><span class="n">p_control</span><span class="p">);</span>
-<a name="line-76"></a>
-<a name="line-77"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="nf">create_spatial_gizmo</span><span class="p">(</span><span class="n">Spatial</span><span class="o">*</span> <span class="n">p_spatial</span><span class="p">);</span>
-<a name="line-78"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="nf">forward_input_event</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">);</span>
-<a name="line-79"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="nf">forward_spatial_input_event</span><span class="p">(</span><span class="n">Camera</span><span class="o">*</span> <span class="n">p_camera</span><span class="p">,</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">);</span>
-<a name="line-80"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-81"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">has_main_screen</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-82"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">make_visible</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_visible</span><span class="p">);</span>
-<a name="line-83"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">selected_notify</span><span class="p">()</span> <span class="p">{}</span><span class="c1">//notify that it was raised by the user, not the editor</span>
-<a name="line-84"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">edit</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">);</span>
-<a name="line-85"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">handles</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-86"></a>	<span class="n">virtual</span> <span class="n">Dictionary</span> <span class="n">get_state</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//save editor state so it can&#39;t be reloaded when reloading scene</span>
-<a name="line-87"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_state</span><span class="p">(</span><span class="k">const</span> <span class="n">Dictionary</span><span class="o">&amp;</span> <span class="n">p_state</span><span class="p">)</span>  <span class="p">;</span> <span class="c1">//restore editor state (likely was saved with the scene)</span>
-<a name="line-88"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">clear</span><span class="p">()</span> <span class="p">;</span> <span class="c1">// clear any temporary data in te editor, reset it (likely new scene or load another scene)</span>
-<a name="line-89"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">save_external_data</span><span class="p">()</span> <span class="p">;</span> <span class="c1">// if editor references external resources/scenes, save them</span>
-<a name="line-90"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">apply_changes</span><span class="p">()</span> <span class="p">;</span> <span class="c1">// if changes are pending in editor, apply them</span>
-<a name="line-91"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">get_breakpoints</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_breakpoints</span><span class="p">);</span>
-<a name="line-92"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="nf">get_remove_list</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="o">*</span><span class="n">p_list</span><span class="p">);</span>
-<a name="line-93"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_window_layout</span><span class="p">(</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">ConfigFile</span><span class="o">&gt;</span> <span class="n">p_layout</span><span class="p">);</span>
-<a name="line-94"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">get_window_layout</span><span class="p">(</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">ConfigFile</span><span class="o">&gt;</span> <span class="n">p_layout</span><span class="p">);</span>
-<a name="line-95"></a>
-<a name="line-96"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">restore_global_state</span><span class="p">();</span>
-<a name="line-97"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">save_global_state</span><span class="p">();</span>
-<a name="line-98"></a>
-<a name="line-99"></a>	<span class="n">EditorPlugin</span><span class="p">();</span>
-<a name="line-100"></a>	<span class="n">virtual</span> <span class="o">~</span><span class="n">EditorPlugin</span><span class="p">();</span>
-<a name="line-101"></a>
-<a name="line-102"></a><span class="p">};</span>
+<a name="line-61"></a>  <span class="cm">/*</span>
+<a name="line-62"></a><span class="cm">   *  Invert byte order within each 16-bits of an array.</span>
+<a name="line-63"></a><span class="cm">   */</span>
+<a name="line-64"></a>
+<a name="line-65"></a>  <span class="n">FT_LOCAL_DEF</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<a name="line-66"></a>  <span class="n">TwoByteSwap</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span>  <span class="n">buf</span><span class="p">,</span>
+<a name="line-67"></a>               <span class="kt">size_t</span>          <span class="n">nbytes</span> <span class="p">)</span>
+<a name="line-68"></a>  <span class="p">{</span>
+<a name="line-69"></a><span class="hll">    <span class="kt">unsigned</span> <span class="kt">char</span>  <span class="n">c</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'c' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;c&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-70"></a>
+<a name="line-71"></a>
+<a name="line-72"></a>    <span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="n">nbytes</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">nbytes</span> <span class="o">-=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">buf</span> <span class="o">+=</span> <span class="mi">2</span> <span class="p">)</span>
+<a name="line-73"></a>    <span class="p">{</span>
+<a name="line-74"></a>      <span class="n">c</span>      <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-75"></a>      <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-76"></a>      <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+<a name="line-77"></a>    <span class="p">}</span>
+<a name="line-78"></a>  <span class="p">}</span>
+<a name="line-79"></a>
+<a name="line-80"></a>  <span class="cm">/*</span>
+<a name="line-81"></a><span class="cm">   *  Invert byte order within each 32-bits of an array.</span>
+<a name="line-82"></a><span class="cm">   */</span>
+<a name="line-83"></a>
+<a name="line-84"></a>  <span class="n">FT_LOCAL_DEF</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<a name="line-85"></a>  <span class="n">FourByteSwap</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span>  <span class="n">buf</span><span class="p">,</span>
+<a name="line-86"></a>                <span class="kt">size_t</span>          <span class="n">nbytes</span> <span class="p">)</span>
+<a name="line-87"></a>  <span class="p">{</span>
+<a name="line-88"></a><span class="hll">    <span class="kt">unsigned</span> <span class="kt">char</span>  <span class="n">c</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'c' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;c&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-89"></a>
+<a name="line-90"></a>
+<a name="line-91"></a>    <span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="n">nbytes</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">;</span> <span class="n">nbytes</span> <span class="o">-=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">buf</span> <span class="o">+=</span> <span class="mi">4</span> <span class="p">)</span>
+<a name="line-92"></a>    <span class="p">{</span>
+<a name="line-93"></a>      <span class="n">c</span>      <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-94"></a>      <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<a name="line-95"></a>      <span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+<a name="line-96"></a>
+<a name="line-97"></a>      <span class="n">c</span>      <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-98"></a>      <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-99"></a>      <span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+<a name="line-100"></a>    <span class="p">}</span>
+<a name="line-101"></a>  <span class="p">}</span>
+<a name="line-102"></a>
 <a name="line-103"></a>
-<a name="line-104"></a><span class="n">VARIANT_ENUM_CAST</span><span class="p">(</span> <span class="n">EditorPlugin</span><span class="o">::</span><span class="n">CustomControlContainer</span> <span class="p">);</span>
-<a name="line-105"></a>
-<a name="line-106"></a>
-<a name="line-107"></a><span class="k">typedef</span> <span class="n">EditorPlugin</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">EditorPluginCreateFunc</span><span class="p">)(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-108"></a>
-<a name="line-109"></a><span class="n">class</span> <span class="n">EditorPlugins</span> <span class="p">{</span>
-<a name="line-110"></a>
-<a name="line-111"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-112"></a>		<span class="n">MAX_CREATE_FUNCS</span><span class="o">=</span><span class="mi">64</span>
-<a name="line-113"></a>	<span class="p">};</span>
-<a name="line-114"></a>
-<a name="line-115"></a>	<span class="k">static</span> <span class="n">EditorPluginCreateFunc</span> <span class="n">creation_funcs</span><span class="p">[</span><span class="n">MAX_CREATE_FUNCS</span><span class="p">];</span>
-<a name="line-116"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">creation_func_count</span><span class="p">;</span>
-<a name="line-117"></a>
-<a name="line-118"></a>	<span class="n">template</span><span class="o">&lt;</span><span class="n">class</span> <span class="n">T</span><span class="o">&gt;</span>
-<a name="line-119"></a><span class="hll">	<span class="k">static</span> <span class="n">EditorPlugin</span> <span class="o">*</span><span class="n">creator</span><span class="p">(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="p">{</span><span class='error2'>&lt;--- Unused private function: 'EditorPlugins::creator'</span>
-</span><a name="line-120"></a>		<span class="k">return</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">T</span><span class="p">(</span><span class="n">p_node</span><span class="p">)</span> <span class="p">);</span>
-<a name="line-121"></a>	<span class="p">}</span>
-<a name="line-122"></a>
-<a name="line-123"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">get_plugin_count</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">creation_func_count</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-126"></a>	<span class="k">static</span> <span class="n">EditorPlugin</span><span class="o">*</span> <span class="n">create</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">,</span><span class="n">EditorNode</span><span class="o">*</span> <span class="n">p_editor</span><span class="p">)</span>	 <span class="p">{</span> <span class="n">ERR_FAIL_INDEX_V</span><span class="p">(</span><span class="n">p_idx</span><span class="p">,</span><span class="n">creation_func_count</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span> <span class="k">return</span> <span class="n">creation_funcs</span><span class="p">[</span><span class="n">p_idx</span><span class="p">](</span><span class="n">p_editor</span><span class="p">);</span> <span class="p">}</span>
-<a name="line-127"></a>
-<a name="line-128"></a>	<span class="n">template</span><span class="o">&lt;</span><span class="n">class</span> <span class="n">T</span><span class="o">&gt;</span>
-<a name="line-129"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">add_by_type</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-130"></a>		<span class="n">add_create_func</span><span class="p">(</span><span class="n">creator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">);</span>
-<a name="line-131"></a>	<span class="p">}</span>
-<a name="line-132"></a>
-<a name="line-133"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">add_create_func</span><span class="p">(</span><span class="n">EditorPluginCreateFunc</span> <span class="n">p_func</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-134"></a>
-<a name="line-135"></a>		<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="n">creation_func_count</span><span class="o">&gt;=</span><span class="n">MAX_CREATE_FUNCS</span><span class="p">);</span>
-<a name="line-136"></a>		<span class="n">creation_funcs</span><span class="p">[</span><span class="n">creation_func_count</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="n">p_func</span><span class="p">;</span>
-<a name="line-137"></a>	<span class="p">}</span>
-<a name="line-138"></a>
-<a name="line-139"></a><span class="p">};</span>
-<a name="line-140"></a>
-<a name="line-141"></a>
-<a name="line-142"></a>
-<a name="line-143"></a>
-<a name="line-144"></a>
-<a name="line-145"></a>
-<a name="line-146"></a>
-<a name="line-147"></a>
-<a name="line-148"></a><span class="cp">#endif</span>
+<a name="line-104"></a><span class="cm">/* END */</span>
 </pre></div>
 </td></tr></table>
       </div>

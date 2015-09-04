@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/webp/enc/webpenc.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/scene/3d/navigation.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> webpenc.c</p>
-<a href='629.html#line-179'> invalidPrintfArgType_sint 179</a><a href='629.html#line-179'> invalidPrintfArgType_sint 179</a><a href='629.html#line-179'> invalidPrintfArgType_sint 179</a><a href='629.html#line-179'> invalidPrintfArgType_sint 179</a><a href='629.html#line-179'> invalidPrintfArgType_sint 179</a><a href='629.html#line-179'> invalidPrintfArgType_sint 179</a><a href='629.html#line-243'> unreadVariable 243</a>
+       <p id="filename"><a href="index.html">Defects:</a> navigation.h</p>
+<a href='629.html#line-35'> useInitializationList 35</a><a href='629.html#line-36'> useInitializationList 36</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -272,625 +272,165 @@
 156
 157
 158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="c1">// Copyright 2011 Google Inc. All Rights Reserved.</span>
-<a name="line-2"></a><span class="c1">//</span>
-<a name="line-3"></a><span class="c1">// This code is licensed under the same terms as WebM:</span>
-<a name="line-4"></a><span class="c1">//  Software License Agreement:  http://www.webmproject.org/license/software/</span>
-<a name="line-5"></a><span class="c1">//  Additional IP Rights Grant:  http://www.webmproject.org/license/additional/</span>
-<a name="line-6"></a><span class="c1">// -----------------------------------------------------------------------------</span>
-<a name="line-7"></a><span class="c1">//</span>
-<a name="line-8"></a><span class="c1">// WebP encoder: main entry point</span>
-<a name="line-9"></a><span class="c1">//</span>
-<a name="line-10"></a><span class="c1">// Author: Skal (pascal.massimino@gmail.com)</span>
+159</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cp">#ifndef NAVIGATION_H</span>
+<a name="line-2"></a><span class="cp">#define NAVIGATION_H</span>
+<a name="line-3"></a>
+<a name="line-4"></a><span class="cp">#include &quot;scene/3d/spatial.h&quot;</span>
+<a name="line-5"></a><span class="cp">#include &quot;scene/3d/navigation_mesh.h&quot;</span>
+<a name="line-6"></a>
+<a name="line-7"></a><span class="n">class</span> <span class="nl">Navigation</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Spatial</span> <span class="p">{</span>
+<a name="line-8"></a>
+<a name="line-9"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">Navigation</span><span class="p">,</span> <span class="n">Spatial</span><span class="p">);</span>
+<a name="line-10"></a>
 <a name="line-11"></a>
-<a name="line-12"></a><span class="cp">#include &lt;assert.h&gt;</span>
-<a name="line-13"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
-<a name="line-14"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-15"></a><span class="cp">#include &lt;math.h&gt;</span>
-<a name="line-16"></a>
-<a name="line-17"></a><span class="cp">#include &quot;./vp8enci.h&quot;</span>
-<a name="line-18"></a><span class="cp">#include &quot;./vp8li.h&quot;</span>
-<a name="line-19"></a><span class="cp">#include &quot;../utils/utils.h&quot;</span>
-<a name="line-20"></a>
-<a name="line-21"></a><span class="c1">// #define PRINT_MEMORY_INFO</span>
-<a name="line-22"></a>
-<a name="line-23"></a><span class="cp">#if defined(__cplusplus) || defined(c_plusplus)</span>
-<a name="line-24"></a><span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
-<a name="line-25"></a><span class="cp">#endif</span>
+<a name="line-12"></a>	<span class="k">union</span> <span class="n">Point</span> <span class="p">{</span>
+<a name="line-13"></a>
+<a name="line-14"></a>		<span class="k">struct</span> <span class="p">{</span>
+<a name="line-15"></a>			<span class="kt">int64_t</span> <span class="nl">x</span><span class="p">:</span><span class="mi">21</span><span class="p">;</span>
+<a name="line-16"></a>			<span class="kt">int64_t</span> <span class="nl">y</span><span class="p">:</span><span class="mi">22</span><span class="p">;</span>
+<a name="line-17"></a>			<span class="kt">int64_t</span> <span class="nl">z</span><span class="p">:</span><span class="mi">21</span><span class="p">;</span>
+<a name="line-18"></a>		<span class="p">};</span>
+<a name="line-19"></a>
+<a name="line-20"></a>		<span class="kt">uint64_t</span> <span class="n">key</span><span class="p">;</span>
+<a name="line-21"></a>		<span class="kt">bool</span> <span class="n">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span><span class="o">&amp;</span> <span class="n">p_key</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="n">p_key</span><span class="p">.</span><span class="n">key</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-22"></a>	<span class="p">};</span>
+<a name="line-23"></a>
+<a name="line-24"></a>
+<a name="line-25"></a>	<span class="k">struct</span> <span class="n">EdgeKey</span> <span class="p">{</span>
 <a name="line-26"></a>
-<a name="line-27"></a><span class="cp">#ifdef PRINT_MEMORY_INFO</span>
-<a name="line-28"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-29"></a><span class="cp">#endif</span>
-<a name="line-30"></a>
-<a name="line-31"></a><span class="c1">//------------------------------------------------------------------------------</span>
-<a name="line-32"></a>
-<a name="line-33"></a><span class="kt">int</span> <span class="n">WebPGetEncoderVersion</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-34"></a>  <span class="k">return</span> <span class="p">(</span><span class="n">ENC_MAJ_VERSION</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ENC_MIN_VERSION</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="n">ENC_REV_VERSION</span><span class="p">;</span>
-<a name="line-35"></a><span class="p">}</span>
-<a name="line-36"></a>
-<a name="line-37"></a><span class="c1">//------------------------------------------------------------------------------</span>
-<a name="line-38"></a><span class="c1">// WebPPicture</span>
-<a name="line-39"></a><span class="c1">//------------------------------------------------------------------------------</span>
-<a name="line-40"></a>
-<a name="line-41"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">DummyWriter</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">data_size</span><span class="p">,</span>
-<a name="line-42"></a>                       <span class="k">const</span> <span class="n">WebPPicture</span><span class="o">*</span> <span class="k">const</span> <span class="n">picture</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-43"></a>  <span class="c1">// The following are to prevent &#39;unused variable&#39; error message.</span>
-<a name="line-44"></a>  <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">data</span><span class="p">;</span>
-<a name="line-45"></a>  <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">data_size</span><span class="p">;</span>
-<a name="line-46"></a>  <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">picture</span><span class="p">;</span>
-<a name="line-47"></a>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-48"></a><span class="p">}</span>
-<a name="line-49"></a>
-<a name="line-50"></a><span class="kt">int</span> <span class="n">WebPPictureInitInternal</span><span class="p">(</span><span class="n">WebPPicture</span><span class="o">*</span> <span class="n">picture</span><span class="p">,</span> <span class="kt">int</span> <span class="n">version</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-51"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">WEBP_ABI_IS_INCOMPATIBLE</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">WEBP_ENCODER_ABI_VERSION</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-52"></a>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// caller/system version mismatch!</span>
-<a name="line-53"></a>  <span class="p">}</span>
-<a name="line-54"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">picture</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-55"></a>    <span class="n">memset</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">picture</span><span class="p">));</span>
-<a name="line-56"></a>    <span class="n">picture</span><span class="o">-&gt;</span><span class="n">writer</span> <span class="o">=</span> <span class="n">DummyWriter</span><span class="p">;</span>
-<a name="line-57"></a>    <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="n">VP8_ENC_OK</span><span class="p">);</span>
-<a name="line-58"></a>  <span class="p">}</span>
-<a name="line-59"></a>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-60"></a><span class="p">}</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class="c1">//------------------------------------------------------------------------------</span>
-<a name="line-63"></a><span class="c1">// VP8Encoder</span>
-<a name="line-64"></a><span class="c1">//------------------------------------------------------------------------------</span>
+<a name="line-27"></a>		<span class="n">Point</span> <span class="n">a</span><span class="p">;</span>
+<a name="line-28"></a>		<span class="n">Point</span> <span class="n">b</span><span class="p">;</span>
+<a name="line-29"></a>
+<a name="line-30"></a>		<span class="kt">bool</span> <span class="n">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="k">const</span> <span class="n">EdgeKey</span><span class="o">&amp;</span> <span class="n">p_key</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-31"></a>			<span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">key</span><span class="o">==</span><span class="n">p_key</span><span class="p">.</span><span class="n">a</span><span class="p">.</span><span class="n">key</span><span class="p">)</span><span class="o">?</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">key</span><span class="o">&lt;</span><span class="n">p_key</span><span class="p">.</span><span class="n">b</span><span class="p">.</span><span class="n">key</span><span class="p">)</span><span class="o">:</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">key</span><span class="o">&lt;</span><span class="n">p_key</span><span class="p">.</span><span class="n">a</span><span class="p">.</span><span class="n">key</span><span class="p">);</span>
+<a name="line-32"></a>		<span class="p">};</span>
+<a name="line-33"></a>
+<a name="line-34"></a>		<span class="n">EdgeKey</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span><span class="o">&amp;</span> <span class="n">p_a</span><span class="o">=</span><span class="n">Point</span><span class="p">(),</span><span class="k">const</span> <span class="n">Point</span><span class="o">&amp;</span> <span class="n">p_b</span><span class="o">=</span><span class="n">Point</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-35"></a><span class="hll">			<span class="n">a</span><span class="o">=</span><span class="n">p_a</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- Variable 'a' is assigned in constructor body. Consider performing initialization in initialization list. <span class='marker'>[+]</span></span><div class='content'>When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;a&apos; a value by passing the value to the constructor in the initialization list.</div></div>
+</span><a name="line-36"></a><span class="hll">			<span class="n">b</span><span class="o">=</span><span class="n">p_b</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- Variable 'b' is assigned in constructor body. Consider performing initialization in initialization list. <span class='marker'>[+]</span></span><div class='content'>When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don&apos;t explicitly write them to the initialization list. You could avoid assigning &apos;b&apos; a value by passing the value to the constructor in the initialization list.</div></div>
+</span><a name="line-37"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">key</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-38"></a>				<span class="n">SWAP</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+<a name="line-39"></a>			<span class="p">}</span>
+<a name="line-40"></a>		<span class="p">}</span>
+<a name="line-41"></a>	<span class="p">};</span>
+<a name="line-42"></a>
+<a name="line-43"></a>
+<a name="line-44"></a>	<span class="k">struct</span> <span class="n">NavMesh</span><span class="p">;</span>
+<a name="line-45"></a>	<span class="k">struct</span> <span class="n">Polygon</span><span class="p">;</span>
+<a name="line-46"></a>
+<a name="line-47"></a>	<span class="k">struct</span> <span class="n">ConnectionPending</span> <span class="p">{</span>
+<a name="line-48"></a>
+<a name="line-49"></a>		<span class="n">Polygon</span> <span class="o">*</span><span class="n">polygon</span><span class="p">;</span>
+<a name="line-50"></a>		<span class="kt">int</span> <span class="n">edge</span><span class="p">;</span>
+<a name="line-51"></a>	<span class="p">};</span>
+<a name="line-52"></a>
+<a name="line-53"></a>
+<a name="line-54"></a>	<span class="k">struct</span> <span class="n">Polygon</span> <span class="p">{</span>
+<a name="line-55"></a>
+<a name="line-56"></a>		<span class="k">struct</span> <span class="n">Edge</span> <span class="p">{</span>
+<a name="line-57"></a>			<span class="n">Point</span> <span class="n">point</span><span class="p">;</span>
+<a name="line-58"></a>			<span class="n">Polygon</span> <span class="o">*</span><span class="n">C</span><span class="p">;</span> <span class="c1">//connection</span>
+<a name="line-59"></a>			<span class="kt">int</span> <span class="n">C_edge</span><span class="p">;</span>
+<a name="line-60"></a>			<span class="n">List</span><span class="o">&lt;</span><span class="n">ConnectionPending</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">P</span><span class="p">;</span>
+<a name="line-61"></a>			<span class="n">Edge</span><span class="p">()</span> <span class="p">{</span> <span class="n">C</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="n">C_edge</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span> <span class="n">P</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-62"></a>		<span class="p">};</span>
+<a name="line-63"></a>
+<a name="line-64"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span> <span class="n">edges</span><span class="p">;</span>
 <a name="line-65"></a>
-<a name="line-66"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">ResetSegmentHeader</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span> <span class="k">const</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-67"></a>  <span class="n">VP8SegmentHeader</span><span class="o">*</span> <span class="k">const</span> <span class="n">hdr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">enc</span><span class="o">-&gt;</span><span class="n">segment_hdr_</span><span class="p">;</span>
-<a name="line-68"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">num_segments_</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">config_</span><span class="o">-&gt;</span><span class="n">segments</span><span class="p">;</span>
-<a name="line-69"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">update_map_</span>  <span class="o">=</span> <span class="p">(</span><span class="n">hdr</span><span class="o">-&gt;</span><span class="n">num_segments_</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-70"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">size_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-71"></a><span class="p">}</span>
+<a name="line-66"></a>		<span class="n">Vector3</span> <span class="n">center</span><span class="p">;</span>
+<a name="line-67"></a>
+<a name="line-68"></a>		<span class="kt">float</span> <span class="n">distance</span><span class="p">;</span>
+<a name="line-69"></a>		<span class="kt">int</span> <span class="n">prev_edge</span><span class="p">;</span>
+<a name="line-70"></a>		<span class="kt">bool</span> <span class="n">clockwise</span><span class="p">;</span>
+<a name="line-71"></a>
 <a name="line-72"></a>
-<a name="line-73"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">ResetFilterHeader</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span> <span class="k">const</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-74"></a>  <span class="n">VP8FilterHeader</span><span class="o">*</span> <span class="k">const</span> <span class="n">hdr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">enc</span><span class="o">-&gt;</span><span class="n">filter_hdr_</span><span class="p">;</span>
-<a name="line-75"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">simple_</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-76"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">level_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-77"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">sharpness_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-78"></a>  <span class="n">hdr</span><span class="o">-&gt;</span><span class="n">i4x4_lf_delta_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-79"></a><span class="p">}</span>
-<a name="line-80"></a>
-<a name="line-81"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">ResetBoundaryPredictions</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span> <span class="k">const</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-82"></a>  <span class="c1">// init boundary values once for all</span>
-<a name="line-83"></a>  <span class="c1">// Note: actually, initializing the preds_[] is only needed for intra4.</span>
-<a name="line-84"></a>  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-85"></a>  <span class="kt">uint8_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">top</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_</span> <span class="o">-</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_w_</span><span class="p">;</span>
-<a name="line-86"></a>  <span class="kt">uint8_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">left</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-87"></a>  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">mb_w_</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-88"></a>    <span class="n">top</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">B_DC_PRED</span><span class="p">;</span>
-<a name="line-89"></a>  <span class="p">}</span>
-<a name="line-90"></a>  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">mb_h_</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-91"></a>    <span class="n">left</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_w_</span><span class="p">]</span> <span class="o">=</span> <span class="n">B_DC_PRED</span><span class="p">;</span>
-<a name="line-92"></a>  <span class="p">}</span>
-<a name="line-93"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">nz_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// constant</span>
-<a name="line-94"></a><span class="p">}</span>
-<a name="line-95"></a>
-<a name="line-96"></a><span class="c1">// Map configured quality level to coding tools used.</span>
-<a name="line-97"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-98"></a><span class="c1">//   Quality   | 0 | 1 | 2 | 3 | 4 | 5 +</span>
-<a name="line-99"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-100"></a><span class="c1">// dynamic prob| ~ | x | x | x | x | x |</span>
-<a name="line-101"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-102"></a><span class="c1">// rd-opt modes|   |   | x | x | x | x |</span>
-<a name="line-103"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-104"></a><span class="c1">// fast i4/i16 | x | x |   |   |   |   |</span>
-<a name="line-105"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-106"></a><span class="c1">// rd-opt i4/16|   |   | x | x | x | x |</span>
-<a name="line-107"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-108"></a><span class="c1">// Trellis     |   | x |   |   | x | x |</span>
-<a name="line-109"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-110"></a><span class="c1">// full-SNS    |   |   |   |   |   | x |</span>
-<a name="line-111"></a><span class="c1">//-------------+---+---+---+---+---+---+</span>
-<a name="line-112"></a>
-<a name="line-113"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">MapConfigToTools</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span> <span class="k">const</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-114"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">method</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">config_</span><span class="o">-&gt;</span><span class="n">method</span><span class="p">;</span>
-<a name="line-115"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">config_</span><span class="o">-&gt;</span><span class="n">partition_limit</span><span class="p">;</span>
-<a name="line-116"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">method_</span> <span class="o">=</span> <span class="n">method</span><span class="p">;</span>
-<a name="line-117"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">rd_opt_level_</span> <span class="o">=</span> <span class="p">(</span><span class="n">method</span> <span class="o">&gt;=</span> <span class="mi">6</span><span class="p">)</span> <span class="o">?</span> <span class="mi">3</span>
-<a name="line-118"></a>                     <span class="o">:</span> <span class="p">(</span><span class="n">method</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">?</span> <span class="mi">2</span>
-<a name="line-119"></a>                     <span class="o">:</span> <span class="p">(</span><span class="n">method</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span>
-<a name="line-120"></a>                     <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-121"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">max_i4_header_bits_</span> <span class="o">=</span>
-<a name="line-122"></a>      <span class="mi">256</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">*</span>                 <span class="c1">// upper bound: up to 16bit per 4x4 block</span>
-<a name="line-123"></a>      <span class="p">(</span><span class="n">limit</span> <span class="o">*</span> <span class="n">limit</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>  <span class="c1">// ... modulated with a quadratic curve.</span>
-<a name="line-124"></a><span class="p">}</span>
+<a name="line-73"></a>		<span class="n">NavMesh</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
+<a name="line-74"></a>	<span class="p">};</span>
+<a name="line-75"></a>
+<a name="line-76"></a>
+<a name="line-77"></a>	<span class="k">struct</span> <span class="n">Connection</span> <span class="p">{</span>
+<a name="line-78"></a>
+<a name="line-79"></a>		<span class="n">Polygon</span> <span class="o">*</span><span class="n">A</span><span class="p">;</span>
+<a name="line-80"></a>		<span class="kt">int</span> <span class="n">A_edge</span><span class="p">;</span>
+<a name="line-81"></a>		<span class="n">Polygon</span> <span class="o">*</span><span class="n">B</span><span class="p">;</span>
+<a name="line-82"></a>		<span class="kt">int</span> <span class="n">B_edge</span><span class="p">;</span>
+<a name="line-83"></a>
+<a name="line-84"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">ConnectionPending</span><span class="o">&gt;</span> <span class="n">pending</span><span class="p">;</span>
+<a name="line-85"></a>
+<a name="line-86"></a>		<span class="n">Connection</span><span class="p">()</span> <span class="p">{</span> <span class="n">A</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="n">B</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span> <span class="n">A_edge</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span> <span class="n">B_edge</span><span class="o">=-</span><span class="mi">1</span><span class="p">;}</span>
+<a name="line-87"></a>	<span class="p">};</span>
+<a name="line-88"></a>
+<a name="line-89"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">EdgeKey</span><span class="p">,</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">connections</span><span class="p">;</span>
+<a name="line-90"></a>
+<a name="line-91"></a>
+<a name="line-92"></a>	<span class="k">struct</span> <span class="n">NavMesh</span> <span class="p">{</span>
+<a name="line-93"></a>
+<a name="line-94"></a>		<span class="n">Object</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
+<a name="line-95"></a>		<span class="n">Transform</span> <span class="n">xform</span><span class="p">;</span>
+<a name="line-96"></a>		<span class="kt">bool</span> <span class="n">linked</span><span class="p">;</span>
+<a name="line-97"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">NavigationMesh</span><span class="o">&gt;</span> <span class="n">navmesh</span><span class="p">;</span>
+<a name="line-98"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Polygon</span><span class="o">&gt;</span> <span class="n">polygons</span><span class="p">;</span>
+<a name="line-99"></a>
+<a name="line-100"></a>	<span class="p">};</span>
+<a name="line-101"></a>
+<a name="line-102"></a>
+<a name="line-103"></a>
+<a name="line-104"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">Point</span> <span class="nf">_get_point</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-105"></a>
+<a name="line-106"></a>		<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">floor</span><span class="p">(</span><span class="n">p_pos</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="n">cell_size</span><span class="p">));</span>
+<a name="line-107"></a>		<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">floor</span><span class="p">(</span><span class="n">p_pos</span><span class="p">.</span><span class="n">y</span><span class="o">/</span><span class="n">cell_size</span><span class="p">));</span>
+<a name="line-108"></a>		<span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="kt">int</span><span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">floor</span><span class="p">(</span><span class="n">p_pos</span><span class="p">.</span><span class="n">z</span><span class="o">/</span><span class="n">cell_size</span><span class="p">));</span>
+<a name="line-109"></a>
+<a name="line-110"></a>		<span class="n">Point</span> <span class="n">p</span><span class="p">;</span>
+<a name="line-111"></a>		<span class="n">p</span><span class="p">.</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-112"></a>		<span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>
+<a name="line-113"></a>		<span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
+<a name="line-114"></a>		<span class="n">p</span><span class="p">.</span><span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">;</span>
+<a name="line-115"></a>		<span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+<a name="line-116"></a>
+<a name="line-117"></a>	<span class="p">}</span>
+<a name="line-118"></a>
+<a name="line-119"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">Vector3</span> <span class="n">_get_vertex</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span><span class="o">&amp;</span> <span class="n">p_point</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-120"></a>
+<a name="line-121"></a>		<span class="k">return</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">p_point</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="n">p_point</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="n">p_point</span><span class="p">.</span><span class="n">z</span><span class="p">)</span><span class="o">*</span><span class="n">cell_size</span><span class="p">;</span>
+<a name="line-122"></a>	<span class="p">}</span>
+<a name="line-123"></a>
+<a name="line-124"></a>
 <a name="line-125"></a>
-<a name="line-126"></a><span class="c1">// Memory scaling with dimensions:</span>
-<a name="line-127"></a><span class="c1">//  memory (bytes) ~= 2.25 * w + 0.0625 * w * h</span>
-<a name="line-128"></a><span class="c1">//</span>
-<a name="line-129"></a><span class="c1">// Typical memory footprint (768x510 picture)</span>
-<a name="line-130"></a><span class="c1">// Memory used:</span>
-<a name="line-131"></a><span class="c1">//              encoder: 33919</span>
-<a name="line-132"></a><span class="c1">//          block cache: 2880</span>
-<a name="line-133"></a><span class="c1">//                 info: 3072</span>
-<a name="line-134"></a><span class="c1">//                preds: 24897</span>
-<a name="line-135"></a><span class="c1">//          top samples: 1623</span>
-<a name="line-136"></a><span class="c1">//             non-zero: 196</span>
-<a name="line-137"></a><span class="c1">//             lf-stats: 2048</span>
-<a name="line-138"></a><span class="c1">//                total: 68635</span>
-<a name="line-139"></a><span class="c1">// Transcient object sizes:</span>
-<a name="line-140"></a><span class="c1">//       VP8EncIterator: 352</span>
-<a name="line-141"></a><span class="c1">//         VP8ModeScore: 912</span>
-<a name="line-142"></a><span class="c1">//       VP8SegmentInfo: 532</span>
-<a name="line-143"></a><span class="c1">//             VP8Proba: 31032</span>
-<a name="line-144"></a><span class="c1">//              LFStats: 2048</span>
-<a name="line-145"></a><span class="c1">// Picture size (yuv): 589824</span>
-<a name="line-146"></a>
-<a name="line-147"></a><span class="k">static</span> <span class="n">VP8Encoder</span><span class="o">*</span> <span class="n">InitVP8Encoder</span><span class="p">(</span><span class="k">const</span> <span class="n">WebPConfig</span><span class="o">*</span> <span class="k">const</span> <span class="n">config</span><span class="p">,</span>
-<a name="line-148"></a>                                  <span class="n">WebPPicture</span><span class="o">*</span> <span class="k">const</span> <span class="n">picture</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-149"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">use_filter</span> <span class="o">=</span>
-<a name="line-150"></a>      <span class="p">(</span><span class="n">config</span><span class="o">-&gt;</span><span class="n">filter_strength</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">config</span><span class="o">-&gt;</span><span class="n">autofilter</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-151"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">mb_w</span> <span class="o">=</span> <span class="p">(</span><span class="n">picture</span><span class="o">-&gt;</span><span class="n">width</span> <span class="o">+</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span>
-<a name="line-152"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">mb_h</span> <span class="o">=</span> <span class="p">(</span><span class="n">picture</span><span class="o">-&gt;</span><span class="n">height</span> <span class="o">+</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span>
-<a name="line-153"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">preds_w</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">mb_w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-154"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">preds_h</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">mb_h</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-155"></a>  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">preds_size</span> <span class="o">=</span> <span class="n">preds_w</span> <span class="o">*</span> <span class="n">preds_h</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">);</span>
-<a name="line-156"></a>  <span class="k">const</span> <span class="kt">int</span> <span class="n">top_stride</span> <span class="o">=</span> <span class="n">mb_w</span> <span class="o">*</span> <span class="mi">16</span><span class="p">;</span>
-<a name="line-157"></a>  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">nz_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">mb_w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">);</span>
-<a name="line-158"></a>  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">cache_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">YUV_SIZE</span> <span class="o">+</span> <span class="n">PRED_SIZE</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">);</span>
-<a name="line-159"></a>  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">info_size</span> <span class="o">=</span> <span class="n">mb_w</span> <span class="o">*</span> <span class="n">mb_h</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">VP8MBInfo</span><span class="p">);</span>
-<a name="line-160"></a>  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">samples_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">top_stride</span> <span class="o">+</span>         <span class="c1">// top-luma/u/v</span>
-<a name="line-161"></a>                               <span class="mi">16</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span>   <span class="c1">// left y/u/v</span>
-<a name="line-162"></a>                               <span class="mi">2</span> <span class="o">*</span> <span class="n">ALIGN_CST</span><span class="p">)</span>           <span class="c1">// align all</span>
-<a name="line-163"></a>                               <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">);</span>
-<a name="line-164"></a>  <span class="k">const</span> <span class="kt">size_t</span> <span class="n">lf_stats_size</span> <span class="o">=</span>
-<a name="line-165"></a>      <span class="n">config</span><span class="o">-&gt;</span><span class="n">autofilter</span> <span class="o">?</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LFStats</span><span class="p">)</span> <span class="o">+</span> <span class="nl">ALIGN_CST</span> <span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-166"></a>  <span class="n">VP8Encoder</span><span class="o">*</span> <span class="n">enc</span><span class="p">;</span>
-<a name="line-167"></a>  <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">mem</span><span class="p">;</span>
-<a name="line-168"></a>  <span class="k">const</span> <span class="kt">uint64_t</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint64_t</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="p">)</span>   <span class="c1">// main struct</span>
-<a name="line-169"></a>                      <span class="o">+</span> <span class="n">ALIGN_CST</span>                      <span class="c1">// cache alignment</span>
-<a name="line-170"></a>                      <span class="o">+</span> <span class="n">cache_size</span>                     <span class="c1">// working caches</span>
-<a name="line-171"></a>                      <span class="o">+</span> <span class="n">info_size</span>                      <span class="c1">// modes info</span>
-<a name="line-172"></a>                      <span class="o">+</span> <span class="n">preds_size</span>                     <span class="c1">// prediction modes</span>
-<a name="line-173"></a>                      <span class="o">+</span> <span class="n">samples_size</span>                   <span class="c1">// top/left samples</span>
-<a name="line-174"></a>                      <span class="o">+</span> <span class="n">nz_size</span>                        <span class="c1">// coeff context bits</span>
-<a name="line-175"></a>                      <span class="o">+</span> <span class="n">lf_stats_size</span><span class="p">;</span>                 <span class="c1">// autofilter stats</span>
-<a name="line-176"></a>
-<a name="line-177"></a><span class="cp">#ifdef PRINT_MEMORY_INFO</span>
-<a name="line-178"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;===================================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-179"></a><span class="hll">  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Memory used:</span><span class="se">\n</span><span class="s">&quot;</span><span class='error2'>&lt;--- %ld in format string (no. 2) requires 'long' but the argument type is 'size_t {aka unsigned long}'.</span><span class='error2'>&lt;--- %ld in format string (no. 3) requires 'long' but the argument type is 'size_t {aka unsigned long}'.</span><span class='error2'>&lt;--- %ld in format string (no. 4) requires 'long' but the argument type is 'size_t {aka unsigned long}'.</span><span class='error2'>&lt;--- %ld in format string (no. 5) requires 'long' but the argument type is 'size_t {aka unsigned long}'.</span><span class='error2'>&lt;--- %ld in format string (no. 6) requires 'long' but the argument type is 'size_t {aka unsigned long}'.</span><span class='error2'>&lt;--- %ld in format string (no. 7) requires 'long' but the argument type is 'size_t {aka unsigned long}'.</span>
-</span><a name="line-180"></a>         <span class="s">&quot;             encoder: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-181"></a>         <span class="s">&quot;         block cache: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-182"></a>         <span class="s">&quot;                info: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-183"></a>         <span class="s">&quot;               preds: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-184"></a>         <span class="s">&quot;         top samples: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-185"></a>         <span class="s">&quot;            non-zero: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-186"></a>         <span class="s">&quot;            lf-stats: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-187"></a>         <span class="s">&quot;               total: %ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
-<a name="line-188"></a>         <span class="k">sizeof</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="p">)</span> <span class="o">+</span> <span class="n">ALIGN_CST</span><span class="p">,</span> <span class="n">cache_size</span><span class="p">,</span> <span class="n">info_size</span><span class="p">,</span>
-<a name="line-189"></a>         <span class="n">preds_size</span><span class="p">,</span> <span class="n">samples_size</span><span class="p">,</span> <span class="n">nz_size</span><span class="p">,</span> <span class="n">lf_stats_size</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
-<a name="line-190"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Transcient object sizes:</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-191"></a>         <span class="s">&quot;      VP8EncIterator: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-192"></a>         <span class="s">&quot;        VP8ModeScore: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-193"></a>         <span class="s">&quot;      VP8SegmentInfo: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-194"></a>         <span class="s">&quot;            VP8Proba: %ld</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-195"></a>         <span class="s">&quot;             LFStats: %ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
-<a name="line-196"></a>         <span class="k">sizeof</span><span class="p">(</span><span class="n">VP8EncIterator</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">VP8ModeScore</span><span class="p">),</span>
-<a name="line-197"></a>         <span class="k">sizeof</span><span class="p">(</span><span class="n">VP8SegmentInfo</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">VP8Proba</span><span class="p">),</span>
-<a name="line-198"></a>         <span class="k">sizeof</span><span class="p">(</span><span class="n">LFStats</span><span class="p">));</span>
-<a name="line-199"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Picture size (yuv): %ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
-<a name="line-200"></a>         <span class="n">mb_w</span> <span class="o">*</span> <span class="n">mb_h</span> <span class="o">*</span> <span class="mi">384</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">));</span>
-<a name="line-201"></a>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;===================================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-202"></a><span class="cp">#endif</span>
-<a name="line-203"></a>  <span class="n">mem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">WebPSafeMalloc</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mem</span><span class="p">));</span>
-<a name="line-204"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">mem</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-205"></a>    <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">picture</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_OUT_OF_MEMORY</span><span class="p">);</span>
-<a name="line-206"></a>    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-207"></a>  <span class="p">}</span>
-<a name="line-208"></a>  <span class="n">enc</span> <span class="o">=</span> <span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-209"></a>  <span class="n">mem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">DO_ALIGN</span><span class="p">(</span><span class="n">mem</span> <span class="o">+</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">enc</span><span class="p">));</span>
-<a name="line-210"></a>  <span class="n">memset</span><span class="p">(</span><span class="n">enc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">enc</span><span class="p">));</span>
-<a name="line-211"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">num_parts_</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">config</span><span class="o">-&gt;</span><span class="n">partitions</span><span class="p">;</span>
-<a name="line-212"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">mb_w_</span> <span class="o">=</span> <span class="n">mb_w</span><span class="p">;</span>
-<a name="line-213"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">mb_h_</span> <span class="o">=</span> <span class="n">mb_h</span><span class="p">;</span>
-<a name="line-214"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_w_</span> <span class="o">=</span> <span class="n">preds_w</span><span class="p">;</span>
-<a name="line-215"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">yuv_in_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-216"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">YUV_SIZE</span><span class="p">;</span>
-<a name="line-217"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">yuv_out_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-218"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">YUV_SIZE</span><span class="p">;</span>
-<a name="line-219"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">yuv_out2_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-220"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">YUV_SIZE</span><span class="p">;</span>
-<a name="line-221"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">yuv_p_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-222"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">PRED_SIZE</span><span class="p">;</span>
-<a name="line-223"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">mb_info_</span> <span class="o">=</span> <span class="p">(</span><span class="n">VP8MBInfo</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-224"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">info_size</span><span class="p">;</span>
-<a name="line-225"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_</span> <span class="o">=</span> <span class="p">((</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">preds_w_</span><span class="p">;</span>
-<a name="line-226"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">preds_w</span> <span class="o">*</span> <span class="n">preds_h</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">);</span>
-<a name="line-227"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">nz_</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-228"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">nz_size</span><span class="p">;</span>
-<a name="line-229"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">lf_stats_</span> <span class="o">=</span> <span class="n">lf_stats_size</span> <span class="o">?</span> <span class="p">(</span><span class="n">LFStats</span><span class="o">*</span><span class="p">)</span><span class="n">DO_ALIGN</span><span class="p">(</span><span class="n">mem</span><span class="p">)</span> <span class="o">:</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-230"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="n">lf_stats_size</span><span class="p">;</span>
-<a name="line-231"></a>
-<a name="line-232"></a>  <span class="c1">// top samples (all 16-aligned)</span>
-<a name="line-233"></a>  <span class="n">mem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">DO_ALIGN</span><span class="p">(</span><span class="n">mem</span><span class="p">);</span>
-<a name="line-234"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">y_top_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-235"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">uv_top_</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">y_top_</span> <span class="o">+</span> <span class="n">top_stride</span><span class="p">;</span>
-<a name="line-236"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">top_stride</span><span class="p">;</span>
-<a name="line-237"></a>  <span class="n">mem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">DO_ALIGN</span><span class="p">(</span><span class="n">mem</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-238"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">y_left_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-239"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="mi">16</span> <span class="o">+</span> <span class="mi">16</span><span class="p">;</span>
-<a name="line-240"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">u_left_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-241"></a>  <span class="n">mem</span> <span class="o">+=</span> <span class="mi">16</span><span class="p">;</span>
-<a name="line-242"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">v_left_</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">mem</span><span class="p">;</span>
-<a name="line-243"></a><span class="hll">  <span class="n">mem</span> <span class="o">+=</span> <span class="mi">8</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'mem' is assigned a value that is never used.</span>
-</span><a name="line-244"></a>
-<a name="line-245"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">config_</span> <span class="o">=</span> <span class="n">config</span><span class="p">;</span>
-<a name="line-246"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">profile_</span> <span class="o">=</span> <span class="n">use_filter</span> <span class="o">?</span> <span class="p">((</span><span class="n">config</span><span class="o">-&gt;</span><span class="n">filter_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">)</span> <span class="o">:</span> <span class="mi">2</span><span class="p">;</span>
-<a name="line-247"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">pic_</span> <span class="o">=</span> <span class="n">picture</span><span class="p">;</span>
-<a name="line-248"></a>  <span class="n">enc</span><span class="o">-&gt;</span><span class="n">percent_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-249"></a>
-<a name="line-250"></a>  <span class="n">MapConfigToTools</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-251"></a>  <span class="n">VP8EncDspInit</span><span class="p">();</span>
-<a name="line-252"></a>  <span class="n">VP8DefaultProbas</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-253"></a>  <span class="n">ResetSegmentHeader</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-254"></a>  <span class="n">ResetFilterHeader</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-255"></a>  <span class="n">ResetBoundaryPredictions</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-256"></a>
-<a name="line-257"></a>  <span class="n">VP8EncInitAlpha</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-258"></a><span class="cp">#ifdef WEBP_EXPERIMENTAL_FEATURES</span>
-<a name="line-259"></a>  <span class="n">VP8EncInitLayer</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-260"></a><span class="cp">#endif</span>
-<a name="line-261"></a>
-<a name="line-262"></a>  <span class="k">return</span> <span class="n">enc</span><span class="p">;</span>
-<a name="line-263"></a><span class="p">}</span>
-<a name="line-264"></a>
-<a name="line-265"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">DeleteVP8Encoder</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-266"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">enc</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-267"></a>    <span class="n">VP8EncDeleteAlpha</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-268"></a><span class="cp">#ifdef WEBP_EXPERIMENTAL_FEATURES</span>
-<a name="line-269"></a>    <span class="n">VP8EncDeleteLayer</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-270"></a><span class="cp">#endif</span>
-<a name="line-271"></a>    <span class="n">free</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-272"></a>  <span class="p">}</span>
-<a name="line-273"></a><span class="p">}</span>
-<a name="line-274"></a>
-<a name="line-275"></a><span class="c1">//------------------------------------------------------------------------------</span>
-<a name="line-276"></a>
-<a name="line-277"></a><span class="k">static</span> <span class="kt">double</span> <span class="n">GetPSNR</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">err</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-278"></a>  <span class="k">return</span> <span class="n">err</span> <span class="o">?</span> <span class="mf">10.</span> <span class="o">*</span> <span class="n">log10</span><span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="mf">255.</span> <span class="o">*</span> <span class="n">size</span> <span class="o">/</span> <span class="n">err</span><span class="p">)</span> <span class="o">:</span> <span class="mf">99.</span><span class="p">;</span>
-<a name="line-279"></a><span class="p">}</span>
-<a name="line-280"></a>
-<a name="line-281"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">FinalizePSNR</span><span class="p">(</span><span class="k">const</span> <span class="n">VP8Encoder</span><span class="o">*</span> <span class="k">const</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-282"></a>  <span class="n">WebPAuxStats</span><span class="o">*</span> <span class="n">stats</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">pic_</span><span class="o">-&gt;</span><span class="n">stats</span><span class="p">;</span>
-<a name="line-283"></a>  <span class="k">const</span> <span class="kt">uint64_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">sse_count_</span><span class="p">;</span>
-<a name="line-284"></a>  <span class="k">const</span> <span class="kt">uint64_t</span><span class="o">*</span> <span class="k">const</span> <span class="n">sse</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">sse_</span><span class="p">;</span>
-<a name="line-285"></a>  <span class="n">stats</span><span class="o">-&gt;</span><span class="n">PSNR</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">GetPSNR</span><span class="p">(</span><span class="n">sse</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="p">);</span>
-<a name="line-286"></a>  <span class="n">stats</span><span class="o">-&gt;</span><span class="n">PSNR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">GetPSNR</span><span class="p">(</span><span class="n">sse</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span> <span class="o">/</span> <span class="mi">4</span><span class="p">);</span>
-<a name="line-287"></a>  <span class="n">stats</span><span class="o">-&gt;</span><span class="n">PSNR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">GetPSNR</span><span class="p">(</span><span class="n">sse</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span> <span class="o">/</span> <span class="mi">4</span><span class="p">);</span>
-<a name="line-288"></a>  <span class="n">stats</span><span class="o">-&gt;</span><span class="n">PSNR</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">GetPSNR</span><span class="p">(</span><span class="n">sse</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">sse</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">sse</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">size</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-<a name="line-289"></a>  <span class="n">stats</span><span class="o">-&gt;</span><span class="n">PSNR</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">GetPSNR</span><span class="p">(</span><span class="n">sse</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">size</span><span class="p">);</span>
-<a name="line-290"></a><span class="p">}</span>
-<a name="line-291"></a>
-<a name="line-292"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">StoreStats</span><span class="p">(</span><span class="n">VP8Encoder</span><span class="o">*</span> <span class="k">const</span> <span class="n">enc</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-293"></a>  <span class="n">WebPAuxStats</span><span class="o">*</span> <span class="k">const</span> <span class="n">stats</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">pic_</span><span class="o">-&gt;</span><span class="n">stats</span><span class="p">;</span>
-<a name="line-294"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">stats</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-295"></a>    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">;</span>
-<a name="line-296"></a>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_MB_SEGMENTS</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-297"></a>      <span class="n">stats</span><span class="o">-&gt;</span><span class="n">segment_level</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">dqm_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">fstrength_</span><span class="p">;</span>
-<a name="line-298"></a>      <span class="n">stats</span><span class="o">-&gt;</span><span class="n">segment_quant</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">dqm_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">quant_</span><span class="p">;</span>
-<a name="line-299"></a>      <span class="k">for</span> <span class="p">(</span><span class="n">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-300"></a>        <span class="n">stats</span><span class="o">-&gt;</span><span class="n">residual_bytes</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">residual_bytes_</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
-<a name="line-301"></a>      <span class="p">}</span>
-<a name="line-302"></a>    <span class="p">}</span>
-<a name="line-303"></a>    <span class="n">FinalizePSNR</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-304"></a>    <span class="n">stats</span><span class="o">-&gt;</span><span class="n">coded_size</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">coded_size_</span><span class="p">;</span>
-<a name="line-305"></a>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-306"></a>      <span class="n">stats</span><span class="o">-&gt;</span><span class="n">block_count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enc</span><span class="o">-&gt;</span><span class="n">block_count_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-307"></a>    <span class="p">}</span>
-<a name="line-308"></a>  <span class="p">}</span>
-<a name="line-309"></a>  <span class="n">WebPReportProgress</span><span class="p">(</span><span class="n">enc</span><span class="o">-&gt;</span><span class="n">pic_</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">enc</span><span class="o">-&gt;</span><span class="n">percent_</span><span class="p">);</span>  <span class="c1">// done!</span>
-<a name="line-310"></a><span class="p">}</span>
-<a name="line-311"></a>
-<a name="line-312"></a><span class="kt">int</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="k">const</span> <span class="n">WebPPicture</span><span class="o">*</span> <span class="k">const</span> <span class="n">pic</span><span class="p">,</span>
-<a name="line-313"></a>                         <span class="n">WebPEncodingError</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-314"></a>  <span class="n">assert</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">error</span> <span class="o">&lt;</span> <span class="n">VP8_ENC_ERROR_LAST</span><span class="p">);</span>
-<a name="line-315"></a>  <span class="n">assert</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">error</span> <span class="o">&gt;=</span> <span class="n">VP8_ENC_OK</span><span class="p">);</span>
-<a name="line-316"></a>  <span class="p">((</span><span class="n">WebPPicture</span><span class="o">*</span><span class="p">)</span><span class="n">pic</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">error_code</span> <span class="o">=</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-317"></a>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-318"></a><span class="p">}</span>
-<a name="line-319"></a>
-<a name="line-320"></a><span class="kt">int</span> <span class="n">WebPReportProgress</span><span class="p">(</span><span class="k">const</span> <span class="n">WebPPicture</span><span class="o">*</span> <span class="k">const</span> <span class="n">pic</span><span class="p">,</span>
-<a name="line-321"></a>                       <span class="kt">int</span> <span class="n">percent</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="k">const</span> <span class="n">percent_store</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-322"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">percent_store</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">percent</span> <span class="o">!=</span> <span class="o">*</span><span class="n">percent_store</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-323"></a>    <span class="o">*</span><span class="n">percent_store</span> <span class="o">=</span> <span class="n">percent</span><span class="p">;</span>
-<a name="line-324"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">progress_hook</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">progress_hook</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span> <span class="n">pic</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-325"></a>      <span class="c1">// user abort requested</span>
-<a name="line-326"></a>      <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_USER_ABORT</span><span class="p">);</span>
-<a name="line-327"></a>      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-328"></a>    <span class="p">}</span>
-<a name="line-329"></a>  <span class="p">}</span>
-<a name="line-330"></a>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// ok</span>
-<a name="line-331"></a><span class="p">}</span>
-<a name="line-332"></a><span class="c1">//------------------------------------------------------------------------------</span>
-<a name="line-333"></a>
-<a name="line-334"></a><span class="kt">int</span> <span class="n">WebPEncode</span><span class="p">(</span><span class="k">const</span> <span class="n">WebPConfig</span><span class="o">*</span> <span class="n">config</span><span class="p">,</span> <span class="n">WebPPicture</span><span class="o">*</span> <span class="n">pic</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-335"></a>  <span class="kt">int</span> <span class="n">ok</span><span class="p">;</span>
-<a name="line-336"></a>
-<a name="line-337"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">pic</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-338"></a>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-339"></a>  <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_OK</span><span class="p">);</span>  <span class="c1">// all ok so far</span>
-<a name="line-340"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">config</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>  <span class="c1">// bad params</span>
-<a name="line-341"></a>    <span class="k">return</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-342"></a>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">WebPValidateConfig</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
-<a name="line-343"></a>    <span class="k">return</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_INVALID_CONFIGURATION</span><span class="p">);</span>
-<a name="line-344"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">width</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">pic</span><span class="o">-&gt;</span><span class="n">height</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-345"></a>    <span class="k">return</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_BAD_DIMENSION</span><span class="p">);</span>
-<a name="line-346"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">width</span> <span class="o">&gt;</span> <span class="n">WEBP_MAX_DIMENSION</span> <span class="o">||</span> <span class="n">pic</span><span class="o">-&gt;</span><span class="n">height</span> <span class="o">&gt;</span> <span class="n">WEBP_MAX_DIMENSION</span><span class="p">)</span>
-<a name="line-347"></a>    <span class="k">return</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_BAD_DIMENSION</span><span class="p">);</span>
-<a name="line-348"></a>
-<a name="line-349"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">stats</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">memset</span><span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">stats</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">stats</span><span class="p">));</span>
-<a name="line-350"></a>
-<a name="line-351"></a>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">config</span><span class="o">-&gt;</span><span class="n">lossless</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-352"></a>    <span class="n">VP8Encoder</span><span class="o">*</span> <span class="n">enc</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-353"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">y</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">pic</span><span class="o">-&gt;</span><span class="n">u</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">pic</span><span class="o">-&gt;</span><span class="n">v</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-354"></a>      <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">argb</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-355"></a>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">WebPPictureARGBToYUVA</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">WEBP_YUV420</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-356"></a>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-357"></a>        <span class="k">return</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-358"></a>      <span class="p">}</span>
-<a name="line-359"></a>    <span class="p">}</span>
-<a name="line-360"></a>
-<a name="line-361"></a>    <span class="n">enc</span> <span class="o">=</span> <span class="n">InitVP8Encoder</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">pic</span><span class="p">);</span>
-<a name="line-362"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">enc</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// pic-&gt;error is already set.</span>
-<a name="line-363"></a>    <span class="c1">// Note: each of the tasks below account for 20% in the progress report.</span>
-<a name="line-364"></a>    <span class="n">ok</span> <span class="o">=</span> <span class="n">VP8EncAnalyze</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span>
-<a name="line-365"></a>      <span class="o">&amp;&amp;</span> <span class="n">VP8StatLoop</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span>
-<a name="line-366"></a>      <span class="o">&amp;&amp;</span> <span class="n">VP8EncLoop</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span>
-<a name="line-367"></a>      <span class="o">&amp;&amp;</span> <span class="n">VP8EncFinishAlpha</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span>
-<a name="line-368"></a><span class="cp">#ifdef WEBP_EXPERIMENTAL_FEATURES</span>
-<a name="line-369"></a>      <span class="o">&amp;&amp;</span> <span class="n">VP8EncFinishLayer</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span>
-<a name="line-370"></a><span class="cp">#endif</span>
-<a name="line-371"></a>      <span class="o">&amp;&amp;</span> <span class="n">VP8EncWrite</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-372"></a>    <span class="n">StoreStats</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-373"></a>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ok</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-374"></a>      <span class="n">VP8EncFreeBitWriters</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-375"></a>    <span class="p">}</span>
-<a name="line-376"></a>    <span class="n">DeleteVP8Encoder</span><span class="p">(</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-377"></a>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-378"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">pic</span><span class="o">-&gt;</span><span class="n">argb</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-379"></a>      <span class="k">return</span> <span class="n">WebPEncodingSetError</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="n">VP8_ENC_ERROR_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-380"></a>
-<a name="line-381"></a>    <span class="n">ok</span> <span class="o">=</span> <span class="n">VP8LEncodeImage</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">pic</span><span class="p">);</span>  <span class="c1">// Sets pic-&gt;error in case of problem.</span>
-<a name="line-382"></a>  <span class="p">}</span>
-<a name="line-383"></a>
-<a name="line-384"></a>  <span class="k">return</span> <span class="n">ok</span><span class="p">;</span>
-<a name="line-385"></a><span class="p">}</span>
-<a name="line-386"></a>
-<a name="line-387"></a><span class="cp">#if defined(__cplusplus) || defined(c_plusplus)</span>
-<a name="line-388"></a><span class="p">}</span>    <span class="c1">// extern &quot;C&quot;</span>
-<a name="line-389"></a><span class="cp">#endif</span>
+<a name="line-126"></a>	<span class="kt">void</span> <span class="n">_navmesh_link</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_id</span><span class="p">);</span>
+<a name="line-127"></a>	<span class="kt">void</span> <span class="nf">_navmesh_unlink</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_id</span><span class="p">);</span>
+<a name="line-128"></a>
+<a name="line-129"></a>	<span class="kt">float</span> <span class="n">cell_size</span><span class="p">;</span>
+<a name="line-130"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">NavMesh</span><span class="o">&gt;</span> <span class="n">navmesh_map</span><span class="p">;</span>
+<a name="line-131"></a>	<span class="kt">int</span> <span class="n">last_id</span><span class="p">;</span>
+<a name="line-132"></a>
+<a name="line-133"></a>	<span class="n">Vector3</span> <span class="n">up</span><span class="p">;</span>
+<a name="line-134"></a>	<span class="kt">void</span> <span class="nf">_clip_path</span><span class="p">(</span><span class="n">Vector</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;&amp;</span> <span class="n">path</span><span class="p">,</span><span class="n">Polygon</span> <span class="o">*</span><span class="n">from_poly</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_to_point</span><span class="p">,</span> <span class="n">Polygon</span><span class="o">*</span> <span class="n">p_to_poly</span><span class="p">);</span>
+<a name="line-135"></a>
+<a name="line-136"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-137"></a>
+<a name="line-138"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
+<a name="line-139"></a>
+<a name="line-140"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-141"></a>
+<a name="line-142"></a>	<span class="kt">void</span> <span class="n">set_up_vector</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_up</span><span class="p">);</span>
+<a name="line-143"></a>	<span class="n">Vector3</span> <span class="n">get_up_vector</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-144"></a>
+<a name="line-145"></a>	<span class="c1">//API should be as dynamic as possible</span>
+<a name="line-146"></a>	<span class="kt">int</span> <span class="nf">navmesh_create</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">NavigationMesh</span><span class="o">&gt;&amp;</span> <span class="n">p_mesh</span><span class="p">,</span><span class="k">const</span> <span class="n">Transform</span><span class="o">&amp;</span> <span class="n">p_xform</span><span class="p">,</span><span class="n">Object</span><span class="o">*</span> <span class="n">p_owner</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-147"></a>	<span class="kt">void</span> <span class="nf">navmesh_set_transform</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_id</span><span class="p">,</span> <span class="k">const</span> <span class="n">Transform</span><span class="o">&amp;</span> <span class="n">p_xform</span><span class="p">);</span>
+<a name="line-148"></a>	<span class="kt">void</span> <span class="nf">navmesh_remove</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_id</span><span class="p">);</span>
+<a name="line-149"></a>
+<a name="line-150"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span> <span class="n">get_simple_path</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_start</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_end</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_optimize</span><span class="o">=</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-151"></a>	<span class="n">Vector3</span> <span class="nf">get_closest_point_to_segment</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_from</span><span class="p">,</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_to</span><span class="p">,</span><span class="k">const</span> <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">p_use_collision</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-152"></a>	<span class="n">Vector3</span> <span class="nf">get_closest_point</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_point</span><span class="p">);</span>
+<a name="line-153"></a>	<span class="n">Vector3</span> <span class="nf">get_closest_point_normal</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_point</span><span class="p">);</span>
+<a name="line-154"></a>	<span class="n">Object</span><span class="o">*</span> <span class="nf">get_closest_point_owner</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector3</span><span class="o">&amp;</span> <span class="n">p_point</span><span class="p">);</span>
+<a name="line-155"></a>
+<a name="line-156"></a>	<span class="n">Navigation</span><span class="p">();</span>
+<a name="line-157"></a><span class="p">};</span>
+<a name="line-158"></a>
+<a name="line-159"></a><span class="cp">#endif </span><span class="c1">// NAVIGATION_H</span>
 </pre></div>
 </td></tr></table>
       </div>

@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/theora/internal.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/platform/android/audio_driver_opensl.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> internal.c</p>
-<a href='570.html#line-261'> clarifyCalculation 261</a>
+       <p id="filename"><a href="index.html">Defects:</a> audio_driver_opensl.cpp</p>
+<a href='570.html#line-109'> cstyleCast 109</a><a href='570.html#line-239'> unusedVariable 239</a><a href='570.html#line-303'> unreadVariable 303</a><a href='570.html#line-304'> unreadVariable 304</a><a href='570.html#line-410'> uninitMemberVar 410</a><a href='570.html#line-410'> uninitMemberVar 410</a><a href='570.html#line-410'> uninitMemberVar 410</a><a href='570.html#line-410'> uninitMemberVar 410</a><a href='570.html#line-410'> uninitMemberVar 410</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -375,268 +375,574 @@
 259
 260
 261
-262</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/********************************************************************</span>
-<a name="line-2"></a><span class="cm"> *                                                                  *</span>
-<a name="line-3"></a><span class="cm"> * THIS FILE IS PART OF THE OggTheora SOFTWARE CODEC SOURCE CODE.   *</span>
-<a name="line-4"></a><span class="cm"> * USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     *</span>
-<a name="line-5"></a><span class="cm"> * GOVERNED BY A BSD-STYLE SOURCE LICENSE INCLUDED WITH THIS SOURCE *</span>
-<a name="line-6"></a><span class="cm"> * IN &#39;COPYING&#39;. PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       *</span>
-<a name="line-7"></a><span class="cm"> *                                                                  *</span>
-<a name="line-8"></a><span class="cm"> * THE Theora SOURCE CODE IS COPYRIGHT (C) 2002-2009                *</span>
-<a name="line-9"></a><span class="cm"> * by the Xiph.Org Foundation and contributors http://www.xiph.org/ *</span>
-<a name="line-10"></a><span class="cm"> *                                                                  *</span>
-<a name="line-11"></a><span class="cm"> ********************************************************************</span>
-<a name="line-12"></a>
-<a name="line-13"></a><span class="cm">  function:</span>
-<a name="line-14"></a><span class="cm">    last mod: $Id: internal.c 16503 2009-08-22 18:14:02Z giles $</span>
-<a name="line-15"></a>
-<a name="line-16"></a><span class="cm"> ********************************************************************/</span>
-<a name="line-17"></a>
-<a name="line-18"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
-<a name="line-19"></a><span class="cp">#include &lt;limits.h&gt;</span>
-<a name="line-20"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-21"></a><span class="cp">#include &quot;internal.h&quot;</span>
-<a name="line-22"></a>
-<a name="line-23"></a>
-<a name="line-24"></a>
-<a name="line-25"></a><span class="cm">/*A map from the index in the zig zag scan to the coefficient number in a</span>
-<a name="line-26"></a><span class="cm">   block.</span>
-<a name="line-27"></a><span class="cm">  All zig zag indices beyond 63 are sent to coefficient 64, so that zero runs</span>
-<a name="line-28"></a><span class="cm">   past the end of a block in bogus streams get mapped to a known location.*/</span>
-<a name="line-29"></a><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">OC_FZIG_ZAG</span><span class="p">[</span><span class="mi">128</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-30"></a>   <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span>
-<a name="line-31"></a>  <span class="mi">17</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
-<a name="line-32"></a>  <span class="mi">12</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span>
-<a name="line-33"></a>  <span class="mi">27</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span>
-<a name="line-34"></a>  <span class="mi">35</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">49</span><span class="p">,</span><span class="mi">56</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span>
-<a name="line-35"></a>  <span class="mi">29</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">51</span><span class="p">,</span>
-<a name="line-36"></a>  <span class="mi">58</span><span class="p">,</span><span class="mi">59</span><span class="p">,</span><span class="mi">52</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">39</span><span class="p">,</span><span class="mi">46</span><span class="p">,</span>
-<a name="line-37"></a>  <span class="mi">53</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">61</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">47</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">62</span><span class="p">,</span><span class="mi">63</span><span class="p">,</span>
-<a name="line-38"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-39"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-40"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-41"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-42"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-43"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-44"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span>
-<a name="line-45"></a>  <span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span>
-<a name="line-46"></a><span class="p">};</span>
-<a name="line-47"></a>
-<a name="line-48"></a><span class="cm">/*A map from the coefficient number in a block to its index in the zig zag</span>
-<a name="line-49"></a><span class="cm">   scan.*/</span>
-<a name="line-50"></a><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">OC_IZIG_ZAG</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-51"></a>   <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span>
-<a name="line-52"></a>   <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span>
-<a name="line-53"></a>   <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span>
-<a name="line-54"></a>   <span class="mi">9</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">53</span><span class="p">,</span>
-<a name="line-55"></a>  <span class="mi">10</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">39</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">52</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span>
-<a name="line-56"></a>  <span class="mi">20</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">46</span><span class="p">,</span><span class="mi">51</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span>
-<a name="line-57"></a>  <span class="mi">21</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">47</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">56</span><span class="p">,</span><span class="mi">59</span><span class="p">,</span><span class="mi">61</span><span class="p">,</span>
-<a name="line-58"></a>  <span class="mi">35</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">49</span><span class="p">,</span><span class="mi">57</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span><span class="mi">62</span><span class="p">,</span><span class="mi">63</span>
-<a name="line-59"></a><span class="p">};</span>
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  audio_driver_opensl.cpp                                             */</span>
+<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
+<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
+<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
+<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
+<a name="line-9"></a><span class="cm">/*                                                                       */</span>
+<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
+<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
+<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
+<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
+<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
+<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
+<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
+<a name="line-17"></a><span class="cm">/*                                                                       */</span>
+<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
+<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
+<a name="line-20"></a><span class="cm">/*                                                                       */</span>
+<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
+<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
+<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
+<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
+<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
+<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
+<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
+<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-29"></a><span class="cp">#include &quot;audio_driver_opensl.h&quot;</span>
+<a name="line-30"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-31"></a>
+<a name="line-32"></a>
+<a name="line-33"></a>
+<a name="line-34"></a>
+<a name="line-35"></a>
+<a name="line-36"></a><span class="cp">#define MAX_NUMBER_INTERFACES 3</span>
+<a name="line-37"></a><span class="cp">#define MAX_NUMBER_OUTPUT_DEVICES 6</span>
+<a name="line-38"></a>
+<a name="line-39"></a><span class="cm">/* Structure for passing information to callback function */</span>
+<a name="line-40"></a>
+<a name="line-41"></a>
+<a name="line-42"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">_buffer_callback</span><span class="p">(</span>
+<a name="line-43"></a>    <span class="n">SLAndroidSimpleBufferQueueItf</span> <span class="n">queueItf</span>
+<a name="line-44"></a> <span class="cm">/*   SLuint32 eventFlags,</span>
+<a name="line-45"></a><span class="cm">    const void * pBuffer,</span>
+<a name="line-46"></a><span class="cm">    SLuint32 bufferSize,</span>
+<a name="line-47"></a><span class="cm">    SLuint32 dataUsed*/</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-48"></a>
+<a name="line-49"></a>	<span class="kt">bool</span> <span class="n">mix</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-50"></a>
+<a name="line-51"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pause</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-52"></a>		<span class="n">mix</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-53"></a>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">mutex</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-54"></a>		<span class="n">mix</span> <span class="o">=</span> <span class="n">mutex</span><span class="o">-&gt;</span><span class="n">try_lock</span><span class="p">()</span><span class="o">==</span><span class="n">OK</span><span class="p">;</span>
+<a name="line-55"></a>	<span class="p">}</span>
+<a name="line-56"></a>
+<a name="line-57"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">mix</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-58"></a>		<span class="n">audio_server_process</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">,</span><span class="n">mixdown_buffer</span><span class="p">);</span>
+<a name="line-59"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 <a name="line-60"></a>
-<a name="line-61"></a><span class="cm">/*A map from physical macro block ordering to bitstream macro block</span>
-<a name="line-62"></a><span class="cm">   ordering within a super block.*/</span>
-<a name="line-63"></a><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">OC_MB_MAP</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="p">{{</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">}};</span>
-<a name="line-64"></a>
-<a name="line-65"></a><span class="cm">/*A list of the indices in the oc_mb.map array that can be valid for each of</span>
-<a name="line-66"></a><span class="cm">   the various chroma decimation types.*/</span>
-<a name="line-67"></a><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">OC_MB_MAP_IDXS</span><span class="p">[</span><span class="n">TH_PF_NFORMATS</span><span class="p">][</span><span class="mi">12</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-68"></a>  <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">},</span>
-<a name="line-69"></a>  <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">},</span>
-<a name="line-70"></a>  <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">},</span>
-<a name="line-71"></a>  <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">}</span>
-<a name="line-72"></a><span class="p">};</span>
-<a name="line-73"></a>
-<a name="line-74"></a><span class="cm">/*The number of indices in the oc_mb.map array that can be valid for each of</span>
-<a name="line-75"></a><span class="cm">   the various chroma decimation types.*/</span>
-<a name="line-76"></a><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">OC_MB_MAP_NIDXS</span><span class="p">[</span><span class="n">TH_PF_NFORMATS</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">};</span>
+<a name="line-61"></a>		<span class="kt">int32_t</span><span class="o">*</span> <span class="n">src_buff</span><span class="o">=</span><span class="n">mixdown_buffer</span><span class="p">;</span>
+<a name="line-62"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">buffer_size</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-63"></a>			<span class="n">src_buff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-64"></a>		<span class="p">}</span>
+<a name="line-65"></a>	<span class="p">}</span>
+<a name="line-66"></a>
+<a name="line-67"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">mutex</span> <span class="o">&amp;&amp;</span> <span class="n">mix</span><span class="p">)</span>
+<a name="line-68"></a>		<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
+<a name="line-69"></a>
+<a name="line-70"></a>
+<a name="line-71"></a>	<span class="k">const</span> <span class="kt">int32_t</span><span class="o">*</span> <span class="n">src_buff</span><span class="o">=</span><span class="n">mixdown_buffer</span><span class="p">;</span>
+<a name="line-72"></a>
+<a name="line-73"></a>	<span class="kt">int16_t</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int16_t</span><span class="o">*</span><span class="p">)</span><span class="n">buffers</span><span class="p">[</span><span class="n">last_free</span><span class="p">];</span>
+<a name="line-74"></a>	<span class="n">last_free</span><span class="o">=</span><span class="p">(</span><span class="n">last_free</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">BUFFER_COUNT</span><span class="p">;</span>
+<a name="line-75"></a>
+<a name="line-76"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">buffer_size</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-77"></a>
-<a name="line-78"></a><span class="cm">/*The number of extra bits that are coded with each of the DCT tokens.</span>
-<a name="line-79"></a><span class="cm">  Each DCT token has some fixed number of additional bits (possibly 0) stored</span>
-<a name="line-80"></a><span class="cm">   after the token itself, containing, for example, coefficient magnitude,</span>
-<a name="line-81"></a><span class="cm">   sign bits, etc.*/</span>
-<a name="line-82"></a><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">OC_DCT_TOKEN_EXTRA_BITS</span><span class="p">[</span><span class="n">TH_NDCT_TOKENS</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-83"></a>  <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span>
-<a name="line-84"></a>  <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
-<a name="line-85"></a>  <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span>
-<a name="line-86"></a>  <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span>
-<a name="line-87"></a>  <span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
-<a name="line-88"></a><span class="p">};</span>
-<a name="line-89"></a>
-<a name="line-90"></a>
-<a name="line-91"></a>
-<a name="line-92"></a><span class="kt">int</span> <span class="nf">oc_ilog</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">_v</span><span class="p">){</span>
-<a name="line-93"></a>  <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-94"></a>  <span class="k">for</span><span class="p">(</span><span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">_v</span><span class="p">;</span><span class="n">ret</span><span class="o">++</span><span class="p">)</span><span class="n">_v</span><span class="o">&gt;&gt;=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-95"></a>  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-96"></a><span class="p">}</span>
-<a name="line-97"></a>
-<a name="line-98"></a>
+<a name="line-78"></a>		<span class="n">ptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">src_buff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="p">}</span>
+<a name="line-80"></a>
+<a name="line-81"></a>	<span class="p">(</span><span class="o">*</span><span class="n">queueItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Enqueue</span><span class="p">(</span><span class="n">queueItf</span><span class="p">,</span> <span class="n">ptr</span><span class="p">,</span>  <span class="mi">4</span> <span class="o">*</span> <span class="n">buffer_size</span><span class="p">);</span>
+<a name="line-82"></a>
+<a name="line-83"></a>
+<a name="line-84"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-85"></a><span class="c">	SLresult res;</span>
+<a name="line-86"></a><span class="c">	CallbackCntxt *pCntxt = (CallbackCntxt*)pContext;</span>
+<a name="line-87"></a><span class="c">	if(pCntxt-&gt;pData &lt; (pCntxt-&gt;pDataBase + pCntxt-&gt;size))</span>
+<a name="line-88"></a><span class="c">	{</span>
+<a name="line-89"></a><span class="c">	    res = (*queueItf)-&gt;Enqueue(queueItf, (void*) pCntxt-&gt;pData,</span>
+<a name="line-90"></a><span class="c">				       2 * AUDIO_DATA_BUFFER_SIZE, SL_BOOLEAN_FALSE); /* Size given</span>
+<a name="line-91"></a><span class="c">    in bytes. */</span>
+<a name="line-92"></a><span class="c">	    CheckErr(res);</span>
+<a name="line-93"></a><span class="c">	    /* Increase data pointer by buffer size */</span>
+<a name="line-94"></a><span class="c">	    pCntxt-&gt;pData += AUDIO_DATA_BUFFER_SIZE;</span>
+<a name="line-95"></a><span class="c">	}</span>
+<a name="line-96"></a><span class="c">    }</span>
+<a name="line-97"></a><span class="cp">#endif</span>
+<a name="line-98"></a><span class="p">}</span>
 <a name="line-99"></a>
-<a name="line-100"></a><span class="cm">/*The function used to fill in the chroma plane motion vectors for a macro</span>
-<a name="line-101"></a><span class="cm">   block when 4 different motion vectors are specified in the luma plane.</span>
-<a name="line-102"></a><span class="cm">  This version is for use with chroma decimated in the X and Y directions</span>
-<a name="line-103"></a><span class="cm">   (4:2:0).</span>
-<a name="line-104"></a><span class="cm">  _cbmvs: The chroma block-level motion vectors to fill in.</span>
-<a name="line-105"></a><span class="cm">  _lbmvs: The luma block-level motion vectors.*/</span>
-<a name="line-106"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">oc_set_chroma_mvs00</span><span class="p">(</span><span class="n">oc_mv</span> <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="k">const</span> <span class="n">oc_mv</span> <span class="n">_lbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">]){</span>
-<a name="line-107"></a>  <span class="kt">int</span> <span class="n">dx</span><span class="p">;</span>
-<a name="line-108"></a>  <span class="kt">int</span> <span class="n">dy</span><span class="p">;</span>
-<a name="line-109"></a>  <span class="n">dx</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-110"></a>  <span class="n">dy</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-111"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-112"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-113"></a><span class="p">}</span>
-<a name="line-114"></a>
-<a name="line-115"></a><span class="cm">/*The function used to fill in the chroma plane motion vectors for a macro</span>
-<a name="line-116"></a><span class="cm">   block when 4 different motion vectors are specified in the luma plane.</span>
-<a name="line-117"></a><span class="cm">  This version is for use with chroma decimated in the Y direction.</span>
-<a name="line-118"></a><span class="cm">  _cbmvs: The chroma block-level motion vectors to fill in.</span>
-<a name="line-119"></a><span class="cm">  _lbmvs: The luma block-level motion vectors.*/</span>
-<a name="line-120"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">oc_set_chroma_mvs01</span><span class="p">(</span><span class="n">oc_mv</span> <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="k">const</span> <span class="n">oc_mv</span> <span class="n">_lbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">]){</span>
-<a name="line-121"></a>  <span class="kt">int</span> <span class="n">dx</span><span class="p">;</span>
-<a name="line-122"></a>  <span class="kt">int</span> <span class="n">dy</span><span class="p">;</span>
-<a name="line-123"></a>  <span class="n">dx</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-124"></a>  <span class="n">dy</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-125"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-126"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-127"></a>  <span class="n">dx</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-128"></a>  <span class="n">dy</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-129"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-130"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-131"></a><span class="p">}</span>
+<a name="line-100"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">_buffer_callbacks</span><span class="p">(</span>
+<a name="line-101"></a>    <span class="n">SLAndroidSimpleBufferQueueItf</span> <span class="n">queueItf</span><span class="p">,</span>
+<a name="line-102"></a>    <span class="cm">/*SLuint32 eventFlags,</span>
+<a name="line-103"></a><span class="cm">    const void * pBuffer,</span>
+<a name="line-104"></a><span class="cm">    SLuint32 bufferSize,</span>
+<a name="line-105"></a><span class="cm">    SLuint32 dataUsed,*/</span>
+<a name="line-106"></a>    <span class="kt">void</span> <span class="o">*</span><span class="n">pContext</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-107"></a>
+<a name="line-108"></a>
+<a name="line-109"></a><span class="hll">	<span class="n">AudioDriverOpenSL</span> <span class="o">*</span><span class="n">ad</span> <span class="o">=</span> <span class="p">(</span><span class="n">AudioDriverOpenSL</span><span class="o">*</span><span class="p">)</span><span class="n">pContext</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div>
+</span><a name="line-110"></a>
+<a name="line-111"></a><span class="c1">//	ad-&gt;_buffer_callback(queueItf,eventFlags,pBuffer,bufferSize,dataUsed);</span>
+<a name="line-112"></a>	<span class="n">ad</span><span class="o">-&gt;</span><span class="n">_buffer_callback</span><span class="p">(</span><span class="n">queueItf</span><span class="p">);</span>
+<a name="line-113"></a>
+<a name="line-114"></a><span class="p">}</span>
+<a name="line-115"></a>
+<a name="line-116"></a>
+<a name="line-117"></a><span class="n">AudioDriverOpenSL</span><span class="o">*</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">s_ad</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-118"></a>
+<a name="line-119"></a><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-120"></a>
+<a name="line-121"></a>	<span class="k">return</span> <span class="s">&quot;Android&quot;</span><span class="p">;</span>
+<a name="line-122"></a><span class="p">}</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-125"></a><span class="c">int AudioDriverOpenSL::thread_func(SceSize args, void *argp) {</span>
+<a name="line-126"></a>
+<a name="line-127"></a><span class="c">	AudioDriverOpenSL* ad = s_ad;</span>
+<a name="line-128"></a><span class="c">	sceAudioOutput2Reserve(AUDIO_OUTPUT_SAMPLE);</span>
+<a name="line-129"></a>
+<a name="line-130"></a><span class="c">	int half=0;</span>
+<a name="line-131"></a><span class="c">	while(!ad-&gt;exit_thread) {</span>
 <a name="line-132"></a>
-<a name="line-133"></a><span class="cm">/*The function used to fill in the chroma plane motion vectors for a macro</span>
-<a name="line-134"></a><span class="cm">   block when 4 different motion vectors are specified in the luma plane.</span>
-<a name="line-135"></a><span class="cm">  This version is for use with chroma decimated in the X direction (4:2:2).</span>
-<a name="line-136"></a><span class="cm">  _cbmvs: The chroma block-level motion vectors to fill in.</span>
-<a name="line-137"></a><span class="cm">  _lbmvs: The luma block-level motion vectors.*/</span>
-<a name="line-138"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">oc_set_chroma_mvs10</span><span class="p">(</span><span class="n">oc_mv</span> <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="k">const</span> <span class="n">oc_mv</span> <span class="n">_lbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">]){</span>
-<a name="line-139"></a>  <span class="kt">int</span> <span class="n">dx</span><span class="p">;</span>
-<a name="line-140"></a>  <span class="kt">int</span> <span class="n">dy</span><span class="p">;</span>
-<a name="line-141"></a>  <span class="n">dx</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-142"></a>  <span class="n">dy</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-143"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-144"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-145"></a>  <span class="n">dx</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-146"></a>  <span class="n">dy</span><span class="o">=</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-147"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-148"></a>  <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="n">OC_DIV_ROUND_POW2</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-149"></a><span class="p">}</span>
-<a name="line-150"></a>
-<a name="line-151"></a><span class="cm">/*The function used to fill in the chroma plane motion vectors for a macro</span>
-<a name="line-152"></a><span class="cm">   block when 4 different motion vectors are specified in the luma plane.</span>
-<a name="line-153"></a><span class="cm">  This version is for use with no chroma decimation (4:4:4).</span>
-<a name="line-154"></a><span class="cm">  _cbmvs: The chroma block-level motion vectors to fill in.</span>
-<a name="line-155"></a><span class="cm">  _lmbmv: The luma macro-block level motion vector to fill in for use in</span>
-<a name="line-156"></a><span class="cm">           prediction.</span>
-<a name="line-157"></a><span class="cm">  _lbmvs: The luma block-level motion vectors.*/</span>
-<a name="line-158"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">oc_set_chroma_mvs11</span><span class="p">(</span><span class="n">oc_mv</span> <span class="n">_cbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="k">const</span> <span class="n">oc_mv</span> <span class="n">_lbmvs</span><span class="p">[</span><span class="mi">4</span><span class="p">]){</span>
-<a name="line-159"></a>  <span class="n">memcpy</span><span class="p">(</span><span class="n">_cbmvs</span><span class="p">,</span><span class="n">_lbmvs</span><span class="p">,</span><span class="mi">4</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">_lbmvs</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
-<a name="line-160"></a><span class="p">}</span>
-<a name="line-161"></a>
-<a name="line-162"></a><span class="cm">/*A table of functions used to fill in the chroma plane motion vectors for a</span>
-<a name="line-163"></a><span class="cm">   macro block when 4 different motion vectors are specified in the luma</span>
-<a name="line-164"></a><span class="cm">   plane.*/</span>
-<a name="line-165"></a><span class="k">const</span> <span class="n">oc_set_chroma_mvs_func</span> <span class="n">OC_SET_CHROMA_MVS_TABLE</span><span class="p">[</span><span class="n">TH_PF_NFORMATS</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-166"></a>  <span class="p">(</span><span class="n">oc_set_chroma_mvs_func</span><span class="p">)</span><span class="n">oc_set_chroma_mvs00</span><span class="p">,</span>
-<a name="line-167"></a>  <span class="p">(</span><span class="n">oc_set_chroma_mvs_func</span><span class="p">)</span><span class="n">oc_set_chroma_mvs01</span><span class="p">,</span>
-<a name="line-168"></a>  <span class="p">(</span><span class="n">oc_set_chroma_mvs_func</span><span class="p">)</span><span class="n">oc_set_chroma_mvs10</span><span class="p">,</span>
-<a name="line-169"></a>  <span class="p">(</span><span class="n">oc_set_chroma_mvs_func</span><span class="p">)</span><span class="n">oc_set_chroma_mvs11</span>
-<a name="line-170"></a><span class="p">};</span>
+<a name="line-133"></a><span class="c">		int16_t *ptr = &amp;ad-&gt;outbuff[AUDIO_OUTPUT_SAMPLE*2*half];</span>
+<a name="line-134"></a>
+<a name="line-135"></a>
+<a name="line-136"></a>
+<a name="line-137"></a><span class="c">		if (!ad-&gt;active) {</span>
+<a name="line-138"></a>
+<a name="line-139"></a><span class="c">			for(int i=0;i&lt;AUDIO_OUTPUT_SAMPLE*2;i++) {</span>
+<a name="line-140"></a><span class="c">				ptr[i]=0;</span>
+<a name="line-141"></a><span class="c">			}</span>
+<a name="line-142"></a>
+<a name="line-143"></a><span class="c">		} else {</span>
+<a name="line-144"></a>
+<a name="line-145"></a><span class="c">		//printf(&quot;samples: %i\n&quot;,AUDIO_OUTPUT_SAMPLE);</span>
+<a name="line-146"></a><span class="c">			ad-&gt;lock();</span>
+<a name="line-147"></a>
+<a name="line-148"></a><span class="c">			ad-&gt;audio_server_process(AUDIO_OUTPUT_SAMPLE,ad-&gt;outbuff_32);</span>
+<a name="line-149"></a>
+<a name="line-150"></a><span class="c">			ad-&gt;unlock();</span>
+<a name="line-151"></a>
+<a name="line-152"></a><span class="c">			const int32_t* src_buff=ad-&gt;outbuff_32;</span>
+<a name="line-153"></a>
+<a name="line-154"></a><span class="c">			for(int i=0;i&lt;AUDIO_OUTPUT_SAMPLE*2;i++) {</span>
+<a name="line-155"></a>
+<a name="line-156"></a><span class="c">				ptr[i]=src_buff[i]&gt;&gt;16;</span>
+<a name="line-157"></a><span class="c">			}</span>
+<a name="line-158"></a><span class="c">		}</span>
+<a name="line-159"></a>
+<a name="line-160"></a>
+<a name="line-161"></a><span class="c">		/* Output 16-bit PCM STEREO data that is in pcmBuf without changing the volume */</span>
+<a name="line-162"></a><span class="c">		sceAudioOutput2OutputBlocking(</span>
+<a name="line-163"></a><span class="c">			   SCE_AUDIO_VOLUME_0dB*3, //0db at 0x8000, that&#39;s obvious</span>
+<a name="line-164"></a><span class="c">			 ptr</span>
+<a name="line-165"></a><span class="c">		);</span>
+<a name="line-166"></a>
+<a name="line-167"></a><span class="c">		if (half)</span>
+<a name="line-168"></a><span class="c">			half=0;</span>
+<a name="line-169"></a><span class="c">		else</span>
+<a name="line-170"></a><span class="c">			half=1;</span>
 <a name="line-171"></a>
-<a name="line-172"></a>
+<a name="line-172"></a><span class="c">	}</span>
 <a name="line-173"></a>
-<a name="line-174"></a><span class="kt">void</span> <span class="o">**</span><span class="nf">oc_malloc_2d</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">_height</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">_width</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">_sz</span><span class="p">){</span>
-<a name="line-175"></a>  <span class="kt">size_t</span>  <span class="n">rowsz</span><span class="p">;</span>
-<a name="line-176"></a>  <span class="kt">size_t</span>  <span class="n">colsz</span><span class="p">;</span>
-<a name="line-177"></a>  <span class="kt">size_t</span>  <span class="n">datsz</span><span class="p">;</span>
-<a name="line-178"></a>  <span class="kt">char</span>   <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-179"></a>  <span class="n">colsz</span><span class="o">=</span><span class="n">_height</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-180"></a>  <span class="n">rowsz</span><span class="o">=</span><span class="n">_sz</span><span class="o">*</span><span class="n">_width</span><span class="p">;</span>
-<a name="line-181"></a>  <span class="n">datsz</span><span class="o">=</span><span class="n">rowsz</span><span class="o">*</span><span class="n">_height</span><span class="p">;</span>
-<a name="line-182"></a>  <span class="cm">/*Alloc array and row pointers.*/</span>
-<a name="line-183"></a>  <span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">_ogg_malloc</span><span class="p">(</span><span class="n">datsz</span><span class="o">+</span><span class="n">colsz</span><span class="p">);</span>
-<a name="line-184"></a>  <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span><span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-185"></a>  <span class="cm">/*Initialize the array.*/</span>
-<a name="line-186"></a>  <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
-<a name="line-187"></a>    <span class="kt">size_t</span>   <span class="n">i</span><span class="p">;</span>
-<a name="line-188"></a>    <span class="kt">void</span>   <span class="o">**</span><span class="n">p</span><span class="p">;</span>
-<a name="line-189"></a>    <span class="kt">char</span>    <span class="o">*</span><span class="n">datptr</span><span class="p">;</span>
-<a name="line-190"></a>    <span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-191"></a>    <span class="n">i</span><span class="o">=</span><span class="n">_height</span><span class="p">;</span>
-<a name="line-192"></a>    <span class="k">for</span><span class="p">(</span><span class="n">datptr</span><span class="o">=</span><span class="n">ret</span><span class="o">+</span><span class="n">colsz</span><span class="p">;</span><span class="n">i</span><span class="o">--&gt;</span><span class="mi">0</span><span class="p">;</span><span class="n">p</span><span class="o">++</span><span class="p">,</span><span class="n">datptr</span><span class="o">+=</span><span class="n">rowsz</span><span class="p">)</span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">datptr</span><span class="p">;</span>
-<a name="line-193"></a>  <span class="p">}</span>
-<a name="line-194"></a>  <span class="k">return</span> <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-195"></a><span class="p">}</span>
-<a name="line-196"></a>
-<a name="line-197"></a><span class="kt">void</span> <span class="o">**</span><span class="nf">oc_calloc_2d</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">_height</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">_width</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">_sz</span><span class="p">){</span>
-<a name="line-198"></a>  <span class="kt">size_t</span>  <span class="n">colsz</span><span class="p">;</span>
-<a name="line-199"></a>  <span class="kt">size_t</span>  <span class="n">rowsz</span><span class="p">;</span>
-<a name="line-200"></a>  <span class="kt">size_t</span>  <span class="n">datsz</span><span class="p">;</span>
-<a name="line-201"></a>  <span class="kt">char</span>   <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-202"></a>  <span class="n">colsz</span><span class="o">=</span><span class="n">_height</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-203"></a>  <span class="n">rowsz</span><span class="o">=</span><span class="n">_sz</span><span class="o">*</span><span class="n">_width</span><span class="p">;</span>
-<a name="line-204"></a>  <span class="n">datsz</span><span class="o">=</span><span class="n">rowsz</span><span class="o">*</span><span class="n">_height</span><span class="p">;</span>
-<a name="line-205"></a>  <span class="cm">/*Alloc array and row pointers.*/</span>
-<a name="line-206"></a>  <span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">_ogg_calloc</span><span class="p">(</span><span class="n">datsz</span><span class="o">+</span><span class="n">colsz</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-207"></a>  <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span><span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-208"></a>  <span class="cm">/*Initialize the array.*/</span>
-<a name="line-209"></a>  <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
-<a name="line-210"></a>    <span class="kt">size_t</span>   <span class="n">i</span><span class="p">;</span>
-<a name="line-211"></a>    <span class="kt">void</span>   <span class="o">**</span><span class="n">p</span><span class="p">;</span>
-<a name="line-212"></a>    <span class="kt">char</span>    <span class="o">*</span><span class="n">datptr</span><span class="p">;</span>
-<a name="line-213"></a>    <span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-214"></a>    <span class="n">i</span><span class="o">=</span><span class="n">_height</span><span class="p">;</span>
-<a name="line-215"></a>    <span class="k">for</span><span class="p">(</span><span class="n">datptr</span><span class="o">=</span><span class="n">ret</span><span class="o">+</span><span class="n">colsz</span><span class="p">;</span><span class="n">i</span><span class="o">--&gt;</span><span class="mi">0</span><span class="p">;</span><span class="n">p</span><span class="o">++</span><span class="p">,</span><span class="n">datptr</span><span class="o">+=</span><span class="n">rowsz</span><span class="p">)</span><span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">datptr</span><span class="p">;</span>
-<a name="line-216"></a>  <span class="p">}</span>
-<a name="line-217"></a>  <span class="k">return</span> <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-218"></a><span class="p">}</span>
-<a name="line-219"></a>
-<a name="line-220"></a><span class="kt">void</span> <span class="nf">oc_free_2d</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">_ptr</span><span class="p">){</span>
-<a name="line-221"></a>  <span class="n">_ogg_free</span><span class="p">(</span><span class="n">_ptr</span><span class="p">);</span>
-<a name="line-222"></a><span class="p">}</span>
+<a name="line-174"></a><span class="c">	sceAudioOutput2Release();</span>
+<a name="line-175"></a>
+<a name="line-176"></a><span class="c">	sceKernelExitThread(SCE_KERNEL_EXIT_SUCCESS);</span>
+<a name="line-177"></a><span class="c">	ad-&gt;thread_exited=true;</span>
+<a name="line-178"></a><span class="c">	return SCE_KERNEL_EXIT_SUCCESS;</span>
+<a name="line-179"></a>
+<a name="line-180"></a><span class="c">}</span>
+<a name="line-181"></a>
+<a name="line-182"></a><span class="cp">#endif</span>
+<a name="line-183"></a><span class="n">Error</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">init</span><span class="p">(){</span>
+<a name="line-184"></a>
+<a name="line-185"></a>	<span class="n">SLresult</span>
+<a name="line-186"></a>	<span class="n">res</span><span class="p">;</span>
+<a name="line-187"></a>	<span class="n">SLEngineOption</span> <span class="n">EngineOption</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-188"></a>	    <span class="p">(</span><span class="n">SLuint32</span><span class="p">)</span> <span class="n">SL_ENGINEOPTION_THREADSAFE</span><span class="p">,</span>
+<a name="line-189"></a>	    <span class="p">(</span><span class="n">SLuint32</span><span class="p">)</span> <span class="n">SL_BOOLEAN_TRUE</span>
+<a name="line-190"></a>
+<a name="line-191"></a>	<span class="p">};</span>
+<a name="line-192"></a>	<span class="n">res</span> <span class="o">=</span> <span class="n">slCreateEngine</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">sl</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">EngineOption</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-193"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-194"></a>
+<a name="line-195"></a>		<span class="n">ERR_EXPLAIN</span><span class="p">(</span><span class="s">&quot;Could not Initialize OpenSL&quot;</span><span class="p">);</span>
+<a name="line-196"></a>		<span class="n">ERR_FAIL_V</span><span class="p">(</span><span class="n">ERR_INVALID_PARAMETER</span><span class="p">);</span>
+<a name="line-197"></a>	<span class="p">}</span>
+<a name="line-198"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">sl</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Realize</span><span class="p">(</span><span class="n">sl</span><span class="p">,</span> <span class="n">SL_BOOLEAN_FALSE</span><span class="p">);</span>
+<a name="line-199"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-200"></a>
+<a name="line-201"></a>		<span class="n">ERR_EXPLAIN</span><span class="p">(</span><span class="s">&quot;Could not Realize OpenSL&quot;</span><span class="p">);</span>
+<a name="line-202"></a>		<span class="n">ERR_FAIL_V</span><span class="p">(</span><span class="n">ERR_INVALID_PARAMETER</span><span class="p">);</span>
+<a name="line-203"></a>	<span class="p">}</span>
+<a name="line-204"></a>
+<a name="line-205"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;OpenSL Init OK!&quot;</span><span class="p">);</span>
+<a name="line-206"></a>
+<a name="line-207"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+<a name="line-208"></a>
+<a name="line-209"></a><span class="p">}</span>
+<a name="line-210"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">start</span><span class="p">(){</span>
+<a name="line-211"></a>
+<a name="line-212"></a>
+<a name="line-213"></a>	<span class="n">mutex</span> <span class="o">=</span> <span class="n">Mutex</span><span class="o">::</span><span class="n">create</span><span class="p">();</span>
+<a name="line-214"></a>	<span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-215"></a>
+<a name="line-216"></a>
+<a name="line-217"></a>	<span class="n">SLint32</span> <span class="n">numOutputs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-218"></a>	<span class="n">SLuint32</span> <span class="n">deviceID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-219"></a>	<span class="n">SLresult</span> <span class="n">res</span><span class="p">;</span>
+<a name="line-220"></a>
+<a name="line-221"></a>
+<a name="line-222"></a>	<span class="n">buffer_size</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
 <a name="line-223"></a>
-<a name="line-224"></a><span class="cm">/*Fills in a Y&#39;CbCr buffer with a pointer to the image data in the first</span>
-<a name="line-225"></a><span class="cm">   buffer, but with the opposite vertical orientation.</span>
-<a name="line-226"></a><span class="cm">  _dst: The destination buffer.</span>
-<a name="line-227"></a><span class="cm">        This can be the same as _src.</span>
-<a name="line-228"></a><span class="cm">  _src: The source buffer.*/</span>
-<a name="line-229"></a><span class="kt">void</span> <span class="nf">oc_ycbcr_buffer_flip</span><span class="p">(</span><span class="n">th_ycbcr_buffer</span> <span class="n">_dst</span><span class="p">,</span>
-<a name="line-230"></a> <span class="k">const</span> <span class="n">th_ycbcr_buffer</span> <span class="n">_src</span><span class="p">){</span>
-<a name="line-231"></a>  <span class="kt">int</span> <span class="n">pli</span><span class="p">;</span>
-<a name="line-232"></a>  <span class="k">for</span><span class="p">(</span><span class="n">pli</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">pli</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">pli</span><span class="o">++</span><span class="p">){</span>
-<a name="line-233"></a>    <span class="n">_dst</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">width</span><span class="o">=</span><span class="n">_src</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">width</span><span class="p">;</span>
-<a name="line-234"></a>    <span class="n">_dst</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">height</span><span class="o">=</span><span class="n">_src</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">height</span><span class="p">;</span>
-<a name="line-235"></a>    <span class="n">_dst</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">stride</span><span class="o">=-</span><span class="n">_src</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">stride</span><span class="p">;</span>
-<a name="line-236"></a>    <span class="n">_dst</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">data</span><span class="o">=</span><span class="n">_src</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">data</span>
-<a name="line-237"></a>     <span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">_dst</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">height</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="kt">ptrdiff_t</span><span class="p">)</span><span class="n">_dst</span><span class="p">[</span><span class="n">pli</span><span class="p">].</span><span class="n">stride</span><span class="p">;</span>
-<a name="line-238"></a>  <span class="p">}</span>
-<a name="line-239"></a><span class="p">}</span>
-<a name="line-240"></a>
-<a name="line-241"></a><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">th_version_string</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-<a name="line-242"></a>  <span class="k">return</span> <span class="n">OC_VENDOR_STRING</span><span class="p">;</span>
-<a name="line-243"></a><span class="p">}</span>
+<a name="line-224"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">BUFFER_COUNT</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-225"></a>
+<a name="line-226"></a>		<span class="n">buffers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">memnew_arr</span><span class="p">(</span> <span class="kt">int16_t</span><span class="p">,</span><span class="n">buffer_size</span><span class="o">*</span><span class="mi">2</span> <span class="p">);</span>
+<a name="line-227"></a>		<span class="n">memset</span><span class="p">(</span><span class="n">buffers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="n">buffer_size</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span>
+<a name="line-228"></a>	<span class="p">}</span>
+<a name="line-229"></a>
+<a name="line-230"></a>	<span class="n">mixdown_buffer</span> <span class="o">=</span> <span class="n">memnew_arr</span><span class="p">(</span> <span class="kt">int32_t</span><span class="p">,</span><span class="n">buffer_size</span><span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+<a name="line-231"></a>
+<a name="line-232"></a>	<span class="cm">/* Callback context for the buffer queue callback function */</span>
+<a name="line-233"></a>
+<a name="line-234"></a>	<span class="cm">/* Get the SL Engine Interface which is implicit */</span>
+<a name="line-235"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">sl</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span><span class="n">sl</span><span class="p">,</span> <span class="n">SL_IID_ENGINE</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">EngineItf</span><span class="p">);</span>
+<a name="line-236"></a>
+<a name="line-237"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-238"></a>	<span class="cm">/* Initialize arrays required[] and iidArray[] */</span>
+<a name="line-239"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span><span class='error2'>&lt;--- Unused variable: i</span>
+</span><a name="line-240"></a>	<span class="n">SLboolean</span> <span class="n">required</span><span class="p">[</span><span class="n">MAX_NUMBER_INTERFACES</span><span class="p">];</span>
+<a name="line-241"></a>	<span class="n">SLInterfaceID</span> <span class="n">iidArray</span><span class="p">[</span><span class="n">MAX_NUMBER_INTERFACES</span><span class="p">];</span>
+<a name="line-242"></a>
+<a name="line-243"></a><span class="cp">#if 0</span><span class="c"></span>
 <a name="line-244"></a>
-<a name="line-245"></a><span class="kt">ogg_uint32_t</span> <span class="nf">th_version_number</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-<a name="line-246"></a>  <span class="k">return</span> <span class="p">(</span><span class="n">TH_VERSION_MAJOR</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">TH_VERSION_MINOR</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">)</span><span class="o">+</span><span class="n">TH_VERSION_SUB</span><span class="p">;</span>
-<a name="line-247"></a><span class="p">}</span>
-<a name="line-248"></a>
-<a name="line-249"></a><span class="cm">/*Determines the packet type.</span>
-<a name="line-250"></a><span class="cm">  Note that this correctly interprets a 0-byte packet as a video data packet.</span>
-<a name="line-251"></a><span class="cm">  Return: 1 for a header packet, 0 for a data packet.*/</span>
-<a name="line-252"></a><span class="kt">int</span> <span class="nf">th_packet_isheader</span><span class="p">(</span><span class="n">ogg_packet</span> <span class="o">*</span><span class="n">_op</span><span class="p">){</span>
-<a name="line-253"></a>  <span class="k">return</span> <span class="n">_op</span><span class="o">-&gt;</span><span class="n">bytes</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">?</span><span class="n">_op</span><span class="o">-&gt;</span><span class="n">packet</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-254"></a><span class="p">}</span>
-<a name="line-255"></a>
-<a name="line-256"></a><span class="cm">/*Determines the frame type of a video data packet.</span>
-<a name="line-257"></a><span class="cm">  Note that this correctly interprets a 0-byte packet as a delta frame.</span>
-<a name="line-258"></a><span class="cm">  Return: 1 for a key frame, 0 for a delta frame, and -1 for a header</span>
-<a name="line-259"></a><span class="cm">           packet.*/</span>
-<a name="line-260"></a><span class="kt">int</span> <span class="nf">th_packet_iskeyframe</span><span class="p">(</span><span class="n">ogg_packet</span> <span class="o">*</span><span class="n">_op</span><span class="p">){</span>
-<a name="line-261"></a><span class="hll">  <span class="k">return</span> <span class="n">_op</span><span class="o">-&gt;</span><span class="n">bytes</span><span class="o">&lt;=</span><span class="mi">0</span><span class="o">?</span><span class="mi">0</span><span class="o">:</span><span class="n">_op</span><span class="o">-&gt;</span><span class="n">packet</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&amp;</span><span class="mh">0x80</span><span class="o">?-</span><span class="mi">1</span><span class="o">:!</span><span class="p">(</span><span class="n">_op</span><span class="o">-&gt;</span><span class="n">packet</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&amp;</span><span class="mh">0x40</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Clarify calculation precedence for '&' and '?'. <span class='marker'>[+]</span></span><div class='content'>Suspicious calculation. Please use parentheses to clarify the code. The code &apos;&apos;a&amp;b?c:d&apos;&apos; should be written as either &apos;&apos;(a&amp;b)?c:d&apos;&apos; or &apos;&apos;a&amp;(b?c:d)&apos;&apos;.</div></div>
-</span><a name="line-262"></a><span class="p">}</span>
+<a name="line-245"></a><span class="c">	for (i=0; i&lt;MAX_NUMBER_INTERFACES; i++)</span>
+<a name="line-246"></a><span class="c">	{</span>
+<a name="line-247"></a><span class="c">	    required[i] = SL_BOOLEAN_FALSE;</span>
+<a name="line-248"></a><span class="c">	    iidArray[i] = SL_IID_NULL;</span>
+<a name="line-249"></a><span class="c">	}</span>
+<a name="line-250"></a><span class="c">    // Set arrays required[] and iidArray[] for VOLUME interface</span>
+<a name="line-251"></a><span class="c">	required[0] = SL_BOOLEAN_TRUE;</span>
+<a name="line-252"></a><span class="c">	iidArray[0] = SL_IID_VOLUME;</span>
+<a name="line-253"></a>
+<a name="line-254"></a><span class="c">    // Create Output Mix object to be used by player</span>
+<a name="line-255"></a><span class="c">	res = (*EngineItf)-&gt;CreateOutputMix(EngineItf, &amp;OutputMix, 1,</span>
+<a name="line-256"></a><span class="c">					    iidArray, required);</span>
+<a name="line-257"></a><span class="cp">#else</span>
+<a name="line-258"></a>
+<a name="line-259"></a>	<span class="p">{</span>
+<a name="line-260"></a>		<span class="k">const</span> <span class="n">SLInterfaceID</span> <span class="n">ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">SL_IID_ENVIRONMENTALREVERB</span><span class="p">};</span>
+<a name="line-261"></a>		<span class="k">const</span> <span class="n">SLboolean</span> <span class="n">req</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">SL_BOOLEAN_FALSE</span><span class="p">};</span>
+<a name="line-262"></a>		<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">EngineItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">CreateOutputMix</span><span class="p">(</span><span class="n">EngineItf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">OutputMix</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a name="line-263"></a>						    <span class="n">ids</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+<a name="line-264"></a>	<span class="p">}</span>
+<a name="line-265"></a>
+<a name="line-266"></a>
+<a name="line-267"></a><span class="cp">#endif</span>
+<a name="line-268"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-269"></a>    <span class="c1">// Realizing the Output Mix object in synchronous mode.</span>
+<a name="line-270"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">OutputMix</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Realize</span><span class="p">(</span><span class="n">OutputMix</span><span class="p">,</span> <span class="n">SL_BOOLEAN_FALSE</span><span class="p">);</span>
+<a name="line-271"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-272"></a>
+<a name="line-273"></a>	<span class="n">SLDataLocator_AndroidSimpleBufferQueue</span> <span class="n">loc_bufq</span> <span class="o">=</span> <span class="p">{</span><span class="n">SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE</span><span class="p">,</span> <span class="n">BUFFER_COUNT</span><span class="p">};</span>
+<a name="line-274"></a><span class="c1">//	bufferQueue.locatorType = SL_DATALOCATOR_BUFFERQUEUE;</span>
+<a name="line-275"></a><span class="c1">//	bufferQueue.numBuffers = BUFFER_COUNT; /* Four buffers in our buffer queue */</span>
+<a name="line-276"></a>	<span class="cm">/* Setup the format of the content in the buffer queue */</span>
+<a name="line-277"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">formatType</span> <span class="o">=</span> <span class="n">SL_DATAFORMAT_PCM</span><span class="p">;</span>
+<a name="line-278"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">numChannels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-279"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">samplesPerSec</span> <span class="o">=</span> <span class="n">SL_SAMPLINGRATE_44_1</span><span class="p">;</span>
+<a name="line-280"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">bitsPerSample</span> <span class="o">=</span> <span class="n">SL_PCMSAMPLEFORMAT_FIXED_16</span><span class="p">;</span>
+<a name="line-281"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">containerSize</span> <span class="o">=</span> <span class="n">SL_PCMSAMPLEFORMAT_FIXED_16</span><span class="p">;</span>
+<a name="line-282"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">channelMask</span> <span class="o">=</span> <span class="n">SL_SPEAKER_FRONT_LEFT</span> <span class="o">|</span> <span class="n">SL_SPEAKER_FRONT_RIGHT</span><span class="p">;</span>
+<a name="line-283"></a><span class="cp">#ifdef BIG_ENDIAN_ENABLED</span>
+<a name="line-284"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">endianness</span> <span class="o">=</span> <span class="n">SL_BYTEORDER_BIGENDIAN</span><span class="p">;</span>
+<a name="line-285"></a><span class="cp">#else</span>
+<a name="line-286"></a>	<span class="n">pcm</span><span class="p">.</span><span class="n">endianness</span> <span class="o">=</span> <span class="n">SL_BYTEORDER_LITTLEENDIAN</span><span class="p">;</span>
+<a name="line-287"></a><span class="cp">#endif</span>
+<a name="line-288"></a>	<span class="n">audioSource</span><span class="p">.</span><span class="n">pFormat</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">pcm</span><span class="p">;</span>
+<a name="line-289"></a>	<span class="n">audioSource</span><span class="p">.</span><span class="n">pLocator</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">loc_bufq</span><span class="p">;</span>
+<a name="line-290"></a>
+<a name="line-291"></a>
+<a name="line-292"></a>	<span class="cm">/* Setup the data sink structure */</span>
+<a name="line-293"></a>	<span class="n">locator_outputmix</span><span class="p">.</span><span class="n">locatorType</span> <span class="o">=</span> <span class="n">SL_DATALOCATOR_OUTPUTMIX</span><span class="p">;</span>
+<a name="line-294"></a>	<span class="n">locator_outputmix</span><span class="p">.</span><span class="n">outputMix</span><span class="o">=</span> <span class="n">OutputMix</span><span class="p">;</span>
+<a name="line-295"></a>	<span class="n">audioSink</span><span class="p">.</span><span class="n">pLocator</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">locator_outputmix</span><span class="p">;</span>
+<a name="line-296"></a>	<span class="n">audioSink</span><span class="p">.</span><span class="n">pFormat</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-297"></a>	<span class="cm">/* Initialize the context for Buffer queue callbacks */</span>
+<a name="line-298"></a><span class="c1">//	cntxt.pDataBase = (void*)&amp;pcmData;</span>
+<a name="line-299"></a>	<span class="c1">//cntxt.pData = cntxt.pDataBase;</span>
+<a name="line-300"></a>	<span class="c1">//cntxt.size = sizeof(pcmData);</span>
+<a name="line-301"></a>	<span class="cm">/* Set arrays required[] and iidArray[] for SEEK interface</span>
+<a name="line-302"></a><span class="cm">	(PlayItf is implicit) */</span>
+<a name="line-303"></a><span class="hll">	<span class="n">required</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">SL_BOOLEAN_TRUE</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'required' is assigned a value that is never used.</span>
+</span><a name="line-304"></a><span class="hll">	<span class="n">iidArray</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">SL_IID_BUFFERQUEUE</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'iidArray' is assigned a value that is never used.</span>
+</span><a name="line-305"></a>	<span class="cm">/* Create the music player */</span>
+<a name="line-306"></a>
+<a name="line-307"></a>	<span class="p">{</span>
+<a name="line-308"></a>		<span class="k">const</span> <span class="n">SLInterfaceID</span> <span class="n">ids</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">SL_IID_BUFFERQUEUE</span><span class="p">,</span> <span class="n">SL_IID_EFFECTSEND</span><span class="p">};</span>
+<a name="line-309"></a>		<span class="k">const</span> <span class="n">SLboolean</span> <span class="n">req</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">SL_BOOLEAN_TRUE</span><span class="p">,</span> <span class="n">SL_BOOLEAN_TRUE</span><span class="p">};</span>
+<a name="line-310"></a>
+<a name="line-311"></a>		<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">EngineItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">CreateAudioPlayer</span><span class="p">(</span><span class="n">EngineItf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">player</span><span class="p">,</span>
+<a name="line-312"></a>						      <span class="o">&amp;</span><span class="n">audioSource</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">audioSink</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+<a name="line-313"></a>		<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-314"></a>	<span class="p">}</span>
+<a name="line-315"></a>	<span class="cm">/* Realizing the player in synchronous mode. */</span>
+<a name="line-316"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">player</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Realize</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">SL_BOOLEAN_FALSE</span><span class="p">);</span>
+<a name="line-317"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-318"></a>	<span class="cm">/* Get seek and play interfaces */</span>
+<a name="line-319"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">player</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">SL_IID_PLAY</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">playItf</span><span class="p">);</span>
+<a name="line-320"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-321"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">player</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">SL_IID_BUFFERQUEUE</span><span class="p">,</span>
+<a name="line-322"></a>				      <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">bufferQueueItf</span><span class="p">);</span>
+<a name="line-323"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-324"></a>	<span class="cm">/* Setup to receive buffer queue event callbacks */</span>
+<a name="line-325"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">bufferQueueItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">RegisterCallback</span><span class="p">(</span><span class="n">bufferQueueItf</span><span class="p">,</span>
+<a name="line-326"></a>		<span class="n">_buffer_callbacks</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<a name="line-327"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-328"></a>	<span class="cm">/* Before we start set volume to -3dB (-300mB) */</span>
+<a name="line-329"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-330"></a><span class="c">	res = (*OutputMix)-&gt;GetInterface(OutputMix, SL_IID_VOLUME,</span>
+<a name="line-331"></a><span class="c">					 (void*)&amp;volumeItf);</span>
+<a name="line-332"></a><span class="c">	ERR_FAIL_COND( res !=SL_RESULT_SUCCESS );</span>
+<a name="line-333"></a><span class="c">	/* Setup the data source structure for the buffer queue */</span>
+<a name="line-334"></a>
+<a name="line-335"></a><span class="c">	res = (*volumeItf)-&gt;SetVolumeLevel(volumeItf, -300);</span>
+<a name="line-336"></a><span class="c">	ERR_FAIL_COND( res !=SL_RESULT_SUCCESS );</span>
+<a name="line-337"></a><span class="cp">#endif</span>
+<a name="line-338"></a>	<span class="n">last_free</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-339"></a><span class="cp">#if 1</span>
+<a name="line-340"></a>	<span class="c1">//fill up buffers</span>
+<a name="line-341"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">BUFFER_COUNT</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-342"></a>		<span class="cm">/* Enqueue a few buffers to get the ball rolling */</span>
+<a name="line-343"></a>		<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">bufferQueueItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Enqueue</span><span class="p">(</span><span class="n">bufferQueueItf</span><span class="p">,</span> <span class="n">buffers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+<a name="line-344"></a>						 <span class="mi">4</span> <span class="o">*</span> <span class="n">buffer_size</span><span class="p">);</span> <span class="cm">/* Size given in */</span>
+<a name="line-345"></a>
+<a name="line-346"></a>	<span class="p">}</span>
+<a name="line-347"></a><span class="cp">#endif</span>
+<a name="line-348"></a>
+<a name="line-349"></a>	<span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">playItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SetPlayState</span><span class="p">(</span><span class="n">playItf</span><span class="p">,</span> <span class="n">SL_PLAYSTATE_PLAYING</span><span class="p">);</span>
+<a name="line-350"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span> <span class="n">res</span> <span class="o">!=</span><span class="n">SL_RESULT_SUCCESS</span> <span class="p">);</span>
+<a name="line-351"></a>
+<a name="line-352"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-353"></a><span class="c">	res = (*bufferQueueItf)-&gt;GetState(bufferQueueItf, &amp;state);</span>
+<a name="line-354"></a><span class="c">	ERR_FAIL_COND( res !=SL_RESULT_SUCCESS );</span>
+<a name="line-355"></a><span class="c">	while(state.count)</span>
+<a name="line-356"></a><span class="c">	{</span>
+<a name="line-357"></a><span class="c">	    (*bufferQueueItf)-&gt;GetState(bufferQueueItf, &amp;state);</span>
+<a name="line-358"></a><span class="c">	}</span>
+<a name="line-359"></a><span class="c">	/* Make sure player is stopped */</span>
+<a name="line-360"></a><span class="c">	res = (*playItf)-&gt;SetPlayState(playItf, SL_PLAYSTATE_STOPPED);</span>
+<a name="line-361"></a><span class="c">	CheckErr(res);</span>
+<a name="line-362"></a><span class="c">	/* Destroy the player */</span>
+<a name="line-363"></a><span class="c">	(*player)-&gt;Destroy(player);</span>
+<a name="line-364"></a><span class="c">	/* Destroy Output Mix object */</span>
+<a name="line-365"></a><span class="c">	(*OutputMix)-&gt;Destroy(OutputMix);</span>
+<a name="line-366"></a><span class="cp">#endif</span>
+<a name="line-367"></a>
+<a name="line-368"></a>	<span class="n">active</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-369"></a><span class="p">}</span>
+<a name="line-370"></a><span class="kt">int</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">get_mix_rate</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-371"></a>
+<a name="line-372"></a>	<span class="k">return</span> <span class="mi">44100</span><span class="p">;</span>
+<a name="line-373"></a><span class="p">}</span>
+<a name="line-374"></a><span class="n">AudioDriverSW</span><span class="o">::</span><span class="n">OutputFormat</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">get_output_format</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
+<a name="line-375"></a>
+<a name="line-376"></a>	<span class="k">return</span> <span class="n">OUTPUT_STEREO</span><span class="p">;</span>
+<a name="line-377"></a><span class="p">}</span>
+<a name="line-378"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">lock</span><span class="p">(){</span>
+<a name="line-379"></a>
+<a name="line-380"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">active</span> <span class="o">&amp;&amp;</span> <span class="n">mutex</span><span class="p">)</span>
+<a name="line-381"></a>		<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">();</span>
+<a name="line-382"></a>
+<a name="line-383"></a><span class="p">}</span>
+<a name="line-384"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">unlock</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-385"></a>
+<a name="line-386"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">active</span> <span class="o">&amp;&amp;</span> <span class="n">mutex</span><span class="p">)</span>
+<a name="line-387"></a>		<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
+<a name="line-388"></a>
+<a name="line-389"></a><span class="p">}</span>
+<a name="line-390"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">finish</span><span class="p">(){</span>
+<a name="line-391"></a>
+<a name="line-392"></a>	<span class="p">(</span><span class="o">*</span><span class="n">sl</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Destroy</span><span class="p">(</span><span class="n">sl</span><span class="p">);</span>
+<a name="line-393"></a>
+<a name="line-394"></a><span class="p">}</span>
+<a name="line-395"></a>
+<a name="line-396"></a><span class="kt">void</span> <span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">set_pause</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_pause</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-397"></a>
+<a name="line-398"></a>	<span class="n">pause</span><span class="o">=</span><span class="n">p_pause</span><span class="p">;</span>
+<a name="line-399"></a>
+<a name="line-400"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">active</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-401"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">pause</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-402"></a>			<span class="p">(</span><span class="o">*</span><span class="n">playItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SetPlayState</span><span class="p">(</span><span class="n">playItf</span><span class="p">,</span> <span class="n">SL_PLAYSTATE_PAUSED</span><span class="p">);</span>
+<a name="line-403"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-404"></a>			<span class="p">(</span><span class="o">*</span><span class="n">playItf</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SetPlayState</span><span class="p">(</span><span class="n">playItf</span><span class="p">,</span> <span class="n">SL_PLAYSTATE_PLAYING</span><span class="p">);</span>
+<a name="line-405"></a>		<span class="p">}</span>
+<a name="line-406"></a>	<span class="p">}</span>
+<a name="line-407"></a><span class="p">}</span>
+<a name="line-408"></a>
+<a name="line-409"></a>
+<a name="line-410"></a><span class="hll"><span class="n">AudioDriverOpenSL</span><span class="o">::</span><span class="n">AudioDriverOpenSL</span><span class="p">()</span><span class='error2'>&lt;--- Member variable 'AudioDriverOpenSL::active' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverOpenSL::buffer_size' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverOpenSL::buffers' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverOpenSL::mixdown_buffer' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverOpenSL::last_free' is not initialized in the constructor.</span>
+</span><a name="line-411"></a><span class="p">{</span>
+<a name="line-412"></a>	<span class="n">s_ad</span><span class="o">=</span><span class="k">this</span><span class="p">;</span>
+<a name="line-413"></a>	<span class="n">mutex</span><span class="o">=</span><span class="n">Mutex</span><span class="o">::</span><span class="n">create</span><span class="p">();</span><span class="c1">//NULL;</span>
+<a name="line-414"></a>	<span class="n">pause</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-415"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

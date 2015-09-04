@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/dso/dso_win32.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/o_time.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> dso_win32.c</p>
-<a href='275.html#line-1'> ConfigurationNotChecked 1</a><a href='275.html#line-97'> obsoleteFunctionsalloca 97</a>
+       <p id="filename"><a href="index.html">Defects:</a> o_time.c</p>
+<a href='275.html#line-107'> unusedStructMember 107</a><a href='275.html#line-124'> unreadVariable 124</a><a href='275.html#line-179'> unusedStructMember 179</a><a href='275.html#line-191'> redundantAssignment 191</a><a href='275.html#line-196'> redundantAssignment 196</a><a href='275.html#line-199'> redundantAssignment 199</a><a href='275.html#line-210'> redundantAssignment 210</a><a href='275.html#line-215'> unreadVariable 215</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -485,1322 +485,378 @@
 369
 370
 371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592
-593
-594
-595
-596
-597
-598
-599
-600
-601
-602
-603
-604
-605
-606
-607
-608
-609
-610
-611
-612
-613
-614
-615
-616
-617
-618
-619
-620
-621
-622
-623
-624
-625
-626
-627
-628
-629
-630
-631
-632
-633
-634
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648
-649
-650
-651
-652
-653
-654
-655
-656
-657
-658
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
-752
-753
-754
-755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767
-768
-769
-770
-771
-772
-773
-774
-775
-776
-777
-778
-779
-780
-781
-782
-783
-784
-785
-786
-787
-788
-789
-790
-791
-792
-793
-794
-795
-796
-797
-798
-799
-800
-801
-802
-803
-804
-805
-806
-807
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
-824
-825
-826
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838
-839
-840
-841
-842
-843
-844</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* dso_win32.c -*- mode:C; c-file-style: &quot;eay&quot; -*- */</span><span class='error2'>&lt;--- Skipping configuration 'DSO_WIN32;MODULEENTRY32' since the value of 'MODULEENTRY32' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
-</span><a name="line-2"></a><span class="cm">/* Written by Geoff Thorpe (geoff@geoffthorpe.net) for the OpenSSL</span>
-<a name="line-3"></a><span class="cm"> * project 2000.</span>
+372</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/o_time.c -*- mode:C; c-file-style: &quot;eay&quot; -*- */</span>
+<a name="line-2"></a><span class="cm">/* Written by Richard Levitte (richard@levitte.org) for the OpenSSL</span>
+<a name="line-3"></a><span class="cm"> * project 2001.</span>
 <a name="line-4"></a><span class="cm"> */</span>
-<a name="line-5"></a><span class="cm">/* ====================================================================</span>
-<a name="line-6"></a><span class="cm"> * Copyright (c) 2000 The OpenSSL Project.  All rights reserved.</span>
-<a name="line-7"></a><span class="cm"> *</span>
-<a name="line-8"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
-<a name="line-9"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
-<a name="line-10"></a><span class="cm"> * are met:</span>
-<a name="line-11"></a><span class="cm"> *</span>
-<a name="line-12"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
-<a name="line-13"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
+<a name="line-5"></a><span class="cm">/* Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL</span>
+<a name="line-6"></a><span class="cm"> * project 2008.</span>
+<a name="line-7"></a><span class="cm"> */</span>
+<a name="line-8"></a><span class="cm">/* ====================================================================</span>
+<a name="line-9"></a><span class="cm"> * Copyright (c) 2001 The OpenSSL Project.  All rights reserved.</span>
+<a name="line-10"></a><span class="cm"> *</span>
+<a name="line-11"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-12"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-13"></a><span class="cm"> * are met:</span>
 <a name="line-14"></a><span class="cm"> *</span>
-<a name="line-15"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
-<a name="line-16"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
-<a name="line-17"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
-<a name="line-18"></a><span class="cm"> *    distribution.</span>
-<a name="line-19"></a><span class="cm"> *</span>
-<a name="line-20"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
-<a name="line-21"></a><span class="cm"> *    software must display the following acknowledgment:</span>
-<a name="line-22"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
-<a name="line-23"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
-<a name="line-24"></a><span class="cm"> *</span>
-<a name="line-25"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
-<a name="line-26"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
-<a name="line-27"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
-<a name="line-28"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
-<a name="line-29"></a><span class="cm"> *</span>
-<a name="line-30"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
-<a name="line-31"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
-<a name="line-32"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
-<a name="line-33"></a><span class="cm"> *</span>
-<a name="line-34"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
-<a name="line-35"></a><span class="cm"> *    acknowledgment:</span>
-<a name="line-36"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
-<a name="line-37"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
-<a name="line-38"></a><span class="cm"> *</span>
-<a name="line-39"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
-<a name="line-40"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
-<a name="line-41"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
-<a name="line-42"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
-<a name="line-43"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
-<a name="line-44"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
-<a name="line-45"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
-<a name="line-46"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
-<a name="line-47"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
-<a name="line-48"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
-<a name="line-49"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
-<a name="line-50"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
-<a name="line-51"></a><span class="cm"> * ====================================================================</span>
-<a name="line-52"></a><span class="cm"> *</span>
-<a name="line-53"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
-<a name="line-54"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
-<a name="line-55"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
-<a name="line-56"></a><span class="cm"> *</span>
-<a name="line-57"></a><span class="cm"> */</span>
-<a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-61"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-62"></a><span class="cp">#include &lt;openssl/dso.h&gt;</span>
-<a name="line-63"></a>
-<a name="line-64"></a><span class="cp">#if !defined(DSO_WIN32)</span>
-<a name="line-65"></a><span class="n">DSO_METHOD</span> <span class="o">*</span><span class="nf">DSO_METHOD_win32</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-66"></a>	<span class="p">{</span>
-<a name="line-67"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-68"></a>	<span class="p">}</span>
-<a name="line-69"></a><span class="cp">#else</span>
-<a name="line-70"></a>
-<a name="line-71"></a><span class="cp">#ifdef _WIN32_WCE</span>
-<a name="line-72"></a><span class="cp"># if _WIN32_WCE &lt; 300</span>
-<a name="line-73"></a><span class="k">static</span> <span class="n">FARPROC</span> <span class="nf">GetProcAddressA</span><span class="p">(</span><span class="n">HMODULE</span> <span class="n">hModule</span><span class="p">,</span><span class="n">LPCSTR</span> <span class="n">lpProcName</span><span class="p">)</span>
-<a name="line-74"></a>	<span class="p">{</span>
-<a name="line-75"></a>	<span class="n">WCHAR</span> <span class="n">lpProcNameW</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
-<a name="line-76"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-77"></a>
-<a name="line-78"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">lpProcName</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-79"></a>		<span class="n">lpProcNameW</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">WCHAR</span><span class="p">)</span><span class="n">lpProcName</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-80"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">64</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-81"></a>	<span class="n">lpProcNameW</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-82"></a>
-<a name="line-83"></a>	<span class="k">return</span> <span class="n">GetProcAddressW</span><span class="p">(</span><span class="n">hModule</span><span class="p">,</span><span class="n">lpProcNameW</span><span class="p">);</span>
-<a name="line-84"></a>	<span class="p">}</span>
-<a name="line-85"></a><span class="cp"># endif</span>
-<a name="line-86"></a><span class="cp"># undef GetProcAddress</span>
-<a name="line-87"></a><span class="cp"># define GetProcAddress GetProcAddressA</span>
-<a name="line-88"></a>
-<a name="line-89"></a><span class="k">static</span> <span class="n">HINSTANCE</span> <span class="nf">LoadLibraryA</span><span class="p">(</span><span class="n">LPCSTR</span> <span class="n">lpLibFileName</span><span class="p">)</span>
-<a name="line-90"></a>	<span class="p">{</span>
-<a name="line-91"></a>	<span class="n">WCHAR</span> <span class="o">*</span><span class="n">fnamw</span><span class="p">;</span>
-<a name="line-92"></a>	<span class="kt">size_t</span> <span class="n">len_0</span><span class="o">=</span><span class="n">strlen</span><span class="p">(</span><span class="n">lpLibFileName</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">;</span>
-<a name="line-93"></a>
-<a name="line-94"></a><span class="cp">#ifdef _MSC_VER</span>
-<a name="line-95"></a>	<span class="n">fnamw</span> <span class="o">=</span> <span class="p">(</span><span class="n">WCHAR</span> <span class="o">*</span><span class="p">)</span><span class="n">_alloca</span> <span class="p">(</span><span class="n">len_0</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">WCHAR</span><span class="p">));</span>
-<a name="line-96"></a><span class="cp">#else</span>
-<a name="line-97"></a><span class="hll">	<span class="n">fnamw</span> <span class="o">=</span> <span class="p">(</span><span class="n">WCHAR</span> <span class="o">*</span><span class="p">)</span><span class="n">alloca</span> <span class="p">(</span><span class="n">len_0</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">WCHAR</span><span class="p">));</span><div class='verbose expandable'><span class='error2'>&lt;--- Obsolete function 'alloca' called. In C99 and later it is recommended to use a variable length array instead. <span class='marker'>[+]</span></span><div class='content'>The obsolete function &apos;alloca&apos; is called. In C99 and later it is recommended to use a variable length array or a dynamically allocated array instead. The function &apos;alloca&apos; is dangerous for many reasons (http://stackoverflow.com/questions/1018853/why-is-alloca-not-considered-good-practice and http://linux.die.net/man/3/alloca).</div></div>
-</span><a name="line-98"></a><span class="cp">#endif</span>
-<a name="line-99"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">fnamw</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-15"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
+<a name="line-16"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
+<a name="line-17"></a><span class="cm"> *</span>
+<a name="line-18"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-19"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
+<a name="line-20"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
+<a name="line-21"></a><span class="cm"> *    distribution.</span>
+<a name="line-22"></a><span class="cm"> *</span>
+<a name="line-23"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
+<a name="line-24"></a><span class="cm"> *    software must display the following acknowledgment:</span>
+<a name="line-25"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-26"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-27"></a><span class="cm"> *</span>
+<a name="line-28"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
+<a name="line-29"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
+<a name="line-30"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
+<a name="line-31"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
+<a name="line-32"></a><span class="cm"> *</span>
+<a name="line-33"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
+<a name="line-34"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
+<a name="line-35"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
+<a name="line-36"></a><span class="cm"> *</span>
+<a name="line-37"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
+<a name="line-38"></a><span class="cm"> *    acknowledgment:</span>
+<a name="line-39"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-40"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-41"></a><span class="cm"> *</span>
+<a name="line-42"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
+<a name="line-43"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-44"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
+<a name="line-45"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
+<a name="line-46"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<a name="line-47"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
+<a name="line-48"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<a name="line-49"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-50"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
+<a name="line-51"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
+<a name="line-52"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
+<a name="line-53"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<a name="line-54"></a><span class="cm"> * ====================================================================</span>
+<a name="line-55"></a><span class="cm"> *</span>
+<a name="line-56"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
+<a name="line-57"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
+<a name="line-58"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
+<a name="line-59"></a><span class="cm"> *</span>
+<a name="line-60"></a><span class="cm"> */</span>
+<a name="line-61"></a>
+<a name="line-62"></a><span class="cp">#include &lt;openssl/e_os2.h&gt;</span>
+<a name="line-63"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-64"></a><span class="cp">#include &quot;o_time.h&quot;</span>
+<a name="line-65"></a>
+<a name="line-66"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-67"></a><span class="cp"># if __CRTL_VER &gt;= 70000000 &amp;&amp; \</span>
+<a name="line-68"></a><span class="cp">     (defined _POSIX_C_SOURCE || !defined _ANSI_C_SOURCE)</span>
+<a name="line-69"></a><span class="cp">#  define VMS_GMTIME_OK</span>
+<a name="line-70"></a><span class="cp"># endif</span>
+<a name="line-71"></a><span class="cp"># ifndef VMS_GMTIME_OK</span>
+<a name="line-72"></a><span class="cp">#  include &lt;libdtdef.h&gt;</span>
+<a name="line-73"></a><span class="cp">#  include &lt;lib$routines.h&gt;</span>
+<a name="line-74"></a><span class="cp">#  include &lt;lnmdef.h&gt;</span>
+<a name="line-75"></a><span class="cp">#  include &lt;starlet.h&gt;</span>
+<a name="line-76"></a><span class="cp">#  include &lt;descrip.h&gt;</span>
+<a name="line-77"></a><span class="cp">#  include &lt;stdlib.h&gt;</span>
+<a name="line-78"></a><span class="cp"># endif </span><span class="cm">/* ndef VMS_GMTIME_OK */</span><span class="cp"></span>
+<a name="line-79"></a><span class="cp">#endif</span>
+<a name="line-80"></a>
+<a name="line-81"></a><span class="k">struct</span> <span class="n">tm</span> <span class="o">*</span><span class="nf">OPENSSL_gmtime</span><span class="p">(</span><span class="k">const</span> <span class="kt">time_t</span> <span class="o">*</span><span class="n">timer</span><span class="p">,</span> <span class="k">struct</span> <span class="n">tm</span> <span class="o">*</span><span class="n">result</span><span class="p">)</span>
+<a name="line-82"></a>	<span class="p">{</span>
+<a name="line-83"></a>	<span class="k">struct</span> <span class="n">tm</span> <span class="o">*</span><span class="n">ts</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-84"></a>
+<a name="line-85"></a><span class="cp">#if defined(OPENSSL_THREADS) &amp;&amp; !defined(OPENSSL_SYS_WIN32) &amp;&amp; !defined(OPENSSL_SYS_OS2) &amp;&amp; (!defined(OPENSSL_SYS_VMS) || defined(gmtime_r)) &amp;&amp; !defined(OPENSSL_SYS_MACOSX) &amp;&amp; !defined(OPENSSL_SYS_SUNOS)</span>
+<a name="line-86"></a>	<span class="cm">/* should return &amp;data, but doesn&#39;t on some systems,</span>
+<a name="line-87"></a><span class="cm">	   so we don&#39;t even look at the return value */</span>
+<a name="line-88"></a>	<span class="n">gmtime_r</span><span class="p">(</span><span class="n">timer</span><span class="p">,</span><span class="n">result</span><span class="p">);</span>
+<a name="line-89"></a>	<span class="n">ts</span> <span class="o">=</span> <span class="n">result</span><span class="p">;</span>
+<a name="line-90"></a><span class="cp">#elif !defined(OPENSSL_SYS_VMS) || defined(VMS_GMTIME_OK)</span>
+<a name="line-91"></a>	<span class="n">ts</span> <span class="o">=</span> <span class="n">gmtime</span><span class="p">(</span><span class="n">timer</span><span class="p">);</span>
+<a name="line-92"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ts</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-93"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-94"></a>
+<a name="line-95"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">tm</span><span class="p">));</span>
+<a name="line-96"></a>	<span class="n">ts</span> <span class="o">=</span> <span class="n">result</span><span class="p">;</span>
+<a name="line-97"></a><span class="cp">#endif</span>
+<a name="line-98"></a><span class="cp">#if defined( OPENSSL_SYS_VMS) &amp;&amp; !defined( VMS_GMTIME_OK)</span>
+<a name="line-99"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ts</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
 <a name="line-100"></a>		<span class="p">{</span>
-<a name="line-101"></a>		<span class="n">SetLastError</span><span class="p">(</span><span class="n">ERROR_NOT_ENOUGH_MEMORY</span><span class="p">);</span>
-<a name="line-102"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-103"></a>		<span class="p">}</span>
-<a name="line-104"></a>
-<a name="line-105"></a><span class="cp">#if defined(_WIN32_WCE) &amp;&amp; _WIN32_WCE&gt;=101</span>
-<a name="line-106"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">MultiByteToWideChar</span><span class="p">(</span><span class="n">CP_ACP</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">lpLibFileName</span><span class="p">,</span><span class="n">len_0</span><span class="p">,</span><span class="n">fnamw</span><span class="p">,</span><span class="n">len_0</span><span class="p">))</span>
-<a name="line-107"></a><span class="cp">#endif</span>
-<a name="line-108"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">len_0</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">fnamw</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">WCHAR</span><span class="p">)</span><span class="n">lpLibFileName</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-109"></a>
-<a name="line-110"></a>	<span class="k">return</span> <span class="n">LoadLibraryW</span><span class="p">(</span><span class="n">fnamw</span><span class="p">);</span>
-<a name="line-111"></a>	<span class="p">}</span>
-<a name="line-112"></a><span class="cp">#endif</span>
-<a name="line-113"></a>
-<a name="line-114"></a><span class="cm">/* Part of the hack in &quot;win32_load&quot; ... */</span>
-<a name="line-115"></a><span class="cp">#define DSO_MAX_TRANSLATED_SIZE 256</span>
+<a name="line-101"></a>		<span class="k">static</span> <span class="err">$</span><span class="n">DESCRIPTOR</span><span class="p">(</span><span class="n">tabnam</span><span class="p">,</span><span class="s">&quot;LNM$DCL_LOGICAL&quot;</span><span class="p">);</span>
+<a name="line-102"></a>		<span class="k">static</span> <span class="err">$</span><span class="n">DESCRIPTOR</span><span class="p">(</span><span class="n">lognam</span><span class="p">,</span><span class="s">&quot;SYS$TIMEZONE_DIFFERENTIAL&quot;</span><span class="p">);</span>
+<a name="line-103"></a>		<span class="kt">char</span> <span class="n">logvalue</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+<a name="line-104"></a>		<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">reslen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-105"></a>		<span class="k">struct</span> <span class="p">{</span>
+<a name="line-106"></a>			<span class="kt">short</span> <span class="n">buflen</span><span class="p">;</span>
+<a name="line-107"></a><span class="hll">			<span class="kt">short</span> <span class="n">code</span><span class="p">;</span><span class='error2'>&lt;--- struct or union member 'Anonymous0::code' is never used.</span>
+</span><a name="line-108"></a>			<span class="kt">void</span> <span class="o">*</span><span class="n">bufaddr</span><span class="p">;</span>
+<a name="line-109"></a>			<span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">reslen</span><span class="p">;</span>
+<a name="line-110"></a>		<span class="p">}</span> <span class="n">itemlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-111"></a>			<span class="p">{</span> <span class="mi">0</span><span class="p">,</span> <span class="n">LNM</span><span class="err">$</span><span class="n">_STRING</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">},</span>
+<a name="line-112"></a>			<span class="p">{</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">},</span>
+<a name="line-113"></a>		<span class="p">};</span>
+<a name="line-114"></a>		<span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-115"></a>		<span class="kt">time_t</span> <span class="n">t</span><span class="p">;</span>
 <a name="line-116"></a>
-<a name="line-117"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">win32_load</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">);</span>
-<a name="line-118"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">win32_unload</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">);</span>
-<a name="line-119"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">win32_bind_var</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">symname</span><span class="p">);</span>
-<a name="line-120"></a><span class="k">static</span> <span class="n">DSO_FUNC_TYPE</span> <span class="nf">win32_bind_func</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">symname</span><span class="p">);</span>
-<a name="line-121"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-122"></a><span class="c">static int win32_unbind_var(DSO *dso, char *symname, void *symptr);</span>
-<a name="line-123"></a><span class="c">static int win32_unbind_func(DSO *dso, char *symname, DSO_FUNC_TYPE symptr);</span>
-<a name="line-124"></a><span class="c">static int win32_init(DSO *dso);</span>
-<a name="line-125"></a><span class="c">static int win32_finish(DSO *dso);</span>
-<a name="line-126"></a><span class="c">static long win32_ctrl(DSO *dso, int cmd, long larg, void *parg);</span>
-<a name="line-127"></a><span class="cp">#endif</span>
-<a name="line-128"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">win32_name_converter</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">);</span>
-<a name="line-129"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">win32_merger</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filespec1</span><span class="p">,</span>
-<a name="line-130"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filespec2</span><span class="p">);</span>
-<a name="line-131"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">win32_pathbyaddr</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span><span class="kt">int</span> <span class="n">sz</span><span class="p">);</span>
-<a name="line-132"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">win32_globallookup</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
-<a name="line-133"></a>
-<a name="line-134"></a><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">openssl_strnchr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">);</span>
-<a name="line-135"></a>
-<a name="line-136"></a><span class="k">static</span> <span class="n">DSO_METHOD</span> <span class="n">dso_meth_win32</span> <span class="o">=</span> <span class="p">{</span>
-<a name="line-137"></a>	<span class="s">&quot;OpenSSL &#39;win32&#39; shared library method&quot;</span><span class="p">,</span>
-<a name="line-138"></a>	<span class="n">win32_load</span><span class="p">,</span>
-<a name="line-139"></a>	<span class="n">win32_unload</span><span class="p">,</span>
-<a name="line-140"></a>	<span class="n">win32_bind_var</span><span class="p">,</span>
-<a name="line-141"></a>	<span class="n">win32_bind_func</span><span class="p">,</span>
-<a name="line-142"></a><span class="cm">/* For now, &quot;unbind&quot; doesn&#39;t exist */</span>
-<a name="line-143"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-144"></a><span class="c">	NULL, /* unbind_var */</span>
-<a name="line-145"></a><span class="c">	NULL, /* unbind_func */</span>
-<a name="line-146"></a><span class="cp">#endif</span>
-<a name="line-147"></a>	<span class="nb">NULL</span><span class="p">,</span> <span class="cm">/* ctrl */</span>
-<a name="line-148"></a>	<span class="n">win32_name_converter</span><span class="p">,</span>
-<a name="line-149"></a>	<span class="n">win32_merger</span><span class="p">,</span>
-<a name="line-150"></a>	<span class="nb">NULL</span><span class="p">,</span> <span class="cm">/* init */</span>
-<a name="line-151"></a>	<span class="nb">NULL</span><span class="p">,</span> <span class="cm">/* finish */</span>
-<a name="line-152"></a>	<span class="n">win32_pathbyaddr</span><span class="p">,</span>
-<a name="line-153"></a>	<span class="n">win32_globallookup</span>
-<a name="line-154"></a>	<span class="p">};</span>
-<a name="line-155"></a>
-<a name="line-156"></a><span class="n">DSO_METHOD</span> <span class="o">*</span><span class="nf">DSO_METHOD_win32</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-157"></a>	<span class="p">{</span>
-<a name="line-158"></a>	<span class="k">return</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dso_meth_win32</span><span class="p">);</span>
-<a name="line-159"></a>	<span class="p">}</span>
-<a name="line-160"></a>
-<a name="line-161"></a><span class="cm">/* For this DSO_METHOD, our meth_data STACK will contain;</span>
-<a name="line-162"></a><span class="cm"> * (i) a pointer to the handle (HINSTANCE) returned from</span>
-<a name="line-163"></a><span class="cm"> *     LoadLibrary(), and copied.</span>
-<a name="line-164"></a><span class="cm"> */</span>
-<a name="line-165"></a>
-<a name="line-166"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">win32_load</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">)</span>
-<a name="line-167"></a>	<span class="p">{</span>
-<a name="line-168"></a>	<span class="n">HINSTANCE</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-169"></a>	<span class="cm">/* See applicable comments from dso_dl.c */</span>
-<a name="line-170"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">filename</span> <span class="o">=</span> <span class="n">DSO_convert_filename</span><span class="p">(</span><span class="n">dso</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-171"></a>
-<a name="line-172"></a>	<span class="k">if</span><span class="p">(</span><span class="n">filename</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-173"></a>		<span class="p">{</span>
-<a name="line-174"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_LOAD</span><span class="p">,</span><span class="n">DSO_R_NO_FILENAME</span><span class="p">);</span>
-<a name="line-175"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-176"></a>		<span class="p">}</span>
-<a name="line-177"></a>	<span class="n">h</span> <span class="o">=</span> <span class="n">LoadLibraryA</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
-<a name="line-178"></a>	<span class="k">if</span><span class="p">(</span><span class="n">h</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-179"></a>		<span class="p">{</span>
-<a name="line-180"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_LOAD</span><span class="p">,</span><span class="n">DSO_R_LOAD_FAILED</span><span class="p">);</span>
-<a name="line-181"></a>		<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;filename(&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">);</span>
-<a name="line-182"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-183"></a>		<span class="p">}</span>
-<a name="line-184"></a>	<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">HINSTANCE</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">HINSTANCE</span><span class="p">));</span>
-<a name="line-185"></a>	<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-186"></a>		<span class="p">{</span>
-<a name="line-187"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_LOAD</span><span class="p">,</span><span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-188"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-189"></a>		<span class="p">}</span>
-<a name="line-190"></a>	<span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
-<a name="line-191"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">sk_void_push</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
-<a name="line-192"></a>		<span class="p">{</span>
-<a name="line-193"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_LOAD</span><span class="p">,</span><span class="n">DSO_R_STACK_ERROR</span><span class="p">);</span>
-<a name="line-194"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-195"></a>		<span class="p">}</span>
-<a name="line-196"></a>	<span class="cm">/* Success */</span>
-<a name="line-197"></a>	<span class="n">dso</span><span class="o">-&gt;</span><span class="n">loaded_filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">;</span>
-<a name="line-198"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-199"></a><span class="nl">err</span><span class="p">:</span>
-<a name="line-200"></a>	<span class="cm">/* Cleanup !*/</span>
-<a name="line-201"></a>	<span class="k">if</span><span class="p">(</span><span class="n">filename</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-202"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
-<a name="line-203"></a>	<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-204"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<a name="line-205"></a>	<span class="k">if</span><span class="p">(</span><span class="n">h</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-206"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">h</span><span class="p">);</span>
-<a name="line-207"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-208"></a>	<span class="p">}</span>
-<a name="line-209"></a>
-<a name="line-210"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">win32_unload</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">)</span>
-<a name="line-211"></a>	<span class="p">{</span>
-<a name="line-212"></a>	<span class="n">HINSTANCE</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-<a name="line-213"></a>	<span class="k">if</span><span class="p">(</span><span class="n">dso</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-214"></a>		<span class="p">{</span>
-<a name="line-215"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_UNLOAD</span><span class="p">,</span><span class="n">ERR_R_PASSED_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-216"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-217"></a>		<span class="p">}</span>
-<a name="line-218"></a>	<span class="k">if</span><span class="p">(</span><span class="n">sk_void_num</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-219"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-220"></a>	<span class="n">p</span> <span class="o">=</span> <span class="n">sk_void_pop</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">);</span>
-<a name="line-221"></a>	<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-222"></a>		<span class="p">{</span>
-<a name="line-223"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_UNLOAD</span><span class="p">,</span><span class="n">DSO_R_NULL_HANDLE</span><span class="p">);</span>
-<a name="line-224"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-225"></a>		<span class="p">}</span>
-<a name="line-226"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">FreeLibrary</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
-<a name="line-227"></a>		<span class="p">{</span>
-<a name="line-228"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_UNLOAD</span><span class="p">,</span><span class="n">DSO_R_UNLOAD_FAILED</span><span class="p">);</span>
-<a name="line-229"></a>		<span class="cm">/* We should push the value back onto the stack in</span>
-<a name="line-230"></a><span class="cm">		 * case of a retry. */</span>
-<a name="line-231"></a>		<span class="n">sk_void_push</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
-<a name="line-232"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-233"></a>		<span class="p">}</span>
-<a name="line-234"></a>	<span class="cm">/* Cleanup */</span>
-<a name="line-235"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<a name="line-236"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-237"></a>	<span class="p">}</span>
-<a name="line-238"></a>
-<a name="line-239"></a><span class="cm">/* Using GetProcAddress for variables? TODO: Check this out in</span>
-<a name="line-240"></a><span class="cm"> * the Win32 API docs, there&#39;s probably a variant for variables. */</span>
-<a name="line-241"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">win32_bind_var</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">symname</span><span class="p">)</span>
-<a name="line-242"></a>	<span class="p">{</span>
-<a name="line-243"></a>	<span class="n">HINSTANCE</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-244"></a>	<span class="kt">void</span> <span class="o">*</span><span class="n">sym</span><span class="p">;</span>
-<a name="line-245"></a>
-<a name="line-246"></a>	<span class="k">if</span><span class="p">((</span><span class="n">dso</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">symname</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-247"></a>		<span class="p">{</span>
-<a name="line-248"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_VAR</span><span class="p">,</span><span class="n">ERR_R_PASSED_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-249"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-250"></a>		<span class="p">}</span>
-<a name="line-251"></a>	<span class="k">if</span><span class="p">(</span><span class="n">sk_void_num</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-117"></a>		<span class="cm">/* Get the value for SYS$TIMEZONE_DIFFERENTIAL */</span>
+<a name="line-118"></a>		<span class="n">itemlist</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">buflen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">logvalue</span><span class="p">);</span>
+<a name="line-119"></a>		<span class="n">itemlist</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">bufaddr</span> <span class="o">=</span> <span class="n">logvalue</span><span class="p">;</span>
+<a name="line-120"></a>		<span class="n">itemlist</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">reslen</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">reslen</span><span class="p">;</span>
+<a name="line-121"></a>		<span class="n">status</span> <span class="o">=</span> <span class="n">sys</span><span class="err">$</span><span class="n">trnlnm</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tabnam</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lognam</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">itemlist</span><span class="p">);</span>
+<a name="line-122"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">status</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span>
+<a name="line-123"></a>			<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-124"></a><span class="hll">		<span class="n">logvalue</span><span class="p">[</span><span class="n">reslen</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'logvalue' is assigned a value that is never used.</span>
+</span><a name="line-125"></a>
+<a name="line-126"></a>		<span class="n">t</span> <span class="o">=</span> <span class="o">*</span><span class="n">timer</span><span class="p">;</span>
+<a name="line-127"></a>
+<a name="line-128"></a><span class="cm">/* The following is extracted from the DEC C header time.h */</span>
+<a name="line-129"></a><span class="cm">/*</span>
+<a name="line-130"></a><span class="cm">**  Beginning in OpenVMS Version 7.0 mktime, time, ctime, strftime</span>
+<a name="line-131"></a><span class="cm">**  have two implementations.  One implementation is provided</span>
+<a name="line-132"></a><span class="cm">**  for compatibility and deals with time in terms of local time,</span>
+<a name="line-133"></a><span class="cm">**  the other __utc_* deals with time in terms of UTC.</span>
+<a name="line-134"></a><span class="cm">*/</span>
+<a name="line-135"></a><span class="cm">/* We use the same conditions as in said time.h to check if we should</span>
+<a name="line-136"></a><span class="cm">   assume that t contains local time (and should therefore be adjusted)</span>
+<a name="line-137"></a><span class="cm">   or UTC (and should therefore be left untouched). */</span>
+<a name="line-138"></a><span class="cp">#if __CRTL_VER &lt; 70000000 || defined _VMS_V6_SOURCE</span>
+<a name="line-139"></a>		<span class="cm">/* Get the numerical value of the equivalence string */</span>
+<a name="line-140"></a>		<span class="n">status</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">logvalue</span><span class="p">);</span>
+<a name="line-141"></a>
+<a name="line-142"></a>		<span class="cm">/* and use it to move time to GMT */</span>
+<a name="line-143"></a>		<span class="n">t</span> <span class="o">-=</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-144"></a><span class="cp">#endif</span>
+<a name="line-145"></a>
+<a name="line-146"></a>		<span class="cm">/* then convert the result to the time structure */</span>
+<a name="line-147"></a>
+<a name="line-148"></a>		<span class="cm">/* Since there was no gmtime_r() to do this stuff for us,</span>
+<a name="line-149"></a><span class="cm">		   we have to do it the hard way. */</span>
+<a name="line-150"></a>		<span class="p">{</span>
+<a name="line-151"></a>		<span class="cm">/* The VMS epoch is the astronomical Smithsonian date,</span>
+<a name="line-152"></a><span class="cm">		   if I remember correctly, which is November 17, 1858.</span>
+<a name="line-153"></a><span class="cm">		   Furthermore, time is measure in thenths of microseconds</span>
+<a name="line-154"></a><span class="cm">		   and stored in quadwords (64 bit integers).  unix_epoch</span>
+<a name="line-155"></a><span class="cm">		   below is January 1st 1970 expressed as a VMS time.  The</span>
+<a name="line-156"></a><span class="cm">		   following code was used to get this number:</span>
+<a name="line-157"></a>
+<a name="line-158"></a><span class="cm">		   #include &lt;stdio.h&gt;</span>
+<a name="line-159"></a><span class="cm">		   #include &lt;stdlib.h&gt;</span>
+<a name="line-160"></a><span class="cm">		   #include &lt;lib$routines.h&gt;</span>
+<a name="line-161"></a><span class="cm">		   #include &lt;starlet.h&gt;</span>
+<a name="line-162"></a>
+<a name="line-163"></a><span class="cm">		   main()</span>
+<a name="line-164"></a><span class="cm">		   {</span>
+<a name="line-165"></a><span class="cm">		     unsigned long systime[2];</span>
+<a name="line-166"></a><span class="cm">		     unsigned short epoch_values[7] =</span>
+<a name="line-167"></a><span class="cm">		       { 1970, 1, 1, 0, 0, 0, 0 };</span>
+<a name="line-168"></a>
+<a name="line-169"></a><span class="cm">		     lib$cvt_vectim(epoch_values, systime);</span>
+<a name="line-170"></a>
+<a name="line-171"></a><span class="cm">		     printf(&quot;%u %u&quot;, systime[0], systime[1]);</span>
+<a name="line-172"></a><span class="cm">		   }</span>
+<a name="line-173"></a><span class="cm">		*/</span>
+<a name="line-174"></a>		<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">unix_epoch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1273708544</span><span class="p">,</span> <span class="mi">8164711</span> <span class="p">};</span>
+<a name="line-175"></a>		<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">deltatime</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-176"></a>		<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">systime</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-177"></a>		<span class="k">struct</span> <span class="n">vms_vectime</span>
+<a name="line-178"></a>			<span class="p">{</span>
+<a name="line-179"></a><span class="hll">			<span class="kt">short</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span><span class='error2'>&lt;--- struct or union member 'vms_vectime::centi_second' is never used.</span>
+</span><a name="line-180"></a>				<span class="n">centi_second</span><span class="p">;</span>
+<a name="line-181"></a>			<span class="p">}</span> <span class="n">time_values</span><span class="p">;</span>
+<a name="line-182"></a>		<span class="kt">long</span> <span class="n">operation</span><span class="p">;</span>
+<a name="line-183"></a>
+<a name="line-184"></a>		<span class="cm">/* Turn the number of seconds since January 1st 1970 to</span>
+<a name="line-185"></a><span class="cm">		   an internal delta time.</span>
+<a name="line-186"></a><span class="cm">		   Note that lib$cvt_to_internal_time() will assume</span>
+<a name="line-187"></a><span class="cm">		   that t is signed, and will therefore break on 32-bit</span>
+<a name="line-188"></a><span class="cm">		   systems some time in 2038.</span>
+<a name="line-189"></a><span class="cm">		*/</span>
+<a name="line-190"></a>		<span class="n">operation</span> <span class="o">=</span> <span class="n">LIB</span><span class="err">$</span><span class="n">K_DELTA_SECONDS</span><span class="p">;</span>
+<a name="line-191"></a><span class="hll">		<span class="n">status</span> <span class="o">=</span> <span class="n">lib</span><span class="err">$</span><span class="n">cvt_to_internal_time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">operation</span><span class="p">,</span><span class='error2'>&lt;--- Variable 'status' is reassigned a value before the old one has been used.</span>
+</span><a name="line-192"></a>			<span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="n">deltatime</span><span class="p">);</span>
+<a name="line-193"></a>
+<a name="line-194"></a>		<span class="cm">/* Add the delta time with the Unix epoch and we have</span>
+<a name="line-195"></a><span class="cm">		   the current UTC time in internal format */</span>
+<a name="line-196"></a><span class="hll">		<span class="n">status</span> <span class="o">=</span> <span class="n">lib</span><span class="err">$</span><span class="n">add_times</span><span class="p">(</span><span class="n">unix_epoch</span><span class="p">,</span> <span class="n">deltatime</span><span class="p">,</span> <span class="n">systime</span><span class="p">);</span><span class='error2'>&lt;--- Variable 'status' is reassigned a value before the old one has been used.</span>
+</span><a name="line-197"></a>
+<a name="line-198"></a>		<span class="cm">/* Turn the internal time into a time vector */</span>
+<a name="line-199"></a><span class="hll">		<span class="n">status</span> <span class="o">=</span> <span class="n">sys</span><span class="err">$</span><span class="n">numtim</span><span class="p">(</span><span class="o">&amp;</span><span class="n">time_values</span><span class="p">,</span> <span class="n">systime</span><span class="p">);</span><span class='error2'>&lt;--- Variable 'status' is reassigned a value before the old one has been used.</span>
+</span><a name="line-200"></a>
+<a name="line-201"></a>		<span class="cm">/* Fill in the struct tm with the result */</span>
+<a name="line-202"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_sec</span> <span class="o">=</span> <span class="n">time_values</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+<a name="line-203"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_min</span> <span class="o">=</span> <span class="n">time_values</span><span class="p">.</span><span class="n">minute</span><span class="p">;</span>
+<a name="line-204"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_hour</span> <span class="o">=</span> <span class="n">time_values</span><span class="p">.</span><span class="n">hour</span><span class="p">;</span>
+<a name="line-205"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_mday</span> <span class="o">=</span> <span class="n">time_values</span><span class="p">.</span><span class="n">day</span><span class="p">;</span>
+<a name="line-206"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_mon</span> <span class="o">=</span> <span class="n">time_values</span><span class="p">.</span><span class="n">month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-207"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_year</span> <span class="o">=</span> <span class="n">time_values</span><span class="p">.</span><span class="n">year</span> <span class="o">-</span> <span class="mi">1900</span><span class="p">;</span>
+<a name="line-208"></a>
+<a name="line-209"></a>		<span class="n">operation</span> <span class="o">=</span> <span class="n">LIB</span><span class="err">$</span><span class="n">K_DAY_OF_WEEK</span><span class="p">;</span>
+<a name="line-210"></a><span class="hll">		<span class="n">status</span> <span class="o">=</span> <span class="n">lib</span><span class="err">$</span><span class="n">cvt_from_internal_time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">operation</span><span class="p">,</span><span class='error2'>&lt;--- Variable 'status' is reassigned a value before the old one has been used.</span>
+</span><a name="line-211"></a>			<span class="o">&amp;</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_wday</span><span class="p">,</span> <span class="n">systime</span><span class="p">);</span>
+<a name="line-212"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_wday</span> <span class="o">%=</span> <span class="mi">7</span><span class="p">;</span>
+<a name="line-213"></a>
+<a name="line-214"></a>		<span class="n">operation</span> <span class="o">=</span> <span class="n">LIB</span><span class="err">$</span><span class="n">K_DAY_OF_YEAR</span><span class="p">;</span>
+<a name="line-215"></a><span class="hll">		<span class="n">status</span> <span class="o">=</span> <span class="n">lib</span><span class="err">$</span><span class="n">cvt_from_internal_time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">operation</span><span class="p">,</span><span class='error2'>&lt;--- Variable 'status' is assigned a value that is never used.</span>
+</span><a name="line-216"></a>			<span class="o">&amp;</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_yday</span><span class="p">,</span> <span class="n">systime</span><span class="p">);</span>
+<a name="line-217"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_yday</span><span class="o">--</span><span class="p">;</span>
+<a name="line-218"></a>
+<a name="line-219"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">tm_isdst</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* There&#39;s no way to know... */</span>
+<a name="line-220"></a>
+<a name="line-221"></a>		<span class="n">ts</span> <span class="o">=</span> <span class="n">result</span><span class="p">;</span>
+<a name="line-222"></a>		<span class="p">}</span>
+<a name="line-223"></a>		<span class="p">}</span>
+<a name="line-224"></a><span class="cp">#endif</span>
+<a name="line-225"></a>	<span class="k">return</span> <span class="n">ts</span><span class="p">;</span>
+<a name="line-226"></a>	<span class="p">}</span>
+<a name="line-227"></a>
+<a name="line-228"></a><span class="cm">/* Take a tm structure and add an offset to it. This avoids any OS issues</span>
+<a name="line-229"></a><span class="cm"> * with restricted date types and overflows which cause the year 2038</span>
+<a name="line-230"></a><span class="cm"> * problem.</span>
+<a name="line-231"></a><span class="cm"> */</span>
+<a name="line-232"></a>
+<a name="line-233"></a><span class="cp">#define SECS_PER_DAY (24 * 60 * 60)</span>
+<a name="line-234"></a>
+<a name="line-235"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">date_to_julian</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">);</span>
+<a name="line-236"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">julian_to_date</span><span class="p">(</span><span class="kt">long</span> <span class="n">jd</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">d</span><span class="p">);</span>
+<a name="line-237"></a>
+<a name="line-238"></a><span class="kt">int</span> <span class="nf">OPENSSL_gmtime_adj</span><span class="p">(</span><span class="k">struct</span> <span class="n">tm</span> <span class="o">*</span><span class="n">tm</span><span class="p">,</span> <span class="kt">int</span> <span class="n">off_day</span><span class="p">,</span> <span class="kt">long</span> <span class="n">offset_sec</span><span class="p">)</span>
+<a name="line-239"></a>	<span class="p">{</span>
+<a name="line-240"></a>	<span class="kt">int</span> <span class="n">offset_hms</span><span class="p">,</span> <span class="n">offset_day</span><span class="p">;</span>
+<a name="line-241"></a>	<span class="kt">long</span> <span class="n">time_jd</span><span class="p">;</span>
+<a name="line-242"></a>	<span class="kt">int</span> <span class="n">time_year</span><span class="p">,</span> <span class="n">time_month</span><span class="p">,</span> <span class="n">time_day</span><span class="p">;</span>
+<a name="line-243"></a>	<span class="cm">/* split offset into days and day seconds */</span>
+<a name="line-244"></a>	<span class="n">offset_day</span> <span class="o">=</span> <span class="n">offset_sec</span> <span class="o">/</span> <span class="n">SECS_PER_DAY</span><span class="p">;</span>
+<a name="line-245"></a>	<span class="cm">/* Avoid sign issues with % operator */</span>
+<a name="line-246"></a>	<span class="n">offset_hms</span>  <span class="o">=</span> <span class="n">offset_sec</span> <span class="o">-</span> <span class="p">(</span><span class="n">offset_day</span> <span class="o">*</span> <span class="n">SECS_PER_DAY</span><span class="p">);</span>
+<a name="line-247"></a>	<span class="n">offset_day</span> <span class="o">+=</span> <span class="n">off_day</span><span class="p">;</span>
+<a name="line-248"></a>	<span class="cm">/* Add current time seconds to offset */</span>
+<a name="line-249"></a>	<span class="n">offset_hms</span> <span class="o">+=</span> <span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_hour</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">+</span> <span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_min</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_sec</span><span class="p">;</span>
+<a name="line-250"></a>	<span class="cm">/* Adjust day seconds if overflow */</span>
+<a name="line-251"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">offset_hms</span> <span class="o">&gt;=</span> <span class="n">SECS_PER_DAY</span><span class="p">)</span>
 <a name="line-252"></a>		<span class="p">{</span>
-<a name="line-253"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_VAR</span><span class="p">,</span><span class="n">DSO_R_STACK_ERROR</span><span class="p">);</span>
-<a name="line-254"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-253"></a>		<span class="n">offset_day</span><span class="o">++</span><span class="p">;</span>
+<a name="line-254"></a>		<span class="n">offset_hms</span> <span class="o">-=</span> <span class="n">SECS_PER_DAY</span><span class="p">;</span>
 <a name="line-255"></a>		<span class="p">}</span>
-<a name="line-256"></a>	<span class="n">ptr</span> <span class="o">=</span> <span class="n">sk_void_value</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">,</span> <span class="n">sk_void_num</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-257"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-258"></a>		<span class="p">{</span>
-<a name="line-259"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_VAR</span><span class="p">,</span><span class="n">DSO_R_NULL_HANDLE</span><span class="p">);</span>
-<a name="line-260"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-261"></a>		<span class="p">}</span>
-<a name="line-262"></a>	<span class="n">sym</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="n">symname</span><span class="p">);</span>
-<a name="line-263"></a>	<span class="k">if</span><span class="p">(</span><span class="n">sym</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-264"></a>		<span class="p">{</span>
-<a name="line-265"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_VAR</span><span class="p">,</span><span class="n">DSO_R_SYM_FAILURE</span><span class="p">);</span>
-<a name="line-266"></a>		<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;symname(&quot;</span><span class="p">,</span> <span class="n">symname</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">);</span>
-<a name="line-267"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-268"></a>		<span class="p">}</span>
-<a name="line-269"></a>	<span class="k">return</span><span class="p">(</span><span class="n">sym</span><span class="p">);</span>
-<a name="line-270"></a>	<span class="p">}</span>
-<a name="line-271"></a>
-<a name="line-272"></a><span class="k">static</span> <span class="n">DSO_FUNC_TYPE</span> <span class="nf">win32_bind_func</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">symname</span><span class="p">)</span>
-<a name="line-273"></a>	<span class="p">{</span>
-<a name="line-274"></a>	<span class="n">HINSTANCE</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-275"></a>	<span class="kt">void</span> <span class="o">*</span><span class="n">sym</span><span class="p">;</span>
+<a name="line-256"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">offset_hms</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-257"></a>		<span class="p">{</span>
+<a name="line-258"></a>		<span class="n">offset_day</span><span class="o">--</span><span class="p">;</span>
+<a name="line-259"></a>		<span class="n">offset_hms</span> <span class="o">+=</span> <span class="n">SECS_PER_DAY</span><span class="p">;</span>
+<a name="line-260"></a>		<span class="p">}</span>
+<a name="line-261"></a>
+<a name="line-262"></a>	<span class="cm">/* Convert date of time structure into a Julian day number.</span>
+<a name="line-263"></a><span class="cm">	 */</span>
+<a name="line-264"></a>
+<a name="line-265"></a>	<span class="n">time_year</span> <span class="o">=</span> <span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_year</span> <span class="o">+</span> <span class="mi">1900</span><span class="p">;</span>
+<a name="line-266"></a>	<span class="n">time_month</span> <span class="o">=</span> <span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_mon</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-267"></a>	<span class="n">time_day</span> <span class="o">=</span> <span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_mday</span><span class="p">;</span>
+<a name="line-268"></a>
+<a name="line-269"></a>	<span class="n">time_jd</span> <span class="o">=</span> <span class="n">date_to_julian</span><span class="p">(</span><span class="n">time_year</span><span class="p">,</span> <span class="n">time_month</span><span class="p">,</span> <span class="n">time_day</span><span class="p">);</span>
+<a name="line-270"></a>
+<a name="line-271"></a>	<span class="cm">/* Work out Julian day of new date */</span>
+<a name="line-272"></a>	<span class="n">time_jd</span> <span class="o">+=</span> <span class="n">offset_day</span><span class="p">;</span>
+<a name="line-273"></a>
+<a name="line-274"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">time_jd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-275"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <a name="line-276"></a>
-<a name="line-277"></a>	<span class="k">if</span><span class="p">((</span><span class="n">dso</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">symname</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-278"></a>		<span class="p">{</span>
-<a name="line-279"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_FUNC</span><span class="p">,</span><span class="n">ERR_R_PASSED_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-280"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-281"></a>		<span class="p">}</span>
-<a name="line-282"></a>	<span class="k">if</span><span class="p">(</span><span class="n">sk_void_num</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-283"></a>		<span class="p">{</span>
-<a name="line-284"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_FUNC</span><span class="p">,</span><span class="n">DSO_R_STACK_ERROR</span><span class="p">);</span>
-<a name="line-285"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-286"></a>		<span class="p">}</span>
-<a name="line-287"></a>	<span class="n">ptr</span> <span class="o">=</span> <span class="n">sk_void_value</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">,</span> <span class="n">sk_void_num</span><span class="p">(</span><span class="n">dso</span><span class="o">-&gt;</span><span class="n">meth_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-288"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-289"></a>		<span class="p">{</span>
-<a name="line-290"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_FUNC</span><span class="p">,</span><span class="n">DSO_R_NULL_HANDLE</span><span class="p">);</span>
-<a name="line-291"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-292"></a>		<span class="p">}</span>
-<a name="line-293"></a>	<span class="n">sym</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="n">symname</span><span class="p">);</span>
-<a name="line-294"></a>	<span class="k">if</span><span class="p">(</span><span class="n">sym</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-295"></a>		<span class="p">{</span>
-<a name="line-296"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_BIND_FUNC</span><span class="p">,</span><span class="n">DSO_R_SYM_FAILURE</span><span class="p">);</span>
-<a name="line-297"></a>		<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;symname(&quot;</span><span class="p">,</span> <span class="n">symname</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">);</span>
-<a name="line-298"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-299"></a>		<span class="p">}</span>
-<a name="line-300"></a>	<span class="k">return</span><span class="p">((</span><span class="n">DSO_FUNC_TYPE</span><span class="p">)</span><span class="n">sym</span><span class="p">);</span>
-<a name="line-301"></a>	<span class="p">}</span>
-<a name="line-302"></a>
-<a name="line-303"></a><span class="k">struct</span> <span class="n">file_st</span>
-<a name="line-304"></a>	<span class="p">{</span>
-<a name="line-305"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span> <span class="kt">int</span> <span class="n">nodelen</span><span class="p">;</span>
-<a name="line-306"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">device</span><span class="p">;</span> <span class="kt">int</span> <span class="n">devicelen</span><span class="p">;</span>
-<a name="line-307"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">predir</span><span class="p">;</span> <span class="kt">int</span> <span class="n">predirlen</span><span class="p">;</span>
-<a name="line-308"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">dir</span><span class="p">;</span> <span class="kt">int</span> <span class="n">dirlen</span><span class="p">;</span>
-<a name="line-309"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">file</span><span class="p">;</span> <span class="kt">int</span> <span class="n">filelen</span><span class="p">;</span>
-<a name="line-310"></a>	<span class="p">};</span>
-<a name="line-311"></a>
-<a name="line-312"></a><span class="k">static</span> <span class="k">struct</span> <span class="n">file_st</span> <span class="o">*</span><span class="nf">win32_splitter</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span>
-<a name="line-313"></a>	<span class="kt">int</span> <span class="n">assume_last_is_dir</span><span class="p">)</span>
-<a name="line-314"></a>	<span class="p">{</span>
-<a name="line-315"></a>	<span class="k">struct</span> <span class="n">file_st</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-316"></a>	<span class="k">enum</span> <span class="p">{</span> <span class="n">IN_NODE</span><span class="p">,</span> <span class="n">IN_DEVICE</span><span class="p">,</span> <span class="n">IN_FILE</span> <span class="p">}</span> <span class="n">position</span><span class="p">;</span>
-<a name="line-317"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">start</span> <span class="o">=</span> <span class="n">filename</span><span class="p">;</span>
-<a name="line-318"></a>	<span class="kt">char</span> <span class="n">last</span><span class="p">;</span>
-<a name="line-319"></a>
-<a name="line-320"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filename</span><span class="p">)</span>
-<a name="line-321"></a>		<span class="p">{</span>
-<a name="line-322"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_SPLITTER</span><span class="p">,</span><span class="n">DSO_R_NO_FILENAME</span><span class="p">);</span>
-<a name="line-323"></a>		<span class="cm">/*goto err;*/</span>
-<a name="line-324"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-325"></a>		<span class="p">}</span>
+<a name="line-277"></a>	<span class="cm">/* Convert Julian day back to date */</span>
+<a name="line-278"></a>
+<a name="line-279"></a>	<span class="n">julian_to_date</span><span class="p">(</span><span class="n">time_jd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">time_year</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">time_month</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">time_day</span><span class="p">);</span>
+<a name="line-280"></a>
+<a name="line-281"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">time_year</span> <span class="o">&lt;</span> <span class="mi">1900</span> <span class="o">||</span> <span class="n">time_year</span> <span class="o">&gt;</span> <span class="mi">9999</span><span class="p">)</span>
+<a name="line-282"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-283"></a>
+<a name="line-284"></a>	<span class="cm">/* Update tm structure */</span>
+<a name="line-285"></a>
+<a name="line-286"></a>	<span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_year</span> <span class="o">=</span> <span class="n">time_year</span> <span class="o">-</span> <span class="mi">1900</span><span class="p">;</span>
+<a name="line-287"></a>	<span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_mon</span> <span class="o">=</span> <span class="n">time_month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-288"></a>	<span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_mday</span> <span class="o">=</span> <span class="n">time_day</span><span class="p">;</span>
+<a name="line-289"></a>
+<a name="line-290"></a>	<span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_hour</span> <span class="o">=</span> <span class="n">offset_hms</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">;</span>
+<a name="line-291"></a>	<span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_min</span> <span class="o">=</span> <span class="p">(</span><span class="n">offset_hms</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">;</span>
+<a name="line-292"></a>	<span class="n">tm</span><span class="o">-&gt;</span><span class="n">tm_sec</span> <span class="o">=</span> <span class="n">offset_hms</span> <span class="o">%</span> <span class="mi">60</span><span class="p">;</span>
+<a name="line-293"></a>
+<a name="line-294"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-295"></a>		
+<a name="line-296"></a><span class="p">}</span>
+<a name="line-297"></a>
+<a name="line-298"></a><span class="cm">/* Convert date to and from julian day</span>
+<a name="line-299"></a><span class="cm"> * Uses Fliegel &amp; Van Flandern algorithm</span>
+<a name="line-300"></a><span class="cm"> */</span>
+<a name="line-301"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">date_to_julian</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<a name="line-302"></a><span class="p">{</span>
+<a name="line-303"></a>	<span class="k">return</span> <span class="p">(</span><span class="mi">1461</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">4800</span> <span class="o">+</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">14</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">))</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span>
+<a name="line-304"></a>		<span class="p">(</span><span class="mi">367</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">12</span> <span class="o">*</span> <span class="p">((</span><span class="n">m</span> <span class="o">-</span> <span class="mi">14</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)))</span> <span class="o">/</span> <span class="mi">12</span> <span class="o">-</span>
+<a name="line-305"></a>		<span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">((</span><span class="n">y</span> <span class="o">+</span> <span class="mi">4900</span> <span class="o">+</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">14</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">))</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span>
+<a name="line-306"></a>		<span class="n">d</span> <span class="o">-</span> <span class="mi">32075</span><span class="p">;</span>
+<a name="line-307"></a><span class="p">}</span>
+<a name="line-308"></a>
+<a name="line-309"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">julian_to_date</span><span class="p">(</span><span class="kt">long</span> <span class="n">jd</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">d</span><span class="p">)</span>
+<a name="line-310"></a>	<span class="p">{</span>
+<a name="line-311"></a>	<span class="kt">long</span>  <span class="n">L</span> <span class="o">=</span> <span class="n">jd</span> <span class="o">+</span> <span class="mi">68569</span><span class="p">;</span>
+<a name="line-312"></a>	<span class="kt">long</span>  <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="mi">146097</span><span class="p">;</span>
+<a name="line-313"></a>	<span class="kt">long</span>  <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+<a name="line-314"></a>
+<a name="line-315"></a>	<span class="n">L</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="p">(</span><span class="mi">146097</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">;</span>
+<a name="line-316"></a>	<span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4000</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">1461001</span><span class="p">;</span>
+<a name="line-317"></a>	<span class="n">L</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1461</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">31</span><span class="p">;</span>
+<a name="line-318"></a>	<span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="mi">80</span> <span class="o">*</span> <span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2447</span><span class="p">;</span>
+<a name="line-319"></a>	<span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2447</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span> <span class="o">/</span> <span class="mi">80</span><span class="p">;</span>
+<a name="line-320"></a>	<span class="n">L</span> <span class="o">=</span> <span class="n">j</span> <span class="o">/</span> <span class="mi">11</span><span class="p">;</span>
+<a name="line-321"></a>	<span class="o">*</span><span class="n">m</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="mi">12</span> <span class="o">*</span> <span class="n">L</span><span class="p">);</span>
+<a name="line-322"></a>	<span class="o">*</span><span class="n">y</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">49</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">L</span><span class="p">;</span>
+<a name="line-323"></a>	<span class="p">}</span>
+<a name="line-324"></a>
+<a name="line-325"></a><span class="cp">#ifdef OPENSSL_TIME_TEST</span>
 <a name="line-326"></a>
-<a name="line-327"></a>	<span class="n">result</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">file_st</span><span class="p">));</span>
-<a name="line-328"></a>	<span class="k">if</span><span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-329"></a>		<span class="p">{</span>
-<a name="line-330"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_SPLITTER</span><span class="p">,</span>
-<a name="line-331"></a>			<span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-332"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-333"></a>		<span class="p">}</span>
-<a name="line-334"></a>
-<a name="line-335"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">file_st</span><span class="p">));</span>
-<a name="line-336"></a>	<span class="n">position</span> <span class="o">=</span> <span class="n">IN_DEVICE</span><span class="p">;</span>
-<a name="line-337"></a>
-<a name="line-338"></a>	<span class="k">if</span><span class="p">((</span><span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">filename</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span><span class="p">)</span>
-<a name="line-339"></a>		<span class="o">||</span> <span class="p">(</span><span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">filename</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span><span class="p">))</span>
-<a name="line-340"></a>		<span class="p">{</span>
-<a name="line-341"></a>		<span class="n">position</span> <span class="o">=</span> <span class="n">IN_NODE</span><span class="p">;</span>
-<a name="line-342"></a>		<span class="n">filename</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
-<a name="line-343"></a>		<span class="n">start</span> <span class="o">=</span> <span class="n">filename</span><span class="p">;</span>
-<a name="line-344"></a>		<span class="n">result</span><span class="o">-&gt;</span><span class="n">node</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-345"></a>		<span class="p">}</span>
-<a name="line-346"></a>
-<a name="line-347"></a>	<span class="k">do</span>
-<a name="line-348"></a>		<span class="p">{</span>
-<a name="line-349"></a>		<span class="n">last</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-350"></a>		<span class="k">switch</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
-<a name="line-351"></a>			<span class="p">{</span>
-<a name="line-352"></a>		<span class="k">case</span> <span class="sc">&#39;:&#39;</span><span class="o">:</span>
-<a name="line-353"></a>			<span class="k">if</span><span class="p">(</span><span class="n">position</span> <span class="o">!=</span> <span class="n">IN_DEVICE</span><span class="p">)</span>
-<a name="line-354"></a>				<span class="p">{</span>
-<a name="line-355"></a>				<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_SPLITTER</span><span class="p">,</span>
-<a name="line-356"></a>					<span class="n">DSO_R_INCORRECT_FILE_SYNTAX</span><span class="p">);</span>
-<a name="line-357"></a>				<span class="cm">/*goto err;*/</span>
-<a name="line-358"></a>				<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
-<a name="line-359"></a>				<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-360"></a>				<span class="p">}</span>
-<a name="line-361"></a>			<span class="n">result</span><span class="o">-&gt;</span><span class="n">device</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-362"></a>			<span class="n">result</span><span class="o">-&gt;</span><span class="n">devicelen</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-363"></a>			<span class="n">position</span> <span class="o">=</span> <span class="n">IN_FILE</span><span class="p">;</span>
-<a name="line-364"></a>			<span class="n">start</span> <span class="o">=</span> <span class="o">++</span><span class="n">filename</span><span class="p">;</span>
-<a name="line-365"></a>			<span class="n">result</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-366"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-367"></a>		<span class="k">case</span> <span class="sc">&#39;\\&#39;</span><span class="o">:</span>
-<a name="line-368"></a>		<span class="k">case</span> <span class="sc">&#39;/&#39;</span><span class="o">:</span>
-<a name="line-369"></a>			<span class="k">if</span><span class="p">(</span><span class="n">position</span> <span class="o">==</span> <span class="n">IN_NODE</span><span class="p">)</span>
-<a name="line-370"></a>				<span class="p">{</span>
-<a name="line-371"></a>				<span class="n">result</span><span class="o">-&gt;</span><span class="n">nodelen</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-372"></a>				<span class="n">position</span> <span class="o">=</span> <span class="n">IN_FILE</span><span class="p">;</span>
-<a name="line-373"></a>				<span class="n">start</span> <span class="o">=</span> <span class="o">++</span><span class="n">filename</span><span class="p">;</span>
-<a name="line-374"></a>				<span class="n">result</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-375"></a>				<span class="p">}</span>
-<a name="line-376"></a>			<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">position</span> <span class="o">==</span> <span class="n">IN_DEVICE</span><span class="p">)</span>
-<a name="line-377"></a>				<span class="p">{</span>
-<a name="line-378"></a>				<span class="n">position</span> <span class="o">=</span> <span class="n">IN_FILE</span><span class="p">;</span>
-<a name="line-379"></a>				<span class="n">filename</span><span class="o">++</span><span class="p">;</span>
-<a name="line-380"></a>				<span class="n">result</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-381"></a>				<span class="n">result</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-382"></a>				<span class="n">start</span> <span class="o">=</span> <span class="n">filename</span><span class="p">;</span>
-<a name="line-383"></a>				<span class="p">}</span>
-<a name="line-384"></a>			<span class="k">else</span>
-<a name="line-385"></a>				<span class="p">{</span>
-<a name="line-386"></a>				<span class="n">filename</span><span class="o">++</span><span class="p">;</span>
-<a name="line-387"></a>				<span class="n">result</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-388"></a>				<span class="n">start</span> <span class="o">=</span> <span class="n">filename</span><span class="p">;</span>
-<a name="line-389"></a>				<span class="p">}</span>
-<a name="line-390"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-391"></a>		<span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span>
-<a name="line-392"></a>			<span class="k">if</span><span class="p">(</span><span class="n">position</span> <span class="o">==</span> <span class="n">IN_NODE</span><span class="p">)</span>
-<a name="line-393"></a>				<span class="p">{</span>
-<a name="line-394"></a>				<span class="n">result</span><span class="o">-&gt;</span><span class="n">nodelen</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-395"></a>				<span class="p">}</span>
-<a name="line-396"></a>			<span class="k">else</span>
-<a name="line-397"></a>				<span class="p">{</span>
-<a name="line-398"></a>				<span class="k">if</span><span class="p">(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-399"></a>					<span class="p">{</span>
-<a name="line-400"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">assume_last_is_dir</span><span class="p">)</span>
-<a name="line-401"></a>						<span class="p">{</span>
-<a name="line-402"></a>						<span class="k">if</span> <span class="p">(</span><span class="n">position</span> <span class="o">==</span> <span class="n">IN_DEVICE</span><span class="p">)</span>
-<a name="line-403"></a>							<span class="p">{</span>
-<a name="line-404"></a>							<span class="n">result</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-405"></a>							<span class="n">result</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-406"></a>							<span class="p">}</span>
-<a name="line-407"></a>						<span class="n">result</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">+=</span>
-<a name="line-408"></a>							<span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-409"></a>						<span class="p">}</span>
-<a name="line-410"></a>					<span class="k">else</span>
-<a name="line-411"></a>						<span class="p">{</span>
-<a name="line-412"></a>						<span class="n">result</span><span class="o">-&gt;</span><span class="n">file</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-<a name="line-413"></a>						<span class="n">result</span><span class="o">-&gt;</span><span class="n">filelen</span> <span class="o">=</span>
-<a name="line-414"></a>							<span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">filename</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-415"></a>						<span class="p">}</span>
-<a name="line-416"></a>					<span class="p">}</span>
-<a name="line-417"></a>				<span class="p">}</span>
-<a name="line-418"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-419"></a>		<span class="k">default</span><span class="o">:</span>
-<a name="line-420"></a>			<span class="n">filename</span><span class="o">++</span><span class="p">;</span>
-<a name="line-421"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-422"></a>			<span class="p">}</span>
-<a name="line-423"></a>		<span class="p">}</span>
-<a name="line-424"></a>	<span class="k">while</span><span class="p">(</span><span class="n">last</span><span class="p">);</span>
-<a name="line-425"></a>
-<a name="line-426"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">nodelen</span><span class="p">)</span> <span class="n">result</span><span class="o">-&gt;</span><span class="n">node</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-427"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">devicelen</span><span class="p">)</span> <span class="n">result</span><span class="o">-&gt;</span><span class="n">device</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-428"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">dirlen</span><span class="p">)</span> <span class="n">result</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-429"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">filelen</span><span class="p">)</span> <span class="n">result</span><span class="o">-&gt;</span><span class="n">file</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-430"></a>
-<a name="line-431"></a>	<span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
-<a name="line-432"></a>	<span class="p">}</span>
-<a name="line-433"></a>
-<a name="line-434"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">win32_joiner</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">file_st</span> <span class="o">*</span><span class="n">file_split</span><span class="p">)</span>
-<a name="line-435"></a>	<span class="p">{</span>
-<a name="line-436"></a>	<span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-437"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-438"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">start</span><span class="p">;</span>
-<a name="line-439"></a>
-<a name="line-440"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file_split</span><span class="p">)</span>
-<a name="line-441"></a>		<span class="p">{</span>
-<a name="line-442"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_JOINER</span><span class="p">,</span>
-<a name="line-443"></a>				<span class="n">ERR_R_PASSED_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-444"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-445"></a>		<span class="p">}</span>
-<a name="line-446"></a>	<span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">node</span><span class="p">)</span>
-<a name="line-447"></a>		<span class="p">{</span>
-<a name="line-448"></a>		<span class="n">len</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">nodelen</span><span class="p">;</span>	<span class="cm">/* 2 for starting \\ */</span>
-<a name="line-449"></a>		<span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span> <span class="o">||</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">||</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">)</span>
-<a name="line-450"></a>			<span class="n">len</span><span class="o">++</span><span class="p">;</span>	<span class="cm">/* 1 for ending \ */</span>
-<a name="line-451"></a>		<span class="p">}</span>
-<a name="line-452"></a>	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">device</span><span class="p">)</span>
-<a name="line-453"></a>		<span class="p">{</span>
-<a name="line-454"></a>		<span class="n">len</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">devicelen</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* 1 for ending : */</span>
-<a name="line-455"></a>		<span class="p">}</span>
-<a name="line-456"></a>	<span class="n">len</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predirlen</span><span class="p">;</span>
-<a name="line-457"></a>	<span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">||</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">))</span>
-<a name="line-458"></a>		<span class="p">{</span>
-<a name="line-459"></a>		<span class="n">len</span><span class="o">++</span><span class="p">;</span>	<span class="cm">/* 1 for ending \ */</span>
-<a name="line-460"></a>		<span class="p">}</span>
-<a name="line-461"></a>	<span class="n">len</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dirlen</span><span class="p">;</span>
-<a name="line-462"></a>	<span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">&amp;&amp;</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">)</span>
-<a name="line-463"></a>		<span class="p">{</span>
-<a name="line-464"></a>		<span class="n">len</span><span class="o">++</span><span class="p">;</span>	<span class="cm">/* 1 for ending \ */</span>
-<a name="line-465"></a>		<span class="p">}</span>
-<a name="line-466"></a>	<span class="n">len</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">filelen</span><span class="p">;</span>
-<a name="line-467"></a>
-<a name="line-468"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">len</span><span class="p">)</span>
-<a name="line-469"></a>		<span class="p">{</span>
-<a name="line-470"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_JOINER</span><span class="p">,</span> <span class="n">DSO_R_EMPTY_FILE_STRUCTURE</span><span class="p">);</span>
-<a name="line-471"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-472"></a>		<span class="p">}</span>
-<a name="line-473"></a>
-<a name="line-474"></a>	<span class="n">result</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-475"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="p">)</span>
-<a name="line-476"></a>		<span class="p">{</span>
-<a name="line-477"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_JOINER</span><span class="p">,</span>
-<a name="line-478"></a>			<span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-479"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-480"></a>		<span class="p">}</span>
-<a name="line-481"></a>
-<a name="line-482"></a>	<span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">node</span><span class="p">)</span>
-<a name="line-483"></a>		<span class="p">{</span>
-<a name="line-484"></a>		<span class="n">strcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">],</span> <span class="s">&quot;</span><span class="se">\\\\</span><span class="s">&quot;</span><span class="p">);</span> <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
-<a name="line-485"></a>		<span class="n">strncpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">],</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">node</span><span class="p">,</span>
-<a name="line-486"></a>			<span class="n">file_split</span><span class="o">-&gt;</span><span class="n">nodelen</span><span class="p">);</span> <span class="n">offset</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">nodelen</span><span class="p">;</span>
-<a name="line-487"></a>		<span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span> <span class="o">||</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">||</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">)</span>
-<a name="line-488"></a>			<span class="p">{</span>
-<a name="line-489"></a>			<span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\\&#39;</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">;</span>
-<a name="line-490"></a>			<span class="p">}</span>
-<a name="line-491"></a>		<span class="p">}</span>
-<a name="line-492"></a>	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">device</span><span class="p">)</span>
-<a name="line-493"></a>		<span class="p">{</span>
-<a name="line-494"></a>		<span class="n">strncpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">],</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">device</span><span class="p">,</span>
-<a name="line-495"></a>			<span class="n">file_split</span><span class="o">-&gt;</span><span class="n">devicelen</span><span class="p">);</span> <span class="n">offset</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">devicelen</span><span class="p">;</span>
-<a name="line-496"></a>		<span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;:&#39;</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">;</span>
-<a name="line-497"></a>		<span class="p">}</span>
-<a name="line-498"></a>	<span class="n">start</span> <span class="o">=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span><span class="p">;</span>
-<a name="line-499"></a>	<span class="k">while</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predirlen</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span><span class="p">))</span>
-<a name="line-500"></a>		<span class="p">{</span>
-<a name="line-501"></a>		<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">end</span> <span class="o">=</span> <span class="n">openssl_strnchr</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="sc">&#39;/&#39;</span><span class="p">,</span>
-<a name="line-502"></a>			<span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predirlen</span> <span class="o">-</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span><span class="p">));</span>
-<a name="line-503"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">end</span><span class="p">)</span>
-<a name="line-504"></a>			<span class="n">end</span> <span class="o">=</span> <span class="n">start</span>
-<a name="line-505"></a>				<span class="o">+</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predirlen</span>
-<a name="line-506"></a>				<span class="o">-</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">predir</span><span class="p">);</span>
-<a name="line-507"></a>		<span class="n">strncpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">],</span> <span class="n">start</span><span class="p">,</span>
-<a name="line-508"></a>			<span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span> <span class="n">offset</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-509"></a>		<span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\\&#39;</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">;</span>
-<a name="line-510"></a>		<span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-511"></a>		<span class="p">}</span>
-<a name="line-512"></a><span class="cp">#if 0</span><span class="c"> /* Not needed, since the directory converter above already appeneded</span>
-<a name="line-513"></a><span class="c">	 a backslash */</span>
-<a name="line-514"></a><span class="c">	if(file_split-&gt;predir &amp;&amp; (file_split-&gt;dir || file_split-&gt;file))</span>
-<a name="line-515"></a><span class="c">		{</span>
-<a name="line-516"></a><span class="c">		result[offset] = &#39;\\&#39;; offset++;</span>
-<a name="line-517"></a><span class="c">		}</span>
-<a name="line-518"></a><span class="cp">#endif</span>
-<a name="line-519"></a>	<span class="n">start</span> <span class="o">=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">;</span>
-<a name="line-520"></a>	<span class="k">while</span><span class="p">(</span><span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">))</span>
-<a name="line-521"></a>		<span class="p">{</span>
-<a name="line-522"></a>		<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">end</span> <span class="o">=</span> <span class="n">openssl_strnchr</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="sc">&#39;/&#39;</span><span class="p">,</span>
-<a name="line-523"></a>			<span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">-</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">));</span>
-<a name="line-524"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">end</span><span class="p">)</span>
-<a name="line-525"></a>			<span class="n">end</span> <span class="o">=</span> <span class="n">start</span>
-<a name="line-526"></a>				<span class="o">+</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dirlen</span>
-<a name="line-527"></a>				<span class="o">-</span> <span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">);</span>
-<a name="line-528"></a>		<span class="n">strncpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">],</span> <span class="n">start</span><span class="p">,</span>
-<a name="line-529"></a>			<span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span> <span class="n">offset</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
-<a name="line-530"></a>		<span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\\&#39;</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">;</span>
-<a name="line-531"></a>		<span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-532"></a>		<span class="p">}</span>
-<a name="line-533"></a><span class="cp">#if 0</span><span class="c"> /* Not needed, since the directory converter above already appeneded</span>
-<a name="line-534"></a><span class="c">	 a backslash */</span>
-<a name="line-535"></a><span class="c">	if(file_split-&gt;dir &amp;&amp; file_split-&gt;file)</span>
-<a name="line-536"></a><span class="c">		{</span>
-<a name="line-537"></a><span class="c">		result[offset] = &#39;\\&#39;; offset++;</span>
-<a name="line-538"></a><span class="c">		}</span>
-<a name="line-539"></a><span class="cp">#endif</span>
-<a name="line-540"></a>	<span class="n">strncpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">],</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">,</span>
-<a name="line-541"></a>		<span class="n">file_split</span><span class="o">-&gt;</span><span class="n">filelen</span><span class="p">);</span> <span class="n">offset</span> <span class="o">+=</span> <span class="n">file_split</span><span class="o">-&gt;</span><span class="n">filelen</span><span class="p">;</span>
-<a name="line-542"></a>	<span class="n">result</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-<a name="line-543"></a>	<span class="k">return</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
-<a name="line-544"></a>	<span class="p">}</span>
-<a name="line-545"></a>
-<a name="line-546"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">win32_merger</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filespec1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filespec2</span><span class="p">)</span>
-<a name="line-547"></a>	<span class="p">{</span>
-<a name="line-548"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">merged</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-549"></a>	<span class="k">struct</span> <span class="n">file_st</span> <span class="o">*</span><span class="n">filespec1_split</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-550"></a>	<span class="k">struct</span> <span class="n">file_st</span> <span class="o">*</span><span class="n">filespec2_split</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-551"></a>
-<a name="line-552"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">filespec1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">filespec2</span><span class="p">)</span>
-<a name="line-553"></a>		<span class="p">{</span>
-<a name="line-554"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_MERGER</span><span class="p">,</span>
-<a name="line-555"></a>				<span class="n">ERR_R_PASSED_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-556"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-557"></a>		<span class="p">}</span>
-<a name="line-558"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec2</span><span class="p">)</span>
-<a name="line-559"></a>		<span class="p">{</span>
-<a name="line-560"></a>		<span class="n">merged</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">filespec1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-561"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">merged</span><span class="p">)</span>
-<a name="line-562"></a>			<span class="p">{</span>
-<a name="line-563"></a>			<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_MERGER</span><span class="p">,</span>
-<a name="line-564"></a>				<span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-565"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-566"></a>			<span class="p">}</span>
-<a name="line-567"></a>		<span class="n">strcpy</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">filespec1</span><span class="p">);</span>
-<a name="line-568"></a>		<span class="p">}</span>
-<a name="line-569"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec1</span><span class="p">)</span>
-<a name="line-570"></a>		<span class="p">{</span>
-<a name="line-571"></a>		<span class="n">merged</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">filespec2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-572"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">merged</span><span class="p">)</span>
-<a name="line-573"></a>			<span class="p">{</span>
-<a name="line-574"></a>			<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_MERGER</span><span class="p">,</span>
-<a name="line-575"></a>				<span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-576"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-577"></a>			<span class="p">}</span>
-<a name="line-578"></a>		<span class="n">strcpy</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">filespec2</span><span class="p">);</span>
-<a name="line-579"></a>		<span class="p">}</span>
-<a name="line-580"></a>	<span class="k">else</span>
-<a name="line-581"></a>		<span class="p">{</span>
-<a name="line-582"></a>		<span class="n">filespec1_split</span> <span class="o">=</span> <span class="n">win32_splitter</span><span class="p">(</span><span class="n">dso</span><span class="p">,</span> <span class="n">filespec1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-583"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec1_split</span><span class="p">)</span>
-<a name="line-584"></a>			<span class="p">{</span>
-<a name="line-585"></a>			<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_MERGER</span><span class="p">,</span>
-<a name="line-586"></a>				<span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-587"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-588"></a>			<span class="p">}</span>
-<a name="line-589"></a>		<span class="n">filespec2_split</span> <span class="o">=</span> <span class="n">win32_splitter</span><span class="p">(</span><span class="n">dso</span><span class="p">,</span> <span class="n">filespec2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-590"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec2_split</span><span class="p">)</span>
-<a name="line-591"></a>			<span class="p">{</span>
-<a name="line-592"></a>			<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_MERGER</span><span class="p">,</span>
-<a name="line-593"></a>				<span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-594"></a>			<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">filespec1_split</span><span class="p">);</span>
-<a name="line-595"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-596"></a>			<span class="p">}</span>
-<a name="line-597"></a>
-<a name="line-598"></a>		<span class="cm">/* Fill in into filespec1_split */</span>
-<a name="line-599"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">node</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">device</span><span class="p">)</span>
-<a name="line-600"></a>			<span class="p">{</span>
-<a name="line-601"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">node</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">node</span><span class="p">;</span>
-<a name="line-602"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">nodelen</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">nodelen</span><span class="p">;</span>
-<a name="line-603"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">device</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">device</span><span class="p">;</span>
-<a name="line-604"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">devicelen</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">devicelen</span><span class="p">;</span>
-<a name="line-605"></a>			<span class="p">}</span>
-<a name="line-606"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">)</span>
-<a name="line-607"></a>			<span class="p">{</span>
-<a name="line-608"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">dir</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">;</span>
-<a name="line-609"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">dirlen</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">dirlen</span><span class="p">;</span>
-<a name="line-610"></a>			<span class="p">}</span>
-<a name="line-611"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\\&#39;</span>
-<a name="line-612"></a>			<span class="o">&amp;&amp;</span> <span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span><span class="p">)</span>
-<a name="line-613"></a>			<span class="p">{</span>
-<a name="line-614"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">predir</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">dir</span><span class="p">;</span>
-<a name="line-615"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">predirlen</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">dirlen</span><span class="p">;</span>
-<a name="line-616"></a>			<span class="p">}</span>
-<a name="line-617"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">)</span>
-<a name="line-618"></a>			<span class="p">{</span>
-<a name="line-619"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">file</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">file</span><span class="p">;</span>
-<a name="line-620"></a>			<span class="n">filespec1_split</span><span class="o">-&gt;</span><span class="n">filelen</span> <span class="o">=</span> <span class="n">filespec2_split</span><span class="o">-&gt;</span><span class="n">filelen</span><span class="p">;</span>
-<a name="line-621"></a>			<span class="p">}</span>
-<a name="line-622"></a>
-<a name="line-623"></a>		<span class="n">merged</span> <span class="o">=</span> <span class="n">win32_joiner</span><span class="p">(</span><span class="n">dso</span><span class="p">,</span> <span class="n">filespec1_split</span><span class="p">);</span>
-<a name="line-624"></a>		<span class="p">}</span>
-<a name="line-625"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">filespec1_split</span><span class="p">);</span>
-<a name="line-626"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">filespec2_split</span><span class="p">);</span>
-<a name="line-627"></a>	<span class="k">return</span><span class="p">(</span><span class="n">merged</span><span class="p">);</span>
-<a name="line-628"></a>	<span class="p">}</span>
-<a name="line-629"></a>
-<a name="line-630"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">win32_name_converter</span><span class="p">(</span><span class="n">DSO</span> <span class="o">*</span><span class="n">dso</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">)</span>
-<a name="line-631"></a>	<span class="p">{</span>
-<a name="line-632"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">translated</span><span class="p">;</span>
-<a name="line-633"></a>	<span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="n">transform</span><span class="p">;</span>
-<a name="line-634"></a>
-<a name="line-635"></a>	<span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
-<a name="line-636"></a>	<span class="n">transform</span> <span class="o">=</span> <span class="p">((</span><span class="n">strstr</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-<a name="line-637"></a>			<span class="p">(</span><span class="n">strstr</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-<a name="line-638"></a>			<span class="p">(</span><span class="n">strstr</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">));</span>
-<a name="line-639"></a>	<span class="k">if</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span>
-<a name="line-640"></a>		<span class="cm">/* We will convert this to &quot;%s.dll&quot; */</span>
-<a name="line-641"></a>		<span class="n">translated</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
-<a name="line-642"></a>	<span class="k">else</span>
-<a name="line-643"></a>		<span class="cm">/* We will simply duplicate filename */</span>
-<a name="line-644"></a>		<span class="n">translated</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-645"></a>	<span class="k">if</span><span class="p">(</span><span class="n">translated</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-646"></a>		<span class="p">{</span>
-<a name="line-647"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_NAME_CONVERTER</span><span class="p">,</span>
-<a name="line-648"></a>				<span class="n">DSO_R_NAME_TRANSLATION_FAILED</span><span class="p">);</span> 
-<a name="line-649"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>   
-<a name="line-650"></a>		<span class="p">}</span>
-<a name="line-651"></a>	<span class="k">if</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span>
-<a name="line-652"></a>		<span class="n">sprintf</span><span class="p">(</span><span class="n">translated</span><span class="p">,</span> <span class="s">&quot;%s.dll&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
-<a name="line-653"></a>	<span class="k">else</span>
-<a name="line-654"></a>		<span class="n">sprintf</span><span class="p">(</span><span class="n">translated</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
-<a name="line-655"></a>	<span class="k">return</span><span class="p">(</span><span class="n">translated</span><span class="p">);</span>
-<a name="line-656"></a>	<span class="p">}</span>
-<a name="line-657"></a>
-<a name="line-658"></a><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">openssl_strnchr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-659"></a>	<span class="p">{</span>
-<a name="line-660"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-661"></a>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-<a name="line-662"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">string</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span>
-<a name="line-663"></a>		<span class="p">{</span>
-<a name="line-664"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span>
-<a name="line-665"></a>			<span class="k">return</span> <span class="n">p</span><span class="p">;</span>
-<a name="line-666"></a>		<span class="p">}</span>
-<a name="line-667"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-668"></a>	<span class="p">}</span>
-<a name="line-669"></a>
-<a name="line-670"></a><span class="cp">#include &lt;tlhelp32.h&gt;</span>
-<a name="line-671"></a><span class="cp">#ifdef _WIN32_WCE</span>
-<a name="line-672"></a><span class="cp"># define DLLNAME &quot;TOOLHELP.DLL&quot;</span>
-<a name="line-673"></a><span class="cp">#else</span>
-<a name="line-674"></a><span class="cp"># ifdef MODULEENTRY32</span>
-<a name="line-675"></a><span class="cp"># undef MODULEENTRY32	</span><span class="cm">/* unmask the ASCII version! */</span><span class="cp"></span>
-<a name="line-676"></a><span class="cp"># endif</span>
-<a name="line-677"></a><span class="cp"># define DLLNAME &quot;KERNEL32.DLL&quot;</span>
-<a name="line-678"></a><span class="cp">#endif</span>
-<a name="line-679"></a>
-<a name="line-680"></a><span class="k">typedef</span> <span class="nf">HANDLE</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CREATETOOLHELP32SNAPSHOT</span><span class="p">)(</span><span class="n">DWORD</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">);</span>
-<a name="line-681"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">);</span>
-<a name="line-682"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">MODULE32</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">,</span> <span class="n">MODULEENTRY32</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-683"></a>
-<a name="line-684"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">win32_pathbyaddr</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span><span class="kt">int</span> <span class="n">sz</span><span class="p">)</span>
-<a name="line-685"></a>	<span class="p">{</span>
-<a name="line-686"></a>	<span class="n">HMODULE</span> <span class="n">dll</span><span class="p">;</span>
-<a name="line-687"></a>	<span class="n">HANDLE</span> <span class="n">hModuleSnap</span> <span class="o">=</span> <span class="n">INVALID_HANDLE_VALUE</span><span class="p">;</span> 
-<a name="line-688"></a>	<span class="n">MODULEENTRY32</span> <span class="n">me32</span><span class="p">;</span> 
-<a name="line-689"></a>	<span class="n">CREATETOOLHELP32SNAPSHOT</span> <span class="n">create_snap</span><span class="p">;</span>
-<a name="line-690"></a>	<span class="n">CLOSETOOLHELP32SNAPSHOT</span>  <span class="n">close_snap</span><span class="p">;</span>
-<a name="line-691"></a>	<span class="n">MODULE32</span> <span class="n">module_first</span><span class="p">,</span> <span class="n">module_next</span><span class="p">;</span>
-<a name="line-692"></a>	<span class="kt">int</span> <span class="n">len</span><span class="p">;</span>
-<a name="line-693"></a> 
-<a name="line-694"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">addr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-695"></a>		<span class="p">{</span>
-<a name="line-696"></a>		<span class="k">union</span>	<span class="p">{</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span><span class="p">,</span><span class="kt">char</span><span class="o">*</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span> <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span> <span class="p">}</span> <span class="n">t</span> <span class="o">=</span>
-<a name="line-697"></a>			<span class="p">{</span> <span class="n">win32_pathbyaddr</span> <span class="p">};</span>
-<a name="line-698"></a>		<span class="n">addr</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">p</span><span class="p">;</span>
-<a name="line-699"></a>		<span class="p">}</span>
-<a name="line-700"></a>
-<a name="line-701"></a>	<span class="n">dll</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="n">DLLNAME</span><span class="p">));</span>
-<a name="line-702"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">dll</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-703"></a>		<span class="p">{</span>
-<a name="line-704"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_PATHBYADDR</span><span class="p">,</span><span class="n">DSO_R_UNSUPPORTED</span><span class="p">);</span>
-<a name="line-705"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-706"></a>		<span class="p">}</span>
-<a name="line-707"></a>
-<a name="line-708"></a>	<span class="n">create_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CREATETOOLHELP32SNAPSHOT</span><span class="p">)</span>
-<a name="line-709"></a>		<span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;CreateToolhelp32Snapshot&quot;</span><span class="p">);</span>
-<a name="line-710"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">create_snap</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-711"></a>		<span class="p">{</span>
-<a name="line-712"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-713"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_PATHBYADDR</span><span class="p">,</span><span class="n">DSO_R_UNSUPPORTED</span><span class="p">);</span>
-<a name="line-714"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-715"></a>		<span class="p">}</span>
-<a name="line-716"></a>	<span class="cm">/* We take the rest for granted... */</span>
-<a name="line-717"></a><span class="cp">#ifdef _WIN32_WCE</span>
-<a name="line-718"></a>	<span class="n">close_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)</span>
-<a name="line-719"></a>		<span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;CloseToolhelp32Snapshot&quot;</span><span class="p">);</span>
-<a name="line-720"></a><span class="cp">#else</span>
-<a name="line-721"></a>	<span class="n">close_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)</span><span class="n">CloseHandle</span><span class="p">;</span>
-<a name="line-722"></a><span class="cp">#endif</span>
-<a name="line-723"></a>	<span class="n">module_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">MODULE32</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;Module32First&quot;</span><span class="p">);</span>
-<a name="line-724"></a>	<span class="n">module_next</span>  <span class="o">=</span> <span class="p">(</span><span class="n">MODULE32</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;Module32Next&quot;</span><span class="p">);</span>
-<a name="line-725"></a>
-<a name="line-726"></a>	<span class="n">hModuleSnap</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">create_snap</span><span class="p">)(</span><span class="n">TH32CS_SNAPMODULE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span> 
-<a name="line-727"></a>	<span class="k">if</span><span class="p">(</span> <span class="n">hModuleSnap</span> <span class="o">==</span> <span class="n">INVALID_HANDLE_VALUE</span> <span class="p">)</span> 
-<a name="line-728"></a>		<span class="p">{</span> 
-<a name="line-729"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-730"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_PATHBYADDR</span><span class="p">,</span><span class="n">DSO_R_UNSUPPORTED</span><span class="p">);</span>
-<a name="line-731"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-732"></a>		<span class="p">}</span> 
-<a name="line-733"></a> 
-<a name="line-734"></a>	<span class="n">me32</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">me32</span><span class="p">);</span> 
-<a name="line-735"></a> 
-<a name="line-736"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="n">module_first</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">,</span><span class="o">&amp;</span><span class="n">me32</span><span class="p">))</span> 
-<a name="line-737"></a>		<span class="p">{</span> 
-<a name="line-738"></a>		<span class="p">(</span><span class="o">*</span><span class="n">close_snap</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">);</span>
-<a name="line-739"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-740"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_PATHBYADDR</span><span class="p">,</span><span class="n">DSO_R_FAILURE</span><span class="p">);</span>
-<a name="line-741"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-742"></a>		<span class="p">}</span>
-<a name="line-743"></a> 
-<a name="line-744"></a>	<span class="k">do</span>	<span class="p">{</span> 
-<a name="line-745"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">addr</span> <span class="o">&gt;=</span> <span class="n">me32</span><span class="p">.</span><span class="n">modBaseAddr</span> <span class="o">&amp;&amp;</span>
-<a name="line-746"></a>		    <span class="p">(</span><span class="n">BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">addr</span> <span class="o">&lt;</span>  <span class="n">me32</span><span class="p">.</span><span class="n">modBaseAddr</span><span class="o">+</span><span class="n">me32</span><span class="p">.</span><span class="n">modBaseSize</span><span class="p">)</span>
-<a name="line-747"></a>			<span class="p">{</span>
-<a name="line-748"></a>			<span class="p">(</span><span class="o">*</span><span class="n">close_snap</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">);</span>
-<a name="line-749"></a>			<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-750"></a><span class="cp">#ifdef _WIN32_WCE</span>
-<a name="line-751"></a><span class="cp"># if _WIN32_WCE &gt;= 101</span>
-<a name="line-752"></a>			<span class="k">return</span> <span class="n">WideCharToMultiByte</span><span class="p">(</span><span class="n">CP_ACP</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">me32</span><span class="p">.</span><span class="n">szExePath</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-753"></a>							<span class="n">path</span><span class="p">,</span><span class="n">sz</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-754"></a><span class="cp"># else</span>
-<a name="line-755"></a>			<span class="n">len</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">wcslen</span><span class="p">(</span><span class="n">me32</span><span class="p">.</span><span class="n">szExePath</span><span class="p">);</span>
-<a name="line-756"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">sz</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">len</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-757"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;=</span> <span class="n">sz</span><span class="p">)</span> <span class="n">len</span><span class="o">=</span><span class="n">sz</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-758"></a>			<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">len</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-759"></a>				<span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">me32</span><span class="p">.</span><span class="n">szExePath</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-760"></a>			<span class="n">path</span><span class="p">[</span><span class="n">len</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-761"></a>			<span class="k">return</span> <span class="n">len</span><span class="p">;</span>
-<a name="line-762"></a><span class="cp"># endif</span>
-<a name="line-763"></a><span class="cp">#else</span>
-<a name="line-764"></a>			<span class="n">len</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">strlen</span><span class="p">(</span><span class="n">me32</span><span class="p">.</span><span class="n">szExePath</span><span class="p">);</span>
-<a name="line-765"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">sz</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">len</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-766"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;=</span> <span class="n">sz</span><span class="p">)</span> <span class="n">len</span><span class="o">=</span><span class="n">sz</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-767"></a>			<span class="n">memcpy</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">me32</span><span class="p">.</span><span class="n">szExePath</span><span class="p">,</span><span class="n">len</span><span class="p">);</span>
-<a name="line-768"></a>			<span class="n">path</span><span class="p">[</span><span class="n">len</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-769"></a>			<span class="k">return</span> <span class="n">len</span><span class="p">;</span>
-<a name="line-770"></a><span class="cp">#endif</span>
-<a name="line-771"></a>			<span class="p">}</span> 
-<a name="line-772"></a>		<span class="p">}</span> <span class="k">while</span><span class="p">((</span><span class="o">*</span><span class="n">module_next</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">me32</span><span class="p">));</span> 
-<a name="line-773"></a> 
-<a name="line-774"></a>	<span class="p">(</span><span class="o">*</span><span class="n">close_snap</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">);</span> 
-<a name="line-775"></a>	<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-776"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-777"></a>	<span class="p">}</span>
-<a name="line-778"></a>
-<a name="line-779"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">win32_globallookup</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
-<a name="line-780"></a>	<span class="p">{</span>
-<a name="line-781"></a>	<span class="n">HMODULE</span> <span class="n">dll</span><span class="p">;</span>
-<a name="line-782"></a>	<span class="n">HANDLE</span> <span class="n">hModuleSnap</span> <span class="o">=</span> <span class="n">INVALID_HANDLE_VALUE</span><span class="p">;</span>
-<a name="line-783"></a>	<span class="n">MODULEENTRY32</span> <span class="n">me32</span><span class="p">;</span>
-<a name="line-784"></a>	<span class="n">CREATETOOLHELP32SNAPSHOT</span> <span class="n">create_snap</span><span class="p">;</span>
-<a name="line-785"></a>	<span class="n">CLOSETOOLHELP32SNAPSHOT</span>  <span class="n">close_snap</span><span class="p">;</span>
-<a name="line-786"></a>	<span class="n">MODULE32</span> <span class="n">module_first</span><span class="p">,</span> <span class="n">module_next</span><span class="p">;</span>
-<a name="line-787"></a>	<span class="n">FARPROC</span> <span class="n">ret</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-788"></a>
-<a name="line-789"></a>	<span class="n">dll</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="n">DLLNAME</span><span class="p">));</span>
-<a name="line-790"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">dll</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-791"></a>		<span class="p">{</span>
-<a name="line-792"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_GLOBALLOOKUP</span><span class="p">,</span><span class="n">DSO_R_UNSUPPORTED</span><span class="p">);</span>
-<a name="line-793"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-794"></a>		<span class="p">}</span>
-<a name="line-795"></a>
-<a name="line-796"></a>	<span class="n">create_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CREATETOOLHELP32SNAPSHOT</span><span class="p">)</span>
-<a name="line-797"></a>		<span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;CreateToolhelp32Snapshot&quot;</span><span class="p">);</span>
-<a name="line-798"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">create_snap</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-799"></a>		<span class="p">{</span>
-<a name="line-800"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-801"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_GLOBALLOOKUP</span><span class="p">,</span><span class="n">DSO_R_UNSUPPORTED</span><span class="p">);</span>
-<a name="line-802"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-803"></a>		<span class="p">}</span>
-<a name="line-804"></a>	<span class="cm">/* We take the rest for granted... */</span>
-<a name="line-805"></a><span class="cp">#ifdef _WIN32_WCE</span>
-<a name="line-806"></a>	<span class="n">close_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)</span>
-<a name="line-807"></a>		<span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;CloseToolhelp32Snapshot&quot;</span><span class="p">);</span>
-<a name="line-808"></a><span class="cp">#else</span>
-<a name="line-809"></a>	<span class="n">close_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)</span><span class="n">CloseHandle</span><span class="p">;</span>
-<a name="line-810"></a><span class="cp">#endif</span>
-<a name="line-811"></a>	<span class="n">module_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">MODULE32</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;Module32First&quot;</span><span class="p">);</span>
-<a name="line-812"></a>	<span class="n">module_next</span>  <span class="o">=</span> <span class="p">(</span><span class="n">MODULE32</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span><span class="s">&quot;Module32Next&quot;</span><span class="p">);</span>
-<a name="line-813"></a>
-<a name="line-814"></a>	<span class="n">hModuleSnap</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">create_snap</span><span class="p">)(</span><span class="n">TH32CS_SNAPMODULE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-815"></a>	<span class="k">if</span><span class="p">(</span> <span class="n">hModuleSnap</span> <span class="o">==</span> <span class="n">INVALID_HANDLE_VALUE</span> <span class="p">)</span>
-<a name="line-816"></a>		<span class="p">{</span>
-<a name="line-817"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-818"></a>		<span class="n">DSOerr</span><span class="p">(</span><span class="n">DSO_F_WIN32_GLOBALLOOKUP</span><span class="p">,</span><span class="n">DSO_R_UNSUPPORTED</span><span class="p">);</span>
-<a name="line-819"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-820"></a>		<span class="p">}</span>
-<a name="line-821"></a>
-<a name="line-822"></a>	<span class="n">me32</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">me32</span><span class="p">);</span>
-<a name="line-823"></a>
-<a name="line-824"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="n">module_first</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">,</span><span class="o">&amp;</span><span class="n">me32</span><span class="p">))</span>
-<a name="line-825"></a>		<span class="p">{</span>
-<a name="line-826"></a>		<span class="p">(</span><span class="o">*</span><span class="n">close_snap</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">);</span>
-<a name="line-827"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-828"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-829"></a>		<span class="p">}</span>
-<a name="line-830"></a>
-<a name="line-831"></a>	<span class="k">do</span>	<span class="p">{</span>
-<a name="line-832"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">ret</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">me32</span><span class="p">.</span><span class="n">hModule</span><span class="p">,</span><span class="n">name</span><span class="p">)))</span>
-<a name="line-833"></a>			<span class="p">{</span>
-<a name="line-834"></a>			<span class="p">(</span><span class="o">*</span><span class="n">close_snap</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">);</span>
-<a name="line-835"></a>			<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-836"></a>			<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-837"></a>			<span class="p">}</span>
-<a name="line-838"></a>		<span class="p">}</span> <span class="k">while</span><span class="p">((</span><span class="o">*</span><span class="n">module_next</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">,</span><span class="o">&amp;</span><span class="n">me32</span><span class="p">));</span>
-<a name="line-839"></a>
-<a name="line-840"></a>	<span class="p">(</span><span class="o">*</span><span class="n">close_snap</span><span class="p">)(</span><span class="n">hModuleSnap</span><span class="p">);</span> 
-<a name="line-841"></a>	<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">dll</span><span class="p">);</span>
-<a name="line-842"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-843"></a>	<span class="p">}</span>
-<a name="line-844"></a><span class="cp">#endif </span><span class="cm">/* DSO_WIN32 */</span><span class="cp"></span>
+<a name="line-327"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-328"></a>
+<a name="line-329"></a><span class="cm">/* Time checking test code. Check times are identical for a wide range of</span>
+<a name="line-330"></a><span class="cm"> * offsets. This should be run on a machine with 64 bit time_t or it will</span>
+<a name="line-331"></a><span class="cm"> * trigger the very errors the routines fix.</span>
+<a name="line-332"></a><span class="cm"> */</span>
+<a name="line-333"></a>
+<a name="line-334"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<a name="line-335"></a>	<span class="p">{</span>
+<a name="line-336"></a>	<span class="kt">long</span> <span class="n">offset</span><span class="p">;</span>
+<a name="line-337"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">1000000</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
+<a name="line-338"></a>		<span class="p">{</span>
+<a name="line-339"></a>		<span class="n">check_time</span><span class="p">(</span><span class="n">offset</span><span class="p">);</span>
+<a name="line-340"></a>		<span class="n">check_time</span><span class="p">(</span><span class="o">-</span><span class="n">offset</span><span class="p">);</span>
+<a name="line-341"></a>		<span class="n">check_time</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+<a name="line-342"></a>		<span class="n">check_time</span><span class="p">(</span><span class="o">-</span><span class="n">offset</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+<a name="line-343"></a>		<span class="p">}</span>
+<a name="line-344"></a>	<span class="p">}</span>
+<a name="line-345"></a>
+<a name="line-346"></a><span class="kt">int</span> <span class="nf">check_time</span><span class="p">(</span><span class="kt">long</span> <span class="n">offset</span><span class="p">)</span>
+<a name="line-347"></a>	<span class="p">{</span>
+<a name="line-348"></a>	<span class="k">struct</span> <span class="n">tm</span> <span class="n">tm1</span><span class="p">,</span> <span class="n">tm2</span><span class="p">;</span>
+<a name="line-349"></a>	<span class="kt">time_t</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">;</span>
+<a name="line-350"></a>	<span class="n">time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t1</span><span class="p">);</span>
+<a name="line-351"></a>	<span class="n">t2</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">+</span> <span class="n">offset</span><span class="p">;</span>
+<a name="line-352"></a>	<span class="n">OPENSSL_gmtime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tm2</span><span class="p">);</span>
+<a name="line-353"></a>	<span class="n">OPENSSL_gmtime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tm1</span><span class="p">);</span>
+<a name="line-354"></a>	<span class="n">OPENSSL_gmtime_adj</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tm1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offset</span><span class="p">);</span>
+<a name="line-355"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">tm1</span><span class="p">.</span><span class="n">tm_year</span> <span class="o">==</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_year</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-356"></a>	    <span class="p">(</span><span class="n">tm1</span><span class="p">.</span><span class="n">tm_mon</span> <span class="o">==</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_mon</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-357"></a>	    <span class="p">(</span><span class="n">tm1</span><span class="p">.</span><span class="n">tm_mday</span> <span class="o">==</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_mday</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-358"></a>	    <span class="p">(</span><span class="n">tm1</span><span class="p">.</span><span class="n">tm_hour</span> <span class="o">==</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_hour</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-359"></a>	    <span class="p">(</span><span class="n">tm1</span><span class="p">.</span><span class="n">tm_min</span> <span class="o">==</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_min</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-360"></a>	    <span class="p">(</span><span class="n">tm1</span><span class="p">.</span><span class="n">tm_sec</span> <span class="o">==</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_sec</span><span class="p">))</span>
+<a name="line-361"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-362"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;TIME ERROR!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-363"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Time1: %d/%d/%d, %d:%02d:%02d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-364"></a>			<span class="n">tm2</span><span class="p">.</span><span class="n">tm_mday</span><span class="p">,</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_mon</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_year</span> <span class="o">+</span> <span class="mi">1900</span><span class="p">,</span>
+<a name="line-365"></a>			<span class="n">tm2</span><span class="p">.</span><span class="n">tm_hour</span><span class="p">,</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_min</span><span class="p">,</span> <span class="n">tm2</span><span class="p">.</span><span class="n">tm_sec</span><span class="p">);</span>
+<a name="line-366"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Time2: %d/%d/%d, %d:%02d:%02d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-367"></a>			<span class="n">tm1</span><span class="p">.</span><span class="n">tm_mday</span><span class="p">,</span> <span class="n">tm1</span><span class="p">.</span><span class="n">tm_mon</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tm1</span><span class="p">.</span><span class="n">tm_year</span> <span class="o">+</span> <span class="mi">1900</span><span class="p">,</span>
+<a name="line-368"></a>			<span class="n">tm1</span><span class="p">.</span><span class="n">tm_hour</span><span class="p">,</span> <span class="n">tm1</span><span class="p">.</span><span class="n">tm_min</span><span class="p">,</span> <span class="n">tm1</span><span class="p">.</span><span class="n">tm_sec</span><span class="p">);</span>
+<a name="line-369"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-370"></a>	<span class="p">}</span>
+<a name="line-371"></a>
+<a name="line-372"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

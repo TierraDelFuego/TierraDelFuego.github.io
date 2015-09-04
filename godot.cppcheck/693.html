@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: platform/javascript/export/export.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/servers/audio/audio_server_sw.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> export.cpp</p>
-<a href='693.html#line-315'> uninitMemberVar 315</a>
+       <p id="filename"><a href="index.html">Defects:</a> audio_server_sw.h</p>
+<a href='693.html#line-64'> uninitMemberVar 64</a><a href='693.html#line-214'> noExplicitConstructor 214</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -397,90 +397,8 @@
 281
 282
 283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  export.cpp                                                           */</span>
+284</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  audio_server_sw.h                                                    */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -507,344 +425,262 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;version.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;export.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;tools/editor/editor_settings.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;tools/editor/editor_import_export.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;tools/editor/editor_node.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;io/zip_io.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;io/marshalls.h&quot;</span>
-<a name="line-36"></a><span class="cp">#include &quot;globals.h&quot;</span>
-<a name="line-37"></a><span class="cp">#include &quot;os/file_access.h&quot;</span>
-<a name="line-38"></a><span class="cp">#include &quot;os/os.h&quot;</span>
-<a name="line-39"></a><span class="cp">#include &quot;platform/javascript/logo.h&quot;</span>
-<a name="line-40"></a><span class="cp">#include &quot;string.h&quot;</span>
-<a name="line-41"></a><span class="k">class</span> <span class="nc">EditorExportPlatformJavaScript</span> <span class="o">:</span> <span class="k">public</span> <span class="n">EditorExportPlatform</span> <span class="p">{</span>
-<a name="line-42"></a>
-<a name="line-43"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">EditorExportPlatformJavaScript</span><span class="p">,</span><span class="n">EditorExportPlatform</span> <span class="p">);</span>
-<a name="line-44"></a>
-<a name="line-45"></a>	<span class="n">String</span> <span class="n">custom_release_package</span><span class="p">;</span>
-<a name="line-46"></a>	<span class="n">String</span> <span class="n">custom_debug_package</span><span class="p">;</span>
+<a name="line-29"></a><span class="cp">#ifndef AUDIO_SERVER_SW_H</span>
+<a name="line-30"></a><span class="cp">#define AUDIO_SERVER_SW_H</span>
+<a name="line-31"></a>
+<a name="line-32"></a><span class="cp">#include &quot;servers/audio_server.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;servers/audio/audio_mixer_sw.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;servers/audio/voice_rb_sw.h&quot;</span>
+<a name="line-35"></a><span class="cp">#include &quot;self_list.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;os/thread_safe.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;os/thread.h&quot;</span>
+<a name="line-38"></a><span class="n">class</span> <span class="nl">AudioServerSW</span> <span class="p">:</span> <span class="n">public</span> <span class="n">AudioServer</span> <span class="p">{</span>
+<a name="line-39"></a>
+<a name="line-40"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">AudioServerSW</span><span class="p">,</span> <span class="n">AudioServer</span> <span class="p">);</span>
+<a name="line-41"></a>
+<a name="line-42"></a>	<span class="n">_THREAD_SAFE_CLASS_</span>
+<a name="line-43"></a>
+<a name="line-44"></a>	<span class="k">enum</span> <span class="p">{</span>
+<a name="line-45"></a>		<span class="n">INTERNAL_BUFFER_SIZE</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
+<a name="line-46"></a>		<span class="n">STREAM_SCALE_BITS</span><span class="o">=</span><span class="mi">12</span>
 <a name="line-47"></a>
-<a name="line-48"></a>	<span class="k">enum</span> <span class="n">PackMode</span> <span class="p">{</span>
-<a name="line-49"></a>		<span class="n">PACK_SINGLE_FILE</span><span class="p">,</span>
-<a name="line-50"></a>		<span class="n">PACK_MULTIPLE_FILES</span>
-<a name="line-51"></a>	<span class="p">};</span>
+<a name="line-48"></a>	<span class="p">};</span>
+<a name="line-49"></a>
+<a name="line-50"></a>	<span class="n">SampleManagerSW</span> <span class="o">*</span><span class="n">sample_manager</span><span class="p">;</span>
+<a name="line-51"></a>	<span class="n">AudioMixerSW</span> <span class="o">*</span><span class="n">mixer</span><span class="p">;</span>
 <a name="line-52"></a>
-<a name="line-53"></a>
-<a name="line-54"></a>	<span class="n">PackMode</span> <span class="n">pack_mode</span><span class="p">;</span>
+<a name="line-53"></a>	<span class="n">virtual</span> <span class="n">AudioMixer</span> <span class="o">*</span><span class="nf">get_mixer</span><span class="p">();</span>
+<a name="line-54"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">audio_mixer_chunk_callback</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">);</span>
 <a name="line-55"></a>
-<a name="line-56"></a>	<span class="kt">bool</span> <span class="n">show_run</span><span class="p">;</span>
+<a name="line-56"></a>	<span class="k">struct</span> <span class="n">Voice</span> <span class="p">{</span>
 <a name="line-57"></a>
-<a name="line-58"></a>	<span class="kt">int</span> <span class="n">max_memory</span><span class="p">;</span>
-<a name="line-59"></a>	<span class="kt">int</span> <span class="n">version_code</span><span class="p">;</span>
-<a name="line-60"></a>
-<a name="line-61"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">ImageTexture</span><span class="o">&gt;</span> <span class="n">logo</span><span class="p">;</span>
+<a name="line-58"></a>		<span class="kt">float</span> <span class="n">volume</span><span class="p">;</span>
+<a name="line-59"></a>		<span class="k">volatile</span> <span class="kt">bool</span> <span class="n">active</span><span class="p">;</span>
+<a name="line-60"></a>		<span class="n">SelfList</span><span class="o">&lt;</span><span class="n">Voice</span><span class="o">&gt;</span> <span class="n">active_item</span><span class="p">;</span>
+<a name="line-61"></a>		<span class="n">AudioMixer</span><span class="o">::</span><span class="n">ChannelID</span> <span class="n">channel</span><span class="p">;</span>
 <a name="line-62"></a>
-<a name="line-63"></a><span class="k">protected</span><span class="o">:</span>
-<a name="line-64"></a>
-<a name="line-65"></a>	<span class="kt">bool</span> <span class="n">_set</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-66"></a>	<span class="kt">bool</span> <span class="n">_get</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="n">Variant</span> <span class="o">&amp;</span><span class="n">r_ret</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-67"></a>	<span class="kt">void</span> <span class="n">_get_property_list</span><span class="p">(</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_list</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-68"></a>
-<a name="line-69"></a><span class="k">public</span><span class="o">:</span>
-<a name="line-70"></a>
-<a name="line-71"></a>	<span class="k">virtual</span> <span class="n">String</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;HTML5&quot;</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-72"></a>	<span class="k">virtual</span> <span class="n">ImageCompression</span> <span class="n">get_image_compression</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">IMAGE_COMPRESSION_BC</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-73"></a>	<span class="k">virtual</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">get_logo</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">logo</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-74"></a>
-<a name="line-75"></a>
-<a name="line-76"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">poll_devices</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">show_run</span><span class="o">?</span><span class="nb">true</span><span class="o">:</span><span class="nb">false</span><span class="p">;}</span>
-<a name="line-77"></a>	<span class="k">virtual</span> <span class="kt">int</span> <span class="n">get_device_count</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">show_run</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">;</span> <span class="p">};</span>
-<a name="line-78"></a>	<span class="k">virtual</span> <span class="n">String</span> <span class="n">get_device_name</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_device</span><span class="p">)</span> <span class="k">const</span>  <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Run in Browser&quot;</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-79"></a>	<span class="k">virtual</span> <span class="n">String</span> <span class="n">get_device_info</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_device</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Run exported HTML in the system&#39;s default browser.&quot;</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-80"></a>	<span class="k">virtual</span> <span class="n">Error</span> <span class="n">run</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_device</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_dumb</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_remote_debug</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-63"></a>
+<a name="line-64"></a><span class="hll">		<span class="n">Voice</span> <span class="p">()</span> <span class="o">:</span> <span class="n">active_item</span><span class="p">(</span><span class="n">this</span><span class="p">)</span> <span class="p">{</span> <span class="n">channel</span><span class="o">=</span><span class="n">AudioMixer</span><span class="o">::</span><span class="n">INVALID_CHANNEL</span><span class="p">;</span> <span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;}</span><span class='error2'>&lt;--- Member variable 'Voice::volume' is not initialized in the constructor.</span>
+</span><a name="line-65"></a>	<span class="p">};</span>
+<a name="line-66"></a>
+<a name="line-67"></a>	<span class="n">mutable</span> <span class="n">RID_Owner</span><span class="o">&lt;</span><span class="n">Voice</span><span class="o">&gt;</span> <span class="n">voice_owner</span><span class="p">;</span>
+<a name="line-68"></a>	<span class="n">SelfList</span><span class="o">&lt;</span><span class="n">Voice</span><span class="o">&gt;::</span><span class="n">List</span> <span class="n">active_list</span><span class="p">;</span>
+<a name="line-69"></a>
+<a name="line-70"></a>	<span class="k">struct</span> <span class="n">Stream</span> <span class="p">{</span>
+<a name="line-71"></a>		<span class="kt">bool</span> <span class="n">active</span><span class="p">;</span>		
+<a name="line-72"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Stream</span><span class="o">*&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="p">;</span>
+<a name="line-73"></a>		<span class="n">AudioStream</span> <span class="o">*</span><span class="n">audio_stream</span><span class="p">;</span>
+<a name="line-74"></a>		<span class="n">EventStream</span> <span class="o">*</span><span class="n">event_stream</span><span class="p">;</span>
+<a name="line-75"></a>		<span class="kt">float</span> <span class="n">volume_scale</span><span class="p">;</span>
+<a name="line-76"></a>	<span class="p">};</span>
+<a name="line-77"></a>
+<a name="line-78"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">Stream</span><span class="o">*&gt;</span> <span class="n">active_audio_streams</span><span class="p">;</span>
+<a name="line-79"></a>
+<a name="line-80"></a>	<span class="c1">//List&lt;Stream*&gt; event_streams;</span>
 <a name="line-81"></a>
-<a name="line-82"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">requieres_password</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_debug</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-83"></a>	<span class="k">virtual</span> <span class="n">String</span> <span class="n">get_binary_extension</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;html&quot;</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-84"></a>	<span class="k">virtual</span> <span class="n">Error</span> <span class="n">export_project</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_debug</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_dumb</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_remote_debug</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-82"></a>	<span class="kt">int32_t</span> <span class="o">*</span> <span class="n">internal_buffer</span><span class="p">;</span>
+<a name="line-83"></a>	<span class="kt">int</span> <span class="n">internal_buffer_channels</span><span class="p">;</span>
+<a name="line-84"></a>	<span class="kt">int32_t</span> <span class="o">*</span> <span class="n">stream_buffer</span><span class="p">;</span>
 <a name="line-85"></a>
-<a name="line-86"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">can_export</span><span class="p">(</span><span class="n">String</span> <span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="nb">NULL</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-86"></a>	<span class="n">mutable</span> <span class="n">RID_Owner</span><span class="o">&lt;</span><span class="n">Stream</span><span class="o">&gt;</span> <span class="n">stream_owner</span><span class="p">;</span>
 <a name="line-87"></a>
-<a name="line-88"></a>	<span class="n">EditorExportPlatformJavaScript</span><span class="p">();</span>
-<a name="line-89"></a>	<span class="o">~</span><span class="n">EditorExportPlatformJavaScript</span><span class="p">();</span>
-<a name="line-90"></a><span class="p">};</span>
-<a name="line-91"></a>
-<a name="line-92"></a><span class="kt">bool</span> <span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">_set</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-93"></a>
-<a name="line-94"></a>	<span class="n">String</span> <span class="n">n</span><span class="o">=</span><span class="n">p_name</span><span class="p">;</span>
-<a name="line-95"></a>
-<a name="line-96"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;custom_package/debug&quot;</span><span class="p">)</span>
-<a name="line-97"></a>		<span class="n">custom_debug_package</span><span class="o">=</span><span class="n">p_value</span><span class="p">;</span>
-<a name="line-98"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;custom_package/release&quot;</span><span class="p">)</span>
-<a name="line-99"></a>		<span class="n">custom_release_package</span><span class="o">=</span><span class="n">p_value</span><span class="p">;</span>
-<a name="line-100"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;browser/enable_run&quot;</span><span class="p">)</span>
-<a name="line-101"></a>		<span class="n">show_run</span><span class="o">=</span><span class="n">p_value</span><span class="p">;</span>
-<a name="line-102"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;options/memory_size&quot;</span><span class="p">)</span>
-<a name="line-103"></a>		<span class="n">max_memory</span><span class="o">=</span><span class="n">p_value</span><span class="p">;</span>
-<a name="line-104"></a>	<span class="k">else</span>
-<a name="line-105"></a>		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-106"></a>
-<a name="line-107"></a>	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-108"></a><span class="p">}</span>
+<a name="line-88"></a>	<span class="kt">float</span> <span class="n">stream_volume</span><span class="p">;</span>
+<a name="line-89"></a>	<span class="kt">float</span> <span class="n">stream_volume_scale</span><span class="p">;</span>
+<a name="line-90"></a>	<span class="kt">float</span> <span class="n">fx_volume_scale</span><span class="p">;</span>
+<a name="line-91"></a>	<span class="kt">float</span> <span class="n">event_voice_volume_scale</span><span class="p">;</span>
+<a name="line-92"></a>	<span class="kt">float</span> <span class="n">peak_left</span><span class="p">,</span><span class="n">peak_right</span><span class="p">;</span>
+<a name="line-93"></a>	<span class="kt">uint32_t</span> <span class="n">max_peak</span><span class="p">;</span>
+<a name="line-94"></a>
+<a name="line-95"></a>	<span class="kt">double</span> <span class="n">_output_delay</span><span class="p">;</span>
+<a name="line-96"></a>
+<a name="line-97"></a>	<span class="n">VoiceRBSW</span> <span class="n">voice_rb</span><span class="p">;</span>
+<a name="line-98"></a>
+<a name="line-99"></a>	<span class="kt">bool</span> <span class="n">exit_update_thread</span><span class="p">;</span>
+<a name="line-100"></a>	<span class="n">Thread</span> <span class="o">*</span><span class="kr">thread</span><span class="p">;</span>
+<a name="line-101"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_thread_func</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span>
+<a name="line-102"></a>
+<a name="line-103"></a>	<span class="kt">void</span> <span class="nf">_update_streams</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_thread</span><span class="p">);</span>
+<a name="line-104"></a>	<span class="kt">void</span> <span class="nf">driver_process_chunk</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">,</span><span class="kt">int32_t</span> <span class="o">*</span><span class="n">p_buffer</span><span class="p">);</span>
+<a name="line-105"></a>
+<a name="line-106"></a>	<span class="n">AudioMixerSW</span><span class="o">::</span><span class="n">InterpolationType</span> <span class="n">mixer_interp</span><span class="p">;</span>
+<a name="line-107"></a>	<span class="kt">bool</span> <span class="n">mixer_use_fx</span><span class="p">;</span>
+<a name="line-108"></a>	<span class="kt">uint64_t</span> <span class="n">mixer_step_usecs</span><span class="p">;</span>
 <a name="line-109"></a>
-<a name="line-110"></a><span class="kt">bool</span> <span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">_get</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="n">Variant</span> <span class="o">&amp;</span><span class="n">r_ret</span><span class="p">)</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-111"></a>
-<a name="line-112"></a>	<span class="n">String</span> <span class="n">n</span><span class="o">=</span><span class="n">p_name</span><span class="p">;</span>
-<a name="line-113"></a>
-<a name="line-114"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;custom_package/debug&quot;</span><span class="p">)</span>
-<a name="line-115"></a>		<span class="n">r_ret</span><span class="o">=</span><span class="n">custom_debug_package</span><span class="p">;</span>
-<a name="line-116"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;custom_package/release&quot;</span><span class="p">)</span>
-<a name="line-117"></a>		<span class="n">r_ret</span><span class="o">=</span><span class="n">custom_release_package</span><span class="p">;</span>
-<a name="line-118"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;browser/enable_run&quot;</span><span class="p">)</span>
-<a name="line-119"></a>		<span class="n">r_ret</span><span class="o">=</span><span class="n">show_run</span><span class="p">;</span>
-<a name="line-120"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="s">&quot;options/memory_size&quot;</span><span class="p">)</span>
-<a name="line-121"></a>		<span class="n">r_ret</span><span class="o">=</span><span class="n">max_memory</span><span class="p">;</span>
-<a name="line-122"></a>	<span class="k">else</span>
-<a name="line-123"></a>		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-126"></a><span class="p">}</span>
-<a name="line-127"></a><span class="kt">void</span> <span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">_get_property_list</span><span class="p">(</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_list</span><span class="p">)</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-128"></a>
-<a name="line-129"></a>	<span class="n">p_list</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span> <span class="n">Variant</span><span class="o">::</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&quot;custom_package/debug&quot;</span><span class="p">,</span> <span class="n">PROPERTY_HINT_GLOBAL_FILE</span><span class="p">,</span><span class="s">&quot;zip&quot;</span><span class="p">));</span>
-<a name="line-130"></a>	<span class="n">p_list</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span> <span class="n">Variant</span><span class="o">::</span><span class="n">STRING</span><span class="p">,</span> <span class="s">&quot;custom_package/release&quot;</span><span class="p">,</span> <span class="n">PROPERTY_HINT_GLOBAL_FILE</span><span class="p">,</span><span class="s">&quot;zip&quot;</span><span class="p">));</span>
-<a name="line-131"></a>	<span class="n">p_list</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span> <span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">,</span> <span class="s">&quot;options/memory_size&quot;</span><span class="p">,</span><span class="n">PROPERTY_HINT_ENUM</span><span class="p">,</span><span class="s">&quot;32mb,64mb,128mb,256mb,512mb,1024mb&quot;</span><span class="p">));</span>
-<a name="line-132"></a>	<span class="n">p_list</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span> <span class="n">Variant</span><span class="o">::</span><span class="n">BOOL</span><span class="p">,</span> <span class="s">&quot;browser/enable_run&quot;</span><span class="p">));</span>
+<a name="line-110"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_mixer_callback</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_udata</span><span class="p">);</span>
+<a name="line-111"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">AudioDriverSW</span><span class="p">;</span>
+<a name="line-112"></a>	<span class="kt">void</span> <span class="nf">driver_process</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">,</span><span class="kt">int32_t</span> <span class="o">*</span><span class="n">p_buffer</span><span class="p">);</span>
+<a name="line-113"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-114"></a>
+<a name="line-115"></a>
+<a name="line-116"></a>	<span class="cm">/* SAMPLE API */</span>
+<a name="line-117"></a>
+<a name="line-118"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">sample_create</span><span class="p">(</span><span class="n">SampleFormat</span> <span class="n">p_format</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_stereo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_length</span><span class="p">);</span>
+<a name="line-119"></a>
+<a name="line-120"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_description</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_description</span><span class="p">);</span>
+<a name="line-121"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">sample_get_description</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_description</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-122"></a>
+<a name="line-123"></a>	<span class="n">virtual</span> <span class="n">SampleFormat</span> <span class="n">sample_get_format</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-124"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">sample_is_stereo</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-125"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_length</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-126"></a>	<span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">sample_get_data_ptr</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-127"></a>
+<a name="line-128"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_data</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;&amp;</span> <span class="n">p_buffer</span><span class="p">);</span>
+<a name="line-129"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">sample_get_data</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-130"></a>
+<a name="line-131"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_rate</span><span class="p">);</span>
+<a name="line-132"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <a name="line-133"></a>
-<a name="line-134"></a>	<span class="c1">//p_list-&gt;push_back( PropertyInfo( Variant::INT, &quot;resources/pack_mode&quot;, PROPERTY_HINT_ENUM,&quot;Copy,Single Exec.,Pack (.pck),Bundles (Optical)&quot;));</span>
-<a name="line-135"></a>
-<a name="line-136"></a><span class="p">}</span>
-<a name="line-137"></a>
-<a name="line-138"></a>
-<a name="line-139"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">_fix_html</span><span class="p">(</span><span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;&amp;</span> <span class="n">html</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span><span class="kt">int</span> <span class="n">max_memory</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-140"></a>
-<a name="line-141"></a>
-<a name="line-142"></a>	<span class="n">String</span> <span class="n">str</span><span class="p">;</span>
-<a name="line-143"></a>	<span class="n">String</span> <span class="n">strnew</span><span class="p">;</span>
-<a name="line-144"></a>	<span class="n">str</span><span class="p">.</span><span class="n">parse_utf8</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">html</span><span class="p">.</span><span class="n">ptr</span><span class="p">(),</span><span class="n">html</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-145"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span><span class="o">=</span><span class="n">str</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-146"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">lines</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-147"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;godot.js&quot;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-148"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="s">&quot;&lt;script type=</span><span class="se">\&quot;</span><span class="s">text/javascript</span><span class="se">\&quot;</span><span class="s"> src=</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;_filesystem.js</span><span class="se">\&quot;</span><span class="s">&gt;&lt;/script&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-149"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="s">&quot;&lt;script async type=</span><span class="se">\&quot;</span><span class="s">text/javascript</span><span class="se">\&quot;</span><span class="s"> src=</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;.js</span><span class="se">\&quot;</span><span class="s">&gt;&lt;/script&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-150"></a>		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;var Module&quot;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-151"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-152"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="s">&quot;TOTAL_MEMORY:&quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">max_memory</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;,&quot;</span><span class="p">;</span>
-<a name="line-153"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-154"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-155"></a>		<span class="p">}</span>
-<a name="line-156"></a>	<span class="p">}</span>
-<a name="line-157"></a>
-<a name="line-158"></a>	<span class="n">CharString</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">strnew</span><span class="p">.</span><span class="n">utf8</span><span class="p">();</span>
-<a name="line-159"></a>	<span class="n">html</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">cs</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-160"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">9</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-161"></a>		<span class="n">html</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-162"></a>	<span class="p">}</span>
-<a name="line-163"></a><span class="p">}</span>
-<a name="line-164"></a>
-<a name="line-165"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">_fix_files</span><span class="p">(</span><span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;&amp;</span> <span class="n">html</span><span class="p">,</span><span class="kt">uint64_t</span> <span class="n">p_data_size</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-166"></a>
+<a name="line-134"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_loop_format</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="n">SampleLoopFormat</span> <span class="n">p_format</span><span class="p">);</span>
+<a name="line-135"></a>	<span class="n">virtual</span> <span class="n">SampleLoopFormat</span> <span class="n">sample_get_loop_format</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-136"></a>
+<a name="line-137"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_loop_begin</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_pos</span><span class="p">);</span>
+<a name="line-138"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_loop_begin</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-139"></a>
+<a name="line-140"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">sample_set_loop_end</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_pos</span><span class="p">);</span>
+<a name="line-141"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">sample_get_loop_end</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_sample</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-142"></a>
+<a name="line-143"></a>	<span class="cm">/* VOICE API */</span>
+<a name="line-144"></a>
+<a name="line-145"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="nf">voice_create</span><span class="p">();</span>
+<a name="line-146"></a>
+<a name="line-147"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_play</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="n">RID</span> <span class="n">p_sample</span><span class="p">);</span>
+<a name="line-148"></a>
+<a name="line-149"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_volume</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_db</span><span class="p">);</span>
+<a name="line-150"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_pan</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_pan</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="kt">float</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//pan and depth go from -1 to 1</span>
+<a name="line-151"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_filter</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="n">FilterType</span> <span class="n">p_type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_cutoff</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_resonance</span><span class="p">,</span><span class="kt">float</span> <span class="n">p_gain</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-152"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_chorus</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_chorus</span> <span class="p">);</span>
+<a name="line-153"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="n">ReverbRoomType</span> <span class="n">p_room_type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_reverb</span><span class="p">);</span>
+<a name="line-154"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_mix_rate</span><span class="p">);</span>
+<a name="line-155"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_set_positional</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_positional</span><span class="p">);</span>
+<a name="line-156"></a>
+<a name="line-157"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_volume</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-158"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_pan</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
+<a name="line-159"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_pan_depth</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
+<a name="line-160"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_pan_height</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//pan and depth go from -1 to 1</span>
+<a name="line-161"></a>	<span class="n">virtual</span> <span class="n">FilterType</span> <span class="n">voice_get_filter_type</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-162"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_filter_cutoff</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-163"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_filter_resonance</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-164"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_chorus</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-165"></a>	<span class="n">virtual</span> <span class="n">ReverbRoomType</span> <span class="n">voice_get_reverb_type</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-166"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">voice_get_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <a name="line-167"></a>
-<a name="line-168"></a>	<span class="n">String</span> <span class="n">str</span><span class="p">;</span>
-<a name="line-169"></a>	<span class="n">String</span> <span class="n">strnew</span><span class="p">;</span>
-<a name="line-170"></a>	<span class="n">str</span><span class="p">.</span><span class="n">parse_utf8</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">html</span><span class="p">.</span><span class="n">ptr</span><span class="p">(),</span><span class="n">html</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-171"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">lines</span><span class="o">=</span><span class="n">str</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-172"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">lines</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-173"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;$DPLEN&quot;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-174"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;$DPLEN&quot;</span><span class="p">,</span><span class="n">itos</span><span class="p">(</span><span class="n">p_data_size</span><span class="p">));</span>
-<a name="line-175"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-176"></a>			<span class="n">strnew</span><span class="o">+=</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-177"></a>		<span class="p">}</span>
-<a name="line-178"></a>	<span class="p">}</span>
-<a name="line-179"></a>
-<a name="line-180"></a>	<span class="n">CharString</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">strnew</span><span class="p">.</span><span class="n">utf8</span><span class="p">();</span>
-<a name="line-181"></a>	<span class="n">html</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">cs</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
-<a name="line-182"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">9</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">cs</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-183"></a>		<span class="n">html</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-184"></a>	<span class="p">}</span>
-<a name="line-185"></a>
-<a name="line-186"></a><span class="p">}</span>
-<a name="line-187"></a>
-<a name="line-188"></a><span class="k">struct</span> <span class="n">JSExportData</span> <span class="p">{</span>
-<a name="line-189"></a>
-<a name="line-190"></a>	<span class="n">EditorProgress</span> <span class="o">*</span><span class="n">ep</span><span class="p">;</span>
-<a name="line-191"></a>	<span class="n">FileAccess</span> <span class="o">*</span><span class="n">f</span><span class="p">;</span>
-<a name="line-192"></a>
-<a name="line-193"></a><span class="p">};</span>
-<a name="line-194"></a>
+<a name="line-168"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">voice_get_mix_rate</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-169"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">voice_is_positional</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-170"></a>
+<a name="line-171"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">voice_stop</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">);</span>
+<a name="line-172"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">voice_is_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-173"></a>
+<a name="line-174"></a>	<span class="cm">/* STREAM API */</span>
+<a name="line-175"></a>
+<a name="line-176"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="nf">audio_stream_create</span><span class="p">(</span><span class="n">AudioStream</span> <span class="o">*</span><span class="n">p_stream</span><span class="p">);</span>
+<a name="line-177"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="nf">event_stream_create</span><span class="p">(</span><span class="n">EventStream</span> <span class="o">*</span><span class="n">p_stream</span><span class="p">);</span>
+<a name="line-178"></a>
+<a name="line-179"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">stream_set_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_active</span><span class="p">);</span>
+<a name="line-180"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">stream_is_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-181"></a>
+<a name="line-182"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">stream_set_volume_scale</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_scale</span><span class="p">);</span>
+<a name="line-183"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">stream_set_volume_scale</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_stream</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-184"></a>
+<a name="line-185"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">free</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_id</span><span class="p">);</span>
+<a name="line-186"></a>
+<a name="line-187"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">();</span>
+<a name="line-188"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">finish</span><span class="p">();</span>
+<a name="line-189"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">();</span>
+<a name="line-190"></a>
+<a name="line-191"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">lock</span><span class="p">();</span>
+<a name="line-192"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">unlock</span><span class="p">();</span>
+<a name="line-193"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_default_channel_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-194"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_default_mix_rate</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <a name="line-195"></a>
-<a name="line-196"></a>
-<a name="line-197"></a><span class="n">Error</span> <span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">export_project</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_debug</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_dumb</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_remote_debug</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-198"></a>
-<a name="line-199"></a>
-<a name="line-200"></a>	<span class="n">String</span> <span class="n">src_template</span><span class="p">;</span>
+<a name="line-196"></a>	<span class="kt">void</span> <span class="nf">set_mixer_params</span><span class="p">(</span><span class="n">AudioMixerSW</span><span class="o">::</span><span class="n">InterpolationType</span> <span class="n">p_interp</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_use_fx</span><span class="p">);</span>
+<a name="line-197"></a>
+<a name="line-198"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_stream_global_volume_scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">);</span>
+<a name="line-199"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_fx_global_volume_scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">);</span>
+<a name="line-200"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_event_voice_global_volume_scale</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_volume</span><span class="p">);</span>
 <a name="line-201"></a>
-<a name="line-202"></a>	<span class="n">EditorProgress</span> <span class="nf">ep</span><span class="p">(</span><span class="s">&quot;export&quot;</span><span class="p">,</span><span class="s">&quot;Exporting for javascript&quot;</span><span class="p">,</span><span class="mi">104</span><span class="p">);</span>
-<a name="line-203"></a>
-<a name="line-204"></a>	<span class="n">String</span> <span class="n">template_path</span> <span class="o">=</span> <span class="n">EditorSettings</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_settings_path</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;/templates/&quot;</span><span class="p">;</span>
-<a name="line-205"></a>
-<a name="line-206"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_debug</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-207"></a>
-<a name="line-208"></a>		<span class="n">src_template</span><span class="o">=</span><span class="n">custom_debug_package</span><span class="o">!=</span><span class="s">&quot;&quot;</span><span class="o">?</span><span class="nl">custom_debug_package</span><span class="p">:</span><span class="n">template_path</span><span class="o">+</span><span class="s">&quot;javascript_debug.zip&quot;</span><span class="p">;</span>
-<a name="line-209"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-202"></a>
+<a name="line-203"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">get_stream_global_volume_scale</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-204"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">get_fx_global_volume_scale</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-205"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">get_event_voice_global_volume_scale</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-206"></a>
+<a name="line-207"></a>	<span class="n">virtual</span> <span class="kt">uint32_t</span> <span class="n">read_output_peak</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-208"></a>
+<a name="line-209"></a>	<span class="n">virtual</span> <span class="kt">double</span> <span class="n">get_mix_time</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//useful for video -&gt; audio sync</span>
 <a name="line-210"></a>
-<a name="line-211"></a>		<span class="n">src_template</span><span class="o">=</span><span class="n">custom_release_package</span><span class="o">!=</span><span class="s">&quot;&quot;</span><span class="o">?</span><span class="nl">custom_release_package</span><span class="p">:</span><span class="n">template_path</span><span class="o">+</span><span class="s">&quot;javascript_release.zip&quot;</span><span class="p">;</span>
+<a name="line-211"></a>	<span class="n">virtual</span> <span class="kt">double</span> <span class="n">get_output_delay</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <a name="line-212"></a>
-<a name="line-213"></a>	<span class="p">}</span>
-<a name="line-214"></a>
-<a name="line-215"></a>
-<a name="line-216"></a>	<span class="n">FileAccess</span> <span class="o">*</span><span class="n">src_f</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-217"></a>	<span class="n">zlib_filefunc_def</span> <span class="n">io</span> <span class="o">=</span> <span class="n">zipio_create_io_from_file</span><span class="p">(</span><span class="o">&amp;</span><span class="n">src_f</span><span class="p">);</span>
+<a name="line-213"></a>
+<a name="line-214"></a><span class="hll">	<span class="n">AudioServerSW</span><span class="p">(</span><span class="n">SampleManagerSW</span> <span class="o">*</span><span class="n">p_sample_manager</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'AudioServerSW' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;AudioServerSW&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
+</span><a name="line-215"></a>	<span class="o">~</span><span class="n">AudioServerSW</span><span class="p">();</span>
+<a name="line-216"></a>
+<a name="line-217"></a><span class="p">};</span>
 <a name="line-218"></a>
-<a name="line-219"></a>	<span class="n">ep</span><span class="p">.</span><span class="n">step</span><span class="p">(</span><span class="s">&quot;Exporting to HTML5&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-220"></a>
-<a name="line-221"></a>	<span class="n">ep</span><span class="p">.</span><span class="n">step</span><span class="p">(</span><span class="s">&quot;Finding Files..&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-219"></a>
+<a name="line-220"></a><span class="n">class</span> <span class="n">AudioDriverSW</span> <span class="p">{</span>
+<a name="line-221"></a>
 <a name="line-222"></a>
-<a name="line-223"></a>	<span class="n">FileAccess</span> <span class="o">*</span><span class="n">f</span><span class="o">=</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">p_path</span><span class="p">.</span><span class="n">get_base_dir</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;/data.pck&quot;</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">WRITE</span><span class="p">);</span>
-<a name="line-224"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-225"></a>		<span class="n">EditorNode</span><span class="o">::</span><span class="n">add_io_error</span><span class="p">(</span><span class="s">&quot;Could not create file for writing:</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="n">p_path</span><span class="p">.</span><span class="n">basename</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;_files.js&quot;</span><span class="p">);</span>
-<a name="line-226"></a>		<span class="k">return</span> <span class="n">ERR_FILE_CANT_WRITE</span><span class="p">;</span>
-<a name="line-227"></a>	<span class="p">}</span>
-<a name="line-228"></a>	<span class="n">Error</span> <span class="n">err</span> <span class="o">=</span> <span class="n">save_pack</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-229"></a>	<span class="kt">size_t</span> <span class="n">len</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_len</span><span class="p">();</span>
-<a name="line-230"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-231"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span>
-<a name="line-232"></a>		<span class="k">return</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-233"></a>
+<a name="line-223"></a>	<span class="k">static</span> <span class="n">AudioDriverSW</span> <span class="o">*</span><span class="n">singleton</span><span class="p">;</span>
+<a name="line-224"></a>	<span class="kt">uint64_t</span> <span class="n">_last_mix_time</span><span class="p">;</span>
+<a name="line-225"></a>	<span class="kt">uint64_t</span> <span class="n">_mix_amount</span><span class="p">;</span>
+<a name="line-226"></a>
+<a name="line-227"></a>
+<a name="line-228"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-229"></a>
+<a name="line-230"></a>	<span class="kt">void</span> <span class="n">audio_server_process</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">,</span><span class="kt">int32_t</span> <span class="o">*</span><span class="n">p_buffer</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_update_mix_time</span><span class="o">=</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-231"></a>	<span class="kt">void</span> <span class="nf">update_mix_time</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">);</span>
+<a name="line-232"></a>
+<a name="line-233"></a><span class="nl">public</span><span class="p">:</span>
 <a name="line-234"></a>
-<a name="line-235"></a>	<span class="n">unzFile</span> <span class="n">pkg</span> <span class="o">=</span> <span class="n">unzOpen2</span><span class="p">(</span><span class="n">src_template</span><span class="p">.</span><span class="n">utf8</span><span class="p">().</span><span class="n">get_data</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">io</span><span class="p">);</span>
-<a name="line-236"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pkg</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-235"></a>
+<a name="line-236"></a>	<span class="kt">double</span> <span class="n">get_mix_time</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//useful for video -&gt; audio sync</span>
 <a name="line-237"></a>
-<a name="line-238"></a>		<span class="n">EditorNode</span><span class="o">::</span><span class="n">add_io_error</span><span class="p">(</span><span class="s">&quot;Could not find template HTML5 to export:</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="n">src_template</span><span class="p">);</span>
-<a name="line-239"></a>		<span class="k">return</span> <span class="n">ERR_FILE_NOT_FOUND</span><span class="p">;</span>
-<a name="line-240"></a>	<span class="p">}</span>
-<a name="line-241"></a>
-<a name="line-242"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span><span class="o">!</span><span class="n">pkg</span><span class="p">,</span> <span class="n">ERR_CANT_OPEN</span><span class="p">);</span>
-<a name="line-243"></a>	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">unzGoToFirstFile</span><span class="p">(</span><span class="n">pkg</span><span class="p">);</span>
-<a name="line-244"></a>
+<a name="line-238"></a>	<span class="k">enum</span> <span class="n">OutputFormat</span> <span class="p">{</span>
+<a name="line-239"></a>
+<a name="line-240"></a>		<span class="n">OUTPUT_MONO</span><span class="p">,</span>
+<a name="line-241"></a>		<span class="n">OUTPUT_STEREO</span><span class="p">,</span>
+<a name="line-242"></a>		<span class="n">OUTPUT_QUAD</span><span class="p">,</span>
+<a name="line-243"></a>		<span class="n">OUTPUT_5_1</span>
+<a name="line-244"></a>	<span class="p">};</span>
 <a name="line-245"></a>
-<a name="line-246"></a>	<span class="k">while</span><span class="p">(</span><span class="n">ret</span><span class="o">==</span><span class="n">UNZ_OK</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-247"></a>
-<a name="line-248"></a>		<span class="c1">//get filename</span>
-<a name="line-249"></a>		<span class="n">unz_file_info</span> <span class="n">info</span><span class="p">;</span>
-<a name="line-250"></a>		<span class="kt">char</span> <span class="n">fname</span><span class="p">[</span><span class="mi">16384</span><span class="p">];</span>
-<a name="line-251"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">unzGetCurrentFileInfo</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span><span class="o">&amp;</span><span class="n">info</span><span class="p">,</span><span class="n">fname</span><span class="p">,</span><span class="mi">16384</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-252"></a>
-<a name="line-253"></a>		<span class="n">String</span> <span class="n">file</span><span class="o">=</span><span class="n">fname</span><span class="p">;</span>
-<a name="line-254"></a>
-<a name="line-255"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">data</span><span class="p">;</span>
-<a name="line-256"></a>		<span class="n">data</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">uncompressed_size</span><span class="p">);</span>
-<a name="line-257"></a>
-<a name="line-258"></a>		<span class="c1">//read</span>
-<a name="line-259"></a>		<span class="n">unzOpenCurrentFile</span><span class="p">(</span><span class="n">pkg</span><span class="p">);</span>
-<a name="line-260"></a>		<span class="n">unzReadCurrentFile</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span><span class="n">data</span><span class="p">.</span><span class="n">ptr</span><span class="p">(),</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-261"></a>		<span class="n">unzCloseCurrentFile</span><span class="p">(</span><span class="n">pkg</span><span class="p">);</span>
-<a name="line-262"></a>
-<a name="line-263"></a>		<span class="c1">//write</span>
-<a name="line-264"></a>
-<a name="line-265"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">file</span><span class="o">==</span><span class="s">&quot;godot.html&quot;</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-246"></a>	<span class="k">static</span> <span class="n">AudioDriverSW</span> <span class="o">*</span><span class="nf">get_singleton</span><span class="p">();</span>
+<a name="line-247"></a>	<span class="kt">void</span> <span class="nf">set_singleton</span><span class="p">();</span>
+<a name="line-248"></a>
+<a name="line-249"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-250"></a>
+<a name="line-251"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="n">init</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-252"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">start</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-253"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_mix_rate</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-254"></a>	<span class="n">virtual</span> <span class="n">OutputFormat</span> <span class="n">get_output_format</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-255"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">lock</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-256"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">unlock</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-257"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">finish</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-258"></a>
+<a name="line-259"></a>
+<a name="line-260"></a>
+<a name="line-261"></a>
+<a name="line-262"></a>	<span class="n">AudioDriverSW</span><span class="p">();</span>
+<a name="line-263"></a>	<span class="n">virtual</span> <span class="o">~</span><span class="n">AudioDriverSW</span><span class="p">()</span> <span class="p">{};</span>
+<a name="line-264"></a><span class="p">};</span>
+<a name="line-265"></a>
 <a name="line-266"></a>
-<a name="line-267"></a>			<span class="n">_fix_html</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">p_path</span><span class="p">.</span><span class="n">get_file</span><span class="p">().</span><span class="n">basename</span><span class="p">(),</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">max_memory</span><span class="o">+</span><span class="mi">5</span><span class="p">));</span>
-<a name="line-268"></a>			<span class="n">file</span><span class="o">=</span><span class="n">p_path</span><span class="p">.</span><span class="n">get_file</span><span class="p">();</span>
-<a name="line-269"></a>		<span class="p">}</span>
-<a name="line-270"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">file</span><span class="o">==</span><span class="s">&quot;filesystem.js&quot;</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-267"></a>
+<a name="line-268"></a><span class="n">class</span> <span class="n">AudioDriverManagerSW</span> <span class="p">{</span>
+<a name="line-269"></a>
+<a name="line-270"></a>	<span class="k">enum</span> <span class="p">{</span>
 <a name="line-271"></a>
-<a name="line-272"></a>			<span class="n">_fix_files</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">len</span><span class="p">);</span>
-<a name="line-273"></a>			<span class="n">file</span><span class="o">=</span><span class="n">p_path</span><span class="p">.</span><span class="n">get_file</span><span class="p">().</span><span class="n">basename</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;_filesystem.js&quot;</span><span class="p">;</span>
-<a name="line-274"></a>		<span class="p">}</span>
-<a name="line-275"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">file</span><span class="o">==</span><span class="s">&quot;godot.js&quot;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-276"></a>
-<a name="line-277"></a>			<span class="c1">//_fix_godot(data);</span>
-<a name="line-278"></a>			<span class="n">file</span><span class="o">=</span><span class="n">p_path</span><span class="p">.</span><span class="n">get_file</span><span class="p">().</span><span class="n">basename</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;.js&quot;</span><span class="p">;</span>
-<a name="line-279"></a>		<span class="p">}</span>
-<a name="line-280"></a>
-<a name="line-281"></a>		<span class="n">String</span> <span class="n">dst</span> <span class="o">=</span> <span class="n">p_path</span><span class="p">.</span><span class="n">get_base_dir</span><span class="p">().</span><span class="n">plus_file</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
-<a name="line-282"></a>		<span class="n">FileAccess</span> <span class="o">*</span><span class="n">f</span><span class="o">=</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">WRITE</span><span class="p">);</span>
-<a name="line-283"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-284"></a>			<span class="n">EditorNode</span><span class="o">::</span><span class="n">add_io_error</span><span class="p">(</span><span class="s">&quot;Could not create file for writing:</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="n">dst</span><span class="p">);</span>
-<a name="line-285"></a>			<span class="n">unzClose</span><span class="p">(</span><span class="n">pkg</span><span class="p">);</span>
-<a name="line-286"></a>			<span class="k">return</span> <span class="n">ERR_FILE_CANT_WRITE</span><span class="p">;</span>
-<a name="line-287"></a>		<span class="p">}</span>
-<a name="line-288"></a>		<span class="n">f</span><span class="o">-&gt;</span><span class="n">store_buffer</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">ptr</span><span class="p">(),</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-289"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-290"></a>
-<a name="line-291"></a>
-<a name="line-292"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">unzGoToNextFile</span><span class="p">(</span><span class="n">pkg</span><span class="p">);</span>
-<a name="line-293"></a>	<span class="p">}</span>
-<a name="line-294"></a>
-<a name="line-295"></a>
-<a name="line-296"></a>
-<a name="line-297"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-298"></a>
-<a name="line-299"></a><span class="p">}</span>
-<a name="line-300"></a>
-<a name="line-301"></a>
-<a name="line-302"></a><span class="n">Error</span> <span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_device</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_dumb</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_remote_debug</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-303"></a>
-<a name="line-304"></a>	<span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">EditorSettings</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_settings_path</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;/tmp/tmp_export.html&quot;</span><span class="p">;</span>
-<a name="line-305"></a>	<span class="n">Error</span> <span class="n">err</span> <span class="o">=</span> <span class="n">export_project</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<a name="line-306"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span>
-<a name="line-307"></a>		<span class="k">return</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-308"></a>
-<a name="line-309"></a>	<span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">shell_open</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-<a name="line-310"></a>
-<a name="line-311"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-312"></a><span class="p">}</span>
-<a name="line-313"></a>
-<a name="line-314"></a>
-<a name="line-315"></a><span class="hll"><span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">EditorExportPlatformJavaScript</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'EditorExportPlatformJavaScript::version_code' is not initialized in the constructor.</span>
-</span><a name="line-316"></a>
-<a name="line-317"></a>	<span class="n">show_run</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-318"></a>	<span class="n">Image</span> <span class="nf">img</span><span class="p">(</span> <span class="n">_javascript_logo</span> <span class="p">);</span>
-<a name="line-319"></a>	<span class="n">logo</span> <span class="o">=</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">ImageTexture</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ImageTexture</span> <span class="p">));</span>
-<a name="line-320"></a>	<span class="n">logo</span><span class="o">-&gt;</span><span class="n">create_from_image</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
-<a name="line-321"></a>	<span class="n">max_memory</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-322"></a>	<span class="n">pack_mode</span><span class="o">=</span><span class="n">PACK_SINGLE_FILE</span><span class="p">;</span>
-<a name="line-323"></a><span class="p">}</span>
-<a name="line-324"></a>
-<a name="line-325"></a><span class="kt">bool</span> <span class="n">EditorExportPlatformJavaScript</span><span class="o">::</span><span class="n">can_export</span><span class="p">(</span><span class="n">String</span> <span class="o">*</span><span class="n">r_error</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-326"></a>
-<a name="line-327"></a>
-<a name="line-328"></a>	<span class="kt">bool</span> <span class="n">valid</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-329"></a>	<span class="n">String</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-330"></a>	<span class="n">String</span> <span class="n">exe_path</span> <span class="o">=</span> <span class="n">EditorSettings</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_settings_path</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;/templates/&quot;</span><span class="p">;</span>
-<a name="line-331"></a>
-<a name="line-332"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">exists</span><span class="p">(</span><span class="n">exe_path</span><span class="o">+</span><span class="s">&quot;javascript_debug.zip&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">exists</span><span class="p">(</span><span class="n">exe_path</span><span class="o">+</span><span class="s">&quot;javascript_release.zip&quot;</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-333"></a>		<span class="n">valid</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-334"></a>		<span class="n">err</span><span class="o">+=</span><span class="s">&quot;No export templates found.</span><span class="se">\n</span><span class="s">Download and install export templates.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-335"></a>	<span class="p">}</span>
-<a name="line-336"></a>
-<a name="line-337"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">custom_debug_package</span><span class="o">!=</span><span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">exists</span><span class="p">(</span><span class="n">custom_debug_package</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-338"></a>		<span class="n">valid</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-339"></a>		<span class="n">err</span><span class="o">+=</span><span class="s">&quot;Custom debug package not found.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-340"></a>	<span class="p">}</span>
-<a name="line-341"></a>
-<a name="line-342"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">custom_release_package</span><span class="o">!=</span><span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">exists</span><span class="p">(</span><span class="n">custom_release_package</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-343"></a>		<span class="n">valid</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-344"></a>		<span class="n">err</span><span class="o">+=</span><span class="s">&quot;Custom release package not found.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<a name="line-345"></a>	<span class="p">}</span>
-<a name="line-346"></a>
-<a name="line-347"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">r_error</span><span class="p">)</span>
-<a name="line-348"></a>		<span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="n">err</span><span class="p">;</span>
-<a name="line-349"></a>
-<a name="line-350"></a>	<span class="k">return</span> <span class="n">valid</span><span class="p">;</span>
-<a name="line-351"></a><span class="p">}</span>
-<a name="line-352"></a>
-<a name="line-353"></a>
-<a name="line-354"></a><span class="n">EditorExportPlatformJavaScript</span><span class="o">::~</span><span class="n">EditorExportPlatformJavaScript</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-355"></a>
-<a name="line-356"></a><span class="p">}</span>
-<a name="line-357"></a>
-<a name="line-358"></a>
-<a name="line-359"></a><span class="kt">void</span> <span class="n">register_javascript_exporter</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-360"></a>
-<a name="line-361"></a>
-<a name="line-362"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">EditorExportPlatformJavaScript</span><span class="o">&gt;</span> <span class="n">exporter</span> <span class="o">=</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">EditorExportPlatformJavaScript</span><span class="o">&gt;</span><span class="p">(</span> <span class="n">memnew</span><span class="p">(</span><span class="n">EditorExportPlatformJavaScript</span><span class="p">)</span> <span class="p">);</span>
-<a name="line-363"></a>	<span class="n">EditorImportExport</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_export_platform</span><span class="p">(</span><span class="n">exporter</span><span class="p">);</span>
-<a name="line-364"></a>
-<a name="line-365"></a>
-<a name="line-366"></a><span class="p">}</span>
+<a name="line-272"></a>		<span class="n">MAX_DRIVERS</span><span class="o">=</span><span class="mi">10</span>
+<a name="line-273"></a>	<span class="p">};</span>
+<a name="line-274"></a>
+<a name="line-275"></a>	<span class="k">static</span> <span class="n">AudioDriverSW</span> <span class="o">*</span><span class="n">drivers</span><span class="p">[</span><span class="n">MAX_DRIVERS</span><span class="p">];</span>
+<a name="line-276"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">driver_count</span><span class="p">;</span>
+<a name="line-277"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-278"></a>
+<a name="line-279"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">add_driver</span><span class="p">(</span><span class="n">AudioDriverSW</span> <span class="o">*</span><span class="n">p_driver</span><span class="p">);</span>
+<a name="line-280"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="nf">get_driver_count</span><span class="p">();</span>
+<a name="line-281"></a>	<span class="k">static</span> <span class="n">AudioDriverSW</span> <span class="o">*</span><span class="nf">get_driver</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_driver</span><span class="p">);</span>
+<a name="line-282"></a><span class="p">};</span>
+<a name="line-283"></a>
+<a name="line-284"></a><span class="cp">#endif </span><span class="c1">// AUDIO_SERVER_SW_H</span>
 </pre></div>
 </td></tr></table>
       </div>

@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/idea/i_ecb.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/rc5/rc5_ecb.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> i_ecb.c</p>
-<a href='304.html#line-83'> unreadVariable 83</a><a href='304.html#line-83'> unreadVariable 83</a><a href='304.html#line-83'> unreadVariable 83</a>
+       <p id="filename"><a href="index.html">Defects:</a> rc5_ecb.c</p>
+<a href='304.html#line-78'> unreadVariable 78</a><a href='304.html#line-78'> unreadVariable 78</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -192,12 +192,7 @@
 76
 77
 78
-79
-80
-81
-82
-83
-84</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/idea/i_ecb.c */</span>
+79</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/rc5/rc5_ecb.c */</span>
 <a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -255,32 +250,27 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;openssl/idea.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &quot;idea_lcl.h&quot;</span>
+<a name="line-59"></a><span class="cp">#include &lt;openssl/rc5.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &quot;rc5_locl.h&quot;</span>
 <a name="line-61"></a><span class="cp">#include &lt;openssl/opensslv.h&gt;</span>
 <a name="line-62"></a>
-<a name="line-63"></a><span class="k">const</span> <span class="kt">char</span> <span class="n">IDEA_version</span><span class="p">[]</span><span class="o">=</span><span class="s">&quot;IDEA&quot;</span> <span class="n">OPENSSL_VERSION_PTEXT</span><span class="p">;</span>
+<a name="line-63"></a><span class="k">const</span> <span class="kt">char</span> <span class="n">RC5_version</span><span class="p">[]</span><span class="o">=</span><span class="s">&quot;RC5&quot;</span> <span class="n">OPENSSL_VERSION_PTEXT</span><span class="p">;</span>
 <a name="line-64"></a>
-<a name="line-65"></a><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">idea_options</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-66"></a>	<span class="p">{</span>
-<a name="line-67"></a>	<span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">short</span><span class="p">)</span> <span class="o">!=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">IDEA_INT</span><span class="p">))</span>
-<a name="line-68"></a>		<span class="k">return</span><span class="p">(</span><span class="s">&quot;idea(int)&quot;</span><span class="p">);</span>
-<a name="line-69"></a>	<span class="k">else</span>
-<a name="line-70"></a>		<span class="k">return</span><span class="p">(</span><span class="s">&quot;idea(short)&quot;</span><span class="p">);</span>
-<a name="line-71"></a>	<span class="p">}</span>
-<a name="line-72"></a>
-<a name="line-73"></a><span class="kt">void</span> <span class="nf">idea_ecb_encrypt</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span>
-<a name="line-74"></a>	     <span class="n">IDEA_KEY_SCHEDULE</span> <span class="o">*</span><span class="n">ks</span><span class="p">)</span>
-<a name="line-75"></a>	<span class="p">{</span>
-<a name="line-76"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">l0</span><span class="p">,</span><span class="n">l1</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a name="line-77"></a>
-<a name="line-78"></a>	<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">l0</span><span class="p">);</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">l0</span><span class="p">;</span>
-<a name="line-79"></a>	<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">l1</span><span class="p">);</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l1</span><span class="p">;</span>
-<a name="line-80"></a>	<span class="n">idea_encrypt</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
-<a name="line-81"></a>	<span class="n">l0</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">l0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-82"></a>	<span class="n">l1</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-83"></a><span class="hll">	<span class="n">l0</span><span class="o">=</span><span class="n">l1</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'l0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'l1' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'd' is assigned a value that is never used.</span>
-</span><a name="line-84"></a>	<span class="p">}</span>
+<a name="line-65"></a><span class="kt">void</span> <span class="nf">RC5_32_ecb_encrypt</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span>
+<a name="line-66"></a>			<span class="n">RC5_32_KEY</span> <span class="o">*</span><span class="n">ks</span><span class="p">,</span> <span class="kt">int</span> <span class="n">encrypt</span><span class="p">)</span>
+<a name="line-67"></a>	<span class="p">{</span>
+<a name="line-68"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">l</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-69"></a>
+<a name="line-70"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">l</span><span class="p">);</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="p">;</span>
+<a name="line-71"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">l</span><span class="p">);</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="p">;</span>
+<a name="line-72"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">encrypt</span><span class="p">)</span>
+<a name="line-73"></a>		<span class="n">RC5_32_encrypt</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
+<a name="line-74"></a>	<span class="k">else</span>
+<a name="line-75"></a>		<span class="n">RC5_32_decrypt</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
+<a name="line-76"></a>	<span class="n">l</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l2c</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-77"></a>	<span class="n">l</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">l2c</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-78"></a><span class="hll">	<span class="n">l</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'l' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'd' is assigned a value that is never used.</span>
+</span><a name="line-79"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

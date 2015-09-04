@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/bio/bss_acpt.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/des/xcbc_enc.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> bss_acpt.c</p>
-<a href='214.html#line-343'> variableScope 343</a><a href='214.html#line-346'> variableScope 346</a><a href='214.html#line-388'> redundantAssignment 388</a>
+       <p id="filename"><a href="index.html">Defects:</a> xcbc_enc.c</p>
+<a href='214.html#line-193'> unreadVariable 193</a><a href='214.html#line-193'> unreadVariable 193</a><a href='214.html#line-193'> unreadVariable 193</a><a href='214.html#line-193'> unreadVariable 193</a><a href='214.html#line-195'> unreadVariable 195</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -309,289 +309,7 @@
 193
 194
 195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/bio/bss_acpt.c */</span>
+196</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/des/xcbc_enc.c */</span>
 <a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -649,450 +367,144 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &lt;errno.h&gt;</span>
-<a name="line-61"></a><span class="cp">#define USE_SOCKETS</span>
-<a name="line-62"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-63"></a><span class="cp">#include &lt;openssl/bio.h&gt;</span>
-<a name="line-64"></a>
-<a name="line-65"></a><span class="cp">#ifndef OPENSSL_NO_SOCK</span>
-<a name="line-66"></a>
-<a name="line-67"></a><span class="cp">#ifdef OPENSSL_SYS_WIN16</span>
-<a name="line-68"></a><span class="cp">#define SOCKET_PROTOCOL 0 </span><span class="cm">/* more microsoft stupidity */</span><span class="cp"></span>
-<a name="line-69"></a><span class="cp">#else</span>
-<a name="line-70"></a><span class="cp">#define SOCKET_PROTOCOL IPPROTO_TCP</span>
-<a name="line-71"></a><span class="cp">#endif</span>
-<a name="line-72"></a>
-<a name="line-73"></a><span class="cp">#if (defined(OPENSSL_SYS_VMS) &amp;&amp; __VMS_VER &lt; 70000000)</span>
-<a name="line-74"></a><span class="cm">/* FIONBIO used as a switch to enable ioctl, and that isn&#39;t in VMS &lt; 7.0 */</span>
-<a name="line-75"></a><span class="cp">#undef FIONBIO</span>
-<a name="line-76"></a><span class="cp">#endif</span>
-<a name="line-77"></a>
-<a name="line-78"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="n">bio_accept_st</span>
-<a name="line-79"></a>	<span class="p">{</span>
-<a name="line-80"></a>	<span class="kt">int</span> <span class="n">state</span><span class="p">;</span>
-<a name="line-81"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">param_addr</span><span class="p">;</span>
+<a name="line-59"></a><span class="cp">#include &quot;des_locl.h&quot;</span>
+<a name="line-60"></a>
+<a name="line-61"></a><span class="cm">/* RSA&#39;s DESX */</span>
+<a name="line-62"></a>
+<a name="line-63"></a><span class="cp">#if 0</span><span class="c"> /* broken code, preserved just in case anyone specifically looks for this */</span>
+<a name="line-64"></a><span class="c">static const unsigned char desx_white_in2out[256]={</span>
+<a name="line-65"></a><span class="c">0xBD,0x56,0xEA,0xF2,0xA2,0xF1,0xAC,0x2A,0xB0,0x93,0xD1,0x9C,0x1B,0x33,0xFD,0xD0,</span>
+<a name="line-66"></a><span class="c">0x30,0x04,0xB6,0xDC,0x7D,0xDF,0x32,0x4B,0xF7,0xCB,0x45,0x9B,0x31,0xBB,0x21,0x5A,</span>
+<a name="line-67"></a><span class="c">0x41,0x9F,0xE1,0xD9,0x4A,0x4D,0x9E,0xDA,0xA0,0x68,0x2C,0xC3,0x27,0x5F,0x80,0x36,</span>
+<a name="line-68"></a><span class="c">0x3E,0xEE,0xFB,0x95,0x1A,0xFE,0xCE,0xA8,0x34,0xA9,0x13,0xF0,0xA6,0x3F,0xD8,0x0C,</span>
+<a name="line-69"></a><span class="c">0x78,0x24,0xAF,0x23,0x52,0xC1,0x67,0x17,0xF5,0x66,0x90,0xE7,0xE8,0x07,0xB8,0x60,</span>
+<a name="line-70"></a><span class="c">0x48,0xE6,0x1E,0x53,0xF3,0x92,0xA4,0x72,0x8C,0x08,0x15,0x6E,0x86,0x00,0x84,0xFA,</span>
+<a name="line-71"></a><span class="c">0xF4,0x7F,0x8A,0x42,0x19,0xF6,0xDB,0xCD,0x14,0x8D,0x50,0x12,0xBA,0x3C,0x06,0x4E,</span>
+<a name="line-72"></a><span class="c">0xEC,0xB3,0x35,0x11,0xA1,0x88,0x8E,0x2B,0x94,0x99,0xB7,0x71,0x74,0xD3,0xE4,0xBF,</span>
+<a name="line-73"></a><span class="c">0x3A,0xDE,0x96,0x0E,0xBC,0x0A,0xED,0x77,0xFC,0x37,0x6B,0x03,0x79,0x89,0x62,0xC6,</span>
+<a name="line-74"></a><span class="c">0xD7,0xC0,0xD2,0x7C,0x6A,0x8B,0x22,0xA3,0x5B,0x05,0x5D,0x02,0x75,0xD5,0x61,0xE3,</span>
+<a name="line-75"></a><span class="c">0x18,0x8F,0x55,0x51,0xAD,0x1F,0x0B,0x5E,0x85,0xE5,0xC2,0x57,0x63,0xCA,0x3D,0x6C,</span>
+<a name="line-76"></a><span class="c">0xB4,0xC5,0xCC,0x70,0xB2,0x91,0x59,0x0D,0x47,0x20,0xC8,0x4F,0x58,0xE0,0x01,0xE2,</span>
+<a name="line-77"></a><span class="c">0x16,0x38,0xC4,0x6F,0x3B,0x0F,0x65,0x46,0xBE,0x7E,0x2D,0x7B,0x82,0xF9,0x40,0xB5,</span>
+<a name="line-78"></a><span class="c">0x1D,0x73,0xF8,0xEB,0x26,0xC7,0x87,0x97,0x25,0x54,0xB1,0x28,0xAA,0x98,0x9D,0xA5,</span>
+<a name="line-79"></a><span class="c">0x64,0x6D,0x7A,0xD4,0x10,0x81,0x44,0xEF,0x49,0xD6,0xAE,0x2E,0xDD,0x76,0x5C,0x2F,</span>
+<a name="line-80"></a><span class="c">0xA7,0x1C,0xC9,0x09,0x69,0x9A,0x83,0xCF,0x29,0x39,0xB9,0xE9,0x4C,0xFF,0x43,0xAB,</span>
+<a name="line-81"></a><span class="c">	};</span>
 <a name="line-82"></a>
-<a name="line-83"></a>	<span class="kt">int</span> <span class="n">accept_sock</span><span class="p">;</span>
-<a name="line-84"></a>	<span class="kt">int</span> <span class="n">accept_nbio</span><span class="p">;</span>
-<a name="line-85"></a>
-<a name="line-86"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">addr</span><span class="p">;</span>
-<a name="line-87"></a>	<span class="kt">int</span> <span class="n">nbio</span><span class="p">;</span>
-<a name="line-88"></a>	<span class="cm">/* If 0, it means normal, if 1, do a connect on bind failure,</span>
-<a name="line-89"></a><span class="cm">	 * and if there is no-one listening, bind with SO_REUSEADDR.</span>
-<a name="line-90"></a><span class="cm">	 * If 2, always use SO_REUSEADDR. */</span>
-<a name="line-91"></a>	<span class="kt">int</span> <span class="n">bind_mode</span><span class="p">;</span>
-<a name="line-92"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">bio_chain</span><span class="p">;</span>
-<a name="line-93"></a>	<span class="p">}</span> <span class="n">BIO_ACCEPT</span><span class="p">;</span>
-<a name="line-94"></a>
-<a name="line-95"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_write</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">);</span>
-<a name="line-96"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_read</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">);</span>
-<a name="line-97"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_puts</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">);</span>
-<a name="line-98"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">acpt_ctrl</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="kt">long</span> <span class="n">arg1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg2</span><span class="p">);</span>
-<a name="line-99"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_new</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">);</span>
-<a name="line-100"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_free</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
-<a name="line-101"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_state</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">c</span><span class="p">);</span>
-<a name="line-102"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">acpt_close_socket</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
-<a name="line-103"></a><span class="k">static</span> <span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="nf">BIO_ACCEPT_new</span><span class="p">(</span><span class="kt">void</span> <span class="p">);</span>
-<a name="line-104"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">BIO_ACCEPT_free</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
-<a name="line-105"></a>
-<a name="line-106"></a><span class="cp">#define ACPT_S_BEFORE			1</span>
-<a name="line-107"></a><span class="cp">#define ACPT_S_GET_ACCEPT_SOCKET	2</span>
-<a name="line-108"></a><span class="cp">#define ACPT_S_OK			3</span>
-<a name="line-109"></a>
-<a name="line-110"></a><span class="k">static</span> <span class="n">BIO_METHOD</span> <span class="n">methods_acceptp</span><span class="o">=</span>
-<a name="line-111"></a>	<span class="p">{</span>
-<a name="line-112"></a>	<span class="n">BIO_TYPE_ACCEPT</span><span class="p">,</span>
-<a name="line-113"></a>	<span class="s">&quot;socket accept&quot;</span><span class="p">,</span>
-<a name="line-114"></a>	<span class="n">acpt_write</span><span class="p">,</span>
-<a name="line-115"></a>	<span class="n">acpt_read</span><span class="p">,</span>
-<a name="line-116"></a>	<span class="n">acpt_puts</span><span class="p">,</span>
-<a name="line-117"></a>	<span class="nb">NULL</span><span class="p">,</span> <span class="cm">/* connect_gets, */</span>
-<a name="line-118"></a>	<span class="n">acpt_ctrl</span><span class="p">,</span>
-<a name="line-119"></a>	<span class="n">acpt_new</span><span class="p">,</span>
-<a name="line-120"></a>	<span class="n">acpt_free</span><span class="p">,</span>
-<a name="line-121"></a>	<span class="nb">NULL</span><span class="p">,</span>
-<a name="line-122"></a>	<span class="p">};</span>
-<a name="line-123"></a>
-<a name="line-124"></a><span class="n">BIO_METHOD</span> <span class="o">*</span><span class="nf">BIO_s_accept</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-125"></a>	<span class="p">{</span>
-<a name="line-126"></a>	<span class="k">return</span><span class="p">(</span><span class="o">&amp;</span><span class="n">methods_acceptp</span><span class="p">);</span>
-<a name="line-127"></a>	<span class="p">}</span>
-<a name="line-128"></a>
-<a name="line-129"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_new</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bi</span><span class="p">)</span>
-<a name="line-130"></a>	<span class="p">{</span>
-<a name="line-131"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">ba</span><span class="p">;</span>
-<a name="line-132"></a>
-<a name="line-133"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-134"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">INVALID_SOCKET</span><span class="p">;</span>
-<a name="line-135"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-136"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">ba</span><span class="o">=</span><span class="n">BIO_ACCEPT_new</span><span class="p">())</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-137"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-138"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">ba</span><span class="p">;</span>
-<a name="line-139"></a>	<span class="n">ba</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_BEFORE</span><span class="p">;</span>
-<a name="line-140"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-141"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-142"></a>	<span class="p">}</span>
-<a name="line-143"></a>
-<a name="line-144"></a><span class="k">static</span> <span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="nf">BIO_ACCEPT_new</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-145"></a>	<span class="p">{</span>
-<a name="line-146"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-147"></a>
-<a name="line-148"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">BIO_ACCEPT</span><span class="p">)))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-149"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-150"></a>
-<a name="line-151"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">BIO_ACCEPT</span><span class="p">));</span>
-<a name="line-152"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="o">=</span><span class="n">INVALID_SOCKET</span><span class="p">;</span>
-<a name="line-153"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">bind_mode</span><span class="o">=</span><span class="n">BIO_BIND_NORMAL</span><span class="p">;</span>
-<a name="line-154"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-155"></a>	<span class="p">}</span>
-<a name="line-156"></a>
-<a name="line-157"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">BIO_ACCEPT_free</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span>
-<a name="line-158"></a>	<span class="p">{</span>
-<a name="line-159"></a>	<span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-160"></a>	    <span class="k">return</span><span class="p">;</span>
-<a name="line-161"></a>
-<a name="line-162"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">param_addr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">param_addr</span><span class="p">);</span>
-<a name="line-163"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">addr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">addr</span><span class="p">);</span>
-<a name="line-164"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">bio_chain</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">BIO_free</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">bio_chain</span><span class="p">);</span>
-<a name="line-165"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-<a name="line-166"></a>	<span class="p">}</span>
-<a name="line-167"></a>
-<a name="line-168"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">acpt_close_socket</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bio</span><span class="p">)</span>
-<a name="line-169"></a>	<span class="p">{</span>
-<a name="line-170"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">c</span><span class="p">;</span>
-<a name="line-171"></a>
-<a name="line-172"></a>	<span class="n">c</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="p">)</span><span class="n">bio</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-173"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_sock</span> <span class="o">!=</span> <span class="n">INVALID_SOCKET</span><span class="p">)</span>
-<a name="line-174"></a>		<span class="p">{</span>
-<a name="line-175"></a>		<span class="n">shutdown</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-176"></a>		<span class="n">closesocket</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="p">);</span>
-<a name="line-177"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="o">=</span><span class="n">INVALID_SOCKET</span><span class="p">;</span>
-<a name="line-178"></a>		<span class="n">bio</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">INVALID_SOCKET</span><span class="p">;</span>
-<a name="line-179"></a>		<span class="p">}</span>
-<a name="line-180"></a>	<span class="p">}</span>
-<a name="line-181"></a>
-<a name="line-182"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_free</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span>
-<a name="line-183"></a>	<span class="p">{</span>
-<a name="line-184"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-<a name="line-185"></a>
-<a name="line-186"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-187"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="p">)</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-188"></a>	 
-<a name="line-189"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">)</span>
-<a name="line-190"></a>		<span class="p">{</span>
-<a name="line-191"></a>		<span class="n">acpt_close_socket</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-<a name="line-192"></a>		<span class="n">BIO_ACCEPT_free</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="line-193"></a>		<span class="n">a</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-194"></a>		<span class="n">a</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-195"></a>		<span class="n">a</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-196"></a>		<span class="p">}</span>
-<a name="line-197"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-198"></a>	<span class="p">}</span>
-<a name="line-199"></a>	
-<a name="line-200"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_state</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">c</span><span class="p">)</span>
-<a name="line-201"></a>	<span class="p">{</span>
-<a name="line-202"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">bio</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="o">*</span><span class="n">dbio</span><span class="p">;</span>
-<a name="line-203"></a>	<span class="kt">int</span> <span class="n">s</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-204"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-205"></a>
-<a name="line-206"></a><span class="nl">again</span><span class="p">:</span>
-<a name="line-207"></a>	<span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">)</span>
-<a name="line-208"></a>		<span class="p">{</span>
-<a name="line-209"></a>	<span class="k">case</span> <span class="nl">ACPT_S_BEFORE</span><span class="p">:</span>
-<a name="line-210"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_addr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-211"></a>			<span class="p">{</span>
-<a name="line-212"></a>			<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_ACPT_STATE</span><span class="p">,</span><span class="n">BIO_R_NO_ACCEPT_PORT_SPECIFIED</span><span class="p">);</span>
-<a name="line-213"></a>			<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-214"></a>			<span class="p">}</span>
-<a name="line-215"></a>		<span class="n">s</span><span class="o">=</span><span class="n">BIO_get_accept_socket</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_addr</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">bind_mode</span><span class="p">);</span>
-<a name="line-216"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">INVALID_SOCKET</span><span class="p">)</span>
-<a name="line-217"></a>			<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-218"></a>
-<a name="line-219"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_nbio</span><span class="p">)</span>
-<a name="line-220"></a>			<span class="p">{</span>
-<a name="line-221"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">BIO_socket_nbio</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<a name="line-222"></a>				<span class="p">{</span>
-<a name="line-223"></a>				<span class="n">closesocket</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-<a name="line-224"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_ACPT_STATE</span><span class="p">,</span><span class="n">BIO_R_ERROR_SETTING_NBIO_ON_ACCEPT_SOCKET</span><span class="p">);</span>
-<a name="line-225"></a>				<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-226"></a>				<span class="p">}</span>
-<a name="line-227"></a>			<span class="p">}</span>
-<a name="line-228"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-<a name="line-229"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-<a name="line-230"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_GET_ACCEPT_SOCKET</span><span class="p">;</span>
-<a name="line-231"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-232"></a>		<span class="cm">/* break; */</span>
-<a name="line-233"></a>	<span class="k">case</span> <span class="nl">ACPT_S_GET_ACCEPT_SOCKET</span><span class="p">:</span>
-<a name="line-234"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next_bio</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-235"></a>			<span class="p">{</span>
-<a name="line-236"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_OK</span><span class="p">;</span>
-<a name="line-237"></a>			<span class="k">goto</span> <span class="n">again</span><span class="p">;</span>
-<a name="line-238"></a>			<span class="p">}</span>
-<a name="line-239"></a>		<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-240"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">retry_reason</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-241"></a>		<span class="n">i</span><span class="o">=</span><span class="n">BIO_accept</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="p">,</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">addr</span><span class="p">));</span>
-<a name="line-242"></a>
-<a name="line-243"></a>		<span class="cm">/* -2 return means we should retry */</span>
-<a name="line-244"></a>		<span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-<a name="line-245"></a>			<span class="p">{</span>
-<a name="line-246"></a>			<span class="n">BIO_set_retry_special</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-247"></a>			<span class="n">b</span><span class="o">-&gt;</span><span class="n">retry_reason</span><span class="o">=</span><span class="n">BIO_RR_ACCEPT</span><span class="p">;</span>
-<a name="line-248"></a>			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-249"></a>			<span class="p">}</span>
-<a name="line-250"></a>
-<a name="line-251"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<a name="line-252"></a>
-<a name="line-253"></a>		<span class="n">bio</span><span class="o">=</span><span class="n">BIO_new_socket</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">BIO_CLOSE</span><span class="p">);</span>
-<a name="line-254"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">bio</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-255"></a>
-<a name="line-256"></a>		<span class="n">BIO_set_callback</span><span class="p">(</span><span class="n">bio</span><span class="p">,</span><span class="n">BIO_get_callback</span><span class="p">(</span><span class="n">b</span><span class="p">));</span>
-<a name="line-257"></a>		<span class="n">BIO_set_callback_arg</span><span class="p">(</span><span class="n">bio</span><span class="p">,</span><span class="n">BIO_get_callback_arg</span><span class="p">(</span><span class="n">b</span><span class="p">));</span>
-<a name="line-258"></a>
-<a name="line-259"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">nbio</span><span class="p">)</span>
-<a name="line-260"></a>			<span class="p">{</span>
-<a name="line-261"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">BIO_socket_nbio</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<a name="line-262"></a>				<span class="p">{</span>
-<a name="line-263"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_ACPT_STATE</span><span class="p">,</span><span class="n">BIO_R_ERROR_SETTING_NBIO_ON_ACCEPTED_SOCKET</span><span class="p">);</span>
-<a name="line-264"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-265"></a>				<span class="p">}</span>
-<a name="line-266"></a>			<span class="p">}</span>
-<a name="line-267"></a>
-<a name="line-268"></a>		<span class="cm">/* If the accept BIO has an bio_chain, we dup it and</span>
-<a name="line-269"></a><span class="cm">		 * put the new socket at the end. */</span>
-<a name="line-270"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">bio_chain</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-271"></a>			<span class="p">{</span>
-<a name="line-272"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">dbio</span><span class="o">=</span><span class="n">BIO_dup_chain</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">bio_chain</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-273"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-274"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">BIO_push</span><span class="p">(</span><span class="n">dbio</span><span class="p">,</span><span class="n">bio</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-275"></a>			<span class="n">bio</span><span class="o">=</span><span class="n">dbio</span><span class="p">;</span>
-<a name="line-276"></a>			<span class="p">}</span>
-<a name="line-277"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">BIO_push</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">bio</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-278"></a>
-<a name="line-279"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_OK</span><span class="p">;</span>
-<a name="line-280"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-281"></a><span class="nl">err</span><span class="p">:</span>
-<a name="line-282"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">bio</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-283"></a>			<span class="n">BIO_free</span><span class="p">(</span><span class="n">bio</span><span class="p">);</span>
-<a name="line-284"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-285"></a>			<span class="n">closesocket</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-<a name="line-286"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-287"></a>		<span class="cm">/* break; */</span>
-<a name="line-288"></a>	<span class="k">case</span> <span class="nl">ACPT_S_OK</span><span class="p">:</span>
-<a name="line-289"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next_bio</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-290"></a>			<span class="p">{</span>
-<a name="line-291"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_GET_ACCEPT_SOCKET</span><span class="p">;</span>
-<a name="line-292"></a>			<span class="k">goto</span> <span class="n">again</span><span class="p">;</span>
-<a name="line-293"></a>			<span class="p">}</span>
-<a name="line-294"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-295"></a>		<span class="cm">/* break; */</span>
-<a name="line-296"></a>	<span class="k">default</span><span class="o">:</span>	
-<a name="line-297"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-298"></a>		<span class="cm">/* break; */</span>
-<a name="line-299"></a>		<span class="p">}</span>
-<a name="line-300"></a>
-<a name="line-301"></a>	<span class="p">}</span>
-<a name="line-302"></a>
-<a name="line-303"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_read</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="n">outl</span><span class="p">)</span>
-<a name="line-304"></a>	<span class="p">{</span>
-<a name="line-305"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-306"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-<a name="line-307"></a>
-<a name="line-308"></a>	<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-309"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-310"></a>
-<a name="line-311"></a>	<span class="k">while</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next_bio</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-312"></a>		<span class="p">{</span>
-<a name="line-313"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">acpt_state</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">data</span><span class="p">);</span>
-<a name="line-314"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-315"></a>		<span class="p">}</span>
-<a name="line-316"></a>
-<a name="line-317"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">BIO_read</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next_bio</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">);</span>
-<a name="line-318"></a>	<span class="n">BIO_copy_next_retry</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-319"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-320"></a>	<span class="p">}</span>
-<a name="line-321"></a>
-<a name="line-322"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_write</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
-<a name="line-323"></a>	<span class="p">{</span>
-<a name="line-324"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-325"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-<a name="line-326"></a>
-<a name="line-327"></a>	<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-328"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-329"></a>
-<a name="line-330"></a>	<span class="k">while</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next_bio</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-331"></a>		<span class="p">{</span>
-<a name="line-332"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">acpt_state</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">data</span><span class="p">);</span>
-<a name="line-333"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-334"></a>		<span class="p">}</span>
-<a name="line-335"></a>
-<a name="line-336"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">BIO_write</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next_bio</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
-<a name="line-337"></a>	<span class="n">BIO_copy_next_retry</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-338"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-339"></a>	<span class="p">}</span>
-<a name="line-340"></a>
-<a name="line-341"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">acpt_ctrl</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="kt">long</span> <span class="n">num</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span>
-<a name="line-342"></a>	<span class="p">{</span>
-<a name="line-343"></a><span class="hll">	<span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ip' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ip&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-344"></a>	<span class="kt">long</span> <span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-345"></a>	<span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-<a name="line-346"></a><span class="hll">	<span class="kt">char</span> <span class="o">**</span><span class="n">pp</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'pp' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;pp&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-347"></a>
-<a name="line-348"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_ACCEPT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-349"></a>
-<a name="line-350"></a>	<span class="k">switch</span> <span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
-<a name="line-351"></a>		<span class="p">{</span>
-<a name="line-352"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_RESET</span><span class="p">:</span>
-<a name="line-353"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-354"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_BEFORE</span><span class="p">;</span>
-<a name="line-355"></a>		<span class="n">acpt_close_socket</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-356"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-357"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-358"></a>	<span class="k">case</span> <span class="nl">BIO_C_DO_STATE_MACHINE</span><span class="p">:</span>
-<a name="line-359"></a>		<span class="cm">/* use this one to start the connection */</span>
-<a name="line-360"></a>		<span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">acpt_state</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">data</span><span class="p">);</span>
-<a name="line-361"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-362"></a>	<span class="k">case</span> <span class="nl">BIO_C_SET_ACCEPT</span><span class="p">:</span>
-<a name="line-363"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-364"></a>			<span class="p">{</span>
-<a name="line-365"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-366"></a>				<span class="p">{</span>
-<a name="line-367"></a>				<span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-368"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_addr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-369"></a>					<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_addr</span><span class="p">);</span>
-<a name="line-370"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">param_addr</span><span class="o">=</span><span class="n">BUF_strdup</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
-<a name="line-371"></a>				<span class="p">}</span>
-<a name="line-372"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-373"></a>				<span class="p">{</span>
-<a name="line-374"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">accept_nbio</span><span class="o">=</span><span class="p">(</span><span class="n">ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-375"></a>				<span class="p">}</span>
-<a name="line-376"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-<a name="line-377"></a>				<span class="p">{</span>
-<a name="line-378"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">bio_chain</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-379"></a>					<span class="n">BIO_free</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">bio_chain</span><span class="p">);</span>
-<a name="line-380"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">bio_chain</span><span class="o">=</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-381"></a>				<span class="p">}</span>
-<a name="line-382"></a>			<span class="p">}</span>
-<a name="line-383"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-384"></a>	<span class="k">case</span> <span class="nl">BIO_C_SET_NBIO</span><span class="p">:</span>
-<a name="line-385"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">nbio</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">num</span><span class="p">;</span>
-<a name="line-386"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-387"></a>	<span class="k">case</span> <span class="nl">BIO_C_SET_FD</span><span class="p">:</span>
-<a name="line-388"></a><span class="hll">		<span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Variable 'init' is reassigned a value before the old one has been used if variable is no semaphore variable. <span class='marker'>[+]</span></span><div class='content'>Variable &apos;init&apos; is reassigned a value before the old one has been used. Make sure that this variable is not used like a semaphore in a threading environment before simplifying this code.</div></div>
-</span><a name="line-389"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">);</span>
-<a name="line-390"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
-<a name="line-391"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">ACPT_S_GET_ACCEPT_SOCKET</span><span class="p">;</span>
-<a name="line-392"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">num</span><span class="p">;</span>
-<a name="line-393"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-394"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-395"></a>	<span class="k">case</span> <span class="nl">BIO_C_GET_FD</span><span class="p">:</span>
-<a name="line-396"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">)</span>
-<a name="line-397"></a>			<span class="p">{</span>
-<a name="line-398"></a>			<span class="n">ip</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-399"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ip</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-400"></a>				<span class="o">*</span><span class="n">ip</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="p">;</span>
-<a name="line-401"></a>			<span class="n">ret</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">accept_sock</span><span class="p">;</span>
-<a name="line-402"></a>			<span class="p">}</span>
-<a name="line-403"></a>		<span class="k">else</span>
-<a name="line-404"></a>			<span class="n">ret</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-405"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-406"></a>	<span class="k">case</span> <span class="nl">BIO_C_GET_ACCEPT</span><span class="p">:</span>
-<a name="line-407"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">)</span>
-<a name="line-408"></a>			<span class="p">{</span>
-<a name="line-409"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-410"></a>				<span class="p">{</span>
-<a name="line-411"></a>				<span class="n">pp</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-412"></a>				<span class="o">*</span><span class="n">pp</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_addr</span><span class="p">;</span>
-<a name="line-413"></a>				<span class="p">}</span>
-<a name="line-414"></a>			<span class="k">else</span>
-<a name="line-415"></a>				<span class="n">ret</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-416"></a>			<span class="p">}</span>
-<a name="line-417"></a>		<span class="k">else</span>
-<a name="line-418"></a>			<span class="n">ret</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-419"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-420"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_GET_CLOSE</span><span class="p">:</span>
-<a name="line-421"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">;</span>
-<a name="line-422"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-423"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_SET_CLOSE</span><span class="p">:</span>
-<a name="line-424"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">num</span><span class="p">;</span>
-<a name="line-425"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-426"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_PENDING</span><span class="p">:</span>
-<a name="line-427"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_WPENDING</span><span class="p">:</span>
-<a name="line-428"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-429"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-430"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_FLUSH</span><span class="p">:</span>
-<a name="line-431"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-432"></a>	<span class="k">case</span> <span class="nl">BIO_C_SET_BIND_MODE</span><span class="p">:</span>
-<a name="line-433"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">bind_mode</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">num</span><span class="p">;</span>
-<a name="line-434"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-435"></a>	<span class="k">case</span> <span class="nl">BIO_C_GET_BIND_MODE</span><span class="p">:</span>
-<a name="line-436"></a>		<span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">bind_mode</span><span class="p">;</span>
-<a name="line-437"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-438"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_DUP</span><span class="p">:</span>
-<a name="line-439"></a><span class="cm">/*		dbio=(BIO *)ptr;</span>
-<a name="line-440"></a><span class="cm">		if (data-&gt;param_port) EAY EAY</span>
-<a name="line-441"></a><span class="cm">			BIO_set_port(dbio,data-&gt;param_port);</span>
-<a name="line-442"></a><span class="cm">		if (data-&gt;param_hostname)</span>
-<a name="line-443"></a><span class="cm">			BIO_set_hostname(dbio,data-&gt;param_hostname);</span>
-<a name="line-444"></a><span class="cm">		BIO_set_nbio(dbio,data-&gt;nbio); */</span>
-<a name="line-445"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-446"></a>
-<a name="line-447"></a>	<span class="k">default</span><span class="o">:</span>
-<a name="line-448"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-449"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-450"></a>		<span class="p">}</span>
-<a name="line-451"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-452"></a>	<span class="p">}</span>
-<a name="line-453"></a>
-<a name="line-454"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">acpt_puts</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
-<a name="line-455"></a>	<span class="p">{</span>
-<a name="line-456"></a>	<span class="kt">int</span> <span class="n">n</span><span class="p">,</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-457"></a>
-<a name="line-458"></a>	<span class="n">n</span><span class="o">=</span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
-<a name="line-459"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">acpt_write</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span><span class="n">str</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-<a name="line-460"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-461"></a>	<span class="p">}</span>
-<a name="line-462"></a>
-<a name="line-463"></a><span class="n">BIO</span> <span class="o">*</span><span class="nf">BIO_new_accept</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
-<a name="line-464"></a>	<span class="p">{</span>
-<a name="line-465"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-466"></a>
-<a name="line-467"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_accept</span><span class="p">());</span>
-<a name="line-468"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-469"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">BIO_set_accept_port</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="n">str</span><span class="p">))</span>
-<a name="line-470"></a>		<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-471"></a>	<span class="k">else</span>
-<a name="line-472"></a>		<span class="p">{</span>
-<a name="line-473"></a>		<span class="n">BIO_free</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-474"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-475"></a>		<span class="p">}</span>
-<a name="line-476"></a>	<span class="p">}</span>
-<a name="line-477"></a>
-<a name="line-478"></a><span class="cp">#endif</span>
+<a name="line-83"></a><span class="c">void DES_xwhite_in2out(const_DES_cblock *des_key, const_DES_cblock *in_white,</span>
+<a name="line-84"></a><span class="c">	     DES_cblock *out_white)</span>
+<a name="line-85"></a><span class="c">	{</span>
+<a name="line-86"></a><span class="c">	int out0,out1;</span>
+<a name="line-87"></a><span class="c">	int i;</span>
+<a name="line-88"></a><span class="c">	const unsigned char *key = &amp;(*des_key)[0];</span>
+<a name="line-89"></a><span class="c">	const unsigned char *in = &amp;(*in_white)[0];</span>
+<a name="line-90"></a><span class="c">	unsigned char *out = &amp;(*out_white)[0];</span>
+<a name="line-91"></a>
+<a name="line-92"></a><span class="c">	out[0]=out[1]=out[2]=out[3]=out[4]=out[5]=out[6]=out[7]=0;</span>
+<a name="line-93"></a><span class="c">	out0=out1=0;</span>
+<a name="line-94"></a><span class="c">	for (i=0; i&lt;8; i++)</span>
+<a name="line-95"></a><span class="c">		{</span>
+<a name="line-96"></a><span class="c">		out[i]=key[i]^desx_white_in2out[out0^out1];</span>
+<a name="line-97"></a><span class="c">		out0=out1;</span>
+<a name="line-98"></a><span class="c">		out1=(int)out[i&amp;0x07];</span>
+<a name="line-99"></a><span class="c">		}</span>
+<a name="line-100"></a>
+<a name="line-101"></a><span class="c">	out0=out[0];</span>
+<a name="line-102"></a><span class="c">	out1=out[i]; /* BUG: out-of-bounds read */</span>
+<a name="line-103"></a><span class="c">	for (i=0; i&lt;8; i++)</span>
+<a name="line-104"></a><span class="c">		{</span>
+<a name="line-105"></a><span class="c">		out[i]=in[i]^desx_white_in2out[out0^out1];</span>
+<a name="line-106"></a><span class="c">		out0=out1;</span>
+<a name="line-107"></a><span class="c">		out1=(int)out[i&amp;0x07];</span>
+<a name="line-108"></a><span class="c">		}</span>
+<a name="line-109"></a><span class="c">	}</span>
+<a name="line-110"></a><span class="cp">#endif</span>
+<a name="line-111"></a>
+<a name="line-112"></a><span class="kt">void</span> <span class="nf">DES_xcbc_encrypt</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span>
+<a name="line-113"></a>		      <span class="kt">long</span> <span class="n">length</span><span class="p">,</span> <span class="n">DES_key_schedule</span> <span class="o">*</span><span class="n">schedule</span><span class="p">,</span>
+<a name="line-114"></a>		      <span class="n">DES_cblock</span> <span class="o">*</span><span class="n">ivec</span><span class="p">,</span> <span class="n">const_DES_cblock</span> <span class="o">*</span><span class="n">inw</span><span class="p">,</span>
+<a name="line-115"></a>		      <span class="n">const_DES_cblock</span> <span class="o">*</span><span class="n">outw</span><span class="p">,</span> <span class="kt">int</span> <span class="n">enc</span><span class="p">)</span>
+<a name="line-116"></a>	<span class="p">{</span>
+<a name="line-117"></a>	<span class="k">register</span> <span class="n">DES_LONG</span> <span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-118"></a>	<span class="k">register</span> <span class="n">DES_LONG</span> <span class="n">tout0</span><span class="p">,</span><span class="n">tout1</span><span class="p">,</span><span class="n">xor0</span><span class="p">,</span><span class="n">xor1</span><span class="p">;</span>
+<a name="line-119"></a>	<span class="k">register</span> <span class="n">DES_LONG</span> <span class="n">inW0</span><span class="p">,</span><span class="n">inW1</span><span class="p">,</span><span class="n">outW0</span><span class="p">,</span><span class="n">outW1</span><span class="p">;</span>
+<a name="line-120"></a>	<span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in2</span><span class="p">;</span>
+<a name="line-121"></a>	<span class="k">register</span> <span class="kt">long</span> <span class="n">l</span><span class="o">=</span><span class="n">length</span><span class="p">;</span>
+<a name="line-122"></a>	<span class="n">DES_LONG</span> <span class="n">tin</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-123"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">;</span>
+<a name="line-124"></a>
+<a name="line-125"></a>	<span class="n">in2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">inw</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-126"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in2</span><span class="p">,</span><span class="n">inW0</span><span class="p">);</span>
+<a name="line-127"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in2</span><span class="p">,</span><span class="n">inW1</span><span class="p">);</span>
+<a name="line-128"></a>	<span class="n">in2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">outw</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-129"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in2</span><span class="p">,</span><span class="n">outW0</span><span class="p">);</span>
+<a name="line-130"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in2</span><span class="p">,</span><span class="n">outW1</span><span class="p">);</span>
+<a name="line-131"></a>
+<a name="line-132"></a>	<span class="n">iv</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">ivec</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-133"></a>
+<a name="line-134"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">enc</span><span class="p">)</span>
+<a name="line-135"></a>		<span class="p">{</span>
+<a name="line-136"></a>		<span class="n">c2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">tout0</span><span class="p">);</span>
+<a name="line-137"></a>		<span class="n">c2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">tout1</span><span class="p">);</span>
+<a name="line-138"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span> <span class="n">l</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-139"></a>			<span class="p">{</span>
+<a name="line-140"></a>			<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span>
+<a name="line-141"></a>			<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span>
+<a name="line-142"></a>			<span class="n">tin0</span><span class="o">^=</span><span class="n">tout0</span><span class="o">^</span><span class="n">inW0</span><span class="p">;</span> <span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-143"></a>			<span class="n">tin1</span><span class="o">^=</span><span class="n">tout1</span><span class="o">^</span><span class="n">inW1</span><span class="p">;</span> <span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-144"></a>			<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">,</span><span class="n">DES_ENCRYPT</span><span class="p">);</span>
+<a name="line-145"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">outW0</span><span class="p">;</span> <span class="n">l2c</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-146"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">outW1</span><span class="p">;</span> <span class="n">l2c</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-147"></a>			<span class="p">}</span>
+<a name="line-148"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-149"></a>			<span class="p">{</span>
+<a name="line-150"></a>			<span class="n">c2ln</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">8</span><span class="p">);</span>
+<a name="line-151"></a>			<span class="n">tin0</span><span class="o">^=</span><span class="n">tout0</span><span class="o">^</span><span class="n">inW0</span><span class="p">;</span> <span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-152"></a>			<span class="n">tin1</span><span class="o">^=</span><span class="n">tout1</span><span class="o">^</span><span class="n">inW1</span><span class="p">;</span> <span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-153"></a>			<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">,</span><span class="n">DES_ENCRYPT</span><span class="p">);</span>
+<a name="line-154"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">outW0</span><span class="p">;</span> <span class="n">l2c</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-155"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">outW1</span><span class="p">;</span> <span class="n">l2c</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-156"></a>			<span class="p">}</span>
+<a name="line-157"></a>		<span class="n">iv</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">ivec</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-158"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
+<a name="line-159"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
+<a name="line-160"></a>		<span class="p">}</span>
+<a name="line-161"></a>	<span class="k">else</span>
+<a name="line-162"></a>		<span class="p">{</span>
+<a name="line-163"></a>		<span class="n">c2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">xor0</span><span class="p">);</span>
+<a name="line-164"></a>		<span class="n">c2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">xor1</span><span class="p">);</span>
+<a name="line-165"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span> <span class="n">l</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">;</span> <span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-166"></a>			<span class="p">{</span>
+<a name="line-167"></a>			<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="o">^</span><span class="n">outW0</span><span class="p">;</span>
+<a name="line-168"></a>			<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="o">^</span><span class="n">outW1</span><span class="p">;</span>
+<a name="line-169"></a>			<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">,</span><span class="n">DES_DECRYPT</span><span class="p">);</span>
+<a name="line-170"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">xor0</span><span class="o">^</span><span class="n">inW0</span><span class="p">;</span>
+<a name="line-171"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">xor1</span><span class="o">^</span><span class="n">inW1</span><span class="p">;</span>
+<a name="line-172"></a>			<span class="n">l2c</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-173"></a>			<span class="n">l2c</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-174"></a>			<span class="n">xor0</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-175"></a>			<span class="n">xor1</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-176"></a>			<span class="p">}</span>
+<a name="line-177"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-178"></a>			<span class="p">{</span>
+<a name="line-179"></a>			<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="o">^</span><span class="n">outW0</span><span class="p">;</span>
+<a name="line-180"></a>			<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="o">^</span><span class="n">outW1</span><span class="p">;</span>
+<a name="line-181"></a>			<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">schedule</span><span class="p">,</span><span class="n">DES_DECRYPT</span><span class="p">);</span>
+<a name="line-182"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">xor0</span><span class="o">^</span><span class="n">inW0</span><span class="p">;</span>
+<a name="line-183"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">xor1</span><span class="o">^</span><span class="n">inW1</span><span class="p">;</span>
+<a name="line-184"></a>			<span class="n">l2cn</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">8</span><span class="p">);</span>
+<a name="line-185"></a>			<span class="n">xor0</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-186"></a>			<span class="n">xor1</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-187"></a>			<span class="p">}</span>
+<a name="line-188"></a>
+<a name="line-189"></a>		<span class="n">iv</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">ivec</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-190"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">xor0</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
+<a name="line-191"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">xor1</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
+<a name="line-192"></a>		<span class="p">}</span>
+<a name="line-193"></a><span class="hll">	<span class="n">tin0</span><span class="o">=</span><span class="n">tin1</span><span class="o">=</span><span class="n">tout0</span><span class="o">=</span><span class="n">tout1</span><span class="o">=</span><span class="n">xor0</span><span class="o">=</span><span class="n">xor1</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'tin0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tin1' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tout0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tout1' is assigned a value that is never used.</span>
+</span><a name="line-194"></a>	<span class="n">inW0</span><span class="o">=</span><span class="n">inW1</span><span class="o">=</span><span class="n">outW0</span><span class="o">=</span><span class="n">outW1</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-195"></a><span class="hll">	<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'tin' is assigned a value that is never used.</span>
+</span><a name="line-196"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

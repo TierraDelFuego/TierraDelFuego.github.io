@@ -107,138 +107,80 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/unix/os_unix.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/platform/nacl/context_gl_nacl.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> os_unix.h</p>
-<a href='596.html#line-43'> noConstructor 43</a>
+       <p id="filename"><a href="index.html">Defects:</a> context_gl_nacl.cpp</p>
+<a href='596.html#line-59'> uninitMemberVar 59</a>
       </div>
       <div id="content">
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  os_unix.h                                                            */</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  context_gl_nacl.cpp                                                  */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -265,102 +207,44 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef OS_UNIX_H</span>
-<a name="line-30"></a><span class="cp">#define OS_UNIX_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cm">/**</span>
-<a name="line-33"></a><span class="cm">	@author Juan Linietsky &lt;reduzio@gmail.com&gt;</span>
-<a name="line-34"></a><span class="cm">*/</span>
-<a name="line-35"></a>
-<a name="line-36"></a><span class="cp">#ifdef UNIX_ENABLED</span>
+<a name="line-29"></a><span class="cp">#include &quot;context_gl_nacl.h&quot;</span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class="cp">#include &lt;nacl/npapi.h&gt;</span>
+<a name="line-32"></a><span class="cp">#include &lt;nacl/npruntime.h&gt;</span>
+<a name="line-33"></a><span class="cp">#include &lt;nacl/npapi_extensions.h&gt;</span>
+<a name="line-34"></a><span class="cp">#include &lt;nacl/npupp.h&gt;</span>
+<a name="line-35"></a><span class="cp">#include &lt;pgl/pgl.h&gt;</span>
+<a name="line-36"></a><span class="cp">#include &lt;GLES2/gl2.h&gt;</span>
 <a name="line-37"></a>
-<a name="line-38"></a>
-<a name="line-39"></a><span class="cp">#include &quot;os/os.h&quot;</span>
-<a name="line-40"></a><span class="cp">#include &quot;drivers/unix/ip_unix.h&quot;</span>
+<a name="line-38"></a><span class="kt">void</span> <span class="n">ContextGLNacl</span><span class="o">::</span><span class="n">make_current</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-39"></a>
+<a name="line-40"></a><span class="p">};</span>
 <a name="line-41"></a>
-<a name="line-42"></a>
-<a name="line-43"></a><span class="hll"><span class="n">class</span> <span class="nl">OS_Unix</span> <span class="p">:</span> <span class="n">public</span> <span class="n">OS</span> <span class="p">{</span><div class='verbose expandable'><span class='error2'>&lt;--- The class 'OS_Unix' does not have a constructor. <span class='marker'>[+]</span></span><div class='content'>The class &apos;OS_Unix&apos; does not have a constructor although it has private member variables. Member variables of builtin types are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior.</div></div>
-</span><a name="line-44"></a>
-<a name="line-45"></a>	<span class="kt">uint64_t</span> <span class="n">ticks_start</span><span class="p">;</span>
-<a name="line-46"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-42"></a><span class="kt">int</span> <span class="n">ContextGLNacl</span><span class="o">::</span><span class="n">get_window_width</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-43"></a>
+<a name="line-44"></a><span class="p">};</span>
+<a name="line-45"></a>
+<a name="line-46"></a><span class="kt">int</span> <span class="n">ContextGLNacl</span><span class="o">::</span><span class="n">get_window_height</span><span class="p">()</span> <span class="p">{</span>
 <a name="line-47"></a>
-<a name="line-48"></a>	<span class="c1">// UNIX only handles the core functions.</span>
-<a name="line-49"></a>	<span class="c1">// inheriting platforms under unix (eg. X11) should handle the rest</span>
-<a name="line-50"></a>	
-<a name="line-51"></a>	<span class="c1">//virtual int get_video_driver_count() const;</span>
-<a name="line-52"></a>	<span class="c1">//virtual const char * get_video_driver_name(int p_driver) const;	</span>
-<a name="line-53"></a>	<span class="c1">//virtual VideoMode get_default_video_mode() const;</span>
-<a name="line-54"></a>	
-<a name="line-55"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_audio_driver_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-56"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">get_audio_driver_name</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_driver</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-57"></a>	
-<a name="line-58"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">initialize_core</span><span class="p">();</span>
-<a name="line-59"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="nf">unix_initialize_audio</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_audio_driver</span><span class="p">);</span>
-<a name="line-60"></a>	<span class="c1">//virtual void initialize(int p_video_driver,int p_audio_driver);</span>
-<a name="line-61"></a>	
-<a name="line-62"></a>	<span class="c1">//virtual void finalize();</span>
-<a name="line-63"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">finalize_core</span><span class="p">();</span>
-<a name="line-64"></a>	
-<a name="line-65"></a>	<span class="n">String</span> <span class="n">stdin_buf</span><span class="p">;</span>
-<a name="line-66"></a>
-<a name="line-67"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-68"></a>
-<a name="line-69"></a>
-<a name="line-70"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">print_error</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p_function</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p_file</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p_code</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">p_rationale</span><span class="p">,</span><span class="n">ErrorType</span> <span class="n">p_type</span><span class="o">=</span><span class="n">ERR_ERROR</span><span class="p">);</span>
-<a name="line-71"></a>
-<a name="line-72"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p_format</span><span class="p">,</span> <span class="p">...</span> <span class="p">);</span>
-<a name="line-73"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">vprint</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p_format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">p_list</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_stderr</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-74"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">alert</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_alert</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_title</span><span class="o">=</span><span class="s">&quot;ALERT!&quot;</span><span class="p">);</span>
-<a name="line-75"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="nf">get_stdin_string</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_block</span><span class="p">);</span>
-<a name="line-76"></a>
-<a name="line-77"></a>	<span class="c1">//virtual void set_mouse_show(bool p_show);</span>
-<a name="line-78"></a>	<span class="c1">//virtual void set_mouse_grab(bool p_grab);</span>
-<a name="line-79"></a>	<span class="c1">//virtual bool is_mouse_grab_enabled() const = 0;</span>
-<a name="line-80"></a>	<span class="c1">//virtual void get_mouse_pos(int &amp;x, int &amp;y) const;	</span>
-<a name="line-81"></a>	<span class="c1">//virtual void set_window_title(const String&amp; p_title);</span>
-<a name="line-82"></a>	
-<a name="line-83"></a>	<span class="c1">//virtual void set_video_mode(const VideoMode&amp; p_video_mode);</span>
-<a name="line-84"></a>	<span class="c1">//virtual VideoMode get_video_mode() const;</span>
-<a name="line-85"></a>	<span class="c1">//virtual void get_fullscreen_mode_list(List&lt;VideoMode&gt; *p_list) const;</span>
-<a name="line-86"></a>
-<a name="line-87"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">set_cwd</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_cwd</span><span class="p">);</span>
-<a name="line-88"></a>
-<a name="line-89"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="nf">get_name</span><span class="p">();</span>
-<a name="line-90"></a>		
-<a name="line-91"></a>	<span class="n">virtual</span> <span class="n">Date</span> <span class="n">get_date</span><span class="p">(</span><span class="kt">bool</span> <span class="n">utc</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-92"></a>	<span class="n">virtual</span> <span class="n">Time</span> <span class="n">get_time</span><span class="p">(</span><span class="kt">bool</span> <span class="n">utc</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-93"></a>	<span class="n">virtual</span> <span class="n">TimeZoneInfo</span> <span class="n">get_time_zone_info</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-94"></a>
-<a name="line-95"></a>	<span class="n">virtual</span> <span class="kt">uint64_t</span> <span class="n">get_unix_time</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-96"></a>	<span class="n">virtual</span> <span class="kt">uint64_t</span> <span class="n">get_system_time_msec</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-97"></a>
-<a name="line-98"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">delay_usec</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">p_usec</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span> 
-<a name="line-99"></a>	<span class="n">virtual</span> <span class="kt">uint64_t</span> <span class="n">get_ticks_usec</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-100"></a>
-<a name="line-101"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">execute</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span> <span class="k">const</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&amp;</span> <span class="n">p_arguments</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_blocking</span><span class="p">,</span><span class="n">ProcessID</span> <span class="o">*</span><span class="n">r_child_id</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="n">String</span><span class="o">*</span> <span class="n">r_pipe</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="kt">int</span> <span class="o">*</span><span class="n">r_exitcode</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-102"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">kill</span><span class="p">(</span><span class="k">const</span> <span class="n">ProcessID</span><span class="o">&amp;</span> <span class="n">p_pid</span><span class="p">);</span>
-<a name="line-103"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_process_ID</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-104"></a>
-<a name="line-105"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">has_environment</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_var</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-106"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_environment</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_var</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-107"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_locale</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-108"></a>
-<a name="line-109"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_processor_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-110"></a>
-<a name="line-111"></a>
-<a name="line-112"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">debug_break</span><span class="p">();</span>
-<a name="line-113"></a>
-<a name="line-114"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_executable_path</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-115"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_data_dir</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-116"></a>
-<a name="line-117"></a>	<span class="c1">//virtual void run( MainLoop * p_main_loop );</span>
-<a name="line-118"></a>
-<a name="line-119"></a>
-<a name="line-120"></a><span class="p">};</span>
-<a name="line-121"></a>
-<a name="line-122"></a><span class="cp">#endif</span>
-<a name="line-123"></a>
-<a name="line-124"></a><span class="cp">#endif</span>
+<a name="line-48"></a><span class="p">};</span>
+<a name="line-49"></a>
+<a name="line-50"></a><span class="kt">void</span> <span class="n">ContextGLNacl</span><span class="o">::</span><span class="n">swap_buffers</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-51"></a>
+<a name="line-52"></a><span class="p">};</span>
+<a name="line-53"></a>
+<a name="line-54"></a><span class="n">Error</span> <span class="n">ContextGLNacl</span><span class="o">::</span><span class="n">initialize</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-55"></a>
+<a name="line-56"></a><span class="p">};</span>
+<a name="line-57"></a>
+<a name="line-58"></a>
+<a name="line-59"></a><span class="hll"><span class="n">ContextGLNacl</span><span class="o">::</span><span class="n">ContextGLNacl</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'ContextGLNacl::device3d_' is not initialized in the constructor.</span>
+</span><a name="line-60"></a>
+<a name="line-61"></a>
+<a name="line-62"></a><span class="p">};</span>
+<a name="line-63"></a>
+<a name="line-64"></a><span class="n">ContextGLNacl</span><span class="o">::~</span><span class="n">ContextGLNacl</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-65"></a>
+<a name="line-66"></a><span class="p">};</span>
 </pre></div>
 </td></tr></table>
       </div>

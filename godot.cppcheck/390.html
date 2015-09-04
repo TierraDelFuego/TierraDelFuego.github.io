@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/x509/x509_att.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/ssl/ssl_task.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> x509_att.c</p>
-<a href='390.html#line-87'> variableScope 87</a>
+       <p id="filename"><a href="index.html">Defects:</a> ssl_task.c</p>
+<a href='390.html#line-161'> unusedStructMember 161</a><a href='390.html#line-310'> unreachableCode 310</a><a href='390.html#line-316'> unreachableCode 316</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -472,7 +472,17 @@
 356
 357
 358
-359</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/x509/x509_att.c */</span>
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* ssl/ssl_task.c */</span>
 <a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -530,319 +540,317 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &lt;openssl/stack.h&gt;</span>
-<a name="line-61"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-62"></a><span class="cp">#include &lt;openssl/asn1.h&gt;</span>
-<a name="line-63"></a><span class="cp">#include &lt;openssl/objects.h&gt;</span>
-<a name="line-64"></a><span class="cp">#include &lt;openssl/evp.h&gt;</span>
-<a name="line-65"></a><span class="cp">#include &lt;openssl/x509.h&gt;</span>
-<a name="line-66"></a><span class="cp">#include &lt;openssl/x509v3.h&gt;</span>
-<a name="line-67"></a>
-<a name="line-68"></a><span class="kt">int</span> <span class="nf">X509at_get_attr_count</span><span class="p">(</span><span class="k">const</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<a name="line-69"></a><span class="p">{</span>
-<a name="line-70"></a>	<span class="k">return</span> <span class="n">sk_X509_ATTRIBUTE_num</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<a name="line-71"></a><span class="p">}</span>
-<a name="line-72"></a>
-<a name="line-73"></a><span class="kt">int</span> <span class="nf">X509at_get_attr_by_NID</span><span class="p">(</span><span class="k">const</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nid</span><span class="p">,</span>
-<a name="line-74"></a>			  <span class="kt">int</span> <span class="n">lastpos</span><span class="p">)</span>
-<a name="line-75"></a><span class="p">{</span>
-<a name="line-76"></a>	<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">;</span>
-<a name="line-77"></a>
-<a name="line-78"></a>	<span class="n">obj</span><span class="o">=</span><span class="n">OBJ_nid2obj</span><span class="p">(</span><span class="n">nid</span><span class="p">);</span>
-<a name="line-79"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-80"></a>	<span class="k">return</span><span class="p">(</span><span class="n">X509at_get_attr_by_OBJ</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">obj</span><span class="p">,</span><span class="n">lastpos</span><span class="p">));</span>
-<a name="line-81"></a><span class="p">}</span>
-<a name="line-82"></a>
-<a name="line-83"></a><span class="kt">int</span> <span class="nf">X509at_get_attr_by_OBJ</span><span class="p">(</span><span class="k">const</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">sk</span><span class="p">,</span> <span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">,</span>
-<a name="line-84"></a>			  <span class="kt">int</span> <span class="n">lastpos</span><span class="p">)</span>
-<a name="line-85"></a><span class="p">{</span>
-<a name="line-86"></a>	<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
-<a name="line-87"></a><span class="hll">	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">ex</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ex' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ex&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-88"></a>
-<a name="line-89"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sk</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-90"></a>	<span class="n">lastpos</span><span class="o">++</span><span class="p">;</span>
-<a name="line-91"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">lastpos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-92"></a>		<span class="n">lastpos</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-93"></a>	<span class="n">n</span><span class="o">=</span><span class="n">sk_X509_ATTRIBUTE_num</span><span class="p">(</span><span class="n">sk</span><span class="p">);</span>
-<a name="line-94"></a>	<span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="n">lastpos</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">lastpos</span><span class="o">++</span><span class="p">)</span>
-<a name="line-95"></a>		<span class="p">{</span>
-<a name="line-96"></a>		<span class="n">ex</span><span class="o">=</span><span class="n">sk_X509_ATTRIBUTE_value</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span><span class="n">lastpos</span><span class="p">);</span>
-<a name="line-97"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">OBJ_cmp</span><span class="p">(</span><span class="n">ex</span><span class="o">-&gt;</span><span class="n">object</span><span class="p">,</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-98"></a>			<span class="k">return</span><span class="p">(</span><span class="n">lastpos</span><span class="p">);</span>
-<a name="line-99"></a>		<span class="p">}</span>
-<a name="line-100"></a>	<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-101"></a><span class="p">}</span>
-<a name="line-102"></a>
-<a name="line-103"></a><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="nf">X509at_get_attr</span><span class="p">(</span><span class="k">const</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">loc</span><span class="p">)</span>
-<a name="line-104"></a><span class="p">{</span>
-<a name="line-105"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">sk_X509_ATTRIBUTE_num</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">loc</span> <span class="o">||</span> <span class="n">loc</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-106"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-107"></a>	<span class="k">else</span>
-<a name="line-108"></a>		<span class="k">return</span> <span class="n">sk_X509_ATTRIBUTE_value</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">loc</span><span class="p">);</span>
-<a name="line-109"></a><span class="p">}</span>
-<a name="line-110"></a>
-<a name="line-111"></a><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="nf">X509at_delete_attr</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">loc</span><span class="p">)</span>
-<a name="line-112"></a><span class="p">{</span>
-<a name="line-113"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-114"></a>
-<a name="line-115"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">sk_X509_ATTRIBUTE_num</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">loc</span> <span class="o">||</span> <span class="n">loc</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-116"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-117"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">sk_X509_ATTRIBUTE_delete</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">loc</span><span class="p">);</span>
-<a name="line-118"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-119"></a><span class="p">}</span>
-<a name="line-120"></a>
-<a name="line-121"></a><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">X509at_add1_attr</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">**</span><span class="n">x</span><span class="p">,</span>
-<a name="line-122"></a>					 <span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">)</span>
-<a name="line-123"></a><span class="p">{</span>
-<a name="line-124"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">new_attr</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-125"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">sk</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-59"></a><span class="cm">/* VMS */</span>
+<a name="line-60"></a><span class="cm">/*</span>
+<a name="line-61"></a><span class="cm"> * DECnet object for servicing SSL.  We accept the inbound and speak a</span>
+<a name="line-62"></a><span class="cm"> * simple protocol for multiplexing the 2 data streams (application and</span>
+<a name="line-63"></a><span class="cm"> * ssl data) over this logical link.</span>
+<a name="line-64"></a><span class="cm"> *</span>
+<a name="line-65"></a><span class="cm"> * Logical names:</span>
+<a name="line-66"></a><span class="cm"> *    SSL_CIPHER	Defines a list of cipher specifications the server</span>
+<a name="line-67"></a><span class="cm"> *			will support in order of preference.</span>
+<a name="line-68"></a><span class="cm"> *    SSL_SERVER_CERTIFICATE</span>
+<a name="line-69"></a><span class="cm"> *			Points to PEM (privacy enhanced mail) file that</span>
+<a name="line-70"></a><span class="cm"> *			contains the server certificate and private password.</span>
+<a name="line-71"></a><span class="cm"> *    SYS$NET		Logical created by netserver.exe as hook for completing</span>
+<a name="line-72"></a><span class="cm"> *			DECnet logical link.</span>
+<a name="line-73"></a><span class="cm"> *</span>
+<a name="line-74"></a><span class="cm"> * Each NSP message sent over the DECnet link has the following structure:</span>
+<a name="line-75"></a><span class="cm"> *    struct rpc_msg { </span>
+<a name="line-76"></a><span class="cm"> *      char channel;</span>
+<a name="line-77"></a><span class="cm"> *      char function;</span>
+<a name="line-78"></a><span class="cm"> *      short length;</span>
+<a name="line-79"></a><span class="cm"> *      char data[MAX_DATA];</span>
+<a name="line-80"></a><span class="cm"> *    } msg;</span>
+<a name="line-81"></a><span class="cm"> *</span>
+<a name="line-82"></a><span class="cm"> * The channel field designates the virtual data stream this message applies</span>
+<a name="line-83"></a><span class="cm"> * to and is one of:</span>
+<a name="line-84"></a><span class="cm"> *   A - Application data (payload).</span>
+<a name="line-85"></a><span class="cm"> *   R - Remote client connection that initiated the SSL connection.  Encrypted</span>
+<a name="line-86"></a><span class="cm"> *       data is sent over this connection.</span>
+<a name="line-87"></a><span class="cm"> *   G - General data, reserved for future use.</span>
+<a name="line-88"></a><span class="cm"> *</span>
+<a name="line-89"></a><span class="cm"> * The data streams are half-duplex read/write and have following functions:</span>
+<a name="line-90"></a><span class="cm"> *   G - Get, requests that up to msg.length bytes of data be returned.  The</span>
+<a name="line-91"></a><span class="cm"> *       data is returned in the next &#39;C&#39; function response that matches the</span>
+<a name="line-92"></a><span class="cm"> *       requesting channel.</span>
+<a name="line-93"></a><span class="cm"> *   P - Put, requests that the first msg.length bytes of msg.data be appended</span>
+<a name="line-94"></a><span class="cm"> *       to the designated stream.</span>
+<a name="line-95"></a><span class="cm"> *   C - Confirms a get or put.  Every get and put will get a confirm response,</span>
+<a name="line-96"></a><span class="cm"> *       you cannot initiate another function on a channel until the previous</span>
+<a name="line-97"></a><span class="cm"> *       operation has been confirmed.</span>
+<a name="line-98"></a><span class="cm"> *</span>
+<a name="line-99"></a><span class="cm"> *  The 2 channels may interleave their operations, for example:</span>
+<a name="line-100"></a><span class="cm"> *        Server msg           Client msg</span>
+<a name="line-101"></a><span class="cm"> *         A, Get, 4092          ----&gt;</span>
+<a name="line-102"></a><span class="cm"> *                               &lt;----  R, get, 4092</span>
+<a name="line-103"></a><span class="cm"> *         R, Confirm, {hello}   ----&gt;</span>
+<a name="line-104"></a><span class="cm"> *                               &lt;----  R, put, {srv hello}</span>
+<a name="line-105"></a><span class="cm"> *         R, Confirm, 0         ----&gt;</span>
+<a name="line-106"></a><span class="cm"> *                               .		(SSL handshake completed)</span>
+<a name="line-107"></a><span class="cm"> *                               .              (read first app data).</span>
+<a name="line-108"></a><span class="cm"> *                               &lt;----  A, confirm, {http data}</span>
+<a name="line-109"></a><span class="cm"> *         A, Put, {http data}   ----&gt;</span>
+<a name="line-110"></a><span class="cm"> *                               &lt;----  A, confirm, 0</span>
+<a name="line-111"></a><span class="cm"> *</span>
+<a name="line-112"></a><span class="cm"> *  The length field is not permitted to be larger that 4092 bytes.</span>
+<a name="line-113"></a><span class="cm"> *</span>
+<a name="line-114"></a><span class="cm"> * Author: Dave Jones</span>
+<a name="line-115"></a><span class="cm"> * Date:   22-JUL-1996</span>
+<a name="line-116"></a><span class="cm"> */</span>
+<a name="line-117"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
+<a name="line-118"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-119"></a><span class="cp">#include &lt;iodef.h&gt;		</span><span class="cm">/* VMS IO$_ definitions */</span><span class="cp"></span>
+<a name="line-120"></a><span class="cp">#include &lt;descrip.h&gt;		</span><span class="cm">/* VMS string descriptors */</span><span class="cp"></span>
+<a name="line-121"></a><span class="k">extern</span> <span class="kt">int</span> <span class="n">SYS</span><span class="err">$</span><span class="n">QIOW</span><span class="p">(),</span> <span class="n">SYS</span><span class="err">$</span><span class="n">ASSIGN</span><span class="p">();</span>
+<a name="line-122"></a><span class="kt">int</span> <span class="n">LIB</span><span class="err">$</span><span class="n">INIT_TIMER</span><span class="p">(),</span> <span class="n">LIB</span><span class="err">$</span><span class="n">SHOW_TIMER</span><span class="p">();</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="cp">#include &lt;string.h&gt;		</span><span class="cm">/* from ssltest.c */</span><span class="cp"></span>
+<a name="line-125"></a><span class="cp">#include &lt;errno.h&gt;</span>
 <a name="line-126"></a>
-<a name="line-127"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-128"></a>		<span class="p">{</span>
-<a name="line-129"></a>		<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509AT_ADD1_ATTR</span><span class="p">,</span> <span class="n">ERR_R_PASSED_NULL_PARAMETER</span><span class="p">);</span>
-<a name="line-130"></a>		<span class="k">goto</span> <span class="n">err2</span><span class="p">;</span>
-<a name="line-131"></a>		<span class="p">}</span> 
-<a name="line-132"></a>
-<a name="line-133"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-134"></a>		<span class="p">{</span>
-<a name="line-135"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">sk</span><span class="o">=</span><span class="n">sk_X509_ATTRIBUTE_new_null</span><span class="p">())</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-136"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-137"></a>		<span class="p">}</span>
-<a name="line-138"></a>	<span class="k">else</span>
-<a name="line-139"></a>		<span class="n">sk</span><span class="o">=</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span>
-<a name="line-140"></a>
-<a name="line-141"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">new_attr</span><span class="o">=</span><span class="n">X509_ATTRIBUTE_dup</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-142"></a>		<span class="k">goto</span> <span class="n">err2</span><span class="p">;</span>
-<a name="line-143"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sk_X509_ATTRIBUTE_push</span><span class="p">(</span><span class="n">sk</span><span class="p">,</span><span class="n">new_attr</span><span class="p">))</span>
-<a name="line-144"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-145"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-146"></a>		<span class="o">*</span><span class="n">x</span><span class="o">=</span><span class="n">sk</span><span class="p">;</span>
-<a name="line-147"></a>	<span class="k">return</span><span class="p">(</span><span class="n">sk</span><span class="p">);</span>
-<a name="line-148"></a><span class="nl">err</span><span class="p">:</span>
-<a name="line-149"></a>	<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509AT_ADD1_ATTR</span><span class="p">,</span><span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-150"></a><span class="nl">err2</span><span class="p">:</span>
-<a name="line-151"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">new_attr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">X509_ATTRIBUTE_free</span><span class="p">(</span><span class="n">new_attr</span><span class="p">);</span>
-<a name="line-152"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sk</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">sk_X509_ATTRIBUTE_free</span><span class="p">(</span><span class="n">sk</span><span class="p">);</span>
-<a name="line-153"></a>	<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-154"></a><span class="p">}</span>
-<a name="line-155"></a>
-<a name="line-156"></a><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">X509at_add1_attr_by_OBJ</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">**</span><span class="n">x</span><span class="p">,</span>
-<a name="line-157"></a>			<span class="k">const</span> <span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span>
-<a name="line-158"></a>			<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">bytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-159"></a><span class="p">{</span>
-<a name="line-160"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">;</span>
-<a name="line-161"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-162"></a>	<span class="n">attr</span> <span class="o">=</span> <span class="n">X509_ATTRIBUTE_create_by_OBJ</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-<a name="line-163"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">attr</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-164"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">X509at_add1_attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attr</span><span class="p">);</span>
-<a name="line-165"></a>	<span class="n">X509_ATTRIBUTE_free</span><span class="p">(</span><span class="n">attr</span><span class="p">);</span>
-<a name="line-166"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-167"></a><span class="p">}</span>
-<a name="line-168"></a>
-<a name="line-169"></a><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">X509at_add1_attr_by_NID</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">**</span><span class="n">x</span><span class="p">,</span>
-<a name="line-170"></a>			<span class="kt">int</span> <span class="n">nid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span>
-<a name="line-171"></a>			<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">bytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-172"></a><span class="p">{</span>
-<a name="line-173"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">;</span>
-<a name="line-174"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-175"></a>	<span class="n">attr</span> <span class="o">=</span> <span class="n">X509_ATTRIBUTE_create_by_NID</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-<a name="line-176"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">attr</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-177"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">X509at_add1_attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attr</span><span class="p">);</span>
-<a name="line-178"></a>	<span class="n">X509_ATTRIBUTE_free</span><span class="p">(</span><span class="n">attr</span><span class="p">);</span>
-<a name="line-179"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-180"></a><span class="p">}</span>
-<a name="line-181"></a>
-<a name="line-182"></a><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">X509at_add1_attr_by_txt</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">**</span><span class="n">x</span><span class="p">,</span>
-<a name="line-183"></a>			<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">attrname</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span>
-<a name="line-184"></a>			<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">bytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-185"></a><span class="p">{</span>
-<a name="line-186"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">;</span>
-<a name="line-187"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-188"></a>	<span class="n">attr</span> <span class="o">=</span> <span class="n">X509_ATTRIBUTE_create_by_txt</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">attrname</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">bytes</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-<a name="line-189"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">attr</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-190"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">X509at_add1_attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attr</span><span class="p">);</span>
-<a name="line-191"></a>	<span class="n">X509_ATTRIBUTE_free</span><span class="p">(</span><span class="n">attr</span><span class="p">);</span>
-<a name="line-192"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<a name="line-127"></a><span class="cp">#include &quot;e_os.h&quot;</span>
+<a name="line-128"></a>
+<a name="line-129"></a><span class="cp">#include &lt;openssl/buffer.h&gt;</span>
+<a name="line-130"></a><span class="cp">#include &lt;openssl/x509.h&gt;</span>
+<a name="line-131"></a><span class="cp">#include &lt;openssl/ssl.h&gt;</span>
+<a name="line-132"></a><span class="cp">#include &lt;openssl/err.h&gt;</span>
+<a name="line-133"></a>
+<a name="line-134"></a><span class="kt">int</span> <span class="n">MS_CALLBACK</span> <span class="nf">verify_callback</span><span class="p">(</span><span class="kt">int</span> <span class="n">ok</span><span class="p">,</span> <span class="n">X509</span> <span class="o">*</span><span class="n">xs</span><span class="p">,</span> <span class="n">X509</span> <span class="o">*</span><span class="n">xi</span><span class="p">,</span> <span class="kt">int</span> <span class="n">depth</span><span class="p">,</span>
+<a name="line-135"></a>	<span class="kt">int</span> <span class="n">error</span><span class="p">);</span>
+<a name="line-136"></a><span class="n">BIO</span> <span class="o">*</span><span class="n">bio_err</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-137"></a><span class="n">BIO</span> <span class="o">*</span><span class="n">bio_stdout</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-138"></a><span class="n">BIO_METHOD</span> <span class="o">*</span><span class="nf">BIO_s_rtcp</span><span class="p">();</span>
+<a name="line-139"></a>
+<a name="line-140"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cipher</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-141"></a><span class="kt">int</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-142"></a><span class="cp">#ifdef FIONBIO</span>
+<a name="line-143"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">s_nbio</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-144"></a><span class="cp">#endif</span>
+<a name="line-145"></a><span class="cp">#define TEST_SERVER_CERT &quot;SSL_SERVER_CERTIFICATE&quot;</span>
+<a name="line-146"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-147"></a><span class="k">struct</span> <span class="n">rpc_msg</span> <span class="p">{</span>		<span class="cm">/* Should have member alignment inhibited */</span>
+<a name="line-148"></a>   <span class="kt">char</span> <span class="n">channel</span><span class="p">;</span>		<span class="cm">/* &#39;A&#39;-app data. &#39;R&#39;-remote client &#39;G&#39;-global */</span>
+<a name="line-149"></a>   <span class="kt">char</span> <span class="n">function</span><span class="p">;</span>		<span class="cm">/* &#39;G&#39;-get, &#39;P&#39;-put, &#39;C&#39;-confirm, &#39;X&#39;-close */</span>
+<a name="line-150"></a>   <span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>	<span class="cm">/* Amount of data returned or max to return */</span>
+<a name="line-151"></a>   <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="mi">4092</span><span class="p">];</span>		<span class="cm">/* variable data */</span>
+<a name="line-152"></a><span class="p">};</span>
+<a name="line-153"></a><span class="cp">#define RPC_HDR_SIZE (sizeof(struct rpc_msg) - 4092)</span>
+<a name="line-154"></a>
+<a name="line-155"></a><span class="k">static</span> <span class="err">$</span><span class="n">DESCRIPTOR</span><span class="p">(</span><span class="n">sysnet</span><span class="p">,</span> <span class="s">&quot;SYS$NET&quot;</span><span class="p">);</span>
+<a name="line-156"></a><span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">io_channel</span><span class="p">;</span>
+<a name="line-157"></a>
+<a name="line-158"></a><span class="k">struct</span> <span class="n">io_status</span> <span class="p">{</span>
+<a name="line-159"></a>    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-160"></a>    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">count</span><span class="p">;</span>
+<a name="line-161"></a><span class="hll">    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">stsval</span><span class="p">;</span><span class='error2'>&lt;--- struct or union member 'io_status::stsval' is never used.</span>
+</span><a name="line-162"></a><span class="p">};</span>
+<a name="line-163"></a><span class="kt">int</span> <span class="nf">doit</span><span class="p">(</span><span class="n">io_channel</span> <span class="n">chan</span><span class="p">,</span> <span class="n">SSL_CTX</span> <span class="o">*</span><span class="n">s_ctx</span> <span class="p">);</span>
+<a name="line-164"></a><span class="cm">/*****************************************************************************/</span>
+<a name="line-165"></a><span class="cm">/* Decnet I/O routines.</span>
+<a name="line-166"></a><span class="cm"> */</span>
+<a name="line-167"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">get</span> <span class="p">(</span> <span class="n">io_channel</span> <span class="n">chan</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">maxlen</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">length</span> <span class="p">)</span>
+<a name="line-168"></a><span class="p">{</span>
+<a name="line-169"></a>    <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-170"></a>    <span class="k">struct</span> <span class="n">io_status</span> <span class="n">iosb</span><span class="p">;</span>
+<a name="line-171"></a>    <span class="n">status</span> <span class="o">=</span> <span class="n">SYS</span><span class="err">$</span><span class="n">QIOW</span> <span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">chan</span><span class="p">,</span> <span class="n">IO</span><span class="err">$</span><span class="n">_READVBLK</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">iosb</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a name="line-172"></a>	<span class="n">buffer</span><span class="p">,</span> <span class="n">maxlen</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+<a name="line-173"></a>    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">status</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="n">status</span> <span class="o">=</span> <span class="n">iosb</span><span class="p">.</span><span class="n">status</span><span class="p">;</span>
+<a name="line-174"></a>    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">status</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">*</span><span class="n">length</span> <span class="o">=</span> <span class="n">iosb</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+<a name="line-175"></a>    <span class="k">return</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-176"></a><span class="p">}</span>
+<a name="line-177"></a>
+<a name="line-178"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">put</span> <span class="p">(</span> <span class="n">io_channel</span> <span class="n">chan</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span> <span class="p">)</span>
+<a name="line-179"></a><span class="p">{</span>
+<a name="line-180"></a>    <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-181"></a>    <span class="k">struct</span> <span class="n">io_status</span> <span class="n">iosb</span><span class="p">;</span>
+<a name="line-182"></a>    <span class="n">status</span> <span class="o">=</span> <span class="n">SYS</span><span class="err">$</span><span class="n">QIOW</span> <span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">chan</span><span class="p">,</span> <span class="n">IO</span><span class="err">$</span><span class="n">_WRITEVBLK</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">iosb</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a name="line-183"></a>	<span class="n">buffer</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+<a name="line-184"></a>    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">status</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="n">status</span> <span class="o">=</span> <span class="n">iosb</span><span class="p">.</span><span class="n">status</span><span class="p">;</span>
+<a name="line-185"></a>    <span class="k">return</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-186"></a><span class="p">}</span>
+<a name="line-187"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-188"></a><span class="cm">/* Handle operations on the &#39;G&#39; channel.</span>
+<a name="line-189"></a><span class="cm"> */</span>
+<a name="line-190"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">general_request</span> <span class="p">(</span> <span class="n">io_channel</span> <span class="n">chan</span><span class="p">,</span> <span class="k">struct</span> <span class="n">rpc_msg</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span> <span class="p">)</span>
+<a name="line-191"></a><span class="p">{</span>
+<a name="line-192"></a>    <span class="k">return</span> <span class="mi">48</span><span class="p">;</span>
 <a name="line-193"></a><span class="p">}</span>
-<a name="line-194"></a>
-<a name="line-195"></a><span class="kt">void</span> <span class="o">*</span><span class="n">X509at_get0_data_by_OBJ</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span><span class="p">)</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span>
-<a name="line-196"></a>				<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lastpos</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">)</span>
-<a name="line-197"></a><span class="p">{</span>
-<a name="line-198"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-199"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">at</span><span class="p">;</span>
-<a name="line-200"></a>	<span class="n">i</span> <span class="o">=</span> <span class="n">X509at_get_attr_by_OBJ</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">lastpos</span><span class="p">);</span>
-<a name="line-201"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a name="line-202"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-203"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">lastpos</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">X509at_get_attr_by_OBJ</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<a name="line-204"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-205"></a>	<span class="n">at</span> <span class="o">=</span> <span class="n">X509at_get_attr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-206"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">lastpos</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">3</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">X509_ATTRIBUTE_count</span><span class="p">(</span><span class="n">at</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">))</span>
-<a name="line-207"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-208"></a>	<span class="k">return</span> <span class="nf">X509_ATTRIBUTE_get0_data</span><span class="p">(</span><span class="n">at</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-209"></a><span class="p">}</span>
-<a name="line-210"></a>
-<a name="line-211"></a><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">X509_ATTRIBUTE_create_by_NID</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">**</span><span class="n">attr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nid</span><span class="p">,</span>
-<a name="line-212"></a>	     <span class="kt">int</span> <span class="n">atrtype</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-213"></a><span class="p">{</span>
-<a name="line-214"></a>	<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">;</span>
-<a name="line-215"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-216"></a>
-<a name="line-217"></a>	<span class="n">obj</span><span class="o">=</span><span class="n">OBJ_nid2obj</span><span class="p">(</span><span class="n">nid</span><span class="p">);</span>
-<a name="line-218"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-219"></a>		<span class="p">{</span>
-<a name="line-220"></a>		<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509_ATTRIBUTE_CREATE_BY_NID</span><span class="p">,</span><span class="n">X509_R_UNKNOWN_NID</span><span class="p">);</span>
-<a name="line-221"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-222"></a>		<span class="p">}</span>
-<a name="line-223"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">X509_ATTRIBUTE_create_by_OBJ</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span><span class="n">obj</span><span class="p">,</span><span class="n">atrtype</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">len</span><span class="p">);</span>
-<a name="line-224"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">ASN1_OBJECT_free</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
-<a name="line-225"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-226"></a><span class="p">}</span>
+<a name="line-194"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-195"></a><span class="kt">int</span> <span class="nf">main</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span> <span class="p">)</span>
+<a name="line-196"></a><span class="p">{</span>
+<a name="line-197"></a>    <span class="kt">int</span> <span class="n">status</span><span class="p">,</span> <span class="n">length</span><span class="p">;</span>
+<a name="line-198"></a>    <span class="n">io_channel</span> <span class="n">chan</span><span class="p">;</span>
+<a name="line-199"></a>    <span class="k">struct</span> <span class="n">rpc_msg</span> <span class="n">msg</span><span class="p">;</span>
+<a name="line-200"></a>
+<a name="line-201"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">CApath</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="o">*</span><span class="n">CAfile</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-202"></a>	<span class="kt">int</span> <span class="n">badop</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-203"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-204"></a>	<span class="kt">int</span> <span class="n">client_auth</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-205"></a>	<span class="kt">int</span> <span class="n">server_auth</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-206"></a>	<span class="n">SSL_CTX</span> <span class="o">*</span><span class="n">s_ctx</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-207"></a>    <span class="cm">/*</span>
+<a name="line-208"></a><span class="cm">     * Confirm logical link with initiating client.</span>
+<a name="line-209"></a><span class="cm">     */</span>
+<a name="line-210"></a>    <span class="n">LIB</span><span class="err">$</span><span class="n">INIT_TIMER</span><span class="p">();</span>
+<a name="line-211"></a>    <span class="n">status</span> <span class="o">=</span> <span class="n">SYS</span><span class="err">$</span><span class="n">ASSIGN</span> <span class="p">(</span> <span class="o">&amp;</span><span class="n">sysnet</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">chan</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+<a name="line-212"></a>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;status of assign to SYS$NET: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">status</span> <span class="p">);</span>
+<a name="line-213"></a>    <span class="cm">/*</span>
+<a name="line-214"></a><span class="cm">     * Initialize standard out and error files.</span>
+<a name="line-215"></a><span class="cm">     */</span>
+<a name="line-216"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">bio_err</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-217"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">bio_err</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_file</span><span class="p">()))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-218"></a>			<span class="n">BIO_set_fp</span><span class="p">(</span><span class="n">bio_err</span><span class="p">,</span><span class="n">stderr</span><span class="p">,</span><span class="n">BIO_NOCLOSE</span><span class="p">);</span>
+<a name="line-219"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">bio_stdout</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-220"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">bio_stdout</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_file</span><span class="p">()))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-221"></a>			<span class="n">BIO_set_fp</span><span class="p">(</span><span class="n">bio_stdout</span><span class="p">,</span><span class="n">stdout</span><span class="p">,</span><span class="n">BIO_NOCLOSE</span><span class="p">);</span>
+<a name="line-222"></a>    <span class="cm">/*</span>
+<a name="line-223"></a><span class="cm">     * get the preferred cipher list and other initialization</span>
+<a name="line-224"></a><span class="cm">     */</span>
+<a name="line-225"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">cipher</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">cipher</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;SSL_CIPHER&quot;</span><span class="p">);</span>
+<a name="line-226"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;cipher list: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">cipher</span> <span class="o">?</span> <span class="nl">cipher</span> <span class="p">:</span> <span class="s">&quot;{undefined}&quot;</span> <span class="p">);</span>
 <a name="line-227"></a>
-<a name="line-228"></a><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">X509_ATTRIBUTE_create_by_OBJ</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">**</span><span class="n">attr</span><span class="p">,</span>
-<a name="line-229"></a>	     <span class="k">const</span> <span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">,</span> <span class="kt">int</span> <span class="n">atrtype</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-230"></a><span class="p">{</span>
-<a name="line-231"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-232"></a>
-<a name="line-233"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="o">*</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-234"></a>		<span class="p">{</span>
-<a name="line-235"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">ret</span><span class="o">=</span><span class="n">X509_ATTRIBUTE_new</span><span class="p">())</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-236"></a>			<span class="p">{</span>
-<a name="line-237"></a>			<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509_ATTRIBUTE_CREATE_BY_OBJ</span><span class="p">,</span><span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-238"></a>			<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-239"></a>			<span class="p">}</span>
-<a name="line-240"></a>		<span class="p">}</span>
-<a name="line-241"></a>	<span class="k">else</span>
-<a name="line-242"></a>		<span class="n">ret</span><span class="o">=</span> <span class="o">*</span><span class="n">attr</span><span class="p">;</span>
-<a name="line-243"></a>
-<a name="line-244"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">X509_ATTRIBUTE_set1_object</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="n">obj</span><span class="p">))</span>
-<a name="line-245"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-246"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">X509_ATTRIBUTE_set1_data</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="n">atrtype</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">len</span><span class="p">))</span>
-<a name="line-247"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-248"></a>
-<a name="line-249"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">attr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">*</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">*</span><span class="n">attr</span><span class="o">=</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-250"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-251"></a><span class="nl">err</span><span class="p">:</span>
-<a name="line-252"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="o">*</span><span class="n">attr</span><span class="p">))</span>
-<a name="line-253"></a>		<span class="n">X509_ATTRIBUTE_free</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-254"></a>	<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-228"></a>	<span class="n">SSL_load_error_strings</span><span class="p">();</span>
+<a name="line-229"></a>	<span class="n">OpenSSL_add_all_algorithms</span><span class="p">();</span>
+<a name="line-230"></a>
+<a name="line-231"></a><span class="cm">/* DRM, this was the original, but there is no such thing as SSLv2()</span>
+<a name="line-232"></a><span class="cm">	s_ctx=SSL_CTX_new(SSLv2());</span>
+<a name="line-233"></a><span class="cm">*/</span>
+<a name="line-234"></a>	<span class="n">s_ctx</span><span class="o">=</span><span class="n">SSL_CTX_new</span><span class="p">(</span><span class="n">SSLv2_server_method</span><span class="p">());</span>
+<a name="line-235"></a>
+<a name="line-236"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s_ctx</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-237"></a>
+<a name="line-238"></a>	<span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">s_ctx</span><span class="p">,</span><span class="n">TEST_SERVER_CERT</span><span class="p">,</span><span class="n">SSL_FILETYPE_PEM</span><span class="p">);</span>
+<a name="line-239"></a>	<span class="n">SSL_CTX_use_RSAPrivateKey_file</span><span class="p">(</span><span class="n">s_ctx</span><span class="p">,</span><span class="n">TEST_SERVER_CERT</span><span class="p">,</span><span class="n">SSL_FILETYPE_PEM</span><span class="p">);</span>
+<a name="line-240"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Loaded server certificate: &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TEST_SERVER_CERT</span> <span class="p">);</span>
+<a name="line-241"></a>
+<a name="line-242"></a>    <span class="cm">/*</span>
+<a name="line-243"></a><span class="cm">     * Take commands from client until bad status.</span>
+<a name="line-244"></a><span class="cm">     */</span>
+<a name="line-245"></a>    <span class="n">LIB</span><span class="err">$</span><span class="n">SHOW_TIMER</span><span class="p">();</span>
+<a name="line-246"></a>    <span class="n">status</span> <span class="o">=</span> <span class="n">doit</span> <span class="p">(</span> <span class="n">chan</span><span class="p">,</span> <span class="n">s_ctx</span> <span class="p">);</span>
+<a name="line-247"></a>    <span class="n">LIB</span><span class="err">$</span><span class="n">SHOW_TIMER</span><span class="p">();</span>
+<a name="line-248"></a>    <span class="cm">/*</span>
+<a name="line-249"></a><span class="cm">     * do final cleanup and exit.</span>
+<a name="line-250"></a><span class="cm">     */</span>
+<a name="line-251"></a><span class="nl">end</span><span class="p">:</span>
+<a name="line-252"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s_ctx</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">SSL_CTX_free</span><span class="p">(</span><span class="n">s_ctx</span><span class="p">);</span>
+<a name="line-253"></a>    <span class="n">LIB</span><span class="err">$</span><span class="n">SHOW_TIMER</span><span class="p">();</span>
+<a name="line-254"></a>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 <a name="line-255"></a><span class="p">}</span>
 <a name="line-256"></a>
-<a name="line-257"></a><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">X509_ATTRIBUTE_create_by_txt</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">**</span><span class="n">attr</span><span class="p">,</span>
-<a name="line-258"></a>		<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">atrname</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">bytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-259"></a>	<span class="p">{</span>
-<a name="line-260"></a>	<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">;</span>
-<a name="line-261"></a>	<span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">nattr</span><span class="p">;</span>
-<a name="line-262"></a>
-<a name="line-263"></a>	<span class="n">obj</span><span class="o">=</span><span class="n">OBJ_txt2obj</span><span class="p">(</span><span class="n">atrname</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-264"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-265"></a>		<span class="p">{</span>
-<a name="line-266"></a>		<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509_ATTRIBUTE_CREATE_BY_TXT</span><span class="p">,</span>
-<a name="line-267"></a>						<span class="n">X509_R_INVALID_FIELD_NAME</span><span class="p">);</span>
-<a name="line-268"></a>		<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;name=&quot;</span><span class="p">,</span> <span class="n">atrname</span><span class="p">);</span>
-<a name="line-269"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-270"></a>		<span class="p">}</span>
-<a name="line-271"></a>	<span class="n">nattr</span> <span class="o">=</span> <span class="n">X509_ATTRIBUTE_create_by_OBJ</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span><span class="n">obj</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="n">len</span><span class="p">);</span>
-<a name="line-272"></a>	<span class="n">ASN1_OBJECT_free</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
-<a name="line-273"></a>	<span class="k">return</span> <span class="n">nattr</span><span class="p">;</span>
-<a name="line-274"></a>	<span class="p">}</span>
-<a name="line-275"></a>
-<a name="line-276"></a><span class="kt">int</span> <span class="n">X509_ATTRIBUTE_set1_object</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">obj</span><span class="p">)</span>
-<a name="line-277"></a><span class="p">{</span>
-<a name="line-278"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">obj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-279"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-280"></a>	<span class="n">ASN1_OBJECT_free</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">object</span><span class="p">);</span>
-<a name="line-281"></a>	<span class="n">attr</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">=</span><span class="n">OBJ_dup</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
-<a name="line-282"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-283"></a><span class="p">}</span>
-<a name="line-284"></a>
-<a name="line-285"></a><span class="kt">int</span> <span class="n">X509_ATTRIBUTE_set1_data</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">attrtype</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-286"></a><span class="p">{</span>
-<a name="line-287"></a>	<span class="n">ASN1_TYPE</span> <span class="o">*</span><span class="n">ttmp</span><span class="p">;</span>
-<a name="line-288"></a>	<span class="n">ASN1_STRING</span> <span class="o">*</span><span class="n">stmp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-289"></a>	<span class="kt">int</span> <span class="n">atype</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-290"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">attr</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-291"></a>	<span class="k">if</span><span class="p">(</span><span class="n">attrtype</span> <span class="o">&amp;</span> <span class="n">MBSTRING_FLAG</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-292"></a>		<span class="n">stmp</span> <span class="o">=</span> <span class="n">ASN1_STRING_set_by_NID</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">attrtype</span><span class="p">,</span>
-<a name="line-293"></a>						<span class="n">OBJ_obj2nid</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">object</span><span class="p">));</span>
-<a name="line-294"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stmp</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-295"></a>			<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509_ATTRIBUTE_SET1_DATA</span><span class="p">,</span> <span class="n">ERR_R_ASN1_LIB</span><span class="p">);</span>
-<a name="line-296"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-297"></a>		<span class="p">}</span>
-<a name="line-298"></a>		<span class="n">atype</span> <span class="o">=</span> <span class="n">stmp</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">;</span>
-<a name="line-299"></a>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
-<a name="line-300"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">stmp</span> <span class="o">=</span> <span class="n">ASN1_STRING_type_new</span><span class="p">(</span><span class="n">attrtype</span><span class="p">)))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-301"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ASN1_STRING_set</span><span class="p">(</span><span class="n">stmp</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">len</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-302"></a>		<span class="n">atype</span> <span class="o">=</span> <span class="n">attrtype</span><span class="p">;</span>
-<a name="line-303"></a>	<span class="p">}</span>
-<a name="line-304"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">set</span> <span class="o">=</span> <span class="n">sk_ASN1_TYPE_new_null</span><span class="p">()))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-305"></a>	<span class="n">attr</span><span class="o">-&gt;</span><span class="n">single</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-306"></a>	<span class="cm">/* This is a bit naughty because the attribute should really have</span>
-<a name="line-307"></a><span class="cm">	 * at least one value but some types use and zero length SET and</span>
-<a name="line-308"></a><span class="cm">	 * require this.</span>
-<a name="line-309"></a><span class="cm">	 */</span>
-<a name="line-310"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">attrtype</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-311"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-312"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">ttmp</span> <span class="o">=</span> <span class="n">ASN1_TYPE_new</span><span class="p">()))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-313"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">len</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="n">attrtype</span> <span class="o">&amp;</span> <span class="n">MBSTRING_FLAG</span><span class="p">))</span>
-<a name="line-314"></a>		<span class="p">{</span>
-<a name="line-315"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ASN1_TYPE_set1</span><span class="p">(</span><span class="n">ttmp</span><span class="p">,</span> <span class="n">attrtype</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-<a name="line-316"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-317"></a>		<span class="p">}</span>
-<a name="line-318"></a>	<span class="k">else</span>
-<a name="line-319"></a>		<span class="n">ASN1_TYPE_set</span><span class="p">(</span><span class="n">ttmp</span><span class="p">,</span> <span class="n">atype</span><span class="p">,</span> <span class="n">stmp</span><span class="p">);</span>
-<a name="line-320"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">sk_ASN1_TYPE_push</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">set</span><span class="p">,</span> <span class="n">ttmp</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-321"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-322"></a>	<span class="nl">err</span><span class="p">:</span>
-<a name="line-323"></a>	<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509_ATTRIBUTE_SET1_DATA</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-324"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-325"></a><span class="p">}</span>
-<a name="line-326"></a>
-<a name="line-327"></a><span class="kt">int</span> <span class="n">X509_ATTRIBUTE_count</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">)</span>
-<a name="line-328"></a><span class="p">{</span>
-<a name="line-329"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">single</span><span class="p">)</span> <span class="k">return</span> <span class="n">sk_ASN1_TYPE_num</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">set</span><span class="p">);</span>
-<a name="line-330"></a>	<span class="k">if</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">single</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-331"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-332"></a><span class="p">}</span>
-<a name="line-333"></a>
-<a name="line-334"></a><span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">X509_ATTRIBUTE_get0_object</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">)</span>
-<a name="line-335"></a><span class="p">{</span>
-<a name="line-336"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-337"></a>	<span class="k">return</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">object</span><span class="p">);</span>
-<a name="line-338"></a><span class="p">}</span>
-<a name="line-339"></a>
-<a name="line-340"></a><span class="kt">void</span> <span class="o">*</span><span class="n">X509_ATTRIBUTE_get0_data</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="p">,</span>
-<a name="line-341"></a>					<span class="kt">int</span> <span class="n">atrtype</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
-<a name="line-342"></a><span class="p">{</span>
-<a name="line-343"></a>	<span class="n">ASN1_TYPE</span> <span class="o">*</span><span class="n">ttmp</span><span class="p">;</span>
-<a name="line-344"></a>	<span class="n">ttmp</span> <span class="o">=</span> <span class="n">X509_ATTRIBUTE_get0_type</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">idx</span><span class="p">);</span>
-<a name="line-345"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ttmp</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-346"></a>	<span class="k">if</span><span class="p">(</span><span class="n">atrtype</span> <span class="o">!=</span> <span class="n">ASN1_TYPE_get</span><span class="p">(</span><span class="n">ttmp</span><span class="p">)){</span>
-<a name="line-347"></a>		<span class="n">X509err</span><span class="p">(</span><span class="n">X509_F_X509_ATTRIBUTE_GET0_DATA</span><span class="p">,</span> <span class="n">X509_R_WRONG_TYPE</span><span class="p">);</span>
-<a name="line-348"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-349"></a>	<span class="p">}</span>
-<a name="line-350"></a>	<span class="k">return</span> <span class="n">ttmp</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">ptr</span><span class="p">;</span>
-<a name="line-351"></a><span class="p">}</span>
-<a name="line-352"></a>
-<a name="line-353"></a><span class="n">ASN1_TYPE</span> <span class="o">*</span><span class="n">X509_ATTRIBUTE_get0_type</span><span class="p">(</span><span class="n">X509_ATTRIBUTE</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="p">)</span>
-<a name="line-354"></a><span class="p">{</span>
-<a name="line-355"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">attr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-356"></a>	<span class="k">if</span><span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">X509_ATTRIBUTE_count</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-357"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">single</span><span class="p">)</span> <span class="k">return</span> <span class="n">sk_ASN1_TYPE_value</span><span class="p">(</span><span class="n">attr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">set</span><span class="p">,</span> <span class="n">idx</span><span class="p">);</span>
-<a name="line-358"></a>	<span class="k">else</span> <span class="k">return</span> <span class="n">attr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">single</span><span class="p">;</span>
-<a name="line-359"></a><span class="p">}</span>
+<a name="line-257"></a><span class="kt">int</span> <span class="nf">doit</span><span class="p">(</span><span class="n">io_channel</span> <span class="n">chan</span><span class="p">,</span> <span class="n">SSL_CTX</span> <span class="o">*</span><span class="n">s_ctx</span> <span class="p">)</span>
+<a name="line-258"></a><span class="p">{</span>
+<a name="line-259"></a>    <span class="kt">int</span> <span class="n">status</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">link_state</span><span class="p">;</span>
+<a name="line-260"></a>     <span class="k">struct</span> <span class="n">rpc_msg</span> <span class="n">msg</span><span class="p">;</span>
+<a name="line-261"></a>
+<a name="line-262"></a>	<span class="n">SSL</span> <span class="o">*</span><span class="n">s_ssl</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-263"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">c_to_s</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-264"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">s_to_c</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-265"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">c_bio</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-266"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">s_bio</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-267"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-268"></a>	<span class="kt">int</span> <span class="n">done</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-269"></a>
+<a name="line-270"></a>	<span class="n">s_ssl</span><span class="o">=</span><span class="n">SSL_new</span><span class="p">(</span><span class="n">s_ctx</span><span class="p">);</span>
+<a name="line-271"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s_ssl</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-272"></a>
+<a name="line-273"></a>	<span class="n">c_to_s</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_rtcp</span><span class="p">());</span>
+<a name="line-274"></a>	<span class="n">s_to_c</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_rtcp</span><span class="p">());</span>
+<a name="line-275"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">s_to_c</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">c_to_s</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-276"></a><span class="cm">/* original, DRM 24-SEP-1997</span>
+<a name="line-277"></a><span class="cm">	BIO_set_fd ( c_to_s, &quot;&quot;, chan );</span>
+<a name="line-278"></a><span class="cm">	BIO_set_fd ( s_to_c, &quot;&quot;, chan );</span>
+<a name="line-279"></a><span class="cm">*/</span>
+<a name="line-280"></a>	<span class="n">BIO_set_fd</span> <span class="p">(</span> <span class="n">c_to_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">chan</span> <span class="p">);</span>
+<a name="line-281"></a>	<span class="n">BIO_set_fd</span> <span class="p">(</span> <span class="n">s_to_c</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">chan</span> <span class="p">);</span>
+<a name="line-282"></a>
+<a name="line-283"></a>	<span class="n">c_bio</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_f_ssl</span><span class="p">());</span>
+<a name="line-284"></a>	<span class="n">s_bio</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_f_ssl</span><span class="p">());</span>
+<a name="line-285"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">c_bio</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">s_bio</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-286"></a>
+<a name="line-287"></a>	<span class="n">SSL_set_accept_state</span><span class="p">(</span><span class="n">s_ssl</span><span class="p">);</span>
+<a name="line-288"></a>	<span class="n">SSL_set_bio</span><span class="p">(</span><span class="n">s_ssl</span><span class="p">,</span><span class="n">c_to_s</span><span class="p">,</span><span class="n">s_to_c</span><span class="p">);</span>
+<a name="line-289"></a>	<span class="n">BIO_set_ssl</span><span class="p">(</span><span class="n">s_bio</span><span class="p">,</span><span class="n">s_ssl</span><span class="p">,</span><span class="n">BIO_CLOSE</span><span class="p">);</span>
+<a name="line-290"></a>
+<a name="line-291"></a>	<span class="cm">/* We can always do writes */</span>
+<a name="line-292"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Begin doit main loop</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-293"></a>	<span class="cm">/*</span>
+<a name="line-294"></a><span class="cm">	 * Link states: 0-idle, 1-read pending, 2-write pending, 3-closed.</span>
+<a name="line-295"></a><span class="cm">	 */</span>
+<a name="line-296"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">link_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">link_state</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-297"></a>	    <span class="cm">/*</span>
+<a name="line-298"></a><span class="cm">	     * Wait for remote end to request data action on A channel.</span>
+<a name="line-299"></a><span class="cm">	     */</span>
+<a name="line-300"></a>	    <span class="k">while</span> <span class="p">(</span> <span class="n">link_state</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-301"></a>		<span class="n">status</span> <span class="o">=</span> <span class="n">get</span> <span class="p">(</span> <span class="n">chan</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">msg</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">length</span> <span class="p">);</span>
+<a name="line-302"></a>		<span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">status</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-303"></a>		    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error in main loop get: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">status</span> <span class="p">);</span>
+<a name="line-304"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-305"></a>		    <span class="k">break</span><span class="p">;</span>
+<a name="line-306"></a>		<span class="p">}</span>
+<a name="line-307"></a>	   	<span class="k">if</span> <span class="p">(</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="n">RPC_HDR_SIZE</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-308"></a>		    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error in main loop get size: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">length</span> <span class="p">);</span>
+<a name="line-309"></a>		    <span class="k">break</span><span class="p">;</span>
+<a name="line-310"></a><span class="hll">		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
+</span><a name="line-311"></a>		<span class="p">}</span>
+<a name="line-312"></a>	   	<span class="k">if</span> <span class="p">(</span> <span class="n">msg</span><span class="p">.</span><span class="n">channel</span> <span class="o">!=</span> <span class="sc">&#39;A&#39;</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-313"></a>		    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error in main loop, unexpected channel: %c</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> 
+<a name="line-314"></a>			<span class="n">msg</span><span class="p">.</span><span class="n">channel</span> <span class="p">);</span>
+<a name="line-315"></a>		    <span class="k">break</span><span class="p">;</span>
+<a name="line-316"></a><span class="hll">		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
+</span><a name="line-317"></a>		<span class="p">}</span>
+<a name="line-318"></a>		<span class="k">if</span> <span class="p">(</span> <span class="n">msg</span><span class="p">.</span><span class="n">function</span> <span class="o">==</span> <span class="sc">&#39;G&#39;</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-319"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-320"></a>		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">msg</span><span class="p">.</span><span class="n">function</span> <span class="o">==</span> <span class="sc">&#39;P&#39;</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-321"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>	<span class="cm">/* write pending */</span>
+<a name="line-322"></a>		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">msg</span><span class="p">.</span><span class="n">function</span> <span class="o">==</span> <span class="sc">&#39;X&#39;</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-323"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-324"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-325"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-326"></a>		<span class="p">}</span>
+<a name="line-327"></a>	    <span class="p">}</span>
+<a name="line-328"></a>	    <span class="k">if</span> <span class="p">(</span> <span class="n">link_state</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-329"></a>		<span class="n">i</span> <span class="o">=</span> <span class="n">BIO_read</span> <span class="p">(</span> <span class="n">s_bio</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">length</span> <span class="p">);</span>
+<a name="line-330"></a>		<span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-331"></a>		<span class="k">else</span> <span class="p">{</span>
+<a name="line-332"></a>		    <span class="n">msg</span><span class="p">.</span><span class="n">channel</span> <span class="o">=</span> <span class="sc">&#39;A&#39;</span><span class="p">;</span>
+<a name="line-333"></a>		    <span class="n">msg</span><span class="p">.</span><span class="n">function</span> <span class="o">=</span> <span class="sc">&#39;C&#39;</span><span class="p">;</span>		<span class="cm">/* confirm */</span>
+<a name="line-334"></a>		    <span class="n">msg</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-335"></a>		    <span class="n">status</span> <span class="o">=</span> <span class="n">put</span> <span class="p">(</span> <span class="n">chan</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="n">RPC_HDR_SIZE</span> <span class="p">);</span>
+<a name="line-336"></a>		    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">status</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-337"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-338"></a>		<span class="p">}</span>
+<a name="line-339"></a>	    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">link_state</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-340"></a>		<span class="n">i</span> <span class="o">=</span> <span class="n">BIO_write</span> <span class="p">(</span> <span class="n">s_bio</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">length</span> <span class="p">);</span>
+<a name="line-341"></a>		<span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="n">link_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-342"></a>		<span class="k">else</span> <span class="p">{</span>
+<a name="line-343"></a>		    <span class="n">msg</span><span class="p">.</span><span class="n">channel</span> <span class="o">=</span> <span class="sc">&#39;A&#39;</span><span class="p">;</span>
+<a name="line-344"></a>		    <span class="n">msg</span><span class="p">.</span><span class="n">function</span> <span class="o">=</span> <span class="sc">&#39;C&#39;</span><span class="p">;</span>		<span class="cm">/* confirm */</span>
+<a name="line-345"></a>		    <span class="n">msg</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-346"></a>		    <span class="n">status</span> <span class="o">=</span> <span class="n">put</span> <span class="p">(</span> <span class="n">chan</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">RPC_HDR_SIZE</span> <span class="p">);</span>
+<a name="line-347"></a>		    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">status</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-348"></a>		    <span class="n">link_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-349"></a>		<span class="p">}</span>
+<a name="line-350"></a>	    <span class="p">}</span>
+<a name="line-351"></a>	<span class="p">}</span>
+<a name="line-352"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span><span class="s">&quot;DONE</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-353"></a><span class="nl">err</span><span class="p">:</span>
+<a name="line-354"></a>	<span class="cm">/* We have to set the BIO&#39;s to NULL otherwise they will be</span>
+<a name="line-355"></a><span class="cm">	 * free()ed twice.  Once when th s_ssl is SSL_free()ed and</span>
+<a name="line-356"></a><span class="cm">	 * again when c_ssl is SSL_free()ed.</span>
+<a name="line-357"></a><span class="cm">	 * This is a hack required because s_ssl and c_ssl are sharing the same</span>
+<a name="line-358"></a><span class="cm">	 * BIO structure and SSL_set_bio() and SSL_free() automatically</span>
+<a name="line-359"></a><span class="cm">	 * BIO_free non NULL entries.</span>
+<a name="line-360"></a><span class="cm">	 * You should not normally do this or be required to do this */</span>
+<a name="line-361"></a>	<span class="n">s_ssl</span><span class="o">-&gt;</span><span class="n">rbio</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-362"></a>	<span class="n">s_ssl</span><span class="o">-&gt;</span><span class="n">wbio</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-363"></a>
+<a name="line-364"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c_to_s</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">BIO_free</span><span class="p">(</span><span class="n">c_to_s</span><span class="p">);</span>
+<a name="line-365"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s_to_c</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">BIO_free</span><span class="p">(</span><span class="n">s_to_c</span><span class="p">);</span>
+<a name="line-366"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c_bio</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">BIO_free</span><span class="p">(</span><span class="n">c_bio</span><span class="p">);</span>
+<a name="line-367"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s_bio</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">BIO_free</span><span class="p">(</span><span class="n">s_bio</span><span class="p">);</span>
+<a name="line-368"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-369"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

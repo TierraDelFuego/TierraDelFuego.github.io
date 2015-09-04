@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: platform/android/audio_driver_jandroid.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/scene/gui/scroll_bar.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> audio_driver_jandroid.cpp</p>
-<a href='654.html#line-83'> redundantAssignment 83</a>
+       <p id="filename"><a href="index.html">Defects:</a> scroll_bar.cpp</p>
+<a href='654.html#line-818'> uninitMemberVar 818</a><a href='654.html#line-818'> uninitMemberVar 818</a><a href='654.html#line-818'> uninitMemberVar 818</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -361,8 +361,603 @@
 245
 246
 247
-248</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  audio_driver_jandroid.cpp                                            */</span>
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  scroll_bar.cpp                                                       */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -389,226 +984,821 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;audio_driver_jandroid.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;globals.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;os/os.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;thread_jandroid.h&quot;</span>
-<a name="line-33"></a><span class="cp">#ifndef ANDROID_NATIVE_ACTIVITY</span>
+<a name="line-29"></a><span class="cp">#include &quot;scroll_bar.h&quot;</span>
+<a name="line-30"></a><span class="cp">#include &quot;os/keyboard.h&quot;</span>
+<a name="line-31"></a><span class="cp">#include &quot;print_string.h&quot;</span>
+<a name="line-32"></a><span class="cp">#include &quot;os/os.h&quot;</span>
+<a name="line-33"></a><span class="kt">bool</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">focus_by_default</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
 <a name="line-34"></a>
-<a name="line-35"></a><span class="n">AudioDriverAndroid</span><span class="o">*</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">s_ad</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-35"></a>
 <a name="line-36"></a>
-<a name="line-37"></a><span class="n">jobject</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">io</span><span class="p">;</span>
-<a name="line-38"></a><span class="n">jmethodID</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">_init_audio</span><span class="p">;</span>
-<a name="line-39"></a><span class="n">jmethodID</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">_write_buffer</span><span class="p">;</span>
-<a name="line-40"></a><span class="n">jmethodID</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">_quit</span><span class="p">;</span>
-<a name="line-41"></a><span class="n">jmethodID</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">_pause</span><span class="p">;</span>
-<a name="line-42"></a><span class="kt">bool</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-43"></a><span class="n">jclass</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">cls</span><span class="p">;</span>
-<a name="line-44"></a><span class="kt">int</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">audioBufferFrames</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-45"></a><span class="kt">int</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">mix_rate</span><span class="o">=</span><span class="mi">44100</span><span class="p">;</span>
-<a name="line-46"></a><span class="kt">bool</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">quit</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-47"></a><span class="n">jobject</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">audioBuffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-48"></a><span class="kt">void</span><span class="o">*</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">audioBufferPinned</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-49"></a><span class="n">Mutex</span> <span class="o">*</span><span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">mutex</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-50"></a><span class="kt">int32_t</span><span class="o">*</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">audioBuffer32</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-37"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">set_can_focus_by_default</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_can_focus</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-38"></a>	
+<a name="line-39"></a>	<span class="n">focus_by_default</span><span class="o">=</span><span class="n">p_can_focus</span><span class="p">;</span>
+<a name="line-40"></a><span class="p">}</span>
+<a name="line-41"></a>
+<a name="line-42"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">_input_event</span><span class="p">(</span><span class="n">InputEvent</span> <span class="n">p_event</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-43"></a>
+<a name="line-44"></a>
+<a name="line-45"></a>	<span class="k">switch</span><span class="p">(</span><span class="n">p_event</span><span class="p">.</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-46"></a>	
+<a name="line-47"></a>		<span class="k">case</span> <span class="n">InputEvent</span><span class="o">::</span><span class="nl">MOUSE_BUTTON</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-48"></a>	
+<a name="line-49"></a>			<span class="k">const</span> <span class="n">InputEventMouseButton</span> <span class="o">&amp;</span><span class="n">b</span><span class="o">=</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_button</span><span class="p">;</span>
+<a name="line-50"></a>			<span class="n">accept_event</span><span class="p">();</span>
 <a name="line-51"></a>
-<a name="line-52"></a>
-<a name="line-53"></a><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-54"></a>
-<a name="line-55"></a>	<span class="k">return</span> <span class="s">&quot;Android&quot;</span><span class="p">;</span>
-<a name="line-56"></a><span class="p">}</span>
-<a name="line-57"></a>
-<a name="line-58"></a>
-<a name="line-59"></a><span class="n">Error</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">init</span><span class="p">(){</span>
-<a name="line-60"></a>
-<a name="line-61"></a>	<span class="n">mutex</span> <span class="o">=</span> <span class="n">Mutex</span><span class="o">::</span><span class="n">create</span><span class="p">();</span>
-<a name="line-62"></a><span class="cm">/*</span>
-<a name="line-63"></a><span class="cm">	// TODO: pass in/return a (Java) device ID, also whether we&#39;re opening for input or output</span>
-<a name="line-64"></a><span class="cm">	   this-&gt;spec.samples = Android_JNI_OpenAudioDevice(this-&gt;spec.freq, this-&gt;spec.format == AUDIO_U8 ? 0 : 1, this-&gt;spec.channels, this-&gt;spec.samples);</span>
-<a name="line-65"></a><span class="cm">	   SDL_CalculateAudioSpec(&amp;this-&gt;spec);</span>
-<a name="line-66"></a>
-<a name="line-67"></a><span class="cm">	   if (this-&gt;spec.samples == 0) {</span>
-<a name="line-68"></a><span class="cm">	       // Init failed?</span>
-<a name="line-69"></a><span class="cm">	       SDL_SetError(&quot;Java-side initialization failed!&quot;);</span>
-<a name="line-70"></a><span class="cm">	       return 0;</span>
-<a name="line-71"></a><span class="cm">	   }</span>
-<a name="line-72"></a><span class="cm">*/</span>
+<a name="line-52"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">button_index</span><span class="o">==</span><span class="mi">5</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">.</span><span class="n">pressed</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-53"></a>		
+<a name="line-54"></a>				<span class="c1">//if (orientation==VERTICAL)</span>
+<a name="line-55"></a>				<span class="c1">//	set_val( get_val() + get_page() / 4.0 );</span>
+<a name="line-56"></a>				<span class="c1">//else</span>
+<a name="line-57"></a>				<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">+</span> <span class="n">get_page</span><span class="p">()</span> <span class="o">/</span> <span class="mf">4.0</span> <span class="p">);</span>
+<a name="line-58"></a>				<span class="n">accept_event</span><span class="p">();</span>
+<a name="line-59"></a>
+<a name="line-60"></a>			<span class="p">}</span>
+<a name="line-61"></a>			
+<a name="line-62"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">button_index</span><span class="o">==</span><span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">.</span><span class="n">pressed</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-63"></a>		
+<a name="line-64"></a>				<span class="c1">//if (orientation==HORIZONTAL)</span>
+<a name="line-65"></a>				<span class="c1">//	set_val( get_val() - get_page() / 4.0 );</span>
+<a name="line-66"></a>				<span class="c1">//else</span>
+<a name="line-67"></a>				<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">-</span> <span class="n">get_page</span><span class="p">()</span> <span class="o">/</span> <span class="mf">4.0</span>  <span class="p">);</span>
+<a name="line-68"></a>				<span class="n">accept_event</span><span class="p">();</span>
+<a name="line-69"></a>			<span class="p">}</span>
+<a name="line-70"></a>		
+<a name="line-71"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">button_index</span><span class="o">!=</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-72"></a>				<span class="k">return</span><span class="p">;</span>
 <a name="line-73"></a>
-<a name="line-74"></a><span class="c1">//	Android_JNI_SetupThread();</span>
-<a name="line-75"></a>
+<a name="line-74"></a>
+<a name="line-75"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">pressed</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-76"></a>
-<a name="line-77"></a>  <span class="c1">//        __android_log_print(ANDROID_LOG_VERBOSE, &quot;SDL&quot;, &quot;SDL audio: opening device&quot;);</span>
-<a name="line-78"></a>
-<a name="line-79"></a>
-<a name="line-80"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span> <span class="o">=</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_env</span><span class="p">();</span>
-<a name="line-81"></a>	<span class="kt">int</span> <span class="n">mix_rate</span> <span class="o">=</span> <span class="n">GLOBAL_DEF</span><span class="p">(</span><span class="s">&quot;audio/mix_rate&quot;</span><span class="p">,</span><span class="mi">44100</span><span class="p">);</span>
-<a name="line-82"></a>
-<a name="line-83"></a><span class="hll">	<span class="kt">int</span> <span class="n">latency</span> <span class="o">=</span> <span class="n">GLOBAL_DEF</span><span class="p">(</span><span class="s">&quot;audio/output_latency&quot;</span><span class="p">,</span><span class="mi">25</span><span class="p">);</span><span class='error2'>&lt;--- Variable 'latency' is reassigned a value before the old one has been used.</span>
-</span><a name="line-84"></a>	<span class="n">latency</span><span class="o">=</span><span class="mi">50</span><span class="p">;</span>
-<a name="line-85"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">buffer_size</span> <span class="o">=</span> <span class="n">nearest_power_of_2</span><span class="p">(</span> <span class="n">latency</span> <span class="o">*</span> <span class="n">mix_rate</span> <span class="o">/</span> <span class="mi">1000</span> <span class="p">);</span>
-<a name="line-86"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">is_stdout_verbose</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-87"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;audio buffer size: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">));</span>
-<a name="line-88"></a>	<span class="p">}</span>
-<a name="line-89"></a>
-<a name="line-90"></a>	<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;Initializing audio! params: %i,%i &quot;</span><span class="p">,</span><span class="n">mix_rate</span><span class="p">,</span><span class="n">buffer_size</span><span class="p">);</span>
-<a name="line-91"></a>	<span class="n">audioBuffer</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">CallObjectMethod</span><span class="p">(</span><span class="n">io</span><span class="p">,</span><span class="n">_init_audio</span><span class="p">,</span> <span class="n">mix_rate</span><span class="p">,</span> <span class="n">buffer_size</span><span class="p">);</span>
-<a name="line-92"></a>
-<a name="line-93"></a>
-<a name="line-94"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span> <span class="n">audioBuffer</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ERR_INVALID_PARAMETER</span><span class="p">);</span>
-<a name="line-95"></a>
-<a name="line-96"></a>	<span class="n">audioBuffer</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewGlobalRef</span><span class="p">(</span><span class="n">audioBuffer</span><span class="p">);</span>
-<a name="line-97"></a>
-<a name="line-98"></a>	<span class="n">jboolean</span> <span class="n">isCopy</span> <span class="o">=</span> <span class="n">JNI_FALSE</span><span class="p">;</span>
-<a name="line-99"></a>	<span class="n">audioBufferPinned</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetShortArrayElements</span><span class="p">((</span><span class="n">jshortArray</span><span class="p">)</span><span class="n">audioBuffer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">isCopy</span><span class="p">);</span>
-<a name="line-100"></a>	<span class="n">audioBufferFrames</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetArrayLength</span><span class="p">((</span><span class="n">jshortArray</span><span class="p">)</span><span class="n">audioBuffer</span><span class="p">);</span>
-<a name="line-101"></a>	<span class="n">audioBuffer32</span> <span class="o">=</span> <span class="n">memnew_arr</span><span class="p">(</span><span class="kt">int32_t</span><span class="p">,</span><span class="n">audioBufferFrames</span><span class="p">);</span>
-<a name="line-102"></a>
-<a name="line-103"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-104"></a><span class="p">}</span>
-<a name="line-105"></a>
-<a name="line-106"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">start</span><span class="p">(){</span>
-<a name="line-107"></a>	<span class="n">active</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-108"></a>
-<a name="line-109"></a><span class="p">}</span>
-<a name="line-110"></a>
-<a name="line-111"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">setup</span><span class="p">(</span> <span class="n">jobject</span> <span class="n">p_io</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-112"></a>
-<a name="line-113"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span> <span class="o">=</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_env</span><span class="p">();</span>
-<a name="line-114"></a>	<span class="n">io</span><span class="o">=</span><span class="n">p_io</span><span class="p">;</span>
-<a name="line-115"></a>
-<a name="line-116"></a>	<span class="n">jclass</span> <span class="n">c</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetObjectClass</span><span class="p">(</span><span class="n">io</span><span class="p">);</span>
-<a name="line-117"></a>	<span class="n">cls</span> <span class="o">=</span> <span class="p">(</span><span class="n">jclass</span><span class="p">)</span><span class="n">env</span><span class="o">-&gt;</span><span class="n">NewGlobalRef</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
-<a name="line-118"></a>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;starting to attempt get methods&quot;</span><span class="p">);</span>
-<a name="line-121"></a>
-<a name="line-122"></a>	<span class="n">_init_audio</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;audioInit&quot;</span><span class="p">,</span> <span class="s">&quot;(II)Ljava/lang/Object;&quot;</span><span class="p">);</span>
-<a name="line-123"></a>	<span class="k">if</span><span class="p">(</span><span class="n">_init_audio</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-124"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;*******GOT METHOD _init_audio ok!!&quot;</span><span class="p">);</span>
-<a name="line-125"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-126"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;audioinit ok!&quot;</span><span class="p">);</span>
-<a name="line-127"></a>	<span class="p">}</span>
-<a name="line-128"></a>
-<a name="line-129"></a>	<span class="n">_write_buffer</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;audioWriteShortBuffer&quot;</span><span class="p">,</span> <span class="s">&quot;([S)V&quot;</span><span class="p">);</span>
-<a name="line-130"></a>	<span class="k">if</span><span class="p">(</span><span class="n">_write_buffer</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-131"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;*******GOT METHOD _write_buffer ok!!&quot;</span><span class="p">);</span>
-<a name="line-132"></a>	<span class="p">}</span>
-<a name="line-133"></a>
+<a name="line-77"></a>
+<a name="line-78"></a>				<span class="kt">double</span> <span class="n">ofs</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">b</span><span class="p">.</span><span class="nl">y</span> <span class="p">:</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="p">;</span>
+<a name="line-79"></a>				<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">decr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">);</span>
+<a name="line-80"></a>				<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment&quot;</span><span class="p">);</span>
+<a name="line-81"></a>				
+<a name="line-82"></a>				<span class="kt">double</span> <span class="n">decr_size</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span> <span class="o">:</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-83"></a>				<span class="kt">double</span> <span class="n">incr_size</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span> <span class="o">:</span> <span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-84"></a>				<span class="kt">double</span> <span class="n">grabber_ofs</span> <span class="o">=</span> <span class="n">get_grabber_offset</span><span class="p">();</span>
+<a name="line-85"></a>				<span class="kt">double</span> <span class="n">grabber_size</span> <span class="o">=</span> <span class="n">get_grabber_size</span><span class="p">();</span>
+<a name="line-86"></a>				<span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">get_size</span><span class="p">().</span><span class="nl">height</span> <span class="p">:</span> <span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-87"></a>				
+<a name="line-88"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">ofs</span> <span class="o">&lt;</span> <span class="n">decr_size</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-89"></a>				
+<a name="line-90"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">custom_step</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="nl">custom_step</span><span class="p">:</span><span class="n">get_step</span><span class="p">())</span> <span class="p">);</span>
+<a name="line-91"></a>					<span class="k">break</span><span class="p">;</span>
+<a name="line-92"></a>				<span class="p">}</span>
+<a name="line-93"></a>				
+<a name="line-94"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">ofs</span> <span class="o">&gt;</span> <span class="n">total</span><span class="o">-</span><span class="n">incr_size</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-95"></a>				
+<a name="line-96"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">custom_step</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="nl">custom_step</span><span class="p">:</span><span class="n">get_step</span><span class="p">())</span> <span class="p">);</span>
+<a name="line-97"></a>					<span class="k">break</span><span class="p">;</span>
+<a name="line-98"></a>				<span class="p">}</span>
+<a name="line-99"></a>				
+<a name="line-100"></a>				<span class="n">ofs</span><span class="o">-=</span><span class="n">decr_size</span><span class="p">;</span>
+<a name="line-101"></a>				
+<a name="line-102"></a>				<span class="k">if</span> <span class="p">(</span> <span class="n">ofs</span> <span class="o">&lt;</span> <span class="n">grabber_ofs</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-103"></a>					
+<a name="line-104"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">-</span> <span class="n">get_page</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-105"></a>					<span class="k">break</span><span class="p">;</span>
+<a name="line-106"></a>					
+<a name="line-107"></a>				<span class="p">}</span> 
+<a name="line-108"></a>				
+<a name="line-109"></a>				<span class="n">ofs</span><span class="o">-=</span><span class="n">grabber_ofs</span><span class="p">;</span>
+<a name="line-110"></a>				
+<a name="line-111"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">ofs</span> <span class="o">&lt;</span> <span class="n">grabber_size</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-112"></a>					
+<a name="line-113"></a>					<span class="n">drag</span><span class="p">.</span><span class="n">active</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-114"></a>					<span class="n">drag</span><span class="p">.</span><span class="n">pos_at_click</span><span class="o">=</span><span class="n">grabber_ofs</span><span class="o">+</span><span class="n">ofs</span><span class="p">;</span>
+<a name="line-115"></a>					<span class="n">drag</span><span class="p">.</span><span class="n">value_at_click</span><span class="o">=</span><span class="n">get_unit_value</span><span class="p">();</span>					
+<a name="line-116"></a>					<span class="n">update</span><span class="p">();</span>
+<a name="line-117"></a>				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-118"></a>				
+<a name="line-119"></a>				
+<a name="line-120"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">+</span> <span class="n">get_page</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-121"></a>				<span class="p">}</span>
+<a name="line-122"></a>				
+<a name="line-123"></a>				
+<a name="line-124"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-125"></a>		
+<a name="line-126"></a>				<span class="n">drag</span><span class="p">.</span><span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-127"></a>				<span class="n">update</span><span class="p">();</span>
+<a name="line-128"></a>			<span class="p">}</span>
+<a name="line-129"></a>			
+<a name="line-130"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-131"></a>		<span class="k">case</span> <span class="n">InputEvent</span><span class="o">::</span><span class="nl">MOUSE_MOTION</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-132"></a>		
+<a name="line-133"></a>			<span class="k">const</span> <span class="n">InputEventMouseMotion</span> <span class="o">&amp;</span><span class="n">m</span><span class="o">=</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">;</span>
 <a name="line-134"></a>
-<a name="line-135"></a>	<span class="n">_quit</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;audioQuit&quot;</span><span class="p">,</span> <span class="s">&quot;()V&quot;</span><span class="p">);</span>
-<a name="line-136"></a>	<span class="k">if</span><span class="p">(</span><span class="n">_quit</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-137"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;*******GOT METHOD _quit ok!!&quot;</span><span class="p">);</span>
-<a name="line-138"></a>	<span class="p">}</span>
-<a name="line-139"></a>
-<a name="line-140"></a>	<span class="n">_pause</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;audioPause&quot;</span><span class="p">,</span> <span class="s">&quot;(Z)V&quot;</span><span class="p">);</span>
-<a name="line-141"></a>	<span class="k">if</span><span class="p">(</span><span class="n">_quit</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-142"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;*******GOT METHOD _pause ok!!&quot;</span><span class="p">);</span>
-<a name="line-143"></a>	<span class="p">}</span>
-<a name="line-144"></a>
-<a name="line-145"></a>
-<a name="line-146"></a><span class="p">}</span>
+<a name="line-135"></a>			<span class="n">accept_event</span><span class="p">();</span>
+<a name="line-136"></a>
+<a name="line-137"></a>			
+<a name="line-138"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">drag</span><span class="p">.</span><span class="n">active</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-139"></a>			
+<a name="line-140"></a>				<span class="kt">double</span> <span class="n">ofs</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">m</span><span class="p">.</span><span class="nl">y</span> <span class="p">:</span> <span class="n">m</span><span class="p">.</span><span class="n">x</span> <span class="p">;</span>
+<a name="line-141"></a>				<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">decr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">);</span>
+<a name="line-142"></a>				
+<a name="line-143"></a>				<span class="kt">double</span> <span class="n">decr_size</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span> <span class="o">:</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-144"></a>				<span class="n">ofs</span><span class="o">-=</span><span class="n">decr_size</span><span class="p">;</span>
+<a name="line-145"></a>				
+<a name="line-146"></a>				<span class="kt">double</span> <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">ofs</span><span class="o">-</span><span class="n">drag</span><span class="p">.</span><span class="n">pos_at_click</span><span class="p">)</span> <span class="o">/</span> <span class="n">get_area_size</span><span class="p">();</span>
 <a name="line-147"></a>
-<a name="line-148"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">thread_func</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-149"></a>
-<a name="line-150"></a>	<span class="n">jclass</span> <span class="n">cls</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;com/android/godot/Godot&quot;</span><span class="p">);</span>
-<a name="line-151"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">cls</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-152"></a>
-<a name="line-153"></a>		<span class="n">cls</span><span class="o">=</span><span class="p">(</span><span class="n">jclass</span><span class="p">)</span><span class="n">env</span><span class="o">-&gt;</span><span class="n">NewGlobalRef</span><span class="p">(</span><span class="n">cls</span><span class="p">);</span>
-<a name="line-154"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;*******CLASS FOUND!!!&quot;</span><span class="p">);</span>
-<a name="line-155"></a>	<span class="p">}</span>
-<a name="line-156"></a>	<span class="n">jfieldID</span> <span class="n">fid</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetStaticFieldID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;io&quot;</span><span class="p">,</span> <span class="s">&quot;Lcom/android/godot/GodotIO;&quot;</span><span class="p">);</span>
-<a name="line-157"></a>	<span class="n">jobject</span> <span class="n">ob</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetStaticObjectField</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">fid</span><span class="p">);</span>
-<a name="line-158"></a>	<span class="n">jobject</span> <span class="n">gob</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewGlobalRef</span><span class="p">(</span><span class="n">ob</span><span class="p">);</span>
-<a name="line-159"></a>	<span class="n">jclass</span> <span class="n">c</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetObjectClass</span><span class="p">(</span><span class="n">gob</span><span class="p">);</span>
-<a name="line-160"></a>	<span class="n">jclass</span> <span class="n">lcls</span> <span class="o">=</span> <span class="p">(</span><span class="n">jclass</span><span class="p">)</span><span class="n">env</span><span class="o">-&gt;</span><span class="n">NewGlobalRef</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
-<a name="line-161"></a>	<span class="n">_write_buffer</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">lcls</span><span class="p">,</span> <span class="s">&quot;audioWriteShortBuffer&quot;</span><span class="p">,</span> <span class="s">&quot;([S)V&quot;</span><span class="p">);</span>
-<a name="line-162"></a>	<span class="k">if</span><span class="p">(</span><span class="n">_write_buffer</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-163"></a>		<span class="n">__android_log_print</span><span class="p">(</span><span class="n">ANDROID_LOG_INFO</span><span class="p">,</span><span class="s">&quot;godot&quot;</span><span class="p">,</span><span class="s">&quot;*******GOT METHOD _write_buffer ok!!&quot;</span><span class="p">);</span>
-<a name="line-164"></a>	<span class="p">}</span>
-<a name="line-165"></a>
-<a name="line-166"></a>	<span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">quit</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-167"></a>
-<a name="line-168"></a>
-<a name="line-169"></a>		<span class="kt">int16_t</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int16_t</span><span class="o">*</span><span class="p">)</span><span class="n">audioBufferPinned</span><span class="p">;</span>
-<a name="line-170"></a>		<span class="kt">int</span> <span class="n">fc</span> <span class="o">=</span> <span class="n">audioBufferFrames</span><span class="p">;</span>
-<a name="line-171"></a>
-<a name="line-172"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">s_ad</span><span class="o">-&gt;</span><span class="n">active</span> <span class="o">||</span> <span class="n">mutex</span><span class="o">-&gt;</span><span class="n">try_lock</span><span class="p">()</span><span class="o">!=</span><span class="n">OK</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-173"></a>
-<a name="line-174"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">fc</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-175"></a>				<span class="n">ptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-176"></a>			<span class="p">}</span>
-<a name="line-177"></a>
-<a name="line-178"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-179"></a>
-<a name="line-180"></a>
-<a name="line-181"></a>			<span class="n">s_ad</span><span class="o">-&gt;</span><span class="n">audio_server_process</span><span class="p">(</span><span class="n">fc</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">audioBuffer32</span><span class="p">);</span>
-<a name="line-182"></a>
-<a name="line-183"></a>			<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
-<a name="line-184"></a>
-<a name="line-185"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">fc</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-186"></a>
-<a name="line-187"></a>				<span class="n">ptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">audioBuffer32</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">;</span>
-<a name="line-188"></a>			<span class="p">}</span>
-<a name="line-189"></a>
-<a name="line-190"></a>		<span class="p">}</span>
-<a name="line-191"></a>		<span class="n">env</span><span class="o">-&gt;</span><span class="n">ReleaseShortArrayElements</span><span class="p">((</span><span class="n">jshortArray</span><span class="p">)</span><span class="n">audioBuffer</span><span class="p">,</span> <span class="p">(</span><span class="n">jshort</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">,</span> <span class="n">JNI_COMMIT</span><span class="p">);</span>
-<a name="line-192"></a>		<span class="n">env</span><span class="o">-&gt;</span><span class="n">CallVoidMethod</span><span class="p">(</span><span class="n">gob</span><span class="p">,</span> <span class="n">_write_buffer</span><span class="p">,</span> <span class="p">(</span><span class="n">jshortArray</span><span class="p">)</span><span class="n">audioBuffer</span><span class="p">);</span>
-<a name="line-193"></a>	<span class="p">}</span>
-<a name="line-194"></a>
-<a name="line-195"></a>
-<a name="line-196"></a>
-<a name="line-197"></a><span class="p">}</span>
-<a name="line-198"></a>
-<a name="line-199"></a><span class="kt">int</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">get_mix_rate</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-200"></a>
-<a name="line-201"></a>	<span class="k">return</span> <span class="n">mix_rate</span><span class="p">;</span>
-<a name="line-202"></a><span class="p">}</span>
-<a name="line-203"></a><span class="n">AudioDriverSW</span><span class="o">::</span><span class="n">OutputFormat</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">get_output_format</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
-<a name="line-204"></a>
-<a name="line-205"></a>	<span class="k">return</span> <span class="n">OUTPUT_STEREO</span><span class="p">;</span>
-<a name="line-206"></a><span class="p">}</span>
-<a name="line-207"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">lock</span><span class="p">(){</span>
-<a name="line-208"></a>
-<a name="line-209"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
-<a name="line-210"></a>		<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">();</span>
-<a name="line-211"></a>
-<a name="line-212"></a><span class="p">}</span>
-<a name="line-213"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">unlock</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-214"></a>
-<a name="line-215"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
-<a name="line-216"></a>		<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
-<a name="line-217"></a><span class="p">}</span>
-<a name="line-218"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">finish</span><span class="p">(){</span>
-<a name="line-219"></a>
-<a name="line-220"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span> <span class="o">=</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_env</span><span class="p">();</span>
-<a name="line-221"></a>	<span class="n">env</span><span class="o">-&gt;</span><span class="n">CallVoidMethod</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">_quit</span><span class="p">);</span>
-<a name="line-222"></a>
-<a name="line-223"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">audioBuffer</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-224"></a>		<span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteGlobalRef</span><span class="p">(</span><span class="n">audioBuffer</span><span class="p">);</span>
-<a name="line-225"></a>		<span class="n">audioBuffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-226"></a>		<span class="n">audioBufferPinned</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-227"></a>	<span class="p">}</span>
-<a name="line-228"></a>
-<a name="line-229"></a>	<span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-230"></a><span class="p">}</span>
-<a name="line-231"></a>
-<a name="line-232"></a><span class="kt">void</span> <span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">set_pause</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_pause</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-233"></a>
-<a name="line-234"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span> <span class="o">=</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_env</span><span class="p">();</span>
-<a name="line-235"></a>	<span class="n">env</span><span class="o">-&gt;</span><span class="n">CallVoidMethod</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">_pause</span><span class="p">,</span><span class="n">p_pause</span><span class="p">);</span>
-<a name="line-236"></a>
+<a name="line-148"></a>				<span class="n">set_unit_value</span><span class="p">(</span> <span class="n">drag</span><span class="p">.</span><span class="n">value_at_click</span> <span class="o">+</span> <span class="n">diff</span> <span class="p">);</span>			
+<a name="line-149"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-150"></a>			
+<a name="line-151"></a>		
+<a name="line-152"></a>				<span class="kt">double</span> <span class="n">ofs</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">m</span><span class="p">.</span><span class="nl">y</span> <span class="p">:</span> <span class="n">m</span><span class="p">.</span><span class="n">x</span> <span class="p">;</span>
+<a name="line-153"></a>				<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">decr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">);</span>
+<a name="line-154"></a>				<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment&quot;</span><span class="p">);</span>
+<a name="line-155"></a>				
+<a name="line-156"></a>				<span class="kt">double</span> <span class="n">decr_size</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span> <span class="o">:</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-157"></a>				<span class="kt">double</span> <span class="n">incr_size</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span> <span class="o">:</span> <span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-158"></a>				<span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span> <span class="o">?</span> <span class="n">get_size</span><span class="p">().</span><span class="nl">height</span> <span class="p">:</span> <span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-159"></a>				
+<a name="line-160"></a>				<span class="n">HiliteStatus</span> <span class="n">new_hilite</span><span class="p">;</span>
+<a name="line-161"></a>				
+<a name="line-162"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">ofs</span> <span class="o">&lt;</span> <span class="n">decr_size</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-163"></a>				
+<a name="line-164"></a>					<span class="n">new_hilite</span><span class="o">=</span><span class="n">HILITE_DECR</span><span class="p">;</span>
+<a name="line-165"></a>					
+<a name="line-166"></a>				<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ofs</span> <span class="o">&gt;</span> <span class="n">total</span><span class="o">-</span><span class="n">incr_size</span> <span class="p">)</span> <span class="p">{</span>
+<a name="line-167"></a>				
+<a name="line-168"></a>					<span class="n">new_hilite</span><span class="o">=</span><span class="n">HILITE_INCR</span><span class="p">;</span>
+<a name="line-169"></a>					
+<a name="line-170"></a>				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-171"></a>				
+<a name="line-172"></a>					<span class="n">new_hilite</span><span class="o">=</span><span class="n">HILITE_RANGE</span><span class="p">;</span>
+<a name="line-173"></a>				<span class="p">}</span>
+<a name="line-174"></a>				
+<a name="line-175"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">new_hilite</span><span class="o">!=</span><span class="n">hilite</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-176"></a>				
+<a name="line-177"></a>					<span class="n">hilite</span><span class="o">=</span><span class="n">new_hilite</span><span class="p">;</span>
+<a name="line-178"></a>					<span class="n">update</span><span class="p">();</span>
+<a name="line-179"></a>					
+<a name="line-180"></a>				<span class="p">}</span>
+<a name="line-181"></a>				
+<a name="line-182"></a>			<span class="p">}</span>
+<a name="line-183"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-184"></a>		<span class="k">case</span> <span class="n">InputEvent</span><span class="o">::</span><span class="nl">KEY</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-185"></a>					
+<a name="line-186"></a>			<span class="k">const</span> <span class="n">InputEventKey</span> <span class="o">&amp;</span><span class="n">k</span><span class="o">=</span><span class="n">p_event</span><span class="p">.</span><span class="n">key</span><span class="p">;</span>
+<a name="line-187"></a>		
+<a name="line-188"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">k</span><span class="p">.</span><span class="n">pressed</span><span class="p">)</span>
+<a name="line-189"></a>				<span class="k">return</span><span class="p">;</span>
+<a name="line-190"></a>				
+<a name="line-191"></a>			<span class="k">switch</span> <span class="p">(</span><span class="n">k</span><span class="p">.</span><span class="n">scancode</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-192"></a>					
+<a name="line-193"></a>				<span class="k">case</span> <span class="nl">KEY_LEFT</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-194"></a>					
+<a name="line-195"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">!=</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+<a name="line-196"></a>						<span class="k">return</span><span class="p">;</span>
+<a name="line-197"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">custom_step</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="nl">custom_step</span><span class="p">:</span><span class="n">get_step</span><span class="p">())</span> <span class="p">);</span>
+<a name="line-198"></a>					
+<a name="line-199"></a>				<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-200"></a>				<span class="k">case</span> <span class="nl">KEY_RIGHT</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-201"></a>					
+<a name="line-202"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">!=</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+<a name="line-203"></a>						<span class="k">return</span><span class="p">;</span>
+<a name="line-204"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">custom_step</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="nl">custom_step</span><span class="p">:</span><span class="n">get_step</span><span class="p">())</span> <span class="p">);</span>
+<a name="line-205"></a>					
+<a name="line-206"></a>				<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-207"></a>				<span class="k">case</span> <span class="nl">KEY_UP</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-208"></a>					
+<a name="line-209"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">!=</span><span class="n">VERTICAL</span><span class="p">)</span>
+<a name="line-210"></a>						<span class="k">return</span><span class="p">;</span>
+<a name="line-211"></a>					
+<a name="line-212"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">custom_step</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="nl">custom_step</span><span class="p">:</span><span class="n">get_step</span><span class="p">())</span> <span class="p">);</span>
+<a name="line-213"></a>					
+<a name="line-214"></a>					
+<a name="line-215"></a>				<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-216"></a>				<span class="k">case</span> <span class="nl">KEY_DOWN</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-217"></a>					
+<a name="line-218"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">!=</span><span class="n">VERTICAL</span><span class="p">)</span>
+<a name="line-219"></a>						<span class="k">return</span><span class="p">;</span>
+<a name="line-220"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_val</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">custom_step</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">?</span><span class="nl">custom_step</span><span class="p">:</span><span class="n">get_step</span><span class="p">())</span> <span class="p">);</span>
+<a name="line-221"></a>					
+<a name="line-222"></a>				<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-223"></a>				<span class="k">case</span> <span class="nl">KEY_HOME</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-224"></a>					
+<a name="line-225"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_min</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-226"></a>					
+<a name="line-227"></a>				<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-228"></a>				<span class="k">case</span> <span class="nl">KEY_END</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-229"></a>					
+<a name="line-230"></a>					<span class="n">set_val</span><span class="p">(</span> <span class="n">get_max</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-231"></a>					
+<a name="line-232"></a>				<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-233"></a>					
+<a name="line-234"></a>			<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-235"></a>		<span class="p">}</span>		
+<a name="line-236"></a>	<span class="p">}</span>
 <a name="line-237"></a><span class="p">}</span>
 <a name="line-238"></a>
-<a name="line-239"></a><span class="n">AudioDriverAndroid</span><span class="o">::</span><span class="n">AudioDriverAndroid</span><span class="p">()</span>
-<a name="line-240"></a><span class="p">{</span>
-<a name="line-241"></a>	<span class="n">s_ad</span><span class="o">=</span><span class="k">this</span><span class="p">;</span>
-<a name="line-242"></a>	<span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-243"></a>
-<a name="line-244"></a>
-<a name="line-245"></a>
-<a name="line-246"></a><span class="p">}</span>
-<a name="line-247"></a>
-<a name="line-248"></a><span class="cp">#endif</span>
+<a name="line-239"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-240"></a>	
+<a name="line-241"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_DRAW</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-242"></a>		
+<a name="line-243"></a>		<span class="n">RID</span> <span class="n">ci</span> <span class="o">=</span> <span class="n">get_canvas_item</span><span class="p">();</span>
+<a name="line-244"></a>		
+<a name="line-245"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">decr</span> <span class="o">=</span> <span class="n">hilite</span><span class="o">==</span><span class="n">HILITE_DECR</span> <span class="o">?</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement_hilite&quot;</span><span class="p">)</span> <span class="o">:</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">);</span>
+<a name="line-246"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">hilite</span><span class="o">==</span><span class="n">HILITE_INCR</span> <span class="o">?</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment_hilite&quot;</span><span class="p">)</span> <span class="o">:</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment&quot;</span><span class="p">);</span>
+<a name="line-247"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">bg</span> <span class="o">=</span> <span class="n">has_focus</span><span class="p">()</span> <span class="o">?</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;scroll_focus&quot;</span><span class="p">)</span> <span class="o">:</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;scroll&quot;</span><span class="p">);</span>
+<a name="line-248"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">grabber</span> <span class="o">=</span> <span class="p">(</span><span class="n">drag</span><span class="p">.</span><span class="n">active</span> <span class="o">||</span> <span class="n">hilite</span><span class="o">==</span><span class="n">HILITE_RANGE</span><span class="p">)</span> <span class="o">?</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;grabber_hilite&quot;</span><span class="p">)</span> <span class="o">:</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;grabber&quot;</span><span class="p">);</span>
+<a name="line-249"></a>		
+<a name="line-250"></a>		<span class="n">Point2</span> <span class="n">ofs</span><span class="p">;</span>
+<a name="line-251"></a>		
+<a name="line-252"></a>		<span class="n">VisualServer</span> <span class="o">*</span><span class="n">vs</span> <span class="o">=</span> <span class="n">VisualServer</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">();</span>
+<a name="line-253"></a>
+<a name="line-254"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">canvas_item_add_texture_rect</span><span class="p">(</span> <span class="n">ci</span><span class="p">,</span> <span class="n">Rect2</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(),</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">()),</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_rid</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-255"></a>
+<a name="line-256"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+<a name="line-257"></a>			<span class="n">ofs</span><span class="p">.</span><span class="n">x</span><span class="o">+=</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-258"></a>		<span class="k">else</span>
+<a name="line-259"></a>			<span class="n">ofs</span><span class="p">.</span><span class="n">y</span><span class="o">+=</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">();</span>
+<a name="line-260"></a>
+<a name="line-261"></a>		<span class="n">Size2</span> <span class="n">area</span><span class="o">=</span><span class="n">get_size</span><span class="p">();</span>
+<a name="line-262"></a>
+<a name="line-263"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+<a name="line-264"></a>			<span class="n">area</span><span class="p">.</span><span class="n">width</span><span class="o">-=</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">()</span><span class="o">+</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-265"></a>		<span class="k">else</span>
+<a name="line-266"></a>			<span class="n">area</span><span class="p">.</span><span class="n">height</span><span class="o">-=</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span><span class="o">+</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">();</span>
+<a name="line-267"></a>
+<a name="line-268"></a>		<span class="n">bg</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span><span class="n">Rect2</span><span class="p">(</span><span class="n">ofs</span><span class="p">,</span><span class="n">area</span><span class="p">));</span>
+<a name="line-269"></a>		
+<a name="line-270"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span> 
+<a name="line-271"></a>			<span class="n">ofs</span><span class="p">.</span><span class="n">width</span><span class="o">+=</span><span class="n">area</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+<a name="line-272"></a>		<span class="k">else</span>
+<a name="line-273"></a>			<span class="n">ofs</span><span class="p">.</span><span class="n">height</span><span class="o">+=</span><span class="n">area</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+<a name="line-274"></a>
+<a name="line-275"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">canvas_item_add_texture_rect</span><span class="p">(</span> <span class="n">ci</span><span class="p">,</span> <span class="n">Rect2</span><span class="p">(</span> <span class="n">ofs</span><span class="p">,</span> <span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">()),</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_rid</span><span class="p">()</span> <span class="p">);</span>
+<a name="line-276"></a>		<span class="n">Rect2</span> <span class="n">grabber_rect</span><span class="p">;</span>
+<a name="line-277"></a>		
+<a name="line-278"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-279"></a>			
+<a name="line-280"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="o">=</span><span class="n">get_grabber_size</span><span class="p">();</span>
+<a name="line-281"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="o">=</span><span class="n">get_size</span><span class="p">().</span><span class="n">height</span><span class="p">;</span>
+<a name="line-282"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-283"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="n">get_grabber_offset</span><span class="p">()</span><span class="o">+</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">()</span><span class="o">+</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_margin</span><span class="p">(</span> <span class="n">MARGIN_LEFT</span> <span class="p">);</span>
+<a name="line-284"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-285"></a>			
+<a name="line-286"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="o">=</span><span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-287"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="o">=</span><span class="n">get_grabber_size</span><span class="p">();</span>
+<a name="line-288"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="n">get_grabber_offset</span><span class="p">()</span><span class="o">+</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">()</span><span class="o">+</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_margin</span><span class="p">(</span> <span class="n">MARGIN_TOP</span> <span class="p">);</span>
+<a name="line-289"></a>			<span class="n">grabber_rect</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>			
+<a name="line-290"></a>		<span class="p">}</span>
+<a name="line-291"></a>		
+<a name="line-292"></a>		<span class="n">grabber</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span><span class="n">grabber_rect</span><span class="p">);</span>
+<a name="line-293"></a>		
+<a name="line-294"></a>	<span class="p">}</span>
+<a name="line-295"></a>	
+<a name="line-296"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_ENTER_TREE</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-297"></a>
+<a name="line-298"></a>
+<a name="line-299"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">has_node</span><span class="p">(</span><span class="n">drag_slave_path</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-300"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">n</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="n">drag_slave_path</span><span class="p">);</span>
+<a name="line-301"></a>			<span class="n">drag_slave</span><span class="o">=</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">Control</span><span class="o">&gt;</span><span class="p">();</span>
+<a name="line-302"></a>		<span class="p">}</span>
+<a name="line-303"></a>
+<a name="line-304"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-305"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;input_event&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_input&quot;</span><span class="p">);</span>
+<a name="line-306"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;exit_tree&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_exit&quot;</span><span class="p">,</span><span class="n">varray</span><span class="p">(),</span><span class="n">CONNECT_ONESHOT</span><span class="p">);</span>
+<a name="line-307"></a>		<span class="p">}</span>
+<a name="line-308"></a>
+<a name="line-309"></a>
+<a name="line-310"></a>	<span class="p">}</span>
+<a name="line-311"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_EXIT_TREE</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-312"></a>
+<a name="line-313"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-314"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;input_event&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_input&quot;</span><span class="p">);</span>
+<a name="line-315"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;exit_tree&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_exit&quot;</span><span class="p">);</span>
+<a name="line-316"></a>		<span class="p">}</span>
+<a name="line-317"></a>
+<a name="line-318"></a>		<span class="n">drag_slave</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-319"></a>
+<a name="line-320"></a>	<span class="p">}</span>
+<a name="line-321"></a>
+<a name="line-322"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_FIXED_PROCESS</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-323"></a>
+<a name="line-324"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_touching</span><span class="p">)</span>  <span class="p">{</span>
+<a name="line-325"></a>
+<a name="line-326"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_touching_deaccel</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-327"></a>
+<a name="line-328"></a>				<span class="n">Vector2</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="o">?</span><span class="n">get_val</span><span class="p">()</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="o">?</span><span class="n">get_val</span><span class="p">()</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-329"></a>				<span class="n">pos</span><span class="o">+=</span><span class="n">drag_slave_speed</span><span class="o">*</span><span class="n">get_fixed_process_delta_time</span><span class="p">();</span>
+<a name="line-330"></a>
+<a name="line-331"></a>				<span class="kt">bool</span> <span class="n">turnoff</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-332"></a>
+<a name="line-333"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-334"></a>
+<a name="line-335"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-336"></a>						<span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-337"></a>						<span class="n">turnoff</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-338"></a>					<span class="p">}</span>
+<a name="line-339"></a>
+<a name="line-340"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">get_max</span><span class="p">()</span><span class="o">-</span><span class="n">get_page</span><span class="p">()))</span> <span class="p">{</span>
+<a name="line-341"></a>						<span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="n">get_max</span><span class="p">()</span><span class="o">-</span><span class="n">get_page</span><span class="p">();</span>
+<a name="line-342"></a>						<span class="n">turnoff</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-343"></a>					<span class="p">}</span>
+<a name="line-344"></a>
+<a name="line-345"></a>					<span class="n">set_val</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<a name="line-346"></a>
+<a name="line-347"></a>					<span class="kt">float</span> <span class="n">sgn_x</span> <span class="o">=</span> <span class="n">drag_slave_speed</span><span class="p">.</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-348"></a>					<span class="kt">float</span> <span class="n">val_x</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">drag_slave_speed</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<a name="line-349"></a>					<span class="n">val_x</span><span class="o">-=</span><span class="mi">1000</span><span class="o">*</span><span class="n">get_fixed_process_delta_time</span><span class="p">();</span>
+<a name="line-350"></a>
+<a name="line-351"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">val_x</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-352"></a>						<span class="n">turnoff</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-353"></a>					<span class="p">}</span>
+<a name="line-354"></a>
+<a name="line-355"></a>					<span class="n">drag_slave_speed</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="n">sgn_x</span><span class="o">*</span><span class="n">val_x</span><span class="p">;</span>
+<a name="line-356"></a>
+<a name="line-357"></a>				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-358"></a>
+<a name="line-359"></a>
+<a name="line-360"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-361"></a>						<span class="n">pos</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-362"></a>						<span class="n">turnoff</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-363"></a>					<span class="p">}</span>
+<a name="line-364"></a>
+<a name="line-365"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">get_max</span><span class="p">()</span><span class="o">-</span><span class="n">get_page</span><span class="p">()))</span> <span class="p">{</span>
+<a name="line-366"></a>						<span class="n">pos</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="n">get_max</span><span class="p">()</span><span class="o">-</span><span class="n">get_page</span><span class="p">();</span>
+<a name="line-367"></a>						<span class="n">turnoff</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-368"></a>					<span class="p">}</span>
+<a name="line-369"></a>
+<a name="line-370"></a>					<span class="n">set_val</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<a name="line-371"></a>
+<a name="line-372"></a>					<span class="kt">float</span> <span class="n">sgn_y</span> <span class="o">=</span> <span class="n">drag_slave_speed</span><span class="p">.</span><span class="n">y</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-373"></a>					<span class="kt">float</span> <span class="n">val_y</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">drag_slave_speed</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<a name="line-374"></a>					<span class="n">val_y</span><span class="o">-=</span><span class="mi">1000</span><span class="o">*</span><span class="n">get_fixed_process_delta_time</span><span class="p">();</span>
+<a name="line-375"></a>
+<a name="line-376"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">val_y</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-377"></a>						<span class="n">turnoff</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-378"></a>					<span class="p">}</span>
+<a name="line-379"></a>					<span class="n">drag_slave_speed</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="n">sgn_y</span><span class="o">*</span><span class="n">val_y</span><span class="p">;</span>
+<a name="line-380"></a>				<span class="p">}</span>
+<a name="line-381"></a>
+<a name="line-382"></a>
+<a name="line-383"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">turnoff</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-384"></a>					<span class="n">set_fixed_process</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-385"></a>					<span class="n">drag_slave_touching</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-386"></a>					<span class="n">drag_slave_touching_deaccel</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-387"></a>				<span class="p">}</span>
+<a name="line-388"></a>
+<a name="line-389"></a>
+<a name="line-390"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-391"></a>
+<a name="line-392"></a>
+<a name="line-393"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">time_since_motion</span><span class="o">==</span><span class="mi">0</span> <span class="o">||</span> <span class="n">time_since_motion</span><span class="o">&gt;</span><span class="mf">0.1</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-394"></a>
+<a name="line-395"></a>					<span class="n">Vector2</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">drag_slave_accum</span> <span class="o">-</span> <span class="n">last_drag_slave_accum</span><span class="p">;</span>
+<a name="line-396"></a>					<span class="n">last_drag_slave_accum</span><span class="o">=</span><span class="n">drag_slave_accum</span><span class="p">;</span>
+<a name="line-397"></a>					<span class="n">drag_slave_speed</span><span class="o">=</span><span class="n">diff</span><span class="o">/</span><span class="n">get_fixed_process_delta_time</span><span class="p">();</span>
+<a name="line-398"></a>				<span class="p">}</span>
+<a name="line-399"></a>
+<a name="line-400"></a>				<span class="n">time_since_motion</span><span class="o">+=</span><span class="n">get_fixed_process_delta_time</span><span class="p">();</span>
+<a name="line-401"></a>			<span class="p">}</span>
+<a name="line-402"></a>		<span class="p">}</span>
+<a name="line-403"></a>
+<a name="line-404"></a>
+<a name="line-405"></a>	<span class="p">}</span>
+<a name="line-406"></a>
+<a name="line-407"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_MOUSE_EXIT</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-408"></a>	
+<a name="line-409"></a>		<span class="n">hilite</span><span class="o">=</span><span class="n">HILITE_NONE</span><span class="p">;</span>
+<a name="line-410"></a>		<span class="n">update</span><span class="p">();</span>
+<a name="line-411"></a>	<span class="p">}</span>
+<a name="line-412"></a><span class="p">}</span>
+<a name="line-413"></a>
+<a name="line-414"></a><span class="kt">double</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_grabber_min_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-415"></a>	
+<a name="line-416"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">grabber</span><span class="o">=</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;grabber&quot;</span><span class="p">);</span>
+<a name="line-417"></a>	<span class="n">Size2</span> <span class="n">gminsize</span><span class="o">=</span><span class="n">grabber</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">()</span><span class="o">+</span><span class="n">grabber</span><span class="o">-&gt;</span><span class="n">get_center_size</span><span class="p">();</span>
+<a name="line-418"></a>	<span class="k">return</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="p">)</span><span class="o">?</span><span class="n">gminsize</span><span class="p">.</span><span class="nl">height</span><span class="p">:</span><span class="n">gminsize</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>	
+<a name="line-419"></a><span class="p">}</span>
+<a name="line-420"></a>
+<a name="line-421"></a><span class="kt">double</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_grabber_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-422"></a>	
+<a name="line-423"></a>	<span class="kt">float</span> <span class="n">range</span> <span class="o">=</span> <span class="n">get_max</span><span class="p">()</span><span class="o">-</span><span class="n">get_min</span><span class="p">();</span>
+<a name="line-424"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">range</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span>
+<a name="line-425"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-426"></a>	
+<a name="line-427"></a>	<span class="kt">float</span> <span class="n">page</span> <span class="o">=</span> <span class="p">(</span><span class="n">get_page</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">?</span> <span class="n">get_page</span><span class="p">()</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-428"></a><span class="c1">//	if (grabber_range &lt; get_step())</span>
+<a name="line-429"></a><span class="c1">//		grabber_range=get_step();</span>
+<a name="line-430"></a>	
+<a name="line-431"></a>	<span class="kt">double</span> <span class="n">area_size</span><span class="o">=</span><span class="n">get_area_size</span><span class="p">();</span>
+<a name="line-432"></a>	<span class="kt">double</span> <span class="n">grabber_size</span> <span class="o">=</span> <span class="n">page</span> <span class="o">/</span> <span class="n">range</span> <span class="o">*</span> <span class="n">area_size</span><span class="p">;</span>
+<a name="line-433"></a>	<span class="k">return</span> <span class="n">grabber_size</span><span class="o">+</span><span class="n">get_grabber_min_size</span><span class="p">();</span>
+<a name="line-434"></a>	
+<a name="line-435"></a><span class="p">}</span>	
+<a name="line-436"></a>
+<a name="line-437"></a><span class="kt">double</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_area_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-438"></a>	
+<a name="line-439"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-440"></a>		
+<a name="line-441"></a>		<span class="kt">double</span> <span class="n">area</span><span class="o">=</span><span class="n">get_size</span><span class="p">().</span><span class="n">height</span><span class="p">;</span>
+<a name="line-442"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;scroll&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">().</span><span class="n">height</span><span class="p">;</span>
+<a name="line-443"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">();</span>
+<a name="line-444"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">();</span>
+<a name="line-445"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_grabber_min_size</span><span class="p">();</span>
+<a name="line-446"></a>		<span class="k">return</span> <span class="n">area</span><span class="p">;</span>
+<a name="line-447"></a>		
+<a name="line-448"></a>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-449"></a>		
+<a name="line-450"></a>		<span class="kt">double</span> <span class="n">area</span><span class="o">=</span><span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-451"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;scroll&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-452"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-453"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-454"></a>		<span class="n">area</span><span class="o">-=</span><span class="n">get_grabber_min_size</span><span class="p">();</span>
+<a name="line-455"></a>		<span class="k">return</span> <span class="n">area</span><span class="p">;</span>
+<a name="line-456"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-457"></a>		
+<a name="line-458"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-459"></a>	<span class="p">}</span>
+<a name="line-460"></a>	
+<a name="line-461"></a><span class="p">}</span>
+<a name="line-462"></a>
+<a name="line-463"></a><span class="kt">double</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_area_offset</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-464"></a>	
+<a name="line-465"></a>	<span class="kt">double</span> <span class="n">ofs</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-466"></a>	
+<a name="line-467"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-468"></a>		
+<a name="line-469"></a>		<span class="n">ofs</span><span class="o">+=</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;hscroll&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_margin</span><span class="p">(</span> <span class="n">MARGIN_TOP</span> <span class="p">);</span>
+<a name="line-470"></a>		<span class="n">ofs</span><span class="o">+=</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_height</span><span class="p">();</span>
+<a name="line-471"></a>
+<a name="line-472"></a>	<span class="p">}</span>	
+<a name="line-473"></a>	
+<a name="line-474"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-475"></a>		
+<a name="line-476"></a>		<span class="n">ofs</span><span class="o">+=</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;hscroll&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_margin</span><span class="p">(</span> <span class="n">MARGIN_LEFT</span> <span class="p">);</span>
+<a name="line-477"></a>		<span class="n">ofs</span><span class="o">+=</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get_width</span><span class="p">();</span>
+<a name="line-478"></a>	<span class="p">}</span>
+<a name="line-479"></a>	
+<a name="line-480"></a>	<span class="k">return</span> <span class="n">ofs</span><span class="p">;</span>	
+<a name="line-481"></a><span class="p">}</span>
+<a name="line-482"></a>
+<a name="line-483"></a><span class="kt">double</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_click_pos</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-484"></a>	
+<a name="line-485"></a>	
+<a name="line-486"></a>	<span class="kt">float</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="p">)</span><span class="o">?</span><span class="n">p_pos</span><span class="p">.</span><span class="nl">y</span><span class="p">:</span><span class="n">p_pos</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<a name="line-487"></a>	<span class="n">pos</span><span class="o">-=</span><span class="n">get_area_offset</span><span class="p">();</span>
+<a name="line-488"></a>	
+<a name="line-489"></a>	<span class="kt">float</span> <span class="n">area</span><span class="o">=</span><span class="n">get_area_size</span><span class="p">();</span>
+<a name="line-490"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">area</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+<a name="line-491"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-492"></a>	<span class="k">else</span>
+<a name="line-493"></a>		<span class="k">return</span> <span class="n">pos</span><span class="o">/</span><span class="n">area</span><span class="p">;</span>
+<a name="line-494"></a>
+<a name="line-495"></a><span class="p">}</span>
+<a name="line-496"></a>
+<a name="line-497"></a><span class="kt">double</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_grabber_offset</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-498"></a>	
+<a name="line-499"></a>	
+<a name="line-500"></a>	<span class="k">return</span> <span class="p">(</span><span class="n">get_area_size</span><span class="p">())</span> <span class="o">*</span> <span class="n">get_unit_value</span><span class="p">();</span>
+<a name="line-501"></a>
+<a name="line-502"></a><span class="p">}</span>
+<a name="line-503"></a>
+<a name="line-504"></a>
+<a name="line-505"></a>
+<a name="line-506"></a><span class="n">Size2</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_minimum_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-507"></a>	
+<a name="line-508"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;increment&quot;</span><span class="p">);</span>
+<a name="line-509"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">decr</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;decrement&quot;</span><span class="p">);</span>
+<a name="line-510"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">bg</span> <span class="o">=</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;scroll&quot;</span><span class="p">);</span>
+<a name="line-511"></a>	<span class="n">Size2</span> <span class="n">minsize</span><span class="p">;</span>
+<a name="line-512"></a>	
+<a name="line-513"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-514"></a>	
+<a name="line-515"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">width</span><span class="o">=</span><span class="n">MAX</span><span class="p">(</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">,(</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">()</span><span class="o">+</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_center_size</span><span class="p">()).</span><span class="n">width</span><span class="p">);</span>
+<a name="line-516"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">height</span><span class="o">+=</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">().</span><span class="n">height</span><span class="p">;</span>
+<a name="line-517"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">height</span><span class="o">+=</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">().</span><span class="n">height</span><span class="p">;</span>
+<a name="line-518"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">height</span><span class="o">+=</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">().</span><span class="n">height</span><span class="p">;</span>
+<a name="line-519"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">height</span><span class="o">+=</span><span class="n">get_grabber_min_size</span><span class="p">();</span>
+<a name="line-520"></a>	<span class="p">}</span>
+<a name="line-521"></a>		
+<a name="line-522"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-523"></a>		
+<a name="line-524"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">height</span><span class="o">=</span><span class="n">MAX</span><span class="p">(</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">().</span><span class="n">height</span><span class="p">,(</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_center_size</span><span class="p">()</span><span class="o">+</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">()).</span><span class="n">height</span><span class="p">);</span>
+<a name="line-525"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">width</span><span class="o">+=</span><span class="n">incr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-526"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">width</span><span class="o">+=</span><span class="n">decr</span><span class="o">-&gt;</span><span class="n">get_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-527"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">width</span><span class="o">+=</span><span class="n">bg</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">().</span><span class="n">width</span><span class="p">;</span>
+<a name="line-528"></a>		<span class="n">minsize</span><span class="p">.</span><span class="n">width</span><span class="o">+=</span><span class="n">get_grabber_min_size</span><span class="p">();</span>
+<a name="line-529"></a>	<span class="p">}</span>
+<a name="line-530"></a>	
+<a name="line-531"></a>	<span class="k">return</span> <span class="n">minsize</span><span class="p">;</span>
+<a name="line-532"></a>
+<a name="line-533"></a><span class="p">}</span>
+<a name="line-534"></a>
+<a name="line-535"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">set_custom_step</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_custom_step</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-536"></a>
+<a name="line-537"></a>	<span class="n">custom_step</span><span class="o">=</span><span class="n">p_custom_step</span><span class="p">;</span>
+<a name="line-538"></a><span class="p">}</span>
+<a name="line-539"></a>
+<a name="line-540"></a><span class="kt">float</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_custom_step</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-541"></a>
+<a name="line-542"></a>	<span class="k">return</span> <span class="n">custom_step</span><span class="p">;</span>
+<a name="line-543"></a><span class="p">}</span>
+<a name="line-544"></a>
+<a name="line-545"></a>
+<a name="line-546"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">_drag_slave_exit</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-547"></a>
+<a name="line-548"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-549"></a>		<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;input_event&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_input&quot;</span><span class="p">);</span>
+<a name="line-550"></a>	<span class="p">}</span>
+<a name="line-551"></a>	<span class="n">drag_slave</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-552"></a><span class="p">}</span>
+<a name="line-553"></a>
+<a name="line-554"></a>
+<a name="line-555"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">_drag_slave_input</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_input</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-556"></a>
+<a name="line-557"></a>	<span class="k">switch</span><span class="p">(</span><span class="n">p_input</span><span class="p">.</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-558"></a>
+<a name="line-559"></a>		<span class="k">case</span> <span class="n">InputEvent</span><span class="o">::</span><span class="nl">MOUSE_BUTTON</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-560"></a>
+<a name="line-561"></a>			<span class="k">const</span> <span class="n">InputEventMouseButton</span> <span class="o">&amp;</span><span class="n">mb</span><span class="o">=</span><span class="n">p_input</span><span class="p">.</span><span class="n">mouse_button</span><span class="p">;</span>
+<a name="line-562"></a>
+<a name="line-563"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">mb</span><span class="p">.</span><span class="n">button_index</span><span class="o">!=</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-564"></a>				<span class="k">break</span><span class="p">;</span>
+<a name="line-565"></a>
+<a name="line-566"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">mb</span><span class="p">.</span><span class="n">pressed</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-567"></a>
+<a name="line-568"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_touching</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-569"></a>					<span class="n">set_fixed_process</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-570"></a>					<span class="n">drag_slave_touching_deaccel</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-571"></a>					<span class="n">drag_slave_touching</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-572"></a>					<span class="n">drag_slave_speed</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-573"></a>					<span class="n">drag_slave_accum</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-574"></a>					<span class="n">last_drag_slave_accum</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-575"></a>					<span class="n">drag_slave_from</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-576"></a>				<span class="p">}</span>
+<a name="line-577"></a>
+<a name="line-578"></a>				<span class="k">if</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-579"></a>					<span class="n">drag_slave_speed</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-580"></a>					<span class="n">drag_slave_accum</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-581"></a>					<span class="n">last_drag_slave_accum</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-582"></a>					<span class="c1">//drag_slave_from=Vector2(h_scroll-&gt;get_val(),v_scroll-&gt;get_val());</span>
+<a name="line-583"></a>					<span class="n">drag_slave_from</span><span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="o">?</span><span class="n">get_val</span><span class="p">()</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="o">?</span><span class="n">get_val</span><span class="p">()</span><span class="o">:</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-584"></a>
+<a name="line-585"></a>					<span class="n">drag_slave_touching</span><span class="o">=</span><span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">has_touchscreen_ui_hint</span><span class="p">();</span>
+<a name="line-586"></a>					<span class="n">drag_slave_touching_deaccel</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-587"></a>					<span class="n">time_since_motion</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-588"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_touching</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-589"></a>						<span class="n">set_fixed_process</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-590"></a>						<span class="n">time_since_motion</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-591"></a>
+<a name="line-592"></a>					<span class="p">}</span>
+<a name="line-593"></a>				<span class="p">}</span>
+<a name="line-594"></a>
+<a name="line-595"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-596"></a>
+<a name="line-597"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_touching</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-598"></a>
+<a name="line-599"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_speed</span><span class="o">==</span><span class="n">Vector2</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-600"></a>						<span class="n">drag_slave_touching_deaccel</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-601"></a>						<span class="n">drag_slave_touching</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-602"></a>						<span class="n">set_fixed_process</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-603"></a>					<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-604"></a>
+<a name="line-605"></a>						<span class="n">drag_slave_touching_deaccel</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-606"></a>					<span class="p">}</span>
+<a name="line-607"></a>				<span class="p">}</span>
+<a name="line-608"></a>			<span class="p">}</span>
+<a name="line-609"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-610"></a>		<span class="k">case</span> <span class="n">InputEvent</span><span class="o">::</span><span class="nl">MOUSE_MOTION</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-611"></a>
+<a name="line-612"></a>			<span class="k">const</span> <span class="n">InputEventMouseMotion</span> <span class="o">&amp;</span><span class="n">mm</span><span class="o">=</span><span class="n">p_input</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">;</span>
+<a name="line-613"></a>
+<a name="line-614"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave_touching</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="n">drag_slave_touching_deaccel</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-615"></a>
+<a name="line-616"></a>				<span class="n">Vector2</span> <span class="n">motion</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">mm</span><span class="p">.</span><span class="n">relative_x</span><span class="p">,</span><span class="n">mm</span><span class="p">.</span><span class="n">relative_y</span><span class="p">);</span>
+<a name="line-617"></a>
+<a name="line-618"></a>				<span class="n">drag_slave_accum</span><span class="o">-=</span><span class="n">motion</span><span class="p">;</span>
+<a name="line-619"></a>				<span class="n">Vector2</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">drag_slave_from</span><span class="o">+</span><span class="n">drag_slave_accum</span><span class="p">;</span>
+<a name="line-620"></a>
+<a name="line-621"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+<a name="line-622"></a>					<span class="n">set_val</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<a name="line-623"></a>				<span class="c1">//else</span>
+<a name="line-624"></a>				<span class="c1">//	drag_slave_accum.x=0;</span>
+<a name="line-625"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">orientation</span><span class="o">==</span><span class="n">VERTICAL</span><span class="p">)</span>
+<a name="line-626"></a>					<span class="n">set_val</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<a name="line-627"></a>				<span class="c1">//else</span>
+<a name="line-628"></a>				<span class="c1">//	drag_slave_accum.y=0;</span>
+<a name="line-629"></a>				<span class="n">time_since_motion</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-630"></a>			<span class="p">}</span>
+<a name="line-631"></a>
+<a name="line-632"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-633"></a>	<span class="p">}</span>
+<a name="line-634"></a><span class="p">}</span>
+<a name="line-635"></a>
+<a name="line-636"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">set_drag_slave</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-637"></a>
+<a name="line-638"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">is_inside_tree</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-639"></a>
+<a name="line-640"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-641"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;input_event&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_input&quot;</span><span class="p">);</span>
+<a name="line-642"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;exit_tree&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_exit&quot;</span><span class="p">);</span>
+<a name="line-643"></a>		<span class="p">}</span>
+<a name="line-644"></a>	<span class="p">}</span>
+<a name="line-645"></a>
+<a name="line-646"></a>	<span class="n">drag_slave</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-647"></a>	<span class="n">drag_slave_path</span><span class="o">=</span><span class="n">p_path</span><span class="p">;</span>
+<a name="line-648"></a>
+<a name="line-649"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">is_inside_tree</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-650"></a>
+<a name="line-651"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">has_node</span><span class="p">(</span><span class="n">p_path</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-652"></a>			<span class="n">Node</span> <span class="o">*</span><span class="n">n</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="n">p_path</span><span class="p">);</span>
+<a name="line-653"></a>			<span class="n">drag_slave</span><span class="o">=</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">Control</span><span class="o">&gt;</span><span class="p">();</span>
+<a name="line-654"></a>		<span class="p">}</span>
+<a name="line-655"></a>
+<a name="line-656"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">drag_slave</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-657"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;input_event&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_input&quot;</span><span class="p">);</span>
+<a name="line-658"></a>			<span class="n">drag_slave</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;exit_tree&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_drag_slave_exit&quot;</span><span class="p">,</span><span class="n">varray</span><span class="p">(),</span><span class="n">CONNECT_ONESHOT</span><span class="p">);</span>
+<a name="line-659"></a>		<span class="p">}</span>
+<a name="line-660"></a>	<span class="p">}</span>
+<a name="line-661"></a><span class="p">}</span>
+<a name="line-662"></a>
+<a name="line-663"></a><span class="n">NodePath</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_drag_slave</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
+<a name="line-664"></a>
+<a name="line-665"></a>
+<a name="line-666"></a>	<span class="k">return</span> <span class="n">drag_slave_path</span><span class="p">;</span>
+<a name="line-667"></a><span class="p">}</span>
+<a name="line-668"></a>
+<a name="line-669"></a>
+<a name="line-670"></a>
+<a name="line-671"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-672"></a>
+<a name="line-673"></a><span class="c">void ScrollBar::mouse_button(const Point2&amp; p_pos, int b.button_index,bool b.pressed,int p_modifier_mask) {</span>
+<a name="line-674"></a><span class="c">	</span>
+<a name="line-675"></a><span class="c">	// wheel!	</span>
+<a name="line-676"></a><span class="c">	</span>
+<a name="line-677"></a><span class="c">	if (b.button_index==BUTTON_WHEEL_UP &amp;&amp; b.pressed) {</span>
+<a name="line-678"></a><span class="c">		</span>
+<a name="line-679"></a><span class="c">		if (orientation==VERTICAL)</span>
+<a name="line-680"></a><span class="c">			set_val( get_val() - get_page() / 4.0 );</span>
+<a name="line-681"></a><span class="c">		else</span>
+<a name="line-682"></a><span class="c">			set_val( get_val() + get_page() / 4.0 );</span>
+<a name="line-683"></a><span class="c">		</span>
+<a name="line-684"></a><span class="c">	}</span>
+<a name="line-685"></a><span class="c">	if (b.button_index==BUTTON_WHEEL_DOWN &amp;&amp; b.pressed) {</span>
+<a name="line-686"></a><span class="c">		</span>
+<a name="line-687"></a><span class="c">		if (orientation==HORIZONTAL)</span>
+<a name="line-688"></a><span class="c">			set_val( get_val() - get_page() / 4.0 );</span>
+<a name="line-689"></a><span class="c">		else</span>
+<a name="line-690"></a><span class="c">			set_val( get_val() + get_page() / 4.0  );</span>
+<a name="line-691"></a><span class="c">	}</span>
+<a name="line-692"></a><span class="c">	</span>
+<a name="line-693"></a><span class="c">	if (b.button_index!=BUTTON_LEFT)</span>
+<a name="line-694"></a><span class="c">		return;</span>
+<a name="line-695"></a><span class="c">	</span>
+<a name="line-696"></a><span class="c">	if (b.pressed) {</span>
+<a name="line-697"></a><span class="c">		</span>
+<a name="line-698"></a><span class="c">		int ofs = orientation==VERTICAL ? p_pos.y : p_pos.x ;</span>
+<a name="line-699"></a><span class="c">		int grabber_ofs = get_grabber_offset();</span>
+<a name="line-700"></a><span class="c">		int grabber_size = get_grabber_size();</span>
+<a name="line-701"></a><span class="c">		</span>
+<a name="line-702"></a><span class="c">		if ( ofs &lt; grabber_ofs ) {</span>
+<a name="line-703"></a><span class="c">			</span>
+<a name="line-704"></a><span class="c">			set_val( get_val() - get_page() );</span>
+<a name="line-705"></a><span class="c">			</span>
+<a name="line-706"></a><span class="c">		} else if (ofs &gt; grabber_ofs + grabber_size ) {</span>
+<a name="line-707"></a><span class="c">			</span>
+<a name="line-708"></a><span class="c">			set_val( get_val() + get_page() );</span>
+<a name="line-709"></a><span class="c">			</span>
+<a name="line-710"></a><span class="c">		} else {</span>
+<a name="line-711"></a><span class="c">			</span>
+<a name="line-712"></a><span class="c">			</span>
+<a name="line-713"></a><span class="c">			drag.active=true;</span>
+<a name="line-714"></a><span class="c">			drag.pos_at_click=get_click_pos(p_pos);</span>
+<a name="line-715"></a><span class="c">			drag.value_at_click=get_unit_value();</span>
+<a name="line-716"></a><span class="c">		}</span>
+<a name="line-717"></a><span class="c">		</span>
+<a name="line-718"></a><span class="c">		</span>
+<a name="line-719"></a><span class="c">	} else {</span>
+<a name="line-720"></a><span class="c">		</span>
+<a name="line-721"></a><span class="c">		drag.active=false;</span>
+<a name="line-722"></a><span class="c">	}</span>
+<a name="line-723"></a><span class="c">	</span>
+<a name="line-724"></a><span class="c">}</span>
+<a name="line-725"></a><span class="c">void ScrollBar::mouse_motion(const Point2&amp; p_pos, const Point2&amp; p_rel, int b.button_index_mask) {</span>
+<a name="line-726"></a><span class="c">	</span>
+<a name="line-727"></a><span class="c">	if (!drag.active)</span>
+<a name="line-728"></a><span class="c">		return;</span>
+<a name="line-729"></a><span class="c">	</span>
+<a name="line-730"></a><span class="c">	double value_ofs=drag.value_at_click+(get_click_pos(p_pos)-drag.pos_at_click);</span>
+<a name="line-731"></a><span class="c">	</span>
+<a name="line-732"></a><span class="c">	</span>
+<a name="line-733"></a><span class="c">	value_ofs=value_ofs*( get_max() - get_min() );</span>
+<a name="line-734"></a><span class="c">	if (value_ofs&lt;get_min())</span>
+<a name="line-735"></a><span class="c">		value_ofs=get_min();</span>
+<a name="line-736"></a><span class="c">	if (value_ofs&gt;(get_max()-get_page()))</span>
+<a name="line-737"></a><span class="c">		value_ofs=get_max()-get_page();</span>
+<a name="line-738"></a><span class="c">	if (get_val()==value_ofs)</span>
+<a name="line-739"></a><span class="c">		return; //dont bother if the value is the same</span>
+<a name="line-740"></a><span class="c">	</span>
+<a name="line-741"></a><span class="c">	set_val( value_ofs );</span>
+<a name="line-742"></a><span class="c">	</span>
+<a name="line-743"></a><span class="c">}</span>
+<a name="line-744"></a>
+<a name="line-745"></a><span class="c">bool ScrollBar::key(unsigned long p_unicode, unsigned long p_scan_code,bool b.pressed,bool p_repeat,int p_modifier_mask) {</span>
+<a name="line-746"></a><span class="c">	</span>
+<a name="line-747"></a><span class="c">	if (!b.pressed)</span>
+<a name="line-748"></a><span class="c">		return false;</span>
+<a name="line-749"></a><span class="c">	</span>
+<a name="line-750"></a><span class="c">	switch (p_scan_code) {</span>
+<a name="line-751"></a><span class="c">		</span>
+<a name="line-752"></a><span class="c">	case KEY_LEFT: {</span>
+<a name="line-753"></a><span class="c">		</span>
+<a name="line-754"></a><span class="c">		if (orientation!=HORIZONTAL)</span>
+<a name="line-755"></a><span class="c">			return false;</span>
+<a name="line-756"></a><span class="c">		set_val( get_val() - get_step() );</span>
+<a name="line-757"></a><span class="c">		</span>
+<a name="line-758"></a><span class="c">	} break;</span>
+<a name="line-759"></a><span class="c">	case KEY_RIGHT: {</span>
+<a name="line-760"></a><span class="c">		</span>
+<a name="line-761"></a><span class="c">		if (orientation!=HORIZONTAL)</span>
+<a name="line-762"></a><span class="c">			return false;</span>
+<a name="line-763"></a><span class="c">		set_val( get_val() + get_step() );</span>
+<a name="line-764"></a><span class="c">		</span>
+<a name="line-765"></a><span class="c">	} break;</span>
+<a name="line-766"></a><span class="c">	case KEY_UP: {</span>
+<a name="line-767"></a><span class="c">		</span>
+<a name="line-768"></a><span class="c">		if (orientation!=VERTICAL)</span>
+<a name="line-769"></a><span class="c">			return false;</span>
+<a name="line-770"></a><span class="c">		</span>
+<a name="line-771"></a><span class="c">		set_val( get_val() - get_step() );</span>
+<a name="line-772"></a><span class="c">		</span>
+<a name="line-773"></a><span class="c">		</span>
+<a name="line-774"></a><span class="c">	} break;</span>
+<a name="line-775"></a><span class="c">	case KEY_DOWN: {</span>
+<a name="line-776"></a><span class="c">		</span>
+<a name="line-777"></a><span class="c">		if (orientation!=VERTICAL)</span>
+<a name="line-778"></a><span class="c">			return false;</span>
+<a name="line-779"></a><span class="c">		set_val( get_val() + get_step() );</span>
+<a name="line-780"></a><span class="c">		</span>
+<a name="line-781"></a><span class="c">	} break;</span>
+<a name="line-782"></a><span class="c">	case KEY_HOME: {</span>
+<a name="line-783"></a><span class="c">		</span>
+<a name="line-784"></a><span class="c">		set_val( get_min() );</span>
+<a name="line-785"></a><span class="c">		</span>
+<a name="line-786"></a><span class="c">	} break;</span>
+<a name="line-787"></a><span class="c">	case KEY_END: {</span>
+<a name="line-788"></a><span class="c">		</span>
+<a name="line-789"></a><span class="c">		set_val( get_max() );</span>
+<a name="line-790"></a><span class="c">		</span>
+<a name="line-791"></a><span class="c">	} break;</span>
+<a name="line-792"></a><span class="c">		</span>
+<a name="line-793"></a><span class="c">	default:</span>
+<a name="line-794"></a><span class="c">		return false;</span>
+<a name="line-795"></a><span class="c">		</span>
+<a name="line-796"></a><span class="c">	}</span>
+<a name="line-797"></a><span class="c">	</span>
+<a name="line-798"></a><span class="c">	return true;</span>
+<a name="line-799"></a><span class="c">}</span>
+<a name="line-800"></a>
+<a name="line-801"></a>
+<a name="line-802"></a>
+<a name="line-803"></a><span class="cp">#endif</span>
+<a name="line-804"></a>
+<a name="line-805"></a><span class="kt">void</span> <span class="n">ScrollBar</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-806"></a>
+<a name="line-807"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_input_event&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">ScrollBar</span><span class="o">::</span><span class="n">_input_event</span><span class="p">);</span>
+<a name="line-808"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;set_custom_step&quot;</span><span class="p">,</span><span class="s">&quot;step&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">ScrollBar</span><span class="o">::</span><span class="n">set_custom_step</span><span class="p">);</span>
+<a name="line-809"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;get_custom_step&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">ScrollBar</span><span class="o">::</span><span class="n">get_custom_step</span><span class="p">);</span>
+<a name="line-810"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_drag_slave_input&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">ScrollBar</span><span class="o">::</span><span class="n">_drag_slave_input</span><span class="p">);</span>
+<a name="line-811"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_drag_slave_exit&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">ScrollBar</span><span class="o">::</span><span class="n">_drag_slave_exit</span><span class="p">);</span>
+<a name="line-812"></a>
+<a name="line-813"></a>	<span class="n">ADD_PROPERTY</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">REAL</span><span class="p">,</span><span class="s">&quot;custom_step&quot;</span><span class="p">,</span><span class="n">PROPERTY_HINT_RANGE</span><span class="p">,</span><span class="s">&quot;-1,4096&quot;</span><span class="p">),</span> <span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;set_custom_step&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;get_custom_step&quot;</span><span class="p">));</span>
+<a name="line-814"></a>
+<a name="line-815"></a><span class="p">}</span>
+<a name="line-816"></a>
+<a name="line-817"></a>
+<a name="line-818"></a><span class="hll"><span class="n">ScrollBar</span><span class="o">::</span><span class="n">ScrollBar</span><span class="p">(</span><span class="n">Orientation</span> <span class="n">p_orientation</span><span class="p">)</span><span class='error2'>&lt;--- Member variable 'ScrollBar::last_drag_slave_time' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'ScrollBar::time_since_motion' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'ScrollBar::click_handled' is not initialized in the constructor.</span>
+</span><a name="line-819"></a><span class="p">{</span>
+<a name="line-820"></a>
+<a name="line-821"></a>
+<a name="line-822"></a>	<span class="n">orientation</span><span class="o">=</span><span class="n">p_orientation</span><span class="p">;</span>
+<a name="line-823"></a>	<span class="n">hilite</span><span class="o">=</span><span class="n">HILITE_NONE</span><span class="p">;</span>
+<a name="line-824"></a>	<span class="n">custom_step</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-825"></a>	<span class="n">drag_slave</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-826"></a>		
+<a name="line-827"></a>	<span class="n">drag</span><span class="p">.</span><span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-828"></a>
+<a name="line-829"></a>	<span class="n">drag_slave_speed</span><span class="o">=</span><span class="n">Vector2</span><span class="p">();</span>
+<a name="line-830"></a>	<span class="n">drag_slave_touching</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-831"></a>	<span class="n">drag_slave_touching_deaccel</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-832"></a>
+<a name="line-833"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">focus_by_default</span><span class="p">)</span>
+<a name="line-834"></a>		<span class="n">set_focus_mode</span><span class="p">(</span> <span class="n">FOCUS_ALL</span> <span class="p">);</span>
+<a name="line-835"></a>
+<a name="line-836"></a>		
+<a name="line-837"></a><span class="p">}</span>
+<a name="line-838"></a>
+<a name="line-839"></a>
+<a name="line-840"></a>
+<a name="line-841"></a><span class="n">ScrollBar</span><span class="o">::~</span><span class="n">ScrollBar</span><span class="p">()</span>
+<a name="line-842"></a><span class="p">{</span>
+<a name="line-843"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

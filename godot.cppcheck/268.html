@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/dh/dhtest.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/mdc2/mdc2dgst.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> dhtest.c</p>
-<a href='268.html#line-222'> uselessAssignmentArg 222</a>
+       <p id="filename"><a href="index.html">Defects:</a> mdc2dgst.c</p>
+<a href='268.html#line-130'> variableScope 130</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -313,33 +313,7 @@
 197
 198
 199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/dh/dhtest.c */</span>
+200</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/mdc2/mdc2dgst.c */</span>
 <a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -397,174 +371,160 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cm">/* Until the key-gen callbacks are modified to use newer prototypes, we allow</span>
-<a name="line-60"></a><span class="cm"> * deprecated functions for openssl-internal code */</span>
-<a name="line-61"></a><span class="cp">#ifdef OPENSSL_NO_DEPRECATED</span>
-<a name="line-62"></a><span class="cp">#undef OPENSSL_NO_DEPRECATED</span>
-<a name="line-63"></a><span class="cp">#endif</span>
-<a name="line-64"></a>
-<a name="line-65"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-66"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
-<a name="line-67"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-68"></a>
-<a name="line-69"></a><span class="cp">#include &quot;../e_os.h&quot;</span>
-<a name="line-70"></a>
-<a name="line-71"></a><span class="cp">#include &lt;openssl/crypto.h&gt;</span>
-<a name="line-72"></a><span class="cp">#include &lt;openssl/bio.h&gt;</span>
-<a name="line-73"></a><span class="cp">#include &lt;openssl/bn.h&gt;</span>
-<a name="line-74"></a><span class="cp">#include &lt;openssl/rand.h&gt;</span>
-<a name="line-75"></a><span class="cp">#include &lt;openssl/err.h&gt;</span>
-<a name="line-76"></a>
-<a name="line-77"></a><span class="cp">#ifdef OPENSSL_NO_DH</span>
-<a name="line-78"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<a name="line-79"></a><span class="p">{</span>
-<a name="line-80"></a>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No DH support</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-81"></a>    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-82"></a><span class="p">}</span>
-<a name="line-83"></a><span class="cp">#else</span>
-<a name="line-84"></a><span class="cp">#include &lt;openssl/dh.h&gt;</span>
-<a name="line-85"></a>
-<a name="line-86"></a><span class="cp">#ifdef OPENSSL_SYS_WIN16</span>
-<a name="line-87"></a><span class="cp">#define MS_CALLBACK	_far _loadds</span>
-<a name="line-88"></a><span class="cp">#else</span>
-<a name="line-89"></a><span class="cp">#define MS_CALLBACK</span>
-<a name="line-90"></a><span class="cp">#endif</span>
+<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
+<a name="line-61"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-62"></a><span class="cp">#include &lt;openssl/crypto.h&gt;</span>
+<a name="line-63"></a><span class="cp">#include &lt;openssl/des.h&gt;</span>
+<a name="line-64"></a><span class="cp">#include &lt;openssl/mdc2.h&gt;</span>
+<a name="line-65"></a>
+<a name="line-66"></a><span class="cp">#undef c2l</span>
+<a name="line-67"></a><span class="cp">#define c2l(c,l)	(l =((DES_LONG)(*((c)++)))    , \</span>
+<a name="line-68"></a><span class="cp">			 l|=((DES_LONG)(*((c)++)))&lt;&lt; 8L, \</span>
+<a name="line-69"></a><span class="cp">			 l|=((DES_LONG)(*((c)++)))&lt;&lt;16L, \</span>
+<a name="line-70"></a><span class="cp">			 l|=((DES_LONG)(*((c)++)))&lt;&lt;24L)</span>
+<a name="line-71"></a>
+<a name="line-72"></a><span class="cp">#undef l2c</span>
+<a name="line-73"></a><span class="cp">#define l2c(l,c)	(*((c)++)=(unsigned char)(((l)     )&amp;0xff), \</span>
+<a name="line-74"></a><span class="cp">			*((c)++)=(unsigned char)(((l)&gt;&gt; 8L)&amp;0xff), \</span>
+<a name="line-75"></a><span class="cp">			*((c)++)=(unsigned char)(((l)&gt;&gt;16L)&amp;0xff), \</span>
+<a name="line-76"></a><span class="cp">			*((c)++)=(unsigned char)(((l)&gt;&gt;24L)&amp;0xff))</span>
+<a name="line-77"></a>
+<a name="line-78"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">mdc2_body</span><span class="p">(</span><span class="n">MDC2_CTX</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">);</span>
+<a name="line-79"></a><span class="n">fips_md_init</span><span class="p">(</span><span class="n">MDC2</span><span class="p">)</span>
+<a name="line-80"></a>	<span class="p">{</span>
+<a name="line-81"></a>	<span class="n">c</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-82"></a>	<span class="n">c</span><span class="o">-&gt;</span><span class="n">pad_type</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-83"></a>	<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="mh">0x52</span><span class="p">,</span><span class="n">MDC2_BLOCK</span><span class="p">);</span>
+<a name="line-84"></a>	<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="mh">0x25</span><span class="p">,</span><span class="n">MDC2_BLOCK</span><span class="p">);</span>
+<a name="line-85"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-86"></a>	<span class="p">}</span>
+<a name="line-87"></a>
+<a name="line-88"></a><span class="kt">int</span> <span class="n">MDC2_Update</span><span class="p">(</span><span class="n">MDC2_CTX</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">)</span>
+<a name="line-89"></a>	<span class="p">{</span>
+<a name="line-90"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
 <a name="line-91"></a>
-<a name="line-92"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">MS_CALLBACK</span> <span class="nf">cb</span><span class="p">(</span><span class="kt">int</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">BN_GENCB</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
-<a name="line-93"></a>
-<a name="line-94"></a><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">rnd_seed</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;string to make the random number generator think it has entropy&quot;</span><span class="p">;</span>
-<a name="line-95"></a>
-<a name="line-96"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<a name="line-97"></a>	<span class="p">{</span>
-<a name="line-98"></a>	<span class="n">BN_GENCB</span> <span class="n">_cb</span><span class="p">;</span>
-<a name="line-99"></a>	<span class="n">DH</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
-<a name="line-100"></a>	<span class="n">DH</span> <span class="o">*</span><span class="n">b</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-101"></a>	<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span>
-<a name="line-102"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">abuf</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="o">*</span><span class="n">bbuf</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-103"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">alen</span><span class="p">,</span><span class="n">blen</span><span class="p">,</span><span class="n">aout</span><span class="p">,</span><span class="n">bout</span><span class="p">,</span><span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-104"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">out</span><span class="p">;</span>
-<a name="line-105"></a>
-<a name="line-106"></a>	<span class="n">CRYPTO_malloc_debug_init</span><span class="p">();</span>
-<a name="line-107"></a>	<span class="n">CRYPTO_dbg_set_options</span><span class="p">(</span><span class="n">V_CRYPTO_MDEBUG_ALL</span><span class="p">);</span>
-<a name="line-108"></a>	<span class="n">CRYPTO_mem_ctrl</span><span class="p">(</span><span class="n">CRYPTO_MEM_CHECK_ON</span><span class="p">);</span>
-<a name="line-109"></a>
-<a name="line-110"></a><span class="cp">#ifdef OPENSSL_SYS_WIN32</span>
-<a name="line-111"></a>	<span class="n">CRYPTO_malloc_init</span><span class="p">();</span>
-<a name="line-112"></a><span class="cp">#endif</span>
-<a name="line-113"></a>
-<a name="line-114"></a>	<span class="n">RAND_seed</span><span class="p">(</span><span class="n">rnd_seed</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">rnd_seed</span><span class="p">);</span>
-<a name="line-115"></a>
-<a name="line-116"></a>	<span class="n">out</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_file</span><span class="p">());</span>
-<a name="line-117"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">out</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">EXIT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-118"></a>	<span class="n">BIO_set_fp</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">stdout</span><span class="p">,</span><span class="n">BIO_NOCLOSE</span><span class="p">);</span>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="n">BN_GENCB_set</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_cb</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cb</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
-<a name="line-121"></a>	<span class="k">if</span><span class="p">(((</span><span class="n">a</span> <span class="o">=</span> <span class="n">DH_new</span><span class="p">())</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="n">DH_generate_parameters_ex</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span>
-<a name="line-122"></a>				<span class="n">DH_GENERATOR_5</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_cb</span><span class="p">))</span>
-<a name="line-123"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">DH_check</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-126"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">DH_CHECK_P_NOT_PRIME</span><span class="p">)</span>
-<a name="line-127"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;p value is not prime</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-128"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">DH_CHECK_P_NOT_SAFE_PRIME</span><span class="p">)</span>
-<a name="line-129"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;p value is not a safe prime</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-130"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">DH_UNABLE_TO_CHECK_GENERATOR</span><span class="p">)</span>
-<a name="line-131"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;unable to check the generator value</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-132"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">DH_NOT_SUITABLE_GENERATOR</span><span class="p">)</span>
-<a name="line-133"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;the g value is not a generator</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-134"></a>
-<a name="line-135"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">p    =&quot;</span><span class="p">);</span>
-<a name="line-136"></a>	<span class="n">BN_print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span>
-<a name="line-137"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">g    =&quot;</span><span class="p">);</span>
-<a name="line-138"></a>	<span class="n">BN_print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">g</span><span class="p">);</span>
-<a name="line-139"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-140"></a>
-<a name="line-141"></a>	<span class="n">b</span><span class="o">=</span><span class="n">DH_new</span><span class="p">();</span>
-<a name="line-142"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-92"></a>	<span class="n">i</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
+<a name="line-93"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-94"></a>		<span class="p">{</span>
+<a name="line-95"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">MDC2_BLOCK</span><span class="p">)</span>
+<a name="line-96"></a>			<span class="p">{</span>
+<a name="line-97"></a>			<span class="cm">/* partial block */</span>
+<a name="line-98"></a>			<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">len</span><span class="p">);</span>
+<a name="line-99"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">+=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">len</span><span class="p">;</span>
+<a name="line-100"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-101"></a>			<span class="p">}</span>
+<a name="line-102"></a>		<span class="k">else</span>
+<a name="line-103"></a>			<span class="p">{</span>
+<a name="line-104"></a>			<span class="cm">/* filled one */</span>
+<a name="line-105"></a>			<span class="n">j</span><span class="o">=</span><span class="n">MDC2_BLOCK</span><span class="o">-</span><span class="n">i</span><span class="p">;</span>
+<a name="line-106"></a>			<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+<a name="line-107"></a>			<span class="n">len</span><span class="o">-=</span><span class="n">j</span><span class="p">;</span>
+<a name="line-108"></a>			<span class="n">in</span><span class="o">+=</span><span class="n">j</span><span class="p">;</span>
+<a name="line-109"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-110"></a>			<span class="n">mdc2_body</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">MDC2_BLOCK</span><span class="p">);</span>
+<a name="line-111"></a>			<span class="p">}</span>
+<a name="line-112"></a>		<span class="p">}</span>
+<a name="line-113"></a>	<span class="n">i</span><span class="o">=</span><span class="n">len</span><span class="o">&amp;~</span><span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="n">MDC2_BLOCK</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-114"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">mdc2_body</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+<a name="line-115"></a>	<span class="n">j</span><span class="o">=</span><span class="n">len</span><span class="o">-</span><span class="n">i</span><span class="p">;</span>
+<a name="line-116"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-117"></a>		<span class="p">{</span>
+<a name="line-118"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="o">&amp;</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">j</span><span class="p">);</span>
+<a name="line-119"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">j</span><span class="p">;</span>
+<a name="line-120"></a>		<span class="p">}</span>
+<a name="line-121"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-122"></a>	<span class="p">}</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">mdc2_body</span><span class="p">(</span><span class="n">MDC2_CTX</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">)</span>
+<a name="line-125"></a>	<span class="p">{</span>
+<a name="line-126"></a>	<span class="k">register</span> <span class="n">DES_LONG</span> <span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-127"></a>	<span class="k">register</span> <span class="n">DES_LONG</span> <span class="n">ttin0</span><span class="p">,</span><span class="n">ttin1</span><span class="p">;</span>
+<a name="line-128"></a>	<span class="n">DES_LONG</span> <span class="n">d</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">dd</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-129"></a>	<span class="n">DES_key_schedule</span> <span class="n">k</span><span class="p">;</span>
+<a name="line-130"></a><span class="hll">	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'p' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;p&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-131"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-132"></a>
+<a name="line-133"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-134"></a>		<span class="p">{</span>
+<a name="line-135"></a>		<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">dd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
+<a name="line-136"></a>		<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">dd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
+<a name="line-137"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&amp;</span><span class="mh">0x9f</span><span class="p">)</span><span class="o">|</span><span class="mh">0x40</span><span class="p">;</span>
+<a name="line-138"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&amp;</span><span class="mh">0x9f</span><span class="p">)</span><span class="o">|</span><span class="mh">0x20</span><span class="p">;</span>
+<a name="line-139"></a>
+<a name="line-140"></a>		<span class="n">DES_set_odd_parity</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">);</span>
+<a name="line-141"></a>		<span class="n">DES_set_key_unchecked</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">,</span><span class="o">&amp;</span><span class="n">k</span><span class="p">);</span>
+<a name="line-142"></a>		<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="o">&amp;</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 <a name="line-143"></a>
-<a name="line-144"></a>	<span class="n">b</span><span class="o">-&gt;</span><span class="n">p</span><span class="o">=</span><span class="n">BN_dup</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span>
-<a name="line-145"></a>	<span class="n">b</span><span class="o">-&gt;</span><span class="n">g</span><span class="o">=</span><span class="n">BN_dup</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">g</span><span class="p">);</span>
-<a name="line-146"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">g</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-144"></a>		<span class="n">DES_set_odd_parity</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">);</span>
+<a name="line-145"></a>		<span class="n">DES_set_key_unchecked</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">,</span><span class="o">&amp;</span><span class="n">k</span><span class="p">);</span>
+<a name="line-146"></a>		<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="o">&amp;</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
 <a name="line-147"></a>
-<a name="line-148"></a>	<span class="cm">/* Set a to run with normal modexp and b to use constant time */</span>
-<a name="line-149"></a>	<span class="n">a</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">DH_FLAG_NO_EXP_CONSTTIME</span><span class="p">;</span>
-<a name="line-150"></a>	<span class="n">b</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">DH_FLAG_NO_EXP_CONSTTIME</span><span class="p">;</span>
-<a name="line-151"></a>
-<a name="line-152"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">DH_generate_key</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-153"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;pri 1=&quot;</span><span class="p">);</span>
-<a name="line-154"></a>	<span class="n">BN_print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">priv_key</span><span class="p">);</span>
-<a name="line-155"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">pub 1=&quot;</span><span class="p">);</span>
-<a name="line-156"></a>	<span class="n">BN_print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">pub_key</span><span class="p">);</span>
-<a name="line-157"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-158"></a>
-<a name="line-159"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">DH_generate_key</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-160"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;pri 2=&quot;</span><span class="p">);</span>
-<a name="line-161"></a>	<span class="n">BN_print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">priv_key</span><span class="p">);</span>
-<a name="line-162"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">pub 2=&quot;</span><span class="p">);</span>
-<a name="line-163"></a>	<span class="n">BN_print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">pub_key</span><span class="p">);</span>
-<a name="line-164"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-165"></a>
-<a name="line-166"></a>	<span class="n">alen</span><span class="o">=</span><span class="n">DH_size</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-<a name="line-167"></a>	<span class="n">abuf</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">alen</span><span class="p">);</span>
-<a name="line-168"></a>	<span class="n">aout</span><span class="o">=</span><span class="n">DH_compute_key</span><span class="p">(</span><span class="n">abuf</span><span class="p">,</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">pub_key</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
-<a name="line-169"></a>
-<a name="line-170"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;key1 =&quot;</span><span class="p">);</span>
-<a name="line-171"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">aout</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-172"></a>		<span class="p">{</span>
-<a name="line-173"></a>		<span class="n">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="n">abuf</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-174"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">buf</span><span class="p">);</span>
+<a name="line-148"></a>		<span class="n">ttin0</span><span class="o">=</span><span class="n">tin0</span><span class="o">^</span><span class="n">dd</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-149"></a>		<span class="n">ttin1</span><span class="o">=</span><span class="n">tin1</span><span class="o">^</span><span class="n">dd</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-150"></a>		<span class="n">tin0</span><span class="o">^=</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-151"></a>		<span class="n">tin1</span><span class="o">^=</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-152"></a>
+<a name="line-153"></a>		<span class="n">p</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">;</span>
+<a name="line-154"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">tin0</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+<a name="line-155"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">ttin1</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+<a name="line-156"></a>		<span class="n">p</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">;</span>
+<a name="line-157"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">ttin0</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+<a name="line-158"></a>		<span class="n">l2c</span><span class="p">(</span><span class="n">tin1</span><span class="p">,</span><span class="n">p</span><span class="p">);</span>
+<a name="line-159"></a>		<span class="p">}</span>
+<a name="line-160"></a>	<span class="p">}</span>
+<a name="line-161"></a>
+<a name="line-162"></a><span class="kt">int</span> <span class="n">MDC2_Final</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">md</span><span class="p">,</span> <span class="n">MDC2_CTX</span> <span class="o">*</span><span class="n">c</span><span class="p">)</span>
+<a name="line-163"></a>	<span class="p">{</span>
+<a name="line-164"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-165"></a>	<span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+<a name="line-166"></a>
+<a name="line-167"></a>	<span class="n">i</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
+<a name="line-168"></a>	<span class="n">j</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">pad_type</span><span class="p">;</span>
+<a name="line-169"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))</span>
+<a name="line-170"></a>		<span class="p">{</span>
+<a name="line-171"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<a name="line-172"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="mh">0x80</span><span class="p">;</span>
+<a name="line-173"></a>		<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="mi">0</span><span class="p">,</span><span class="n">MDC2_BLOCK</span><span class="o">-</span><span class="n">i</span><span class="p">);</span>
+<a name="line-174"></a>		<span class="n">mdc2_body</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span><span class="n">MDC2_BLOCK</span><span class="p">);</span>
 <a name="line-175"></a>		<span class="p">}</span>
-<a name="line-176"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-177"></a>
-<a name="line-178"></a>	<span class="n">blen</span><span class="o">=</span><span class="n">DH_size</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-179"></a>	<span class="n">bbuf</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">blen</span><span class="p">);</span>
-<a name="line-180"></a>	<span class="n">bout</span><span class="o">=</span><span class="n">DH_compute_key</span><span class="p">(</span><span class="n">bbuf</span><span class="p">,</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">pub_key</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
-<a name="line-181"></a>
-<a name="line-182"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;key2 =&quot;</span><span class="p">);</span>
-<a name="line-183"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">bout</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-184"></a>		<span class="p">{</span>
-<a name="line-185"></a>		<span class="n">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="n">bbuf</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-186"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">buf</span><span class="p">);</span>
-<a name="line-187"></a>		<span class="p">}</span>
-<a name="line-188"></a>	<span class="n">BIO_puts</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-189"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">aout</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">bout</span> <span class="o">!=</span> <span class="n">aout</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">abuf</span><span class="p">,</span><span class="n">bbuf</span><span class="p">,</span><span class="n">aout</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span>
-<a name="line-190"></a>		<span class="p">{</span>
-<a name="line-191"></a>		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;Error in DH routines</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-192"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-193"></a>		<span class="p">}</span>
-<a name="line-194"></a>	<span class="k">else</span>
-<a name="line-195"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-196"></a><span class="nl">err</span><span class="p">:</span>
-<a name="line-197"></a>	<span class="n">ERR_print_errors_fp</span><span class="p">(</span><span class="n">stderr</span><span class="p">);</span>
-<a name="line-198"></a>
-<a name="line-199"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">abuf</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">abuf</span><span class="p">);</span>
-<a name="line-200"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">bbuf</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">bbuf</span><span class="p">);</span>
-<a name="line-201"></a>	<span class="k">if</span><span class="p">(</span><span class="n">b</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">DH_free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-202"></a>	<span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">DH_free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
-<a name="line-203"></a>	<span class="n">BIO_free</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
-<a name="line-204"></a><span class="cp">#ifdef OPENSSL_SYS_NETWARE</span>
-<a name="line-205"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
-<a name="line-206"></a><span class="cp">#endif</span>
-<a name="line-207"></a>	<span class="n">EXIT</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-208"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-209"></a>	<span class="p">}</span>
-<a name="line-210"></a>
-<a name="line-211"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">MS_CALLBACK</span> <span class="nf">cb</span><span class="p">(</span><span class="kt">int</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">BN_GENCB</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
-<a name="line-212"></a>	<span class="p">{</span>
-<a name="line-213"></a>	<span class="kt">char</span> <span class="n">c</span><span class="o">=</span><span class="sc">&#39;*&#39;</span><span class="p">;</span>
-<a name="line-214"></a>
-<a name="line-215"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">c</span><span class="o">=</span><span class="sc">&#39;.&#39;</span><span class="p">;</span>
-<a name="line-216"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">c</span><span class="o">=</span><span class="sc">&#39;+&#39;</span><span class="p">;</span>
-<a name="line-217"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="n">c</span><span class="o">=</span><span class="sc">&#39;*&#39;</span><span class="p">;</span>
-<a name="line-218"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="n">c</span><span class="o">=</span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-<a name="line-219"></a>	<span class="n">BIO_write</span><span class="p">(</span><span class="n">arg</span><span class="o">-&gt;</span><span class="n">arg</span><span class="p">,</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-220"></a>	<span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">BIO_flush</span><span class="p">(</span><span class="n">arg</span><span class="o">-&gt;</span><span class="n">arg</span><span class="p">);</span>
-<a name="line-221"></a><span class="cp">#ifdef LINT</span>
-<a name="line-222"></a><span class="hll">	<span class="n">p</span><span class="o">=</span><span class="n">n</span><span class="p">;</span><span class='error2'>&lt;--- Assignment of function parameter has no effect outside the function.</span>
-</span><a name="line-223"></a><span class="cp">#endif</span>
-<a name="line-224"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-225"></a>	<span class="p">}</span>
-<a name="line-226"></a><span class="cp">#endif</span>
+<a name="line-176"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="n">md</span><span class="p">,(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">,</span><span class="n">MDC2_BLOCK</span><span class="p">);</span>
+<a name="line-177"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="n">MDC2_BLOCK</span><span class="p">]),(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">hh</span><span class="p">,</span><span class="n">MDC2_BLOCK</span><span class="p">);</span>
+<a name="line-178"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-179"></a>	<span class="p">}</span>
+<a name="line-180"></a>
+<a name="line-181"></a><span class="cp">#undef TEST</span>
+<a name="line-182"></a>
+<a name="line-183"></a><span class="cp">#ifdef TEST</span>
+<a name="line-184"></a><span class="n">main</span><span class="p">()</span>
+<a name="line-185"></a>	<span class="p">{</span>
+<a name="line-186"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">md</span><span class="p">[</span><span class="n">MDC2_DIGEST_LENGTH</span><span class="p">];</span>
+<a name="line-187"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-188"></a>	<span class="n">MDC2_CTX</span> <span class="n">c</span><span class="p">;</span>
+<a name="line-189"></a>	<span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;Now is the time for all &quot;</span><span class="p">;</span>
+<a name="line-190"></a>
+<a name="line-191"></a>	<span class="n">MDC2_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+<a name="line-192"></a>	<span class="n">MDC2_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="n">text</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">));</span>
+<a name="line-193"></a>	<span class="n">MDC2_Final</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+<a name="line-194"></a>
+<a name="line-195"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">MDC2_DIGEST_LENGTH</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-196"></a>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02X&quot;</span><span class="p">,</span><span class="n">md</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a name="line-197"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-198"></a>	<span class="p">}</span>
+<a name="line-199"></a>
+<a name="line-200"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

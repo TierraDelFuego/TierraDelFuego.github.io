@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: tools/editor/io_plugins/editor_translation_import_plugin.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/freetype/freetype/src/gxvalid/gxvmorx2.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> editor_translation_import_plugin.cpp</p>
-<a href='890.html#line-293'> noExplicitConstructor 293</a><a href='890.html#line-408'> unreadVariable 408</a>
+       <p id="filename"><a href="index.html">Defects:</a> gxvmorx2.c</p>
+<a href='890.html#line-252'> unreadVariable 252</a><a href='890.html#line-320'> unreadVariable 320</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -440,593 +440,333 @@
 324
 325
 326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  editor_translation_import_plugin.cpp                                 */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;editor_translation_import_plugin.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;scene/gui/file_dialog.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;tools/editor/editor_dir_dialog.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;tools/editor/editor_node.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;tools/editor/property_editor.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;scene/resources/sample.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;io/resource_saver.h&quot;</span>
-<a name="line-36"></a><span class="cp">#include &quot;os/file_access.h&quot;</span>
-<a name="line-37"></a><span class="cp">#include &quot;translation.h&quot;</span>
-<a name="line-38"></a><span class="cp">#include &quot;compressed_translation.h&quot;</span>
-<a name="line-39"></a><span class="cp">#include &quot;tools/editor/project_settings.h&quot;</span>
+327</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*                                                                         */</span>
+<a name="line-3"></a><span class="cm">/*  gxvmorx2.c                                                             */</span>
+<a name="line-4"></a><span class="cm">/*                                                                         */</span>
+<a name="line-5"></a><span class="cm">/*    TrueTypeGX/AAT morx table validation                                 */</span>
+<a name="line-6"></a><span class="cm">/*    body for type2 (Ligature Substitution) subtable.                     */</span>
+<a name="line-7"></a><span class="cm">/*                                                                         */</span>
+<a name="line-8"></a><span class="cm">/*  Copyright 2005 by suzuki toshiya, Masatake YAMATO, Red Hat K.K.,       */</span>
+<a name="line-9"></a><span class="cm">/*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */</span>
+<a name="line-10"></a><span class="cm">/*                                                                         */</span>
+<a name="line-11"></a><span class="cm">/*  This file is part of the FreeType project, and may only be used,       */</span>
+<a name="line-12"></a><span class="cm">/*  modified, and distributed under the terms of the FreeType project      */</span>
+<a name="line-13"></a><span class="cm">/*  license, LICENSE.TXT.  By continuing to use, modify, or distribute     */</span>
+<a name="line-14"></a><span class="cm">/*  this file you indicate that you have read the license and              */</span>
+<a name="line-15"></a><span class="cm">/*  understand and accept it fully.                                        */</span>
+<a name="line-16"></a><span class="cm">/*                                                                         */</span>
+<a name="line-17"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-18"></a>
+<a name="line-19"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-20"></a><span class="cm">/*                                                                         */</span>
+<a name="line-21"></a><span class="cm">/* gxvalid is derived from both gxlayout module and otvalid module.        */</span>
+<a name="line-22"></a><span class="cm">/* Development of gxlayout is supported by the Information-technology      */</span>
+<a name="line-23"></a><span class="cm">/* Promotion Agency(IPA), Japan.                                           */</span>
+<a name="line-24"></a><span class="cm">/*                                                                         */</span>
+<a name="line-25"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-26"></a>
+<a name="line-27"></a>
+<a name="line-28"></a><span class="cp">#include &quot;gxvmorx.h&quot;</span>
+<a name="line-29"></a>
+<a name="line-30"></a>
+<a name="line-31"></a>  <span class="cm">/*************************************************************************/</span>
+<a name="line-32"></a>  <span class="cm">/*                                                                       */</span>
+<a name="line-33"></a>  <span class="cm">/* The macro FT_COMPONENT is used in trace mode.  It is an implicit      */</span>
+<a name="line-34"></a>  <span class="cm">/* parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log  */</span>
+<a name="line-35"></a>  <span class="cm">/* messages during execution.                                            */</span>
+<a name="line-36"></a>  <span class="cm">/*                                                                       */</span>
+<a name="line-37"></a><span class="cp">#undef  FT_COMPONENT</span>
+<a name="line-38"></a><span class="cp">#define FT_COMPONENT  trace_gxvmorx</span>
+<a name="line-39"></a>
 <a name="line-40"></a>
-<a name="line-41"></a>
-<a name="line-42"></a><span class="k">class</span> <span class="nc">EditorTranslationImportDialog</span> <span class="o">:</span> <span class="k">public</span> <span class="n">ConfirmationDialog</span> <span class="p">{</span>
-<a name="line-43"></a>
-<a name="line-44"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">EditorTranslationImportDialog</span><span class="p">,</span><span class="n">ConfirmationDialog</span><span class="p">);</span>
-<a name="line-45"></a>
-<a name="line-46"></a>	<span class="n">EditorTranslationImportPlugin</span> <span class="o">*</span><span class="n">plugin</span><span class="p">;</span>
-<a name="line-47"></a>
-<a name="line-48"></a>	<span class="n">LineEdit</span> <span class="o">*</span><span class="n">import_path</span><span class="p">;</span>
-<a name="line-49"></a>	<span class="n">LineEdit</span> <span class="o">*</span><span class="n">save_path</span><span class="p">;</span>
-<a name="line-50"></a>	<span class="n">EditorFileDialog</span> <span class="o">*</span><span class="n">file_select</span><span class="p">;</span>
-<a name="line-51"></a>	<span class="n">CheckButton</span> <span class="o">*</span><span class="n">ignore_first</span><span class="p">;</span>
-<a name="line-52"></a>	<span class="n">CheckButton</span> <span class="o">*</span><span class="n">compress</span><span class="p">;</span>
-<a name="line-53"></a>	<span class="n">CheckButton</span> <span class="o">*</span><span class="n">add_to_project</span><span class="p">;</span>
-<a name="line-54"></a>	<span class="n">EditorDirDialog</span> <span class="o">*</span><span class="n">save_select</span><span class="p">;</span>
-<a name="line-55"></a>	<span class="n">ConfirmationDialog</span> <span class="o">*</span><span class="n">error_dialog</span><span class="p">;</span>
-<a name="line-56"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">TreeItem</span><span class="o">*&gt;</span> <span class="n">items</span><span class="p">;</span>
-<a name="line-57"></a>	<span class="n">Tree</span> <span class="o">*</span><span class="n">columns</span><span class="p">;</span>
-<a name="line-58"></a>
-<a name="line-59"></a><span class="k">public</span><span class="o">:</span>
-<a name="line-60"></a>
-<a name="line-61"></a>	<span class="kt">void</span> <span class="n">_choose_file</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-62"></a>
-<a name="line-63"></a>		<span class="n">import_path</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="n">p_path</span><span class="p">);</span>
-<a name="line-64"></a>		<span class="n">FileAccess</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">p_path</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">READ</span><span class="p">);</span>
-<a name="line-65"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-66"></a>
-<a name="line-67"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Invalid source!&quot;</span><span class="p">);</span>
-<a name="line-68"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">100</span><span class="p">));</span>
-<a name="line-69"></a>			<span class="k">return</span><span class="p">;</span>
-<a name="line-70"></a>
-<a name="line-71"></a>		<span class="p">}</span>
-<a name="line-72"></a>
-<a name="line-73"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">csvh</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_csv_line</span><span class="p">();</span>
-<a name="line-74"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
-<a name="line-75"></a>
-<a name="line-76"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">csvh</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-77"></a>
-<a name="line-78"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Invalid translation source!&quot;</span><span class="p">);</span>
-<a name="line-79"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">100</span><span class="p">));</span>
-<a name="line-80"></a>			<span class="k">return</span><span class="p">;</span>
+<a name="line-41"></a>  <span class="k">typedef</span> <span class="k">struct</span>  <span class="n">GXV_morx_subtable_type2_StateOptRec_</span>
+<a name="line-42"></a>  <span class="p">{</span>
+<a name="line-43"></a>    <span class="n">FT_ULong</span>  <span class="n">ligActionTable</span><span class="p">;</span>
+<a name="line-44"></a>    <span class="n">FT_ULong</span>  <span class="n">componentTable</span><span class="p">;</span>
+<a name="line-45"></a>    <span class="n">FT_ULong</span>  <span class="n">ligatureTable</span><span class="p">;</span>
+<a name="line-46"></a>    <span class="n">FT_ULong</span>  <span class="n">ligActionTable_length</span><span class="p">;</span>
+<a name="line-47"></a>    <span class="n">FT_ULong</span>  <span class="n">componentTable_length</span><span class="p">;</span>
+<a name="line-48"></a>    <span class="n">FT_ULong</span>  <span class="n">ligatureTable_length</span><span class="p">;</span>
+<a name="line-49"></a>
+<a name="line-50"></a>  <span class="p">}</span>  <span class="n">GXV_morx_subtable_type2_StateOptRec</span><span class="p">,</span>
+<a name="line-51"></a>    <span class="o">*</span><span class="n">GXV_morx_subtable_type2_StateOptRecData</span><span class="p">;</span>
+<a name="line-52"></a>
+<a name="line-53"></a>
+<a name="line-54"></a><span class="cp">#define GXV_MORX_SUBTABLE_TYPE2_HEADER_SIZE \</span>
+<a name="line-55"></a><span class="cp">          ( GXV_XSTATETABLE_HEADER_SIZE + 4 + 4 + 4 )</span>
+<a name="line-56"></a>
+<a name="line-57"></a>
+<a name="line-58"></a>  <span class="k">static</span> <span class="kt">void</span>
+<a name="line-59"></a>  <span class="nf">gxv_morx_subtable_type2_opttable_load</span><span class="p">(</span> <span class="n">FT_Bytes</span>       <span class="n">table</span><span class="p">,</span>
+<a name="line-60"></a>                                         <span class="n">FT_Bytes</span>       <span class="n">limit</span><span class="p">,</span>
+<a name="line-61"></a>                                         <span class="n">GXV_Validator</span>  <span class="n">valid</span> <span class="p">)</span>
+<a name="line-62"></a>  <span class="p">{</span>
+<a name="line-63"></a>    <span class="n">FT_Bytes</span>  <span class="n">p</span> <span class="o">=</span> <span class="n">table</span><span class="p">;</span>
+<a name="line-64"></a>
+<a name="line-65"></a>    <span class="n">GXV_morx_subtable_type2_StateOptRecData</span>  <span class="n">optdata</span> <span class="o">=</span>
+<a name="line-66"></a>      <span class="p">(</span><span class="n">GXV_morx_subtable_type2_StateOptRecData</span><span class="p">)</span><span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">optdata</span><span class="p">;</span>
+<a name="line-67"></a>
+<a name="line-68"></a>
+<a name="line-69"></a>    <span class="n">GXV_LIMIT_CHECK</span><span class="p">(</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">4</span> <span class="p">);</span>
+<a name="line-70"></a>    <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable</span> <span class="o">=</span> <span class="n">FT_NEXT_ULONG</span><span class="p">(</span> <span class="n">p</span> <span class="p">);</span>
+<a name="line-71"></a>    <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">componentTable</span> <span class="o">=</span> <span class="n">FT_NEXT_ULONG</span><span class="p">(</span> <span class="n">p</span> <span class="p">);</span>
+<a name="line-72"></a>    <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span>  <span class="o">=</span> <span class="n">FT_NEXT_ULONG</span><span class="p">(</span> <span class="n">p</span> <span class="p">);</span>
+<a name="line-73"></a>
+<a name="line-74"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;offset to ligActionTable=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-75"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable</span> <span class="p">));</span>
+<a name="line-76"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;offset to componentTable=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-77"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">componentTable</span> <span class="p">));</span>
+<a name="line-78"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;offset to ligatureTable=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-79"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span> <span class="p">));</span>
+<a name="line-80"></a>  <span class="p">}</span>
 <a name="line-81"></a>
-<a name="line-82"></a>		<span class="p">}</span>
-<a name="line-83"></a>
-<a name="line-84"></a>		<span class="n">columns</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-85"></a>		<span class="n">columns</span><span class="o">-&gt;</span><span class="n">set_columns</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-86"></a>		<span class="n">TreeItem</span> <span class="o">*</span><span class="n">root</span> <span class="o">=</span> <span class="n">columns</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">();</span>
-<a name="line-87"></a>		<span class="n">columns</span><span class="o">-&gt;</span><span class="n">set_hide_root</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-88"></a>		<span class="n">columns</span><span class="o">-&gt;</span><span class="n">set_column_titles_visible</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-89"></a>		<span class="n">columns</span><span class="o">-&gt;</span><span class="n">set_column_title</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;Column&quot;</span><span class="p">);</span>
-<a name="line-90"></a>		<span class="n">columns</span><span class="o">-&gt;</span><span class="n">set_column_title</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">&quot;Language&quot;</span><span class="p">);</span>
-<a name="line-91"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">langs</span> <span class="o">=</span> <span class="n">TranslationServer</span><span class="o">::</span><span class="n">get_all_locales</span><span class="p">();</span>
-<a name="line-92"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="n">TranslationServer</span><span class="o">::</span><span class="n">get_all_locale_names</span><span class="p">();</span>
-<a name="line-93"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">csvh</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-<a name="line-94"></a>			<span class="n">ignore_first</span><span class="o">-&gt;</span><span class="n">set_pressed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-95"></a>
+<a name="line-82"></a>
+<a name="line-83"></a>  <span class="k">static</span> <span class="kt">void</span>
+<a name="line-84"></a>  <span class="nf">gxv_morx_subtable_type2_subtable_setup</span><span class="p">(</span> <span class="n">FT_ULong</span>       <span class="n">table_size</span><span class="p">,</span>
+<a name="line-85"></a>                                          <span class="n">FT_ULong</span>       <span class="n">classTable</span><span class="p">,</span>
+<a name="line-86"></a>                                          <span class="n">FT_ULong</span>       <span class="n">stateArray</span><span class="p">,</span>
+<a name="line-87"></a>                                          <span class="n">FT_ULong</span>       <span class="n">entryTable</span><span class="p">,</span>
+<a name="line-88"></a>                                          <span class="n">FT_ULong</span><span class="o">*</span>      <span class="n">classTable_length_p</span><span class="p">,</span>
+<a name="line-89"></a>                                          <span class="n">FT_ULong</span><span class="o">*</span>      <span class="n">stateArray_length_p</span><span class="p">,</span>
+<a name="line-90"></a>                                          <span class="n">FT_ULong</span><span class="o">*</span>      <span class="n">entryTable_length_p</span><span class="p">,</span>
+<a name="line-91"></a>                                          <span class="n">GXV_Validator</span>  <span class="n">valid</span> <span class="p">)</span>
+<a name="line-92"></a>  <span class="p">{</span>
+<a name="line-93"></a>    <span class="n">FT_ULong</span>   <span class="n">o</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<a name="line-94"></a>    <span class="n">FT_ULong</span><span class="o">*</span>  <span class="n">l</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<a name="line-95"></a>    <span class="n">FT_ULong</span>   <span class="n">buff</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
 <a name="line-96"></a>
-<a name="line-97"></a>		<span class="n">items</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-98"></a>
-<a name="line-99"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">csvh</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-97"></a>    <span class="n">GXV_morx_subtable_type2_StateOptRecData</span>  <span class="n">optdata</span> <span class="o">=</span>
+<a name="line-98"></a>      <span class="p">(</span><span class="n">GXV_morx_subtable_type2_StateOptRecData</span><span class="p">)</span><span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">optdata</span><span class="p">;</span>
+<a name="line-99"></a>
 <a name="line-100"></a>
-<a name="line-101"></a>			<span class="n">TreeItem</span> <span class="o">*</span><span class="n">ti</span> <span class="o">=</span> <span class="n">columns</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a name="line-101"></a>    <span class="n">GXV_NAME_ENTER</span><span class="p">(</span> <span class="s">&quot;subtable boundaries setup&quot;</span> <span class="p">);</span>
 <a name="line-102"></a>
-<a name="line-103"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-104"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_selectable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-105"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_CHECK</span><span class="p">);</span>
-<a name="line-106"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_checked</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-107"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">itos</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
-<a name="line-108"></a>			<span class="n">items</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">ti</span><span class="p">);</span>
-<a name="line-109"></a>
-<a name="line-110"></a>			<span class="n">String</span> <span class="n">lname</span> <span class="o">=</span> <span class="n">csvh</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">to_lower</span><span class="p">().</span><span class="n">strip_edges</span><span class="p">();</span>
-<a name="line-111"></a>			<span class="kt">int</span> <span class="n">idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-112"></a>			<span class="n">String</span> <span class="n">hint</span><span class="p">;</span>
-<a name="line-113"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">langs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-114"></a>
-<a name="line-115"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">langs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">==</span><span class="n">lname</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">langs</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">length</span><span class="p">()).</span><span class="n">to_lower</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-116"></a>					<span class="n">idx</span><span class="o">=</span><span class="n">j</span><span class="p">;</span>
-<a name="line-117"></a>				<span class="p">}</span>
-<a name="line-118"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-119"></a>					<span class="n">hint</span><span class="o">+=</span><span class="s">&quot;,&quot;</span><span class="p">;</span>
-<a name="line-120"></a>				<span class="p">}</span>
-<a name="line-121"></a>				<span class="n">hint</span><span class="o">+=</span><span class="n">names</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">);</span>
-<a name="line-122"></a>			<span class="p">}</span>
-<a name="line-123"></a>
-<a name="line-124"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_cell_mode</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">TreeItem</span><span class="o">::</span><span class="n">CELL_MODE_RANGE</span><span class="p">);</span>
-<a name="line-125"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">hint</span><span class="p">);</span>
-<a name="line-126"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_editable</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-127"></a>
-<a name="line-128"></a>
-<a name="line-129"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">idx</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-130"></a>				<span class="n">ignore_first</span><span class="o">-&gt;</span><span class="n">set_pressed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-131"></a>				<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">idx</span><span class="p">);</span>
-<a name="line-132"></a>			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-103"></a>    <span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">classTable</span><span class="p">;</span>
+<a name="line-104"></a>    <span class="n">o</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">stateArray</span><span class="p">;</span>
+<a name="line-105"></a>    <span class="n">o</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">entryTable</span><span class="p">;</span>
+<a name="line-106"></a>    <span class="n">o</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable</span><span class="p">;</span>
+<a name="line-107"></a>    <span class="n">o</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">componentTable</span><span class="p">;</span>
+<a name="line-108"></a>    <span class="n">o</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span><span class="p">;</span>
+<a name="line-109"></a>    <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">classTable_length_p</span><span class="p">;</span>
+<a name="line-110"></a>    <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">stateArray_length_p</span><span class="p">;</span>
+<a name="line-111"></a>    <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">entryTable_length_p</span><span class="p">;</span>
+<a name="line-112"></a>    <span class="n">l</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable_length</span><span class="p">);</span>
+<a name="line-113"></a>    <span class="n">l</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">optdata</span><span class="o">-&gt;</span><span class="n">componentTable_length</span><span class="p">);</span>
+<a name="line-114"></a>    <span class="n">l</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable_length</span><span class="p">);</span>
+<a name="line-115"></a>
+<a name="line-116"></a>    <span class="n">gxv_set_length_by_ulong_offset</span><span class="p">(</span> <span class="n">o</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">buff</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">table_size</span><span class="p">,</span> <span class="n">valid</span> <span class="p">);</span>
+<a name="line-117"></a>
+<a name="line-118"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;classTable: offset=0x%08x length=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-119"></a>                <span class="n">classTable</span><span class="p">,</span> <span class="o">*</span><span class="n">classTable_length_p</span> <span class="p">));</span>
+<a name="line-120"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;stateArray: offset=0x%08x length=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-121"></a>                <span class="n">stateArray</span><span class="p">,</span> <span class="o">*</span><span class="n">stateArray_length_p</span> <span class="p">));</span>
+<a name="line-122"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;entryTable: offset=0x%08x length=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-123"></a>                <span class="n">entryTable</span><span class="p">,</span> <span class="o">*</span><span class="n">entryTable_length_p</span> <span class="p">));</span>
+<a name="line-124"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;ligActionTable: offset=0x%08x length=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-125"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable</span><span class="p">,</span>
+<a name="line-126"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable_length</span> <span class="p">));</span>
+<a name="line-127"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;componentTable: offset=0x%08x length=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-128"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">componentTable</span><span class="p">,</span>
+<a name="line-129"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">componentTable_length</span> <span class="p">));</span>
+<a name="line-130"></a>    <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;ligatureTable:  offset=0x%08x length=0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-131"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span><span class="p">,</span>
+<a name="line-132"></a>                <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable_length</span> <span class="p">));</span>
 <a name="line-133"></a>
-<a name="line-134"></a>				<span class="c1">//not found, maybe used stupid name</span>
-<a name="line-135"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">lname</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;br&quot;</span><span class="p">))</span> <span class="c1">//brazilian</span>
-<a name="line-136"></a>					<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">langs</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;pt&quot;</span><span class="p">));</span>
-<a name="line-137"></a>				<span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">lname</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;ch&quot;</span><span class="p">))</span> <span class="c1">//chinese</span>
-<a name="line-138"></a>					<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">langs</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;zh&quot;</span><span class="p">));</span>
-<a name="line-139"></a>				<span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">lname</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;sp&quot;</span><span class="p">))</span> <span class="c1">//spanish</span>
-<a name="line-140"></a>					<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">langs</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;es&quot;</span><span class="p">));</span>
-<a name="line-141"></a>				<span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">lname</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;kr&quot;</span><span class="p">))</span><span class="c1">// kprean</span>
-<a name="line-142"></a>					<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">langs</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ko&quot;</span><span class="p">));</span>
-<a name="line-143"></a>				<span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-144"></a>					<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">langs</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">));</span>
-<a name="line-145"></a>				<span class="k">else</span>
-<a name="line-146"></a>					<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">langs</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;es&quot;</span><span class="p">));</span>
-<a name="line-147"></a>			<span class="p">}</span>
-<a name="line-148"></a>
-<a name="line-149"></a>			<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_metadata</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">names</span><span class="p">[</span><span class="n">ti</span><span class="o">-&gt;</span><span class="n">get_range</span><span class="p">(</span><span class="mi">1</span><span class="p">)]);</span>
-<a name="line-150"></a>		<span class="p">}</span>
-<a name="line-151"></a>
-<a name="line-152"></a>
-<a name="line-153"></a>
-<a name="line-154"></a>	<span class="p">}</span>
-<a name="line-155"></a>	<span class="kt">void</span> <span class="n">_choose_save_dir</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-134"></a>    <span class="n">GXV_EXIT</span><span class="p">;</span>
+<a name="line-135"></a>  <span class="p">}</span>
+<a name="line-136"></a>
+<a name="line-137"></a>
+<a name="line-138"></a><span class="cp">#define GXV_MORX_LIGACTION_ENTRY_SIZE  4</span>
+<a name="line-139"></a>
+<a name="line-140"></a>
+<a name="line-141"></a>  <span class="k">static</span> <span class="kt">void</span>
+<a name="line-142"></a>  <span class="nf">gxv_morx_subtable_type2_ligActionIndex_validate</span><span class="p">(</span>
+<a name="line-143"></a>    <span class="n">FT_Bytes</span>       <span class="n">table</span><span class="p">,</span>
+<a name="line-144"></a>    <span class="n">FT_UShort</span>      <span class="n">ligActionIndex</span><span class="p">,</span>
+<a name="line-145"></a>    <span class="n">GXV_Validator</span>  <span class="n">valid</span> <span class="p">)</span>
+<a name="line-146"></a>  <span class="p">{</span>
+<a name="line-147"></a>    <span class="cm">/* access ligActionTable */</span>
+<a name="line-148"></a>    <span class="n">GXV_morx_subtable_type2_StateOptRecData</span> <span class="n">optdata</span> <span class="o">=</span>
+<a name="line-149"></a>      <span class="p">(</span><span class="n">GXV_morx_subtable_type2_StateOptRecData</span><span class="p">)</span><span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">optdata</span><span class="p">;</span>
+<a name="line-150"></a>
+<a name="line-151"></a>    <span class="n">FT_Bytes</span> <span class="n">lat_base</span>  <span class="o">=</span> <span class="n">table</span> <span class="o">+</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable</span><span class="p">;</span>
+<a name="line-152"></a>    <span class="n">FT_Bytes</span> <span class="n">p</span>         <span class="o">=</span> <span class="n">lat_base</span> <span class="o">+</span>
+<a name="line-153"></a>                         <span class="n">ligActionIndex</span> <span class="o">*</span> <span class="n">GXV_MORX_LIGACTION_ENTRY_SIZE</span><span class="p">;</span>
+<a name="line-154"></a>    <span class="n">FT_Bytes</span> <span class="n">lat_limit</span> <span class="o">=</span> <span class="n">lat_base</span> <span class="o">+</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligActionTable</span><span class="p">;</span>
+<a name="line-155"></a>
 <a name="line-156"></a>
-<a name="line-157"></a>		<span class="n">save_path</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="n">p_path</span><span class="p">);</span>
-<a name="line-158"></a>	<span class="p">}</span>
-<a name="line-159"></a>
-<a name="line-160"></a>	<span class="kt">void</span> <span class="n">_browse</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-161"></a>
-<a name="line-162"></a>		<span class="n">file_select</span><span class="o">-&gt;</span><span class="n">popup_centered_ratio</span><span class="p">();</span>
-<a name="line-163"></a>	<span class="p">}</span>
-<a name="line-164"></a>
-<a name="line-165"></a>	<span class="kt">void</span> <span class="n">_browse_target</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-166"></a>
-<a name="line-167"></a>		<span class="n">save_select</span><span class="o">-&gt;</span><span class="n">popup_centered_ratio</span><span class="p">();</span>
-<a name="line-168"></a>
-<a name="line-169"></a>	<span class="p">}</span>
-<a name="line-170"></a>
-<a name="line-171"></a>
-<a name="line-172"></a>	<span class="kt">void</span> <span class="n">popup_import</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_from</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-173"></a>
-<a name="line-174"></a>		<span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">));</span>
-<a name="line-175"></a>
-<a name="line-176"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p_from</span><span class="o">!=</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-157"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">lat_base</span> <span class="p">)</span>
+<a name="line-158"></a>    <span class="p">{</span>
+<a name="line-159"></a>      <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;p &lt; lat_base (%d byte rewind)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lat_base</span> <span class="o">-</span> <span class="n">p</span> <span class="p">));</span>
+<a name="line-160"></a>      <span class="n">FT_INVALID_OFFSET</span><span class="p">;</span>
+<a name="line-161"></a>    <span class="p">}</span>
+<a name="line-162"></a>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="n">lat_limit</span> <span class="o">&lt;</span> <span class="n">p</span> <span class="p">)</span>
+<a name="line-163"></a>    <span class="p">{</span>
+<a name="line-164"></a>      <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;lat_limit &lt; p (%d byte overrun)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="n">lat_limit</span> <span class="p">));</span>
+<a name="line-165"></a>      <span class="n">FT_INVALID_OFFSET</span><span class="p">;</span>
+<a name="line-166"></a>    <span class="p">}</span>
+<a name="line-167"></a>
+<a name="line-168"></a>    <span class="p">{</span>
+<a name="line-169"></a>      <span class="cm">/* validate entry in ligActionTable */</span>
+<a name="line-170"></a>      <span class="n">FT_ULong</span>   <span class="n">lig_action</span><span class="p">;</span>
+<a name="line-171"></a><span class="cp">#ifdef GXV_LOAD_UNUSED_VARS</span>
+<a name="line-172"></a>      <span class="n">FT_UShort</span>  <span class="n">last</span><span class="p">;</span>
+<a name="line-173"></a>      <span class="n">FT_UShort</span>  <span class="n">store</span><span class="p">;</span>
+<a name="line-174"></a><span class="cp">#endif</span>
+<a name="line-175"></a>      <span class="n">FT_ULong</span>   <span class="n">offset</span><span class="p">;</span>
+<a name="line-176"></a>      <span class="n">FT_Long</span>    <span class="n">gid_limit</span><span class="p">;</span>
 <a name="line-177"></a>
-<a name="line-178"></a>			<span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceImportMetadata</span><span class="o">&gt;</span> <span class="n">rimd</span> <span class="o">=</span> <span class="n">ResourceLoader</span><span class="o">::</span><span class="n">load_import_metadata</span><span class="p">(</span><span class="n">p_from</span><span class="p">);</span>
-<a name="line-179"></a>			<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">rimd</span><span class="p">.</span><span class="n">is_valid</span><span class="p">());</span>
-<a name="line-180"></a>			<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="n">rimd</span><span class="o">-&gt;</span><span class="n">get_source_count</span><span class="p">()</span><span class="o">!=</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-181"></a>			<span class="n">_choose_file</span><span class="p">(</span><span class="n">EditorImportPlugin</span><span class="o">::</span><span class="n">expand_source_path</span><span class="p">(</span><span class="n">rimd</span><span class="o">-&gt;</span><span class="n">get_source_path</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span>
-<a name="line-182"></a>			<span class="n">_choose_save_dir</span><span class="p">(</span><span class="n">p_from</span><span class="p">.</span><span class="n">get_base_dir</span><span class="p">());</span>
-<a name="line-183"></a>			<span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">rimd</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;locale&quot;</span><span class="p">);</span>
-<a name="line-184"></a>			<span class="kt">bool</span> <span class="n">skip_first</span><span class="o">=</span><span class="n">rimd</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;skip_first&quot;</span><span class="p">);</span>
-<a name="line-185"></a>			<span class="kt">bool</span> <span class="n">compressed</span> <span class="o">=</span> <span class="n">rimd</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;compress&quot;</span><span class="p">);</span>
+<a name="line-178"></a>
+<a name="line-179"></a>      <span class="n">lig_action</span> <span class="o">=</span> <span class="n">FT_NEXT_ULONG</span><span class="p">(</span> <span class="n">p</span> <span class="p">);</span>
+<a name="line-180"></a><span class="cp">#ifdef GXV_LOAD_UNUSED_VARS</span>
+<a name="line-181"></a>      <span class="n">last</span>       <span class="o">=</span> <span class="p">(</span><span class="n">FT_UShort</span><span class="p">)(</span> <span class="p">(</span> <span class="n">lig_action</span> <span class="o">&gt;&gt;</span> <span class="mi">31</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="p">);</span>
+<a name="line-182"></a>      <span class="n">store</span>      <span class="o">=</span> <span class="p">(</span><span class="n">FT_UShort</span><span class="p">)(</span> <span class="p">(</span> <span class="n">lig_action</span> <span class="o">&gt;&gt;</span> <span class="mi">30</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="p">);</span>
+<a name="line-183"></a><span class="cp">#endif</span>
+<a name="line-184"></a>
+<a name="line-185"></a>      <span class="n">offset</span> <span class="o">=</span> <span class="n">lig_action</span> <span class="o">&amp;</span> <span class="mh">0x3FFFFFFFUL</span><span class="p">;</span>
 <a name="line-186"></a>
-<a name="line-187"></a>			<span class="kt">int</span> <span class="n">idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-188"></a>
-<a name="line-189"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">items</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-190"></a>
-<a name="line-191"></a>				<span class="n">String</span> <span class="n">il</span> <span class="o">=</span> <span class="n">TranslationServer</span><span class="o">::</span><span class="n">get_all_locales</span><span class="p">()[</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">get_range</span><span class="p">(</span><span class="mi">1</span><span class="p">)];</span>
-<a name="line-192"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">il</span><span class="o">==</span><span class="n">locale</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-193"></a>					<span class="n">idx</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-194"></a>					<span class="k">break</span><span class="p">;</span>
-<a name="line-195"></a>				<span class="p">}</span>
-<a name="line-196"></a>			<span class="p">}</span>
-<a name="line-197"></a>
-<a name="line-198"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">idx</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-199"></a>				<span class="n">idx</span><span class="o">=</span><span class="n">rimd</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">);</span>
-<a name="line-200"></a>			<span class="p">}</span>
-<a name="line-201"></a>
-<a name="line-202"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">items</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-203"></a>
-<a name="line-204"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">idx</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-187"></a>      <span class="cm">/* this offset is 30-bit signed value to add to GID */</span>
+<a name="line-188"></a>      <span class="cm">/* it is different from the location offset in mort */</span>
+<a name="line-189"></a>      <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">offset</span> <span class="o">&amp;</span> <span class="mh">0x3FFF0000UL</span> <span class="p">)</span> <span class="o">==</span> <span class="mh">0x3FFF0000UL</span> <span class="p">)</span>
+<a name="line-190"></a>      <span class="p">{</span> <span class="cm">/* negative offset */</span>
+<a name="line-191"></a>        <span class="n">gid_limit</span> <span class="o">=</span> <span class="n">valid</span><span class="o">-&gt;</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">num_glyphs</span> <span class="o">-</span> <span class="p">(</span> <span class="n">offset</span> <span class="o">&amp;</span> <span class="mh">0x0000FFFFUL</span> <span class="p">);</span>
+<a name="line-192"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">gid_limit</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-193"></a>          <span class="k">return</span><span class="p">;</span>
+<a name="line-194"></a>
+<a name="line-195"></a>        <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;ligature action table includes&quot;</span>
+<a name="line-196"></a>                    <span class="s">&quot; too negative offset moving all GID&quot;</span>
+<a name="line-197"></a>                    <span class="s">&quot; below defined range: 0x%04x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-198"></a>                    <span class="n">offset</span> <span class="o">&amp;</span> <span class="mh">0xFFFFU</span> <span class="p">));</span>
+<a name="line-199"></a>        <span class="n">GXV_SET_ERR_IF_PARANOID</span><span class="p">(</span> <span class="n">FT_INVALID_OFFSET</span> <span class="p">);</span>
+<a name="line-200"></a>      <span class="p">}</span>
+<a name="line-201"></a>      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="n">offset</span> <span class="o">&amp;</span> <span class="mh">0x3FFF0000UL</span> <span class="p">)</span> <span class="o">==</span> <span class="mh">0x0000000UL</span> <span class="p">)</span>
+<a name="line-202"></a>      <span class="p">{</span> <span class="cm">/* positive offset */</span>
+<a name="line-203"></a>        <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">FT_Long</span><span class="p">)</span><span class="n">offset</span> <span class="o">&lt;</span> <span class="n">valid</span><span class="o">-&gt;</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">num_glyphs</span> <span class="p">)</span>
+<a name="line-204"></a>          <span class="k">return</span><span class="p">;</span>
 <a name="line-205"></a>
-<a name="line-206"></a>					<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">locs</span> <span class="o">=</span> <span class="n">TranslationServer</span><span class="o">::</span><span class="n">get_all_locales</span><span class="p">();</span>
-<a name="line-207"></a>					<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">locs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-208"></a>						<span class="k">if</span> <span class="p">(</span><span class="n">locs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">==</span><span class="n">locale</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-209"></a>							<span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">set_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
-<a name="line-210"></a>						<span class="p">}</span>
-<a name="line-211"></a>
-<a name="line-212"></a>					<span class="p">}</span>
-<a name="line-213"></a>					<span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">set_checked</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-214"></a>				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-215"></a>					<span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">set_checked</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-216"></a>
-<a name="line-217"></a>				<span class="p">}</span>
-<a name="line-218"></a>			<span class="p">}</span>
+<a name="line-206"></a>        <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;ligature action table includes&quot;</span>
+<a name="line-207"></a>                    <span class="s">&quot; too large offset moving all GID&quot;</span>
+<a name="line-208"></a>                    <span class="s">&quot; over defined range: 0x%04x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<a name="line-209"></a>                    <span class="n">offset</span> <span class="o">&amp;</span> <span class="mh">0xFFFFU</span> <span class="p">));</span>
+<a name="line-210"></a>        <span class="n">GXV_SET_ERR_IF_PARANOID</span><span class="p">(</span> <span class="n">FT_INVALID_OFFSET</span> <span class="p">);</span>
+<a name="line-211"></a>      <span class="p">}</span>
+<a name="line-212"></a>
+<a name="line-213"></a>      <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;ligature action table includes&quot;</span>
+<a name="line-214"></a>                  <span class="s">&quot; invalid offset to add to 16-bit GID:&quot;</span>
+<a name="line-215"></a>                  <span class="s">&quot; 0x%08x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">offset</span> <span class="p">));</span>
+<a name="line-216"></a>      <span class="n">GXV_SET_ERR_IF_PARANOID</span><span class="p">(</span> <span class="n">FT_INVALID_OFFSET</span> <span class="p">);</span>
+<a name="line-217"></a>    <span class="p">}</span>
+<a name="line-218"></a>  <span class="p">}</span>
 <a name="line-219"></a>
-<a name="line-220"></a>			<span class="n">ignore_first</span><span class="o">-&gt;</span><span class="n">set_pressed</span><span class="p">(</span><span class="n">skip_first</span><span class="p">);</span>
-<a name="line-221"></a>			<span class="n">compress</span><span class="o">-&gt;</span><span class="n">set_pressed</span><span class="p">(</span><span class="n">compressed</span><span class="p">);</span>
-<a name="line-222"></a>
-<a name="line-223"></a>
-<a name="line-224"></a>
-<a name="line-225"></a>		<span class="p">}</span>
-<a name="line-226"></a>
-<a name="line-227"></a>	<span class="p">}</span>
-<a name="line-228"></a>
-<a name="line-229"></a>
-<a name="line-230"></a>	<span class="kt">void</span> <span class="n">_import</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-231"></a>
-<a name="line-232"></a>
-<a name="line-233"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">items</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-234"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;No items to import!&quot;</span><span class="p">);</span>
-<a name="line-235"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">100</span><span class="p">));</span>
-<a name="line-236"></a>		<span class="p">}</span>
+<a name="line-220"></a>
+<a name="line-221"></a>  <span class="k">static</span> <span class="kt">void</span>
+<a name="line-222"></a>  <span class="nf">gxv_morx_subtable_type2_entry_validate</span><span class="p">(</span>
+<a name="line-223"></a>    <span class="n">FT_UShort</span>                       <span class="n">state</span><span class="p">,</span>
+<a name="line-224"></a>    <span class="n">FT_UShort</span>                       <span class="n">flags</span><span class="p">,</span>
+<a name="line-225"></a>    <span class="n">GXV_StateTable_GlyphOffsetCPtr</span>  <span class="n">glyphOffset_p</span><span class="p">,</span>
+<a name="line-226"></a>    <span class="n">FT_Bytes</span>                        <span class="n">table</span><span class="p">,</span>
+<a name="line-227"></a>    <span class="n">FT_Bytes</span>                        <span class="n">limit</span><span class="p">,</span>
+<a name="line-228"></a>    <span class="n">GXV_Validator</span>                   <span class="n">valid</span> <span class="p">)</span>
+<a name="line-229"></a>  <span class="p">{</span>
+<a name="line-230"></a><span class="cp">#ifdef GXV_LOAD_UNUSED_VARS</span>
+<a name="line-231"></a>    <span class="n">FT_UShort</span>  <span class="n">setComponent</span><span class="p">;</span>
+<a name="line-232"></a>    <span class="n">FT_UShort</span>  <span class="n">dontAdvance</span><span class="p">;</span>
+<a name="line-233"></a>    <span class="n">FT_UShort</span>  <span class="n">performAction</span><span class="p">;</span>
+<a name="line-234"></a><span class="cp">#endif</span>
+<a name="line-235"></a>    <span class="n">FT_UShort</span>  <span class="n">reserved</span><span class="p">;</span>
+<a name="line-236"></a>    <span class="n">FT_UShort</span>  <span class="n">ligActionIndex</span><span class="p">;</span>
 <a name="line-237"></a>
-<a name="line-238"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">save_path</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">().</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;res://&quot;</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-239"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;No target path!!&quot;</span><span class="p">);</span>
-<a name="line-240"></a>			<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">100</span><span class="p">));</span>
-<a name="line-241"></a>		<span class="p">}</span>
-<a name="line-242"></a>
-<a name="line-243"></a>		<span class="n">EditorProgress</span> <span class="n">progress</span><span class="p">(</span><span class="s">&quot;import_xl&quot;</span><span class="p">,</span><span class="s">&quot;Import Translations&quot;</span><span class="p">,</span><span class="n">items</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-244"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">items</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-245"></a>
-<a name="line-246"></a>			<span class="n">progress</span><span class="p">.</span><span class="n">step</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">i</span><span class="p">);</span>
-<a name="line-247"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">is_checked</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-<a name="line-248"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-249"></a>
-<a name="line-250"></a>			<span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">TranslationServer</span><span class="o">::</span><span class="n">get_all_locales</span><span class="p">()[</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">get_range</span><span class="p">(</span><span class="mi">1</span><span class="p">)];</span>
-<a name="line-251"></a>			<span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceImportMetadata</span><span class="o">&gt;</span> <span class="n">imd</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ResourceImportMetadata</span> <span class="p">);</span>
-<a name="line-252"></a>			<span class="n">imd</span><span class="o">-&gt;</span><span class="n">add_source</span><span class="p">(</span><span class="n">EditorImportPlugin</span><span class="o">::</span><span class="n">validate_source_path</span><span class="p">(</span><span class="n">import_path</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">()));</span>
-<a name="line-253"></a>			<span class="n">imd</span><span class="o">-&gt;</span><span class="n">set_option</span><span class="p">(</span><span class="s">&quot;locale&quot;</span><span class="p">,</span><span class="n">locale</span><span class="p">);</span>
-<a name="line-254"></a>			<span class="n">imd</span><span class="o">-&gt;</span><span class="n">set_option</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
-<a name="line-255"></a>			<span class="n">imd</span><span class="o">-&gt;</span><span class="n">set_option</span><span class="p">(</span><span class="s">&quot;skip_first&quot;</span><span class="p">,</span><span class="n">ignore_first</span><span class="o">-&gt;</span><span class="n">is_pressed</span><span class="p">());</span>
-<a name="line-256"></a>			<span class="n">imd</span><span class="o">-&gt;</span><span class="n">set_option</span><span class="p">(</span><span class="s">&quot;compress&quot;</span><span class="p">,</span><span class="n">compress</span><span class="o">-&gt;</span><span class="n">is_pressed</span><span class="p">());</span>
-<a name="line-257"></a>
-<a name="line-258"></a>			<span class="n">String</span> <span class="n">savefile</span> <span class="o">=</span> <span class="n">save_path</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">().</span><span class="n">plus_file</span><span class="p">(</span><span class="n">import_path</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">().</span><span class="n">get_file</span><span class="p">().</span><span class="n">basename</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;.&quot;</span><span class="o">+</span><span class="n">locale</span><span class="o">+</span><span class="s">&quot;.xl&quot;</span><span class="p">);</span>
-<a name="line-259"></a>			<span class="n">Error</span> <span class="n">err</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">-&gt;</span><span class="n">import</span><span class="p">(</span><span class="n">savefile</span><span class="p">,</span><span class="n">imd</span><span class="p">);</span>
-<a name="line-260"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="o">!=</span><span class="n">OK</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-261"></a>				<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Couldnt import!&quot;</span><span class="p">);</span>
-<a name="line-262"></a>				<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">100</span><span class="p">));</span>
-<a name="line-263"></a>			<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">add_to_project</span><span class="o">-&gt;</span><span class="n">is_pressed</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-264"></a>
-<a name="line-265"></a>				<span class="n">ProjectSettings</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_translation</span><span class="p">(</span><span class="n">savefile</span><span class="p">);</span>
-<a name="line-266"></a>			<span class="p">}</span>
-<a name="line-267"></a>		<span class="p">}</span>
-<a name="line-268"></a>		<span class="n">hide</span><span class="p">();</span>
-<a name="line-269"></a>
-<a name="line-270"></a>	<span class="p">}</span>
+<a name="line-238"></a>    <span class="n">FT_UNUSED</span><span class="p">(</span> <span class="n">state</span> <span class="p">);</span>
+<a name="line-239"></a>    <span class="n">FT_UNUSED</span><span class="p">(</span> <span class="n">limit</span> <span class="p">);</span>
+<a name="line-240"></a>
+<a name="line-241"></a>
+<a name="line-242"></a><span class="cp">#ifdef GXV_LOAD_UNUSED_VARS</span>
+<a name="line-243"></a>    <span class="n">setComponent</span>   <span class="o">=</span> <span class="p">(</span><span class="n">FT_UShort</span><span class="p">)(</span> <span class="p">(</span> <span class="n">flags</span> <span class="o">&gt;&gt;</span> <span class="mi">15</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="p">);</span>
+<a name="line-244"></a>    <span class="n">dontAdvance</span>    <span class="o">=</span> <span class="p">(</span><span class="n">FT_UShort</span><span class="p">)(</span> <span class="p">(</span> <span class="n">flags</span> <span class="o">&gt;&gt;</span> <span class="mi">14</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="p">);</span>
+<a name="line-245"></a>    <span class="n">performAction</span>  <span class="o">=</span> <span class="p">(</span><span class="n">FT_UShort</span><span class="p">)(</span> <span class="p">(</span> <span class="n">flags</span> <span class="o">&gt;&gt;</span> <span class="mi">13</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="p">);</span>
+<a name="line-246"></a><span class="cp">#endif</span>
+<a name="line-247"></a>
+<a name="line-248"></a>    <span class="n">reserved</span>       <span class="o">=</span> <span class="p">(</span><span class="n">FT_UShort</span><span class="p">)(</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="mh">0x1FFF</span> <span class="p">);</span>
+<a name="line-249"></a>    <span class="n">ligActionIndex</span> <span class="o">=</span> <span class="n">glyphOffset_p</span><span class="o">-&gt;</span><span class="n">u</span><span class="p">;</span>
+<a name="line-250"></a>
+<a name="line-251"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">reserved</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-252"></a><span class="hll">      <span class="n">GXV_TRACE</span><span class="p">((</span> <span class="s">&quot;  reserved 14bit is non-zero</span><span class="se">\n</span><span class="s">&quot;</span> <span class="p">));</span><span class='error2'>&lt;--- Variable 'FT_TRACE4' is assigned a value that is never used.</span>
+</span><a name="line-253"></a>
+<a name="line-254"></a>    <span class="k">if</span> <span class="p">(</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ligActionIndex</span> <span class="p">)</span>
+<a name="line-255"></a>      <span class="n">gxv_morx_subtable_type2_ligActionIndex_validate</span><span class="p">(</span>
+<a name="line-256"></a>        <span class="n">table</span><span class="p">,</span> <span class="n">ligActionIndex</span><span class="p">,</span> <span class="n">valid</span> <span class="p">);</span>
+<a name="line-257"></a>  <span class="p">}</span>
+<a name="line-258"></a>
+<a name="line-259"></a>
+<a name="line-260"></a>  <span class="k">static</span> <span class="kt">void</span>
+<a name="line-261"></a>  <span class="nf">gxv_morx_subtable_type2_ligatureTable_validate</span><span class="p">(</span> <span class="n">FT_Bytes</span>       <span class="n">table</span><span class="p">,</span>
+<a name="line-262"></a>                                                  <span class="n">GXV_Validator</span>  <span class="n">valid</span> <span class="p">)</span>
+<a name="line-263"></a>  <span class="p">{</span>
+<a name="line-264"></a>    <span class="n">GXV_morx_subtable_type2_StateOptRecData</span>  <span class="n">optdata</span> <span class="o">=</span>
+<a name="line-265"></a>      <span class="p">(</span><span class="n">GXV_morx_subtable_type2_StateOptRecData</span><span class="p">)</span><span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">optdata</span><span class="p">;</span>
+<a name="line-266"></a>
+<a name="line-267"></a>    <span class="n">FT_Bytes</span> <span class="n">p</span>     <span class="o">=</span> <span class="n">table</span> <span class="o">+</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span><span class="p">;</span>
+<a name="line-268"></a>    <span class="n">FT_Bytes</span> <span class="n">limit</span> <span class="o">=</span> <span class="n">table</span> <span class="o">+</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span>
+<a name="line-269"></a>                           <span class="o">+</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable_length</span><span class="p">;</span>
+<a name="line-270"></a>
 <a name="line-271"></a>
-<a name="line-272"></a>
-<a name="line-273"></a>	<span class="kt">void</span> <span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-274"></a>
-<a name="line-275"></a>
-<a name="line-276"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_ENTER_TREE</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-277"></a>
-<a name="line-278"></a>
-<a name="line-279"></a>		<span class="p">}</span>
-<a name="line-280"></a>	<span class="p">}</span>
+<a name="line-272"></a>    <span class="n">GXV_NAME_ENTER</span><span class="p">(</span> <span class="s">&quot;morx chain subtable type2 - substitutionTable&quot;</span> <span class="p">);</span>
+<a name="line-273"></a>
+<a name="line-274"></a>    <span class="k">if</span> <span class="p">(</span> <span class="mi">0</span> <span class="o">!=</span> <span class="n">optdata</span><span class="o">-&gt;</span><span class="n">ligatureTable</span> <span class="p">)</span>
+<a name="line-275"></a>    <span class="p">{</span>
+<a name="line-276"></a>      <span class="cm">/* Apple does not give specification of ligatureTable format */</span>
+<a name="line-277"></a>      <span class="k">while</span> <span class="p">(</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">limit</span> <span class="p">)</span>
+<a name="line-278"></a>      <span class="p">{</span>
+<a name="line-279"></a>        <span class="n">FT_UShort</span>  <span class="n">lig_gid</span><span class="p">;</span>
+<a name="line-280"></a>
 <a name="line-281"></a>
-<a name="line-282"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-283"></a>
-<a name="line-284"></a>
-<a name="line-285"></a>		<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_choose_file&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">EditorTranslationImportDialog</span><span class="o">::</span><span class="n">_choose_file</span><span class="p">);</span>
-<a name="line-286"></a>		<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_choose_save_dir&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">EditorTranslationImportDialog</span><span class="o">::</span><span class="n">_choose_save_dir</span><span class="p">);</span>
-<a name="line-287"></a>		<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_import&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">EditorTranslationImportDialog</span><span class="o">::</span><span class="n">_import</span><span class="p">);</span>
-<a name="line-288"></a>		<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_browse&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">EditorTranslationImportDialog</span><span class="o">::</span><span class="n">_browse</span><span class="p">);</span>
-<a name="line-289"></a>		<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_browse_target&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">EditorTranslationImportDialog</span><span class="o">::</span><span class="n">_browse_target</span><span class="p">);</span>
-<a name="line-290"></a>	<span class="c1">//	ADD_SIGNAL( MethodInfo(&quot;imported&quot;,PropertyInfo(Variant::OBJECT,&quot;scene&quot;)) );</span>
-<a name="line-291"></a>	<span class="p">}</span>
+<a name="line-282"></a>        <span class="n">GXV_LIMIT_CHECK</span><span class="p">(</span> <span class="mi">2</span> <span class="p">);</span>
+<a name="line-283"></a>        <span class="n">lig_gid</span> <span class="o">=</span> <span class="n">FT_NEXT_USHORT</span><span class="p">(</span> <span class="n">p</span> <span class="p">);</span>
+<a name="line-284"></a>        <span class="k">if</span> <span class="p">(</span> <span class="n">lig_gid</span> <span class="o">&lt;</span> <span class="n">valid</span><span class="o">-&gt;</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">num_glyphs</span> <span class="p">)</span>
+<a name="line-285"></a>          <span class="n">GXV_SET_ERR_IF_PARANOID</span><span class="p">(</span> <span class="n">FT_INVALID_GLYPH_ID</span> <span class="p">);</span>
+<a name="line-286"></a>      <span class="p">}</span>
+<a name="line-287"></a>    <span class="p">}</span>
+<a name="line-288"></a>
+<a name="line-289"></a>    <span class="n">GXV_EXIT</span><span class="p">;</span>
+<a name="line-290"></a>  <span class="p">}</span>
+<a name="line-291"></a>
 <a name="line-292"></a>
-<a name="line-293"></a><span class="hll">	<span class="n">EditorTranslationImportDialog</span><span class="p">(</span><span class="n">EditorTranslationImportPlugin</span> <span class="o">*</span><span class="n">p_plugin</span><span class="p">)</span> <span class="p">{</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'EditorTranslationImportDialog' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;EditorTranslationImportDialog&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
-</span><a name="line-294"></a>
-<a name="line-295"></a>		<span class="n">plugin</span><span class="o">=</span><span class="n">p_plugin</span><span class="p">;</span>
-<a name="line-296"></a>
-<a name="line-297"></a>
-<a name="line-298"></a>		<span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Import Translation&quot;</span><span class="p">);</span>
+<a name="line-293"></a>  <span class="n">FT_LOCAL_DEF</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+<a name="line-294"></a>  <span class="n">gxv_morx_subtable_type2_validate</span><span class="p">(</span> <span class="n">FT_Bytes</span>       <span class="n">table</span><span class="p">,</span>
+<a name="line-295"></a>                                    <span class="n">FT_Bytes</span>       <span class="n">limit</span><span class="p">,</span>
+<a name="line-296"></a>                                    <span class="n">GXV_Validator</span>  <span class="n">valid</span> <span class="p">)</span>
+<a name="line-297"></a>  <span class="p">{</span>
+<a name="line-298"></a>    <span class="n">FT_Bytes</span>  <span class="n">p</span> <span class="o">=</span> <span class="n">table</span><span class="p">;</span>
 <a name="line-299"></a>
-<a name="line-300"></a>		<span class="n">VBoxContainer</span> <span class="o">*</span><span class="n">vbc</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
-<a name="line-301"></a>		<span class="n">add_child</span><span class="p">(</span><span class="n">vbc</span><span class="p">);</span>
-<a name="line-302"></a>		<span class="n">set_child_rect</span><span class="p">(</span><span class="n">vbc</span><span class="p">);</span>
-<a name="line-303"></a>
+<a name="line-300"></a>    <span class="n">GXV_morx_subtable_type2_StateOptRec</span>  <span class="n">lig_rec</span><span class="p">;</span>
+<a name="line-301"></a>
+<a name="line-302"></a>
+<a name="line-303"></a>    <span class="n">GXV_NAME_ENTER</span><span class="p">(</span> <span class="s">&quot;morx chain subtable type2 (Ligature Substitution)&quot;</span> <span class="p">);</span>
 <a name="line-304"></a>
-<a name="line-305"></a>
-<a name="line-306"></a>		<span class="n">VBoxContainer</span> <span class="o">*</span><span class="n">csvb</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
-<a name="line-307"></a>
-<a name="line-308"></a>		<span class="n">HBoxContainer</span> <span class="o">*</span><span class="n">hbc</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">HBoxContainer</span> <span class="p">);</span>
-<a name="line-309"></a>		<span class="n">csvb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">hbc</span><span class="p">);</span>
-<a name="line-310"></a>		<span class="n">vbc</span><span class="o">-&gt;</span><span class="n">add_margin_child</span><span class="p">(</span><span class="s">&quot;Source CSV:&quot;</span><span class="p">,</span><span class="n">csvb</span><span class="p">);</span>
-<a name="line-311"></a>
-<a name="line-312"></a>		<span class="n">import_path</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">LineEdit</span> <span class="p">);</span>
-<a name="line-313"></a>		<span class="n">import_path</span><span class="o">-&gt;</span><span class="n">set_h_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
-<a name="line-314"></a>		<span class="n">hbc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">import_path</span><span class="p">);</span>
-<a name="line-315"></a>		<span class="n">ignore_first</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">CheckButton</span> <span class="p">);</span>
-<a name="line-316"></a>		<span class="n">ignore_first</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Ignore First Row&quot;</span><span class="p">);</span>
-<a name="line-317"></a>		<span class="n">csvb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">ignore_first</span><span class="p">);</span>
-<a name="line-318"></a>
-<a name="line-319"></a>		<span class="n">Button</span> <span class="o">*</span> <span class="n">import_choose</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Button</span> <span class="p">);</span>
-<a name="line-320"></a>		<span class="n">import_choose</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot; .. &quot;</span><span class="p">);</span>
-<a name="line-321"></a>		<span class="n">hbc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">import_choose</span><span class="p">);</span>
+<a name="line-305"></a>    <span class="n">GXV_LIMIT_CHECK</span><span class="p">(</span> <span class="n">GXV_MORX_SUBTABLE_TYPE2_HEADER_SIZE</span> <span class="p">);</span>
+<a name="line-306"></a>
+<a name="line-307"></a>    <span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">optdata</span> <span class="o">=</span>
+<a name="line-308"></a>      <span class="o">&amp;</span><span class="n">lig_rec</span><span class="p">;</span>
+<a name="line-309"></a>    <span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">optdata_load_func</span> <span class="o">=</span>
+<a name="line-310"></a>      <span class="n">gxv_morx_subtable_type2_opttable_load</span><span class="p">;</span>
+<a name="line-311"></a>    <span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">subtable_setup_func</span> <span class="o">=</span>
+<a name="line-312"></a>      <span class="n">gxv_morx_subtable_type2_subtable_setup</span><span class="p">;</span>
+<a name="line-313"></a>    <span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">entry_glyphoffset_fmt</span> <span class="o">=</span>
+<a name="line-314"></a>      <span class="n">GXV_GLYPHOFFSET_USHORT</span><span class="p">;</span>
+<a name="line-315"></a>    <span class="n">valid</span><span class="o">-&gt;</span><span class="n">xstatetable</span><span class="p">.</span><span class="n">entry_validate_func</span> <span class="o">=</span>
+<a name="line-316"></a>      <span class="n">gxv_morx_subtable_type2_entry_validate</span><span class="p">;</span>
+<a name="line-317"></a>
+<a name="line-318"></a>    <span class="n">gxv_XStateTable_validate</span><span class="p">(</span> <span class="n">p</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">valid</span> <span class="p">);</span>
+<a name="line-319"></a>
+<a name="line-320"></a><span class="hll">    <span class="n">p</span> <span class="o">+=</span> <span class="n">valid</span><span class="o">-&gt;</span><span class="n">subtable_length</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'p' is assigned a value that is never used.</span>
+</span><a name="line-321"></a>    <span class="n">gxv_morx_subtable_type2_ligatureTable_validate</span><span class="p">(</span> <span class="n">table</span><span class="p">,</span> <span class="n">valid</span> <span class="p">);</span>
 <a name="line-322"></a>
-<a name="line-323"></a>		<span class="n">import_choose</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_browse&quot;</span><span class="p">);</span>
-<a name="line-324"></a>
-<a name="line-325"></a>		<span class="n">VBoxContainer</span> <span class="o">*</span><span class="n">tcomp</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span><span class="p">);</span>
-<a name="line-326"></a>		<span class="n">hbc</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">HBoxContainer</span> <span class="p">);</span>
-<a name="line-327"></a>		<span class="n">tcomp</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">hbc</span><span class="p">);</span>
-<a name="line-328"></a>		<span class="n">vbc</span><span class="o">-&gt;</span><span class="n">add_margin_child</span><span class="p">(</span><span class="s">&quot;Target Path:&quot;</span><span class="p">,</span><span class="n">tcomp</span><span class="p">);</span>
-<a name="line-329"></a>
-<a name="line-330"></a>		<span class="n">save_path</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">LineEdit</span> <span class="p">);</span>
-<a name="line-331"></a>		<span class="n">save_path</span><span class="o">-&gt;</span><span class="n">set_h_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
-<a name="line-332"></a>		<span class="n">hbc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">save_path</span><span class="p">);</span>
-<a name="line-333"></a>
-<a name="line-334"></a>		<span class="n">Button</span> <span class="o">*</span> <span class="n">save_choose</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Button</span> <span class="p">);</span>
-<a name="line-335"></a>		<span class="n">save_choose</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot; .. &quot;</span><span class="p">);</span>
-<a name="line-336"></a>		<span class="n">hbc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">save_choose</span><span class="p">);</span>
-<a name="line-337"></a>
-<a name="line-338"></a>		<span class="n">save_choose</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_browse_target&quot;</span><span class="p">);</span>
-<a name="line-339"></a>
-<a name="line-340"></a>		<span class="n">compress</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">CheckButton</span><span class="p">);</span>
-<a name="line-341"></a>		<span class="n">compress</span><span class="o">-&gt;</span><span class="n">set_pressed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-342"></a>		<span class="n">compress</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Compress&quot;</span><span class="p">);</span>
-<a name="line-343"></a>		<span class="n">tcomp</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">compress</span><span class="p">);</span>
-<a name="line-344"></a>
-<a name="line-345"></a>		<span class="n">add_to_project</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">CheckButton</span><span class="p">);</span>
-<a name="line-346"></a>		<span class="n">add_to_project</span><span class="o">-&gt;</span><span class="n">set_pressed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-347"></a>		<span class="n">add_to_project</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Add to Project (engine.cfg)&quot;</span><span class="p">);</span>
-<a name="line-348"></a>		<span class="n">tcomp</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">add_to_project</span><span class="p">);</span>
-<a name="line-349"></a>
-<a name="line-350"></a>		<span class="n">file_select</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">EditorFileDialog</span><span class="p">);</span>
-<a name="line-351"></a>		<span class="n">file_select</span><span class="o">-&gt;</span><span class="n">set_access</span><span class="p">(</span><span class="n">EditorFileDialog</span><span class="o">::</span><span class="n">ACCESS_FILESYSTEM</span><span class="p">);</span>
-<a name="line-352"></a>		<span class="n">add_child</span><span class="p">(</span><span class="n">file_select</span><span class="p">);</span>
-<a name="line-353"></a>		<span class="n">file_select</span><span class="o">-&gt;</span><span class="n">set_mode</span><span class="p">(</span><span class="n">EditorFileDialog</span><span class="o">::</span><span class="n">MODE_OPEN_FILE</span><span class="p">);</span>
-<a name="line-354"></a>		<span class="n">file_select</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;file_selected&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_choose_file&quot;</span><span class="p">);</span>
-<a name="line-355"></a>		<span class="n">file_select</span><span class="o">-&gt;</span><span class="n">add_filter</span><span class="p">(</span><span class="s">&quot;*.csv ; Translation CSV&quot;</span><span class="p">);</span>
-<a name="line-356"></a>		<span class="n">save_select</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span>	<span class="n">EditorDirDialog</span> <span class="p">);</span>
-<a name="line-357"></a>		<span class="n">add_child</span><span class="p">(</span><span class="n">save_select</span><span class="p">);</span>
-<a name="line-358"></a>
-<a name="line-359"></a>	<span class="c1">//	save_select-&gt;set_mode(EditorFileDialog::MODE_OPEN_DIR);</span>
-<a name="line-360"></a>		<span class="n">save_select</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;dir_selected&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_choose_save_dir&quot;</span><span class="p">);</span>
-<a name="line-361"></a>
-<a name="line-362"></a>		<span class="n">get_ok</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_import&quot;</span><span class="p">);</span>
-<a name="line-363"></a>		<span class="n">get_ok</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Import&quot;</span><span class="p">);</span>
-<a name="line-364"></a>
-<a name="line-365"></a>
-<a name="line-366"></a>		<span class="n">error_dialog</span> <span class="o">=</span> <span class="n">memnew</span> <span class="p">(</span> <span class="n">ConfirmationDialog</span> <span class="p">);</span>
-<a name="line-367"></a>		<span class="n">add_child</span><span class="p">(</span><span class="n">error_dialog</span><span class="p">);</span>
-<a name="line-368"></a>		<span class="n">error_dialog</span><span class="o">-&gt;</span><span class="n">get_ok</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Accept&quot;</span><span class="p">);</span>
-<a name="line-369"></a>	<span class="c1">//	error_dialog-&gt;get_cancel()-&gt;hide();</span>
-<a name="line-370"></a>
-<a name="line-371"></a>		<span class="n">set_hide_on_ok</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-372"></a>
-<a name="line-373"></a>		<span class="n">columns</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Tree</span> <span class="p">);</span>
-<a name="line-374"></a>		<span class="n">vbc</span><span class="o">-&gt;</span><span class="n">add_margin_child</span><span class="p">(</span><span class="s">&quot;Import Languages:&quot;</span><span class="p">,</span><span class="n">columns</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-375"></a>	<span class="p">}</span>
-<a name="line-376"></a>
-<a name="line-377"></a>	<span class="o">~</span><span class="n">EditorTranslationImportDialog</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-378"></a>
-<a name="line-379"></a>	<span class="p">}</span>
-<a name="line-380"></a>
-<a name="line-381"></a><span class="p">};</span>
-<a name="line-382"></a>
-<a name="line-383"></a>
-<a name="line-384"></a><span class="n">String</span> <span class="n">EditorTranslationImportPlugin</span><span class="o">::</span><span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-385"></a>
-<a name="line-386"></a>	<span class="k">return</span> <span class="s">&quot;translation&quot;</span><span class="p">;</span>
-<a name="line-387"></a><span class="p">}</span>
-<a name="line-388"></a><span class="n">String</span> <span class="n">EditorTranslationImportPlugin</span><span class="o">::</span><span class="n">get_visible_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-389"></a>
-<a name="line-390"></a>	<span class="k">return</span> <span class="s">&quot;Translation&quot;</span><span class="p">;</span>
-<a name="line-391"></a><span class="p">}</span>
-<a name="line-392"></a><span class="kt">void</span> <span class="n">EditorTranslationImportPlugin</span><span class="o">::</span><span class="n">import_dialog</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_from</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-393"></a>
-<a name="line-394"></a>	<span class="n">dialog</span><span class="o">-&gt;</span><span class="n">popup_import</span><span class="p">(</span><span class="n">p_from</span><span class="p">);</span>
-<a name="line-395"></a><span class="p">}</span>
-<a name="line-396"></a>
-<a name="line-397"></a><span class="n">Error</span> <span class="n">EditorTranslationImportPlugin</span><span class="o">::</span><span class="n">import</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span> <span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceImportMetadata</span><span class="o">&gt;&amp;</span> <span class="n">p_from</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-398"></a>
-<a name="line-399"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceImportMetadata</span><span class="o">&gt;</span> <span class="n">from</span> <span class="o">=</span> <span class="n">p_from</span><span class="p">;</span>
-<a name="line-400"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">get_source_count</span><span class="p">()</span><span class="o">!=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ERR_INVALID_PARAMETER</span><span class="p">);</span>
-<a name="line-401"></a>
-<a name="line-402"></a>	<span class="n">String</span> <span class="n">source</span> <span class="o">=</span> <span class="n">EditorImportPlugin</span><span class="o">::</span><span class="n">expand_source_path</span><span class="p">(</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">get_source_path</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">);</span>
-<a name="line-403"></a>
-<a name="line-404"></a>	<span class="n">FileAccessRef</span> <span class="n">f</span> <span class="o">=</span> <span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">source</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">READ</span><span class="p">);</span>
-<a name="line-405"></a>
-<a name="line-406"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span> <span class="o">!</span><span class="n">f</span><span class="p">,</span> <span class="n">ERR_INVALID_PARAMETER</span> <span class="p">);</span>
-<a name="line-407"></a>
-<a name="line-408"></a><span class="hll">	<span class="kt">bool</span> <span class="n">first</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'first' is assigned a value that is never used.</span>
-</span><a name="line-409"></a>	<span class="kt">bool</span> <span class="n">skip_first</span> <span class="o">=</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;skip_first&quot;</span><span class="p">);</span>
-<a name="line-410"></a>	<span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">);</span>
-<a name="line-411"></a>	<span class="n">index</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-412"></a>	<span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">from</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;locale&quot;</span><span class="p">);</span>
-<a name="line-413"></a>
-<a name="line-414"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Translation</span><span class="o">&gt;</span> <span class="n">translation</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Translation</span> <span class="p">);</span>
-<a name="line-415"></a>
-<a name="line-416"></a>	<span class="n">translation</span><span class="o">-&gt;</span><span class="n">set_locale</span><span class="p">(</span> <span class="n">locale</span> <span class="p">);</span>
-<a name="line-417"></a>
-<a name="line-418"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_csv_line</span><span class="p">();</span>
-<a name="line-419"></a>
-<a name="line-420"></a>	<span class="k">while</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-421"></a>
-<a name="line-422"></a>
-<a name="line-423"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">skip_first</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-424"></a>			<span class="n">ERR_FAIL_INDEX_V</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">line</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="n">ERR_INVALID_DATA</span> <span class="p">);</span>
-<a name="line-425"></a>			<span class="n">translation</span><span class="o">-&gt;</span><span class="n">add_message</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">strip_edges</span><span class="p">(),</span><span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="p">]);</span>
-<a name="line-426"></a>
-<a name="line-427"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-428"></a>
-<a name="line-429"></a>			<span class="n">skip_first</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-430"></a>		<span class="p">}</span>
-<a name="line-431"></a>
-<a name="line-432"></a>		<span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">-&gt;</span><span class="n">get_csv_line</span><span class="p">();</span>
-<a name="line-433"></a>	<span class="p">}</span>
-<a name="line-434"></a>
-<a name="line-435"></a>	<span class="n">from</span><span class="o">-&gt;</span><span class="n">set_source_md5</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">get_md5</span><span class="p">(</span><span class="n">source</span><span class="p">));</span>
-<a name="line-436"></a>	<span class="n">from</span><span class="o">-&gt;</span><span class="n">set_editor</span><span class="p">(</span><span class="n">get_name</span><span class="p">());</span>
-<a name="line-437"></a>
-<a name="line-438"></a>	<span class="n">String</span> <span class="n">dst_path</span> <span class="o">=</span> <span class="n">p_path</span><span class="p">;</span>
-<a name="line-439"></a>
-<a name="line-440"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">from</span><span class="o">-&gt;</span><span class="n">get_option</span><span class="p">(</span><span class="s">&quot;compress&quot;</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-441"></a>
-<a name="line-442"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">PHashTranslation</span><span class="o">&gt;</span> <span class="n">cxl</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">PHashTranslation</span> <span class="p">);</span>
-<a name="line-443"></a>		<span class="n">cxl</span><span class="o">-&gt;</span><span class="n">generate</span><span class="p">(</span> <span class="n">translation</span> <span class="p">);</span>
-<a name="line-444"></a>		<span class="n">translation</span><span class="o">=</span><span class="n">cxl</span><span class="p">;</span>
-<a name="line-445"></a>	<span class="p">}</span>
-<a name="line-446"></a>
-<a name="line-447"></a>	<span class="n">translation</span><span class="o">-&gt;</span><span class="n">set_import_metadata</span><span class="p">(</span><span class="n">from</span><span class="p">);</span>
-<a name="line-448"></a>	<span class="k">return</span> <span class="n">ResourceSaver</span><span class="o">::</span><span class="n">save</span><span class="p">(</span><span class="n">dst_path</span><span class="p">,</span><span class="n">translation</span><span class="p">);</span>
-<a name="line-449"></a>
-<a name="line-450"></a><span class="p">}</span>
-<a name="line-451"></a>
-<a name="line-452"></a>
-<a name="line-453"></a><span class="n">EditorTranslationImportPlugin</span><span class="o">::</span><span class="n">EditorTranslationImportPlugin</span><span class="p">(</span><span class="n">EditorNode</span><span class="o">*</span> <span class="n">p_editor</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-454"></a>
-<a name="line-455"></a>	<span class="n">dialog</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">EditorTranslationImportDialog</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-<a name="line-456"></a>	<span class="n">p_editor</span><span class="o">-&gt;</span><span class="n">get_gui_base</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">dialog</span><span class="p">);</span>
-<a name="line-457"></a><span class="p">}</span>
+<a name="line-323"></a>    <span class="n">GXV_EXIT</span><span class="p">;</span>
+<a name="line-324"></a>  <span class="p">}</span>
+<a name="line-325"></a>
+<a name="line-326"></a>
+<a name="line-327"></a><span class="cm">/* END */</span>
 </pre></div>
 </td></tr></table>
       </div>

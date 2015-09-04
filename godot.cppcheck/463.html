@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/chibi/cp_loader_it_instruments.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/pulseaudio/audio_driver_pulseaudio.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> cp_loader_it_instruments.cpp</p>
-<a href='463.html#line-220'> unreachableCode 220</a>
+       <p id="filename"><a href="index.html">Defects:</a> audio_driver_pulseaudio.cpp</p>
+<a href='463.html#line-87'> cstyleCast 87</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a><a href='463.html#line-183'> uninitMemberVar 183</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -307,42 +307,14 @@
 191
 192
 193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  cp_loader_it_instruments.cpp                                         */</span>
+194</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  audio_driver_alsa.cpp                                                */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
 <a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
 <a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
+<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                 */</span>
 <a name="line-9"></a><span class="cm">/*                                                                       */</span>
 <a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
 <a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
@@ -363,200 +335,172 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a>
-<a name="line-30"></a><span class="cp">#include &quot;cp_loader_it.h&quot;</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="k">enum</span> <span class="n">EnvFlags</span> <span class="p">{</span>
-<a name="line-33"></a>	<span class="n">ENV_ON</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-34"></a>	<span class="n">ENV_LOOP</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<a name="line-35"></a>	<span class="n">ENV_SUSLOOP</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-<a name="line-36"></a>	<span class="n">ENV_CARRY</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-<a name="line-37"></a>	<span class="n">ENV_FILTER</span><span class="o">=</span><span class="mi">128</span>
-<a name="line-38"></a><span class="p">};</span>
-<a name="line-39"></a>
-<a name="line-40"></a><span class="kt">void</span> <span class="n">CPLoader_IT</span><span class="o">::</span><span class="n">load_envelope</span><span class="p">(</span><span class="n">CPEnvelope</span> <span class="o">*</span><span class="n">p_envelope</span><span class="p">,</span><span class="kt">bool</span><span class="o">*</span><span class="n">p_has_filter_flag</span><span class="p">)</span> <span class="p">{</span> 
-<a name="line-41"></a>
-<a name="line-42"></a>	<span class="kt">uint8_t</span> <span class="n">flags</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-43"></a>	<span class="kt">uint8_t</span> <span class="n">points</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-44"></a>	<span class="kt">uint8_t</span> <span class="n">begin</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-45"></a>	<span class="kt">uint8_t</span> <span class="n">end</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-46"></a>	<span class="kt">uint8_t</span> <span class="n">susbegin</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-47"></a>	<span class="kt">uint8_t</span> <span class="n">susend</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-48"></a>	
-<a name="line-49"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
-<a name="line-50"></a>	
-<a name="line-51"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">25</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-52"></a>
-<a name="line-53"></a>		<span class="kt">uint8_t</span> <span class="n">height</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-54"></a>		<span class="kt">int8_t</span> <span class="o">&amp;</span><span class="n">signed_height</span><span class="o">=</span><span class="p">(</span><span class="kt">int8_t</span><span class="o">&amp;</span><span class="p">)</span><span class="n">height</span><span class="p">;</span>
-<a name="line-55"></a>		<span class="kt">uint16_t</span> <span class="n">tick</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_word</span><span class="p">();</span>
-<a name="line-56"></a>		
-<a name="line-57"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">&gt;=</span><span class="n">points</span><span class="p">)</span>
-<a name="line-58"></a>			<span class="k">continue</span><span class="p">;</span>
-<a name="line-59"></a>		<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">add_position</span><span class="p">(</span> <span class="n">tick</span><span class="p">,</span> <span class="n">signed_height</span> <span class="p">);</span>
-<a name="line-60"></a>	
-<a name="line-61"></a>	<span class="p">}</span>
-<a name="line-62"></a>
-<a name="line-63"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_enabled</span><span class="p">(</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ENV_ON</span> <span class="p">);</span>
-<a name="line-64"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_carry_enabled</span><span class="p">(</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ENV_CARRY</span><span class="p">);</span>
-<a name="line-65"></a>	
-<a name="line-66"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_loop_enabled</span><span class="p">(</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ENV_LOOP</span> <span class="p">);</span>
-<a name="line-67"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_loop_begin</span><span class="p">(</span> <span class="n">begin</span> <span class="p">);</span>
-<a name="line-68"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_loop_end</span><span class="p">(</span> <span class="n">end</span> <span class="p">);</span>
-<a name="line-69"></a>	
-<a name="line-70"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_sustain_loop_enabled</span><span class="p">(</span> <span class="n">flags</span> <span class="o">&amp;</span> <span class="n">ENV_SUSLOOP</span> <span class="p">);</span>
-<a name="line-71"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_sustain_loop_begin</span><span class="p">(</span> <span class="n">susbegin</span> <span class="p">);</span>
-<a name="line-72"></a>	<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">set_sustain_loop_end</span><span class="p">(</span> <span class="n">susend</span> <span class="p">);</span>
-<a name="line-73"></a>	
-<a name="line-74"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_has_filter_flag</span><span class="p">)</span>
-<a name="line-75"></a>		<span class="o">*</span><span class="n">p_has_filter_flag</span><span class="o">=</span><span class="n">flags</span><span class="o">&amp;</span><span class="n">ENV_FILTER</span><span class="p">;</span>
-<a name="line-76"></a>	
-<a name="line-77"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span> <span class="c1">//zerobyte</span>
-<a name="line-78"></a>	
-<a name="line-79"></a>	<span class="c1">//fill with stuff if the envelope hass less than 2 points</span>
-<a name="line-80"></a>	<span class="k">while</span><span class="p">(</span><span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">get_node_count</span><span class="p">()</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-81"></a>		
-<a name="line-82"></a>		<span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">add_position</span><span class="p">(</span> <span class="mi">30</span><span class="o">*</span><span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">get_node_count</span><span class="p">(),</span> <span class="n">p_envelope</span><span class="o">-&gt;</span><span class="n">get_min</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span> <span class="o">?</span> <span class="mi">64</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span> <span class="p">);</span>
-<a name="line-83"></a>	<span class="p">}</span>
-<a name="line-84"></a><span class="p">}</span>
-<a name="line-85"></a>
+<a name="line-29"></a><span class="cp">#include &quot;audio_driver_pulseaudio.h&quot;</span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class="cp">#ifdef PULSEAUDIO_ENABLED</span>
+<a name="line-32"></a>
+<a name="line-33"></a><span class="cp">#include &lt;pulse/error.h&gt;</span>
+<a name="line-34"></a>
+<a name="line-35"></a><span class="cp">#include &quot;globals.h&quot;</span>
+<a name="line-36"></a>
+<a name="line-37"></a><span class="n">Error</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">init</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-38"></a>
+<a name="line-39"></a>    <span class="n">active</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-40"></a>    <span class="n">thread_exited</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-41"></a>    <span class="n">exit_thread</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-42"></a>	<span class="n">pcm_open</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-43"></a>	<span class="n">samples_in</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-44"></a>	<span class="n">samples_out</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-45"></a>
+<a name="line-46"></a>	<span class="n">mix_rate</span> <span class="o">=</span> <span class="mi">44100</span><span class="p">;</span>
+<a name="line-47"></a>	<span class="n">output_format</span> <span class="o">=</span> <span class="n">OUTPUT_STEREO</span><span class="p">;</span>
+<a name="line-48"></a>	<span class="n">channels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-49"></a>
+<a name="line-50"></a>    <span class="n">pa_sample_spec</span> <span class="n">spec</span><span class="p">;</span>
+<a name="line-51"></a>    <span class="n">spec</span><span class="p">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">PA_SAMPLE_S16LE</span><span class="p">;</span>
+<a name="line-52"></a>    <span class="n">spec</span><span class="p">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span><span class="p">;</span>
+<a name="line-53"></a>    <span class="n">spec</span><span class="p">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">mix_rate</span><span class="p">;</span>
+<a name="line-54"></a>
+<a name="line-55"></a>    <span class="kt">int</span> <span class="n">error_code</span><span class="p">;</span>
+<a name="line-56"></a>    <span class="n">pulse</span> <span class="o">=</span> <span class="n">pa_simple_new</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span>         <span class="c1">// default server</span>
+<a name="line-57"></a>                          <span class="s">&quot;Godot&quot;</span><span class="p">,</span>      <span class="c1">// application name</span>
+<a name="line-58"></a>                          <span class="n">PA_STREAM_PLAYBACK</span><span class="p">,</span>
+<a name="line-59"></a>                          <span class="nb">NULL</span><span class="p">,</span>         <span class="c1">// default device</span>
+<a name="line-60"></a>                          <span class="s">&quot;Sound&quot;</span><span class="p">,</span>      <span class="c1">// stream description</span>
+<a name="line-61"></a>                          <span class="o">&amp;</span><span class="n">spec</span><span class="p">,</span>
+<a name="line-62"></a>                          <span class="nb">NULL</span><span class="p">,</span>         <span class="c1">// use default channel map</span>
+<a name="line-63"></a>                          <span class="nb">NULL</span><span class="p">,</span>         <span class="c1">// use default buffering attributes</span>
+<a name="line-64"></a>                          <span class="o">&amp;</span><span class="n">error_code</span>
+<a name="line-65"></a>                          <span class="p">);</span>
+<a name="line-66"></a>
+<a name="line-67"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">pulse</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-68"></a>
+<a name="line-69"></a>        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;PulseAudio ERR: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">pa_strerror</span><span class="p">(</span><span class="n">error_code</span><span class="p">));</span>\
+<a name="line-70"></a>        <span class="n">ERR_FAIL_COND_V</span><span class="p">(</span><span class="n">pulse</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ERR_CANT_OPEN</span><span class="p">);</span>
+<a name="line-71"></a>    <span class="p">}</span>
+<a name="line-72"></a>
+<a name="line-73"></a>    <span class="kt">int</span> <span class="n">latency</span> <span class="o">=</span> <span class="n">GLOBAL_DEF</span><span class="p">(</span><span class="s">&quot;audio/output_latency&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+<a name="line-74"></a>    <span class="n">buffer_size</span> <span class="o">=</span> <span class="n">nearest_power_of_2</span><span class="p">(</span><span class="n">latency</span> <span class="o">*</span> <span class="n">mix_rate</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">);</span>
+<a name="line-75"></a>
+<a name="line-76"></a>    <span class="n">samples_in</span> <span class="o">=</span> <span class="n">memnew_arr</span><span class="p">(</span><span class="kt">int32_t</span><span class="p">,</span> <span class="n">buffer_size</span> <span class="o">*</span> <span class="n">channels</span><span class="p">);</span>
+<a name="line-77"></a>    <span class="n">samples_out</span> <span class="o">=</span> <span class="n">memnew_arr</span><span class="p">(</span><span class="kt">int16_t</span><span class="p">,</span> <span class="n">buffer_size</span> <span class="o">*</span> <span class="n">channels</span><span class="p">);</span>
+<a name="line-78"></a>
+<a name="line-79"></a>    <span class="n">mutex</span> <span class="o">=</span> <span class="n">Mutex</span><span class="o">::</span><span class="n">create</span><span class="p">();</span>
+<a name="line-80"></a>    <span class="kr">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">thread_func</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<a name="line-81"></a>
+<a name="line-82"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
+<a name="line-83"></a><span class="p">}</span>
+<a name="line-84"></a>
+<a name="line-85"></a><span class="kt">void</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">thread_func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_udata</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-86"></a>
-<a name="line-87"></a><span class="n">CPLoader</span><span class="o">::</span><span class="n">Error</span> <span class="n">CPLoader_IT</span><span class="o">::</span><span class="n">load_instrument</span><span class="p">(</span><span class="n">CPInstrument</span> <span class="o">*</span><span class="n">p_instrument</span><span class="p">,</span><span class="kt">int</span> <span class="o">*</span><span class="n">p_samples</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-88"></a>
-<a name="line-89"></a>
+<a name="line-87"></a><span class="hll">    <span class="n">AudioDriverPulseAudio</span><span class="o">*</span> <span class="n">ad</span> <span class="o">=</span> <span class="p">(</span><span class="n">AudioDriverPulseAudio</span><span class="o">*</span><span class="p">)</span><span class="n">p_udata</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div>
+</span><a name="line-88"></a>
+<a name="line-89"></a>	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">exit_thread</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-90"></a>
-<a name="line-91"></a>	<span class="kt">char</span> <span class="n">aux_header</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
-<a name="line-92"></a>	
-<a name="line-93"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte_array</span><span class="p">((</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">aux_header</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>	
+<a name="line-91"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">active</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-92"></a>
+<a name="line-93"></a>            <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">buffer_size</span> <span class="o">*</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">channels</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-94"></a>
-<a name="line-95"></a>	
-<a name="line-96"></a>	<span class="k">if</span> <span class="p">(</span>	<span class="n">aux_header</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;I&#39;</span> <span class="o">||</span>
-<a name="line-97"></a>		       <span class="n">aux_header</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;M&#39;</span> <span class="o">||</span>
-<a name="line-98"></a>		       <span class="n">aux_header</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;P&#39;</span> <span class="o">||</span>
-<a name="line-99"></a>		       <span class="n">aux_header</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;I&#39;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-100"></a>		<span class="n">CP_PRINTERR</span><span class="p">(</span><span class="s">&quot;IT CPLoader CPInstrument: Failed Identifier&quot;</span><span class="p">);</span>
-<a name="line-101"></a>	
-<a name="line-102"></a>		<span class="k">return</span> <span class="n">FILE_UNRECOGNIZED</span><span class="p">;</span>
-<a name="line-103"></a>	<span class="p">}</span>
-<a name="line-104"></a>		
-<a name="line-105"></a>	
-<a name="line-106"></a>
-<a name="line-107"></a>	<span class="c1">// Ignore deprecated 8.3 filename field</span>
-<a name="line-108"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-109"></a>	
-<a name="line-110"></a>	<span class="c1">//Ignore zerobyte</span>
-<a name="line-111"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>		<span class="cm">/* (byte) CPInstrument type (always 0) */</span>
-<a name="line-112"></a>	
-<a name="line-113"></a>	<span class="k">switch</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span> <span class="cm">/* New CPNote Action [0,1,2,3] */</span>
-<a name="line-114"></a>		<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_NNA_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">NNA_NOTE_CUT</span> <span class="p">)</span> <span class="p">;</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-115"></a>		<span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_NNA_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">NNA_NOTE_CONTINUE</span> <span class="p">)</span> <span class="p">;</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-116"></a>		<span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_NNA_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">NNA_NOTE_OFF</span> <span class="p">)</span> <span class="p">;</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-117"></a>		<span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_NNA_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">NNA_NOTE_FADE</span> <span class="p">)</span> <span class="p">;</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-118"></a>	<span class="p">};</span>
-<a name="line-119"></a>	<span class="k">switch</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span> <span class="c1">// Duplicate Check Type</span>
-<a name="line-120"></a>		<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCT_DISABLED</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>		
-<a name="line-121"></a>		<span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCT_NOTE</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>		
-<a name="line-122"></a>		<span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCT_SAMPLE</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>		
-<a name="line-123"></a>		<span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_type</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCT_INSTRUMENT</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>		
-<a name="line-124"></a>	<span class="p">}</span>
-<a name="line-125"></a>	<span class="k">switch</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span> <span class="c1">//Duplicate Check Action</span>
-<a name="line-126"></a>		<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_action</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCA_NOTE_CUT</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>
-<a name="line-127"></a>		<span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_action</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCA_NOTE_OFF</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>
-<a name="line-128"></a>		<span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_DC_action</span><span class="p">(</span> <span class="n">CPInstrument</span><span class="o">::</span><span class="n">DCA_NOTE_FADE</span> <span class="p">);</span> <span class="k">break</span> <span class="p">;</span>
-<a name="line-129"></a>	<span class="p">}</span>
-<a name="line-130"></a>	
-<a name="line-131"></a>	<span class="kt">int</span> <span class="n">fade</span> <span class="o">=</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_word</span><span class="p">();</span>
-<a name="line-132"></a>	<span class="c1">//intf(&quot;AFADE: %i\n&quot;,fade);</span>
-<a name="line-133"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">fade</span><span class="o">&gt;</span><span class="n">CPInstrument</span><span class="o">::</span><span class="n">MAX_FADEOUT</span><span class="p">)</span> <span class="c1">//needs to be clipped because of horrible modplug doings</span>
-<a name="line-134"></a>		<span class="n">fade</span><span class="o">=</span><span class="n">CPInstrument</span><span class="o">::</span><span class="n">MAX_FADEOUT</span><span class="p">;</span>
-<a name="line-135"></a>	
-<a name="line-136"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_volume_fadeout</span><span class="p">(</span> <span class="n">fade</span> <span class="p">);</span>
-<a name="line-137"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_pan_pitch_separation</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-138"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_pan_pitch_center</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-139"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_volume_global_amount</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-140"></a>	<span class="kt">uint8_t</span> <span class="n">pan</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-141"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_pan_default_amount</span><span class="p">(</span><span class="n">pan</span><span class="o">&amp;</span><span class="mh">0x7F</span><span class="p">);</span>
-<a name="line-142"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_pan_default_enabled</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="n">pan</span><span class="o">&amp;</span><span class="mh">0x80</span><span class="p">)</span> <span class="p">);</span>
-<a name="line-143"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_volume_random_variation</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-144"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_pan_random_variation</span><span class="p">(</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-145"></a>	
-<a name="line-146"></a>	
-<a name="line-147"></a>	
-<a name="line-148"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_word</span><span class="p">();</span> <span class="c1">//empty (version)</span>
-<a name="line-149"></a>	<span class="kt">uint8_t</span> <span class="n">samples</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-150"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_samples</span><span class="p">)</span>
-<a name="line-151"></a>		<span class="o">*</span><span class="n">p_samples</span><span class="o">=</span><span class="n">samples</span><span class="p">;</span>
-<a name="line-152"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span> <span class="c1">//empty</span>
-<a name="line-153"></a>	<span class="kt">char</span> <span class="n">aux_name</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>	
-<a name="line-154"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte_array</span><span class="p">((</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">aux_name</span><span class="p">,</span><span class="mi">26</span><span class="p">);</span>
-<a name="line-155"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_name</span><span class="p">(</span><span class="n">aux_name</span><span class="p">);</span>
-<a name="line-156"></a>	
-<a name="line-157"></a>	<span class="kt">uint8_t</span> <span class="n">cutoff</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-158"></a>		
-<a name="line-159"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_filter_default_cutoff</span><span class="p">(</span><span class="n">cutoff</span><span class="o">&amp;</span><span class="mh">0x7F</span><span class="p">);</span>
-<a name="line-160"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_filter_use_default_cutoff</span><span class="p">(</span><span class="n">cutoff</span><span class="o">&amp;</span><span class="mh">0x80</span><span class="p">);</span> 
-<a name="line-161"></a>	
-<a name="line-162"></a>	<span class="kt">uint8_t</span> <span class="n">resonance</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-163"></a>		
-<a name="line-164"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_filter_default_resonance</span><span class="p">(</span><span class="n">resonance</span><span class="o">&amp;</span><span class="mh">0x7F</span><span class="p">);</span>
-<a name="line-165"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_filter_use_default_resonance</span><span class="p">(</span><span class="n">resonance</span><span class="o">&amp;</span><span class="mh">0x80</span><span class="p">);</span> 
-<a name="line-166"></a>	
-<a name="line-167"></a>	<span class="n">file</span><span class="o">-&gt;</span><span class="n">get_dword</span><span class="p">();</span> <span class="c1">//MIDI, IGNORED!</span>
-<a name="line-168"></a>	
-<a name="line-169"></a>	<span class="cm">/* CPNote -&gt; CPSample table */</span>
-<a name="line-170"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">CPNote</span><span class="o">::</span><span class="n">NOTES</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-171"></a>		
-<a name="line-172"></a>		
-<a name="line-173"></a>		<span class="kt">uint8_t</span> <span class="n">note</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-174"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">note</span><span class="o">&gt;=</span><span class="n">CPNote</span><span class="o">::</span><span class="n">NOTES</span><span class="p">)</span>
-<a name="line-175"></a>			<span class="n">note</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-176"></a>		<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_note_number</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">note</span><span class="p">);</span>		
-<a name="line-177"></a>		
-<a name="line-178"></a>		<span class="kt">uint8_t</span> <span class="n">samp</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_byte</span><span class="p">();</span>
-<a name="line-179"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">samp</span><span class="o">==</span><span class="mi">0</span> <span class="o">||</span> <span class="n">samp</span><span class="o">&gt;</span><span class="mi">99</span><span class="p">)</span>
-<a name="line-180"></a>			<span class="n">samp</span><span class="o">=</span><span class="n">CPNote</span><span class="o">::</span><span class="n">EMPTY</span><span class="p">;</span>
-<a name="line-181"></a>		<span class="k">else</span> 
-<a name="line-182"></a>			<span class="n">samp</span><span class="o">--</span><span class="p">;</span>
-<a name="line-183"></a>		
-<a name="line-184"></a>		
-<a name="line-185"></a>		<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_sample_number</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">samp</span><span class="p">);</span>
-<a name="line-186"></a>	
-<a name="line-187"></a>
-<a name="line-188"></a>	<span class="p">}</span>
+<a name="line-95"></a>				<span class="n">ad</span><span class="o">-&gt;</span><span class="n">samples_out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-96"></a>            <span class="p">}</span>
+<a name="line-97"></a>
+<a name="line-98"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-99"></a>
+<a name="line-100"></a>			<span class="n">ad</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">();</span>
+<a name="line-101"></a>
+<a name="line-102"></a>			<span class="n">ad</span><span class="o">-&gt;</span><span class="n">audio_server_process</span><span class="p">(</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">buffer_size</span><span class="p">,</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">samples_in</span><span class="p">);</span>
+<a name="line-103"></a>
+<a name="line-104"></a>			<span class="n">ad</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
+<a name="line-105"></a>
+<a name="line-106"></a>            <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">buffer_size</span> <span class="o">*</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">channels</span><span class="p">;</span><span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-107"></a>
+<a name="line-108"></a>                <span class="n">ad</span><span class="o">-&gt;</span><span class="n">samples_out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">samples_in</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span>
+<a name="line-109"></a>			<span class="p">}</span>
+<a name="line-110"></a>        <span class="p">}</span>
+<a name="line-111"></a>
+<a name="line-112"></a>        <span class="c1">// pa_simple_write always consumes the entire buffer</span>
+<a name="line-113"></a>
+<a name="line-114"></a>        <span class="kt">int</span> <span class="n">error_code</span><span class="p">;</span>
+<a name="line-115"></a>        <span class="kt">int</span> <span class="n">byte_size</span> <span class="o">=</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">buffer_size</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int16_t</span><span class="p">)</span> <span class="o">*</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">channels</span><span class="p">;</span>
+<a name="line-116"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">pa_simple_write</span><span class="p">(</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">pulse</span><span class="p">,</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">samples_out</span><span class="p">,</span> <span class="n">byte_size</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">error_code</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-117"></a>
+<a name="line-118"></a>            <span class="c1">// can&#39;t recover here</span>
+<a name="line-119"></a>            <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;PulseAudio failed and can&#39;t recover: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">pa_strerror</span><span class="p">(</span><span class="n">error_code</span><span class="p">));</span>
+<a name="line-120"></a>            <span class="n">ad</span><span class="o">-&gt;</span><span class="n">active</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-121"></a>            <span class="n">ad</span><span class="o">-&gt;</span><span class="n">exit_thread</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-122"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-123"></a>        <span class="p">}</span>
+<a name="line-124"></a>    <span class="p">}</span>
+<a name="line-125"></a>
+<a name="line-126"></a>    <span class="n">ad</span><span class="o">-&gt;</span><span class="n">thread_exited</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-127"></a><span class="p">}</span>
+<a name="line-128"></a>
+<a name="line-129"></a><span class="kt">void</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-130"></a>
+<a name="line-131"></a>	<span class="n">active</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-132"></a><span class="p">}</span>
+<a name="line-133"></a>
+<a name="line-134"></a><span class="kt">int</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">get_mix_rate</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-135"></a>
+<a name="line-136"></a>	<span class="k">return</span> <span class="n">mix_rate</span><span class="p">;</span>
+<a name="line-137"></a><span class="p">}</span>
+<a name="line-138"></a>
+<a name="line-139"></a><span class="n">AudioDriverSW</span><span class="o">::</span><span class="n">OutputFormat</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">get_output_format</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-140"></a>
+<a name="line-141"></a>	<span class="k">return</span> <span class="n">output_format</span><span class="p">;</span>
+<a name="line-142"></a><span class="p">}</span>
+<a name="line-143"></a>
+<a name="line-144"></a><span class="kt">void</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">lock</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-145"></a>
+<a name="line-146"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">thread</span> <span class="o">||</span> <span class="o">!</span><span class="n">mutex</span><span class="p">)</span>
+<a name="line-147"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-148"></a>	<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">();</span>
+<a name="line-149"></a><span class="p">}</span>
+<a name="line-150"></a>
+<a name="line-151"></a><span class="kt">void</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">unlock</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-152"></a>
+<a name="line-153"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">thread</span> <span class="o">||</span> <span class="o">!</span><span class="n">mutex</span><span class="p">)</span>
+<a name="line-154"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-155"></a>	<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
+<a name="line-156"></a><span class="p">}</span>
+<a name="line-157"></a>
+<a name="line-158"></a><span class="kt">void</span> <span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">finish</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-159"></a>
+<a name="line-160"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">thread</span><span class="p">)</span>
+<a name="line-161"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-162"></a>
+<a name="line-163"></a>	<span class="n">exit_thread</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-164"></a>	<span class="n">Thread</span><span class="o">::</span><span class="n">wait_to_finish</span><span class="p">(</span><span class="kr">thread</span><span class="p">);</span>
+<a name="line-165"></a>
+<a name="line-166"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">pulse</span><span class="p">)</span>
+<a name="line-167"></a>        <span class="n">pa_simple_free</span><span class="p">(</span><span class="n">pulse</span><span class="p">);</span>
+<a name="line-168"></a>
+<a name="line-169"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">samples_in</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-170"></a>		<span class="n">memdelete_arr</span><span class="p">(</span><span class="n">samples_in</span><span class="p">);</span>
+<a name="line-171"></a>		<span class="n">memdelete_arr</span><span class="p">(</span><span class="n">samples_out</span><span class="p">);</span>
+<a name="line-172"></a>	<span class="p">};</span>
+<a name="line-173"></a>
+<a name="line-174"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="kr">thread</span><span class="p">);</span>
+<a name="line-175"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">mutex</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-176"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
+<a name="line-177"></a>        <span class="n">mutex</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-178"></a>    <span class="p">}</span>
+<a name="line-179"></a>
+<a name="line-180"></a>	<span class="kr">thread</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-181"></a><span class="p">}</span>
+<a name="line-182"></a>
+<a name="line-183"></a><span class="hll"><span class="n">AudioDriverPulseAudio</span><span class="o">::</span><span class="n">AudioDriverPulseAudio</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::samples_in' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::samples_out' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::mix_rate' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::buffer_size' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::channels' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::active' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::thread_exited' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::exit_thread' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverPulseAudio::pcm_open' is not initialized in the constructor.</span>
+</span><a name="line-184"></a>
+<a name="line-185"></a>	<span class="n">mutex</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-186"></a>    <span class="kr">thread</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-187"></a>    <span class="n">pulse</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-188"></a><span class="p">}</span>
 <a name="line-189"></a>
-<a name="line-190"></a>	
-<a name="line-191"></a>	<span class="n">load_envelope</span><span class="p">(</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">get_volume_envelope</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-192"></a>	<span class="n">load_envelope</span><span class="p">(</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">get_pan_envelope</span><span class="p">()</span> <span class="p">);</span>
-<a name="line-193"></a>	<span class="kt">bool</span> <span class="n">use_as_filter</span><span class="p">;</span>
-<a name="line-194"></a>	<span class="n">load_envelope</span><span class="p">(</span> <span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">get_pitch_filter_envelope</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">use_as_filter</span> <span class="p">);</span>
-<a name="line-195"></a>	<span class="n">p_instrument</span><span class="o">-&gt;</span><span class="n">set_pitch_use_as_filter</span><span class="p">(</span> <span class="n">use_as_filter</span> <span class="p">);</span>
-<a name="line-196"></a>
-<a name="line-197"></a>	<span class="k">return</span> <span class="n">FILE_OK</span><span class="p">;</span>
-<a name="line-198"></a>
-<a name="line-199"></a><span class="p">}</span>
-<a name="line-200"></a>
-<a name="line-201"></a>
-<a name="line-202"></a><span class="n">CPLoader</span><span class="o">::</span><span class="n">Error</span> <span class="n">CPLoader_IT</span><span class="o">::</span><span class="n">load_instruments</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-203"></a>
-<a name="line-204"></a>
-<a name="line-205"></a>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">header</span><span class="p">.</span><span class="n">insnum</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-206"></a>
-<a name="line-207"></a>		
-<a name="line-208"></a>		<span class="n">file</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span><span class="mh">0xC0</span><span class="o">+</span><span class="n">header</span><span class="p">.</span><span class="n">ordnum</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span>
-<a name="line-209"></a>		<span class="kt">uint32_t</span> <span class="n">final_location</span><span class="o">=</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">get_dword</span><span class="p">();</span>
-<a name="line-210"></a>		<span class="n">file</span><span class="o">-&gt;</span><span class="n">seek</span><span class="p">(</span> <span class="n">final_location</span> <span class="p">);</span>
-<a name="line-211"></a>		
-<a name="line-212"></a>		<span class="n">Error</span> <span class="n">err</span><span class="o">=</span><span class="n">load_instrument</span><span class="p">(</span> <span class="n">song</span><span class="o">-&gt;</span><span class="n">get_instrument</span><span class="p">(</span> <span class="n">i</span> <span class="p">)</span> <span class="p">);</span>
-<a name="line-213"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span>
-<a name="line-214"></a>			<span class="k">return</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-215"></a>
-<a name="line-216"></a>	<span class="p">}</span>
-<a name="line-217"></a>
-<a name="line-218"></a>	<span class="k">return</span> <span class="n">FILE_OK</span><span class="p">;</span>
-<a name="line-219"></a>
-<a name="line-220"></a><span class="hll">	<span class="k">if</span> <span class="p">(</span><span class="n">file</span><span class="o">-&gt;</span><span class="n">eof_reached</span><span class="p">()</span> <span class="o">||</span> <span class="n">file</span><span class="o">-&gt;</span><span class="n">get_error</span><span class="p">())</span><span class='inconclusive2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
-</span><a name="line-221"></a>		<span class="k">return</span> <span class="n">FILE_CORRUPTED</span><span class="p">;</span>
-<a name="line-222"></a><span class="p">}</span>
+<a name="line-190"></a><span class="n">AudioDriverPulseAudio</span><span class="o">::~</span><span class="n">AudioDriverPulseAudio</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-191"></a>
+<a name="line-192"></a><span class="p">}</span>
+<a name="line-193"></a>
+<a name="line-194"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

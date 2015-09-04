@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/x509v3/pcy_tree.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/chibi/cp_envelope.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> pcy_tree.c</p>
-<a href='401.html#line-83'> variableScope 83</a><a href='401.html#line-314'> variableScope 314</a><a href='401.html#line-344'> variableScope 344</a><a href='401.html#line-408'> variableScope 408</a><a href='401.html#line-448'> variableScope 448</a><a href='401.html#line-590'> variableScope 590</a><a href='401.html#line-593'> nullPointerRedundantCheck 593</a><a href='401.html#line-637'> variableScope 637</a><a href='401.html#line-698'> variableScope 698</a><a href='401.html#line-700'> variableScope 700</a>
+       <p id="filename"><a href="index.html">Defects:</a> cp_envelope.cpp</p>
+<a href='401.html#line-32'> uninitMemberVar 32</a><a href='401.html#line-32'> uninitMemberVar 32</a><a href='401.html#line-32'> uninitMemberVar 32</a><a href='401.html#line-362'> unreadVariable 362</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -481,1488 +481,374 @@
 365
 366
 367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592
-593
-594
-595
-596
-597
-598
-599
-600
-601
-602
-603
-604
-605
-606
-607
-608
-609
-610
-611
-612
-613
-614
-615
-616
-617
-618
-619
-620
-621
-622
-623
-624
-625
-626
-627
-628
-629
-630
-631
-632
-633
-634
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648
-649
-650
-651
-652
-653
-654
-655
-656
-657
-658
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
-752
-753
-754
-755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767
-768
-769
-770
-771
-772
-773
-774
-775
-776
-777
-778
-779
-780
-781
-782
-783
-784
-785
-786
-787
-788
-789
-790
-791
-792
-793
-794
-795
-796
-797
-798
-799
-800
-801
-802
-803
-804
-805
-806
-807
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
-824
-825
-826
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838
-839
-840
-841
-842
-843
-844
-845
-846
-847
-848
-849
-850
-851
-852
-853
-854
-855
-856
-857
-858
-859
-860
-861
-862
-863
-864
-865
-866
-867
-868
-869
-870
-871</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* pcy_tree.c */</span>
-<a name="line-2"></a><span class="cm">/* Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL</span>
-<a name="line-3"></a><span class="cm"> * project 2004.</span>
-<a name="line-4"></a><span class="cm"> */</span>
-<a name="line-5"></a><span class="cm">/* ====================================================================</span>
-<a name="line-6"></a><span class="cm"> * Copyright (c) 2004 The OpenSSL Project.  All rights reserved.</span>
-<a name="line-7"></a><span class="cm"> *</span>
-<a name="line-8"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
-<a name="line-9"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
-<a name="line-10"></a><span class="cm"> * are met:</span>
-<a name="line-11"></a><span class="cm"> *</span>
-<a name="line-12"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
-<a name="line-13"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
-<a name="line-14"></a><span class="cm"> *</span>
-<a name="line-15"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
-<a name="line-16"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
-<a name="line-17"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
-<a name="line-18"></a><span class="cm"> *    distribution.</span>
-<a name="line-19"></a><span class="cm"> *</span>
-<a name="line-20"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
-<a name="line-21"></a><span class="cm"> *    software must display the following acknowledgment:</span>
-<a name="line-22"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
-<a name="line-23"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
-<a name="line-24"></a><span class="cm"> *</span>
-<a name="line-25"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
-<a name="line-26"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
-<a name="line-27"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
-<a name="line-28"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
-<a name="line-29"></a><span class="cm"> *</span>
-<a name="line-30"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
-<a name="line-31"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
-<a name="line-32"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
-<a name="line-33"></a><span class="cm"> *</span>
-<a name="line-34"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
-<a name="line-35"></a><span class="cm"> *    acknowledgment:</span>
-<a name="line-36"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
-<a name="line-37"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
-<a name="line-38"></a><span class="cm"> *</span>
-<a name="line-39"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
-<a name="line-40"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
-<a name="line-41"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
-<a name="line-42"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
-<a name="line-43"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
-<a name="line-44"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
-<a name="line-45"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
-<a name="line-46"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
-<a name="line-47"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
-<a name="line-48"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
-<a name="line-49"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
-<a name="line-50"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
-<a name="line-51"></a><span class="cm"> * ====================================================================</span>
-<a name="line-52"></a><span class="cm"> *</span>
-<a name="line-53"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
-<a name="line-54"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
-<a name="line-55"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
-<a name="line-56"></a><span class="cm"> *</span>
-<a name="line-57"></a><span class="cm"> */</span>
-<a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-60"></a><span class="cp">#include &lt;openssl/x509.h&gt;</span>
-<a name="line-61"></a><span class="cp">#include &lt;openssl/x509v3.h&gt;</span>
-<a name="line-62"></a>
-<a name="line-63"></a><span class="cp">#include &quot;pcy_int.h&quot;</span>
-<a name="line-64"></a>
-<a name="line-65"></a><span class="cm">/* Enable this to print out the complete policy tree at various point during</span>
-<a name="line-66"></a><span class="cm"> * evaluation.</span>
-<a name="line-67"></a><span class="cm"> */</span>
-<a name="line-68"></a>
-<a name="line-69"></a><span class="cm">/*#define OPENSSL_POLICY_DEBUG*/</span>
-<a name="line-70"></a>
-<a name="line-71"></a><span class="cp">#ifdef OPENSSL_POLICY_DEBUG</span>
-<a name="line-72"></a>
-<a name="line-73"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">expected_print</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">err</span><span class="p">,</span> <span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">lev</span><span class="p">,</span>
-<a name="line-74"></a>				<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">indent</span><span class="p">)</span>
-<a name="line-75"></a>	<span class="p">{</span>
-<a name="line-76"></a>	<span class="k">if</span> <span class="p">(</span>	    <span class="p">(</span><span class="n">lev</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_INHIBIT_MAP</span><span class="p">)</span>
-<a name="line-77"></a>		<span class="o">||</span> <span class="o">!</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">POLICY_DATA_FLAG_MAP_MASK</span><span class="p">))</span>
-<a name="line-78"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;  Not Mapped</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-79"></a>	<span class="k">else</span>
-<a name="line-80"></a>		<span class="p">{</span>
-<a name="line-81"></a>		<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-82"></a>		<span class="n">STACK_OF</span><span class="p">(</span><span class="n">ASN1_OBJECT</span><span class="p">)</span> <span class="o">*</span><span class="n">pset</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">expected_policy_set</span><span class="p">;</span>
-<a name="line-83"></a><span class="hll">		<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">oid</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'oid' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;oid&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-84"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;  Expected: &quot;</span><span class="p">);</span>
-<a name="line-85"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_ASN1_OBJECT_num</span><span class="p">(</span><span class="n">pset</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-86"></a>			<span class="p">{</span>
-<a name="line-87"></a>			<span class="n">oid</span> <span class="o">=</span> <span class="n">sk_ASN1_OBJECT_value</span><span class="p">(</span><span class="n">pset</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-88"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<a name="line-89"></a>				<span class="n">BIO_puts</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
-<a name="line-90"></a>			<span class="n">i2a_ASN1_OBJECT</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">oid</span><span class="p">);</span>
-<a name="line-91"></a>			<span class="p">}</span>
-<a name="line-92"></a>		<span class="n">BIO_puts</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-93"></a>		<span class="p">}</span>
-<a name="line-94"></a>	<span class="p">}</span>
+368</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  cp_envelope.cpp                                                      */</span>
+<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
+<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
+<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
+<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
+<a name="line-9"></a><span class="cm">/*                                                                       */</span>
+<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
+<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
+<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
+<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
+<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
+<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
+<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
+<a name="line-17"></a><span class="cm">/*                                                                       */</span>
+<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
+<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
+<a name="line-20"></a><span class="cm">/*                                                                       */</span>
+<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
+<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
+<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
+<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
+<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
+<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
+<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
+<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-29"></a><span class="cp">#include &quot;cp_envelope.h&quot;</span>
+<a name="line-30"></a>
+<a name="line-31"></a>
+<a name="line-32"></a><span class="hll"><span class="n">CPEnvelope</span><span class="o">::</span><span class="n">CPEnvelope</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'CPEnvelope::node' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'CPEnvelope::max_value' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'CPEnvelope::min_value' is not initialized in the constructor.</span>
+</span><a name="line-33"></a>
+<a name="line-34"></a>
+<a name="line-35"></a>	<span class="n">reset</span><span class="p">();</span>
+<a name="line-36"></a><span class="p">}</span>
+<a name="line-37"></a>
+<a name="line-38"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-39"></a>
+<a name="line-40"></a>
+<a name="line-41"></a>
+<a name="line-42"></a>	<span class="n">on</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-43"></a>	<span class="n">carry</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-44"></a>	<span class="n">loop_on</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-45"></a>	<span class="n">loop_begin_node</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-46"></a>	<span class="n">loop_end_node</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-47"></a>	<span class="n">sustain_loop_on</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-48"></a>	<span class="n">sustain_loop_begin_node</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-49"></a>	<span class="n">sustain_loop_end_node</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-50"></a>	<span class="n">node_count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-51"></a>
+<a name="line-52"></a><span class="p">}</span>
+<a name="line-53"></a>
+<a name="line-54"></a><span class="kt">int</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_height_at_pos</span><span class="p">(</span><span class="kt">int</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-55"></a>
+<a name="line-56"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">node_count</span> <span class="o">&amp;&amp;</span> <span class="n">pos</span><span class="o">&gt;</span><span class="n">node</span><span class="p">[</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">)</span>
+<a name="line-57"></a>		<span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-58"></a>	
+<a name="line-59"></a>	<span class="kt">int</span> <span class="n">begin_x</span><span class="p">,</span><span class="n">begin_y</span><span class="p">;</span>
+<a name="line-60"></a>	<span class="kt">int</span> <span class="n">end_x</span><span class="p">,</span><span class="n">end_y</span><span class="p">,</span><span class="n">xdif</span><span class="p">;</span>
+<a name="line-61"></a>	<span class="kt">int</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-62"></a>	<span class="kt">int</span> <span class="n">limit</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-63"></a>
+<a name="line-64"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">node_count</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO_POINT</span><span class="p">;</span>
+<a name="line-65"></a>
+<a name="line-66"></a>	<span class="k">while</span> <span class="p">((</span><span class="n">count</span><span class="o">&lt;</span><span class="n">node_count</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">limit</span><span class="o">==-</span><span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-67"></a>
+<a name="line-68"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">count</span><span class="p">].</span><span class="n">tick_offset</span><span class="o">&gt;=</span><span class="n">pos</span><span class="p">)</span> <span class="n">limit</span><span class="o">=</span><span class="n">count</span><span class="p">;</span>
+<a name="line-69"></a>		<span class="n">count</span><span class="o">++</span><span class="p">;</span>
+<a name="line-70"></a>	<span class="p">}</span>
+<a name="line-71"></a>
+<a name="line-72"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-73"></a>
+<a name="line-74"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">limit</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO_POINT</span><span class="p">;</span>
+<a name="line-75"></a>
+<a name="line-76"></a>	<span class="n">begin_x</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">;</span>
+<a name="line-77"></a>	<span class="n">end_x</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">;</span>
+<a name="line-78"></a>	<span class="n">begin_y</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="n">end_y</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-80"></a>
+<a name="line-81"></a>	<span class="n">xdif</span><span class="o">=</span><span class="n">end_x</span><span class="o">-</span><span class="n">begin_x</span><span class="p">;</span>
+<a name="line-82"></a>	<span class="k">return</span> <span class="n">begin_y</span><span class="o">+</span><span class="p">((</span><span class="n">pos</span><span class="o">-</span><span class="n">begin_x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">end_y</span><span class="o">-</span><span class="n">begin_y</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">xdif</span><span class="o">?</span><span class="nl">xdif</span><span class="p">:</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-83"></a><span class="p">}</span>
+<a name="line-84"></a>
+<a name="line-85"></a><span class="cm">/*</span>
+<a name="line-86"></a><span class="cm">int CPEnvelope::get_fx_height_at_pos(int pos) {</span>
+<a name="line-87"></a>
+<a name="line-88"></a><span class="cm">	if (node_count &amp;&amp; pos&gt;node[node_count-1].tick_offset)</span>
+<a name="line-89"></a><span class="cm">		return node[node_count-1].value&lt;&lt;FX_HEIGHT_BITS;</span>
+<a name="line-90"></a><span class="cm">	</span>
+<a name="line-91"></a><span class="cm">	int begin_x,begin_y;</span>
+<a name="line-92"></a><span class="cm">	int end_x,end_y,xdif;</span>
+<a name="line-93"></a><span class="cm">	int count=0;</span>
+<a name="line-94"></a><span class="cm">	int limit=-1;</span>
 <a name="line-95"></a>
-<a name="line-96"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">tree_print</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">,</span>
-<a name="line-97"></a>			<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">)</span>
-<a name="line-98"></a>	<span class="p">{</span>
-<a name="line-99"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">plev</span><span class="p">;</span>
-<a name="line-100"></a>	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span>
-<a name="line-101"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-102"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">err</span><span class="p">;</span>
-<a name="line-103"></a>	<span class="n">err</span> <span class="o">=</span> <span class="n">BIO_new_fp</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">BIO_NOCLOSE</span><span class="p">);</span>
-<a name="line-104"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">curr</span><span class="p">)</span>
-<a name="line-105"></a>		<span class="n">curr</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span> <span class="o">+</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span><span class="p">;</span>
-<a name="line-106"></a>	<span class="k">else</span>
-<a name="line-107"></a>		<span class="n">curr</span><span class="o">++</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="n">BIO_printf</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;Level print after %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
-<a name="line-109"></a>	<span class="n">BIO_printf</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;Printing Up to Level %ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">curr</span> <span class="o">-</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">);</span>
-<a name="line-110"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">plev</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">;</span> <span class="n">plev</span> <span class="o">!=</span> <span class="n">curr</span><span class="p">;</span> <span class="n">plev</span><span class="o">++</span><span class="p">)</span>
-<a name="line-111"></a>		<span class="p">{</span>
-<a name="line-112"></a>		<span class="n">BIO_printf</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;Level %ld, flags = %x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
-<a name="line-113"></a>				<span class="n">plev</span> <span class="o">-</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">,</span> <span class="n">plev</span><span class="o">-&gt;</span><span class="n">flags</span><span class="p">);</span>
-<a name="line-114"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">plev</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-115"></a>			<span class="p">{</span>
-<a name="line-116"></a>			<span class="n">node</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_value</span><span class="p">(</span><span class="n">plev</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-117"></a>			<span class="n">X509_POLICY_NODE_print</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-<a name="line-118"></a>			<span class="n">expected_print</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">plev</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-<a name="line-119"></a>			<span class="n">BIO_printf</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;  Flags: %x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">flags</span><span class="p">);</span>
-<a name="line-120"></a>			<span class="p">}</span>
-<a name="line-121"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">plev</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-122"></a>			<span class="n">X509_POLICY_NODE_print</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">plev</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-<a name="line-123"></a>		<span class="p">}</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="n">BIO_free</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
-<a name="line-126"></a>
-<a name="line-127"></a>	<span class="p">}</span>
-<a name="line-128"></a><span class="cp">#else</span>
+<a name="line-96"></a><span class="cm">	if (node_count&lt;2) return NO_POINT;</span>
+<a name="line-97"></a>
+<a name="line-98"></a><span class="cm">	while ((count&lt;node_count) &amp;&amp; (limit==-1)) {</span>
+<a name="line-99"></a>
+<a name="line-100"></a><span class="cm">		if (node[count].tick_offset&gt;=pos) limit=count;</span>
+<a name="line-101"></a><span class="cm">		count++;</span>
+<a name="line-102"></a><span class="cm">	}</span>
+<a name="line-103"></a>
+<a name="line-104"></a><span class="cm">	if (pos==0) return node[0].value&lt;&lt;FX_HEIGHT_BITS;</span>
+<a name="line-105"></a>
+<a name="line-106"></a><span class="cm">	if (limit==-1) return NO_POINT;</span>
+<a name="line-107"></a>
+<a name="line-108"></a><span class="cm">	begin_x=node[limit-1].tick_offset;</span>
+<a name="line-109"></a><span class="cm">	end_x=node[limit].tick_offset;</span>
+<a name="line-110"></a><span class="cm">	begin_y=node[limit-1].value;</span>
+<a name="line-111"></a><span class="cm">	end_y=node[limit].value;</span>
+<a name="line-112"></a>
+<a name="line-113"></a><span class="cm">	xdif=end_x-begin_x;</span>
+<a name="line-114"></a><span class="cm">	return (begin_y&lt;&lt;FX_HEIGHT_BITS)+((pos-begin_x)*(end_y-begin_y)*(int)(1&lt;&lt;FX_HEIGHT_BITS))/(xdif?xdif:1);</span>
+<a name="line-115"></a><span class="cm">}</span>
+<a name="line-116"></a><span class="cm">*/</span>
+<a name="line-117"></a>
+<a name="line-118"></a><span class="kt">float</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_interp_height_at_pos</span><span class="p">(</span><span class="kt">float</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-119"></a>
+<a name="line-120"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">node_count</span> <span class="o">&amp;&amp;</span> <span class="n">pos</span><span class="o">&gt;</span><span class="n">node</span><span class="p">[</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">)</span>
+<a name="line-121"></a>		<span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-122"></a>
+<a name="line-123"></a>	<span class="kt">int</span> <span class="n">begin_x</span><span class="p">,</span><span class="n">begin_y</span><span class="p">;</span>
+<a name="line-124"></a>	<span class="kt">int</span> <span class="n">end_x</span><span class="p">,</span><span class="n">end_y</span><span class="p">,</span><span class="n">xdif</span><span class="p">;</span>
+<a name="line-125"></a>	<span class="kt">int</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-126"></a>	<span class="kt">int</span> <span class="n">limit</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-127"></a>
+<a name="line-128"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">node_count</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO_POINT</span><span class="p">;</span>
 <a name="line-129"></a>
-<a name="line-130"></a><span class="cp">#define tree_print(a,b,c) </span><span class="cm">/* */</span><span class="cp"></span>
+<a name="line-130"></a>	<span class="k">while</span> <span class="p">((</span><span class="n">count</span><span class="o">&lt;</span><span class="n">node_count</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">limit</span><span class="o">==-</span><span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
 <a name="line-131"></a>
-<a name="line-132"></a><span class="cp">#endif</span>
-<a name="line-133"></a>
-<a name="line-134"></a><span class="cm">/* Initialize policy tree. Return values:</span>
-<a name="line-135"></a><span class="cm"> *  0 Some internal error occured.</span>
-<a name="line-136"></a><span class="cm"> * -1 Inconsistent or invalid extensions in certificates.</span>
-<a name="line-137"></a><span class="cm"> *  1 Tree initialized OK.</span>
-<a name="line-138"></a><span class="cm"> *  2 Policy tree is empty.</span>
-<a name="line-139"></a><span class="cm"> *  5 Tree OK and requireExplicitPolicy true.</span>
-<a name="line-140"></a><span class="cm"> *  6 Tree empty and requireExplicitPolicy true.</span>
-<a name="line-141"></a><span class="cm"> */</span>
-<a name="line-142"></a>
-<a name="line-143"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_init</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">**</span><span class="n">ptree</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
-<a name="line-144"></a>			<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">)</span>
-<a name="line-145"></a>	<span class="p">{</span>
-<a name="line-146"></a>	<span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">;</span>
-<a name="line-147"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">level</span><span class="p">;</span>
-<a name="line-148"></a>	<span class="k">const</span> <span class="n">X509_POLICY_CACHE</span> <span class="o">*</span><span class="n">cache</span><span class="p">;</span>
-<a name="line-149"></a>	<span class="n">X509_POLICY_DATA</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-150"></a>	<span class="n">X509</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span>
-<a name="line-151"></a>	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-152"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">;</span>
-<a name="line-153"></a>	<span class="kt">int</span> <span class="n">explicit_policy</span><span class="p">;</span>
-<a name="line-154"></a>	<span class="kt">int</span> <span class="n">any_skip</span><span class="p">;</span>
-<a name="line-155"></a>	<span class="kt">int</span> <span class="n">map_skip</span><span class="p">;</span>
-<a name="line-156"></a>	<span class="o">*</span><span class="n">ptree</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-157"></a>	<span class="n">n</span> <span class="o">=</span> <span class="n">sk_X509_num</span><span class="p">(</span><span class="n">certs</span><span class="p">);</span>
+<a name="line-132"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">count</span><span class="p">].</span><span class="n">tick_offset</span><span class="o">&gt;=</span><span class="n">pos</span><span class="p">)</span> <span class="n">limit</span><span class="o">=</span><span class="n">count</span><span class="p">;</span>
+<a name="line-133"></a>		<span class="n">count</span><span class="o">++</span><span class="p">;</span>
+<a name="line-134"></a>	<span class="p">}</span>
+<a name="line-135"></a>
+<a name="line-136"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pos</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-137"></a>
+<a name="line-138"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">limit</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">NO_POINT</span><span class="p">;</span>
+<a name="line-139"></a>
+<a name="line-140"></a>	<span class="n">begin_x</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">;</span>
+<a name="line-141"></a>	<span class="n">end_x</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">;</span>
+<a name="line-142"></a>	<span class="n">begin_y</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-143"></a>	<span class="n">end_y</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">limit</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+<a name="line-144"></a>
+<a name="line-145"></a>	<span class="n">xdif</span><span class="o">=</span><span class="n">end_x</span><span class="o">-</span><span class="n">begin_x</span><span class="p">;</span>
+<a name="line-146"></a>	<span class="k">return</span> <span class="n">begin_y</span><span class="o">+</span><span class="p">((</span><span class="n">pos</span><span class="o">-</span><span class="n">begin_x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">end_y</span><span class="o">-</span><span class="n">begin_y</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">xdif</span><span class="o">?</span><span class="nl">xdif</span><span class="p">:</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-147"></a><span class="p">}</span>
+<a name="line-148"></a>
+<a name="line-149"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_position</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_node</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_x</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_y</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-150"></a>
+<a name="line-151"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_node</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+<a name="line-152"></a>	
+<a name="line-153"></a>
+<a name="line-154"></a>
+<a name="line-155"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_node</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-156"></a>
+<a name="line-157"></a>		<span class="n">p_x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <a name="line-158"></a>
-<a name="line-159"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-160"></a><span class="c">	/* Disable policy mapping for now... */</span>
-<a name="line-161"></a><span class="c">	flags |= X509_V_FLAG_INHIBIT_MAP;</span>
-<a name="line-162"></a><span class="cp">#endif</span>
-<a name="line-163"></a>
-<a name="line-164"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_EXPLICIT_POLICY</span><span class="p">)</span>
-<a name="line-165"></a>		<span class="n">explicit_policy</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-166"></a>	<span class="k">else</span>
-<a name="line-167"></a>		<span class="n">explicit_policy</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-168"></a>
-<a name="line-169"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_INHIBIT_ANY</span><span class="p">)</span>
-<a name="line-170"></a>		<span class="n">any_skip</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-171"></a>	<span class="k">else</span>
-<a name="line-172"></a>		<span class="n">any_skip</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-173"></a>
-<a name="line-174"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_INHIBIT_MAP</span><span class="p">)</span>
-<a name="line-175"></a>		<span class="n">map_skip</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-176"></a>	<span class="k">else</span>
-<a name="line-177"></a>		<span class="n">map_skip</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-178"></a>
-<a name="line-179"></a>	<span class="cm">/* Can&#39;t do anything with just a trust anchor */</span>
-<a name="line-180"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-181"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-182"></a>	<span class="cm">/* First setup policy cache in all certificates apart from the</span>
-<a name="line-183"></a><span class="cm">	 * trust anchor. Note any bad cache results on the way. Also can</span>
-<a name="line-184"></a><span class="cm">	 * calculate explicit_policy value at this point.</span>
-<a name="line-185"></a><span class="cm">	 */</span>
-<a name="line-186"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
-<a name="line-187"></a>		<span class="p">{</span>
-<a name="line-188"></a>		<span class="n">x</span> <span class="o">=</span> <span class="n">sk_X509_value</span><span class="p">(</span><span class="n">certs</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-189"></a>		<span class="n">X509_check_purpose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-190"></a>		<span class="n">cache</span> <span class="o">=</span> <span class="n">policy_cache_set</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<a name="line-191"></a>		<span class="cm">/* If cache NULL something bad happened: return immediately */</span>
-<a name="line-192"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">cache</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-193"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-194"></a>		<span class="cm">/* If inconsistent extensions keep a note of it but continue */</span>
-<a name="line-195"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_flags</span> <span class="o">&amp;</span> <span class="n">EXFLAG_INVALID_POLICY</span><span class="p">)</span>
-<a name="line-196"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-197"></a>		<span class="cm">/* Otherwise if we have no data (hence no CertificatePolicies)</span>
-<a name="line-198"></a><span class="cm">		 * and haven&#39;t already set an inconsistent code note it.</span>
-<a name="line-199"></a><span class="cm">		 */</span>
-<a name="line-200"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span>
-<a name="line-201"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<a name="line-202"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">explicit_policy</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-203"></a>			<span class="p">{</span>
-<a name="line-204"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_flags</span> <span class="o">&amp;</span> <span class="n">EXFLAG_SI</span><span class="p">))</span>
-<a name="line-205"></a>				<span class="n">explicit_policy</span><span class="o">--</span><span class="p">;</span>
-<a name="line-206"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">explicit_skip</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a name="line-207"></a>				<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">explicit_skip</span> <span class="o">&lt;</span> <span class="n">explicit_policy</span><span class="p">))</span>
-<a name="line-208"></a>				<span class="n">explicit_policy</span> <span class="o">=</span> <span class="n">cache</span><span class="o">-&gt;</span><span class="n">explicit_skip</span><span class="p">;</span>
-<a name="line-209"></a>			<span class="p">}</span>
-<a name="line-210"></a>		<span class="p">}</span>
-<a name="line-211"></a>
-<a name="line-212"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-213"></a>		<span class="p">{</span>
-<a name="line-214"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">explicit_policy</span><span class="p">)</span>
-<a name="line-215"></a>			<span class="k">return</span> <span class="mi">6</span><span class="p">;</span>
-<a name="line-216"></a>		<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-217"></a>		<span class="p">}</span>
-<a name="line-218"></a>
+<a name="line-159"></a>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">p_x</span><span class="o">&lt;=</span><span class="n">node</span><span class="p">[</span><span class="n">p_node</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-160"></a>
+<a name="line-161"></a>		<span class="n">p_x</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">p_node</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-162"></a>
+<a name="line-163"></a>	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">p_node</span><span class="o">&lt;</span><span class="p">(</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p_x</span><span class="o">&gt;=</span><span class="n">node</span><span class="p">[</span><span class="n">p_node</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-164"></a>
+<a name="line-165"></a>		<span class="n">p_x</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">p_node</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">tick_offset</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-166"></a>	<span class="p">}</span>
+<a name="line-167"></a>
+<a name="line-168"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_x</span><span class="o">&gt;=</span><span class="mi">9999</span><span class="p">)</span> <span class="n">p_x</span><span class="o">=</span><span class="mi">9999</span><span class="p">;</span>
+<a name="line-169"></a>
+<a name="line-170"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_y</span><span class="o">&gt;</span><span class="n">max_value</span><span class="p">)</span> <span class="n">p_y</span><span class="o">=</span><span class="n">max_value</span><span class="p">;</span>
+<a name="line-171"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_y</span><span class="o">&lt;</span><span class="n">min_value</span><span class="p">)</span> <span class="n">p_y</span><span class="o">=</span><span class="n">min_value</span><span class="p">;</span>
+<a name="line-172"></a>
+<a name="line-173"></a>	
+<a name="line-174"></a>	<span class="n">node</span><span class="p">[</span><span class="n">p_node</span><span class="p">].</span><span class="n">tick_offset</span><span class="o">=</span><span class="n">p_x</span><span class="p">;</span>
+<a name="line-175"></a>        <span class="n">node</span><span class="p">[</span><span class="n">p_node</span><span class="p">].</span><span class="n">value</span><span class="o">=</span><span class="n">p_y</span><span class="p">;</span>
+<a name="line-176"></a>	
+<a name="line-177"></a>
+<a name="line-178"></a>	
+<a name="line-179"></a><span class="p">}</span>
+<a name="line-180"></a>
+<a name="line-181"></a><span class="kt">int</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">add_position</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_x</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_y</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_move_loops</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-182"></a>
+<a name="line-183"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">node_count</span><span class="o">==</span><span class="n">MAX_POINTS</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-184"></a>
+<a name="line-185"></a>	
+<a name="line-186"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">new_node</span><span class="p">;</span>
+<a name="line-187"></a>
+<a name="line-188"></a>	<span class="c1">// if this is assigning an existing node, let&#39;s quit.</span>
+<a name="line-189"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">node_count</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">p_x</span><span class="o">==</span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-190"></a>
+<a name="line-191"></a>
+<a name="line-192"></a>	<span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-193"></a>	<span class="k">while</span> <span class="p">((</span><span class="n">i</span><span class="o">&lt;</span><span class="n">node_count</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p_x</span><span class="o">&gt;=</span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">tick_offset</span><span class="p">))</span> <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<a name="line-194"></a>	
+<a name="line-195"></a>	<span class="n">new_node</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
+<a name="line-196"></a>	<span class="n">node_count</span><span class="o">++</span><span class="p">;</span>
+<a name="line-197"></a>
+<a name="line-198"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_move_loops</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-199"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">loop_begin_node</span><span class="o">&gt;=</span><span class="n">new_node</span><span class="p">)</span> <span class="n">loop_begin_node</span><span class="o">++</span><span class="p">;</span>
+<a name="line-200"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">loop_end_node</span><span class="o">&gt;=</span><span class="n">new_node</span><span class="p">)</span> <span class="n">loop_end_node</span><span class="o">++</span><span class="p">;</span>
+<a name="line-201"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">sustain_loop_begin_node</span><span class="o">&gt;=</span><span class="n">new_node</span><span class="p">)</span> <span class="n">sustain_loop_begin_node</span><span class="o">++</span><span class="p">;</span>
+<a name="line-202"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">sustain_loop_end_node</span><span class="o">&gt;=</span><span class="n">new_node</span><span class="p">)</span> <span class="n">sustain_loop_end_node</span><span class="o">++</span><span class="p">;</span>
+<a name="line-203"></a>	<span class="p">}</span>
+<a name="line-204"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;</span><span class="n">new_node</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-205"></a>
+<a name="line-206"></a>
+<a name="line-207"></a>		
+<a name="line-208"></a>        <span class="n">set_position</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span><span class="n">p_x</span><span class="p">,</span><span class="n">p_y</span><span class="p">);</span>
+<a name="line-209"></a>
+<a name="line-210"></a>
+<a name="line-211"></a>	
+<a name="line-212"></a>	<span class="k">return</span> <span class="n">new_node</span><span class="p">;</span>
+<a name="line-213"></a>	
+<a name="line-214"></a><span class="p">}</span>
+<a name="line-215"></a>
+<a name="line-216"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_loop_begin</span><span class="p">(</span><span class="kt">int</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-217"></a>
+<a name="line-218"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">pos</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">pos</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
 <a name="line-219"></a>
-<a name="line-220"></a>	<span class="cm">/* If we get this far initialize the tree */</span>
-<a name="line-221"></a>
-<a name="line-222"></a>	<span class="n">tree</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span><span class="p">));</span>
+<a name="line-220"></a>
+<a name="line-221"></a>	
+<a name="line-222"></a>	<span class="n">loop_begin_node</span><span class="o">=</span><span class="n">pos</span><span class="p">;</span>
 <a name="line-223"></a>
-<a name="line-224"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-225"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-224"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">loop_end_node</span><span class="o">&lt;</span><span class="n">loop_begin_node</span><span class="p">)</span> <span class="n">loop_end_node</span><span class="o">=</span><span class="n">loop_begin_node</span><span class="p">;</span>
+<a name="line-225"></a>
 <a name="line-226"></a>
-<a name="line-227"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-228"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">);</span>
-<a name="line-229"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-230"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">extra_data</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-231"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">auth_policies</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-232"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">user_policies</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-227"></a>
+<a name="line-228"></a><span class="p">}</span>
+<a name="line-229"></a>
+<a name="line-230"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_loop_end</span><span class="p">(</span><span class="kt">int</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-231"></a>
+<a name="line-232"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">pos</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">pos</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
 <a name="line-233"></a>
-<a name="line-234"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">)</span>
-<a name="line-235"></a>		<span class="p">{</span>
-<a name="line-236"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-237"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-238"></a>		<span class="p">}</span>
+<a name="line-234"></a>
+<a name="line-235"></a>	
+<a name="line-236"></a>        <span class="n">loop_end_node</span><span class="o">=</span><span class="n">pos</span><span class="p">;</span>
+<a name="line-237"></a>	
+<a name="line-238"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">loop_end_node</span><span class="o">&lt;</span><span class="n">loop_begin_node</span><span class="p">)</span> <span class="n">loop_begin_node</span><span class="o">=</span><span class="n">loop_end_node</span><span class="p">;</span>
 <a name="line-239"></a>
-<a name="line-240"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span><span class="p">));</span>
-<a name="line-241"></a>
-<a name="line-242"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
-<a name="line-243"></a>
-<a name="line-244"></a>	<span class="n">level</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">;</span>
+<a name="line-240"></a>
+<a name="line-241"></a>	
+<a name="line-242"></a>
+<a name="line-243"></a><span class="p">}</span>
+<a name="line-244"></a>
 <a name="line-245"></a>
-<a name="line-246"></a>	<span class="cm">/* Root data: initialize to anyPolicy */</span>
+<a name="line-246"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_sustain_loop_begin</span><span class="p">(</span><span class="kt">int</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-247"></a>
-<a name="line-248"></a>	<span class="n">data</span> <span class="o">=</span> <span class="n">policy_data_new</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">OBJ_nid2obj</span><span class="p">(</span><span class="n">NID_any_policy</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-248"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">pos</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">pos</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
 <a name="line-249"></a>
-<a name="line-250"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">data</span> <span class="o">||</span> <span class="o">!</span><span class="n">level_add_node</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">tree</span><span class="p">))</span>
-<a name="line-251"></a>		<span class="k">goto</span> <span class="n">bad_tree</span><span class="p">;</span>
-<a name="line-252"></a>
-<a name="line-253"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
-<a name="line-254"></a>		<span class="p">{</span>
-<a name="line-255"></a>		<span class="n">level</span><span class="o">++</span><span class="p">;</span>
-<a name="line-256"></a>		<span class="n">x</span> <span class="o">=</span> <span class="n">sk_X509_value</span><span class="p">(</span><span class="n">certs</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-257"></a>		<span class="n">cache</span> <span class="o">=</span> <span class="n">policy_cache_set</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<a name="line-258"></a>		<span class="n">CRYPTO_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">references</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CRYPTO_LOCK_X509</span><span class="p">);</span>
-<a name="line-259"></a>		<span class="n">level</span><span class="o">-&gt;</span><span class="n">cert</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-<a name="line-260"></a>
-<a name="line-261"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-262"></a>				<span class="n">level</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">X509_V_FLAG_INHIBIT_ANY</span><span class="p">;</span>
+<a name="line-250"></a>
+<a name="line-251"></a>	
+<a name="line-252"></a>	<span class="n">sustain_loop_begin_node</span><span class="o">=</span><span class="n">pos</span><span class="p">;</span>
+<a name="line-253"></a>
+<a name="line-254"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sustain_loop_end_node</span><span class="o">&lt;</span><span class="n">sustain_loop_begin_node</span><span class="p">)</span> <span class="n">sustain_loop_end_node</span><span class="o">=</span><span class="n">sustain_loop_begin_node</span><span class="p">;</span>
+<a name="line-255"></a>
+<a name="line-256"></a>
+<a name="line-257"></a>
+<a name="line-258"></a><span class="p">}</span>
+<a name="line-259"></a>
+<a name="line-260"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_sustain_loop_end</span><span class="p">(</span><span class="kt">int</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-261"></a>
+<a name="line-262"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">pos</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">pos</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
 <a name="line-263"></a>
-<a name="line-264"></a>		<span class="cm">/* Determine inhibit any and inhibit map flags */</span>
-<a name="line-265"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">any_skip</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-266"></a>			<span class="p">{</span>
-<a name="line-267"></a>			<span class="cm">/* Any matching allowed if certificate is self</span>
-<a name="line-268"></a><span class="cm">			 * issued and not the last in the chain.</span>
-<a name="line-269"></a><span class="cm">			 */</span>
-<a name="line-270"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_flags</span> <span class="o">&amp;</span> <span class="n">EXFLAG_SI</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
-<a name="line-271"></a>				<span class="n">level</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">X509_V_FLAG_INHIBIT_ANY</span><span class="p">;</span>
-<a name="line-272"></a>			<span class="p">}</span>
-<a name="line-273"></a>		<span class="k">else</span>
-<a name="line-274"></a>			<span class="p">{</span>
-<a name="line-275"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_flags</span> <span class="o">&amp;</span> <span class="n">EXFLAG_SI</span><span class="p">))</span>
-<a name="line-276"></a>				<span class="n">any_skip</span><span class="o">--</span><span class="p">;</span>
-<a name="line-277"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">any_skip</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-278"></a>				<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">any_skip</span> <span class="o">&lt;</span> <span class="n">any_skip</span><span class="p">))</span>
-<a name="line-279"></a>				<span class="n">any_skip</span> <span class="o">=</span> <span class="n">cache</span><span class="o">-&gt;</span><span class="n">any_skip</span><span class="p">;</span>
-<a name="line-280"></a>			<span class="p">}</span>
-<a name="line-281"></a>
-<a name="line-282"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">map_skip</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-283"></a>			<span class="n">level</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">X509_V_FLAG_INHIBIT_MAP</span><span class="p">;</span>
-<a name="line-284"></a>		<span class="k">else</span>
-<a name="line-285"></a>			<span class="p">{</span>
-<a name="line-286"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_flags</span> <span class="o">&amp;</span> <span class="n">EXFLAG_SI</span><span class="p">))</span>
-<a name="line-287"></a>				<span class="n">map_skip</span><span class="o">--</span><span class="p">;</span>
-<a name="line-288"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">map_skip</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-289"></a>				<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">map_skip</span> <span class="o">&lt;</span> <span class="n">map_skip</span><span class="p">))</span>
-<a name="line-290"></a>				<span class="n">map_skip</span> <span class="o">=</span> <span class="n">cache</span><span class="o">-&gt;</span><span class="n">map_skip</span><span class="p">;</span>
-<a name="line-291"></a>			<span class="p">}</span>
+<a name="line-264"></a>
+<a name="line-265"></a>	
+<a name="line-266"></a>        <span class="n">sustain_loop_end_node</span><span class="o">=</span><span class="n">pos</span><span class="p">;</span>
+<a name="line-267"></a>	
+<a name="line-268"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sustain_loop_end_node</span><span class="o">&lt;</span><span class="n">sustain_loop_begin_node</span><span class="p">)</span> <span class="n">sustain_loop_begin_node</span><span class="o">=</span><span class="n">sustain_loop_end_node</span><span class="p">;</span>
+<a name="line-269"></a>
+<a name="line-270"></a>
+<a name="line-271"></a>
+<a name="line-272"></a><span class="p">}</span>
+<a name="line-273"></a>
+<a name="line-274"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_loop_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-275"></a>	
+<a name="line-276"></a>	<span class="n">loop_on</span><span class="o">=</span><span class="n">p_enabled</span><span class="p">;</span>
+<a name="line-277"></a><span class="p">}</span>
+<a name="line-278"></a><span class="kt">bool</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">is_loop_enabled</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-279"></a>	
+<a name="line-280"></a>	<span class="k">return</span> <span class="n">loop_on</span><span class="p">;</span>
+<a name="line-281"></a><span class="p">}</span>
+<a name="line-282"></a>
+<a name="line-283"></a>
+<a name="line-284"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_sustain_loop_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-285"></a>	
+<a name="line-286"></a>	<span class="n">sustain_loop_on</span><span class="o">=</span><span class="n">p_enabled</span><span class="p">;</span>
+<a name="line-287"></a><span class="p">}</span>
+<a name="line-288"></a><span class="kt">bool</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">is_sustain_loop_enabled</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-289"></a>	
+<a name="line-290"></a>	<span class="k">return</span> <span class="n">sustain_loop_on</span><span class="p">;</span>
+<a name="line-291"></a><span class="p">}</span>
 <a name="line-292"></a>
-<a name="line-293"></a>		<span class="p">}</span>
+<a name="line-293"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">del_position</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_node</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-294"></a>
-<a name="line-295"></a>	<span class="o">*</span><span class="n">ptree</span> <span class="o">=</span> <span class="n">tree</span><span class="p">;</span>
+<a name="line-295"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">node_count</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">p_node</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">p_node</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
 <a name="line-296"></a>
-<a name="line-297"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">explicit_policy</span><span class="p">)</span>
-<a name="line-298"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-299"></a>	<span class="k">else</span>
-<a name="line-300"></a>		<span class="k">return</span> <span class="mi">5</span><span class="p">;</span>
-<a name="line-301"></a>
-<a name="line-302"></a>	<span class="nl">bad_tree</span><span class="p">:</span>
-<a name="line-303"></a>
-<a name="line-304"></a>	<span class="n">X509_policy_tree_free</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+<a name="line-297"></a>
+<a name="line-298"></a>	
+<a name="line-299"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-300"></a>
+<a name="line-301"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">loop_begin_node</span><span class="o">&gt;=</span><span class="n">p_node</span><span class="p">)</span> <span class="n">loop_begin_node</span><span class="o">--</span><span class="p">;</span>
+<a name="line-302"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">loop_end_node</span><span class="o">&gt;=</span><span class="n">p_node</span><span class="p">)</span> <span class="n">loop_end_node</span><span class="o">--</span><span class="p">;</span>
+<a name="line-303"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sustain_loop_begin_node</span><span class="o">&gt;=</span><span class="n">p_node</span><span class="p">)</span> <span class="n">sustain_loop_begin_node</span><span class="o">--</span><span class="p">;</span>
+<a name="line-304"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sustain_loop_end_node</span><span class="o">&gt;=</span><span class="n">p_node</span><span class="p">)</span> <span class="n">sustain_loop_end_node</span><span class="o">--</span><span class="p">;</span>
 <a name="line-305"></a>
-<a name="line-306"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-306"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">p_node</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
 <a name="line-307"></a>
-<a name="line-308"></a>	<span class="p">}</span>
-<a name="line-309"></a>
-<a name="line-310"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_link_matching_nodes</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">,</span>
-<a name="line-311"></a>				<span class="k">const</span> <span class="n">X509_POLICY_DATA</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
-<a name="line-312"></a>	<span class="p">{</span>
-<a name="line-313"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">last</span> <span class="o">=</span> <span class="n">curr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-314"></a><span class="hll">	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'node' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;node&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-315"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">matched</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-316"></a>	<span class="cm">/* Iterate through all in nodes linking matches */</span>
-<a name="line-317"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">last</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-318"></a>		<span class="p">{</span>
-<a name="line-319"></a>		<span class="n">node</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_value</span><span class="p">(</span><span class="n">last</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-320"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">policy_node_match</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">valid_policy</span><span class="p">))</span>
-<a name="line-321"></a>			<span class="p">{</span>
-<a name="line-322"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">level_add_node</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-323"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-324"></a>			<span class="n">matched</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-325"></a>			<span class="p">}</span>
-<a name="line-326"></a>		<span class="p">}</span>
-<a name="line-327"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">matched</span> <span class="o">&amp;&amp;</span> <span class="n">last</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-328"></a>		<span class="p">{</span>
-<a name="line-329"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">level_add_node</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">last</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-330"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-331"></a>		<span class="p">}</span>
-<a name="line-332"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-333"></a>	<span class="p">}</span>
+<a name="line-308"></a>	<span class="n">node_count</span><span class="o">--</span><span class="p">;</span>
+<a name="line-309"></a>	
+<a name="line-310"></a>
+<a name="line-311"></a>	
+<a name="line-312"></a><span class="p">}</span>
+<a name="line-313"></a>
+<a name="line-314"></a><span class="kt">uint8_t</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_loop_begin</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-315"></a>	
+<a name="line-316"></a>	
+<a name="line-317"></a>	<span class="k">return</span> <span class="n">loop_begin_node</span><span class="p">;</span>
+<a name="line-318"></a><span class="p">}</span>
+<a name="line-319"></a><span class="kt">uint8_t</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_loop_end</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-320"></a>	
+<a name="line-321"></a>	<span class="k">return</span> <span class="n">loop_end_node</span><span class="p">;</span>	
+<a name="line-322"></a><span class="p">}</span>
+<a name="line-323"></a>
+<a name="line-324"></a><span class="kt">uint8_t</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_sustain_loop_begin</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-325"></a>	
+<a name="line-326"></a>	
+<a name="line-327"></a>	<span class="k">return</span> <span class="n">sustain_loop_begin_node</span><span class="p">;</span>
+<a name="line-328"></a><span class="p">}</span>
+<a name="line-329"></a><span class="kt">uint8_t</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_sustain_loop_end</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-330"></a>	
+<a name="line-331"></a>	<span class="k">return</span> <span class="n">sustain_loop_end_node</span><span class="p">;</span>	
+<a name="line-332"></a><span class="p">}</span>
+<a name="line-333"></a>
 <a name="line-334"></a>
-<a name="line-335"></a><span class="cm">/* This corresponds to RFC3280 6.1.3(d)(1):</span>
-<a name="line-336"></a><span class="cm"> * link any data from CertificatePolicies onto matching parent</span>
-<a name="line-337"></a><span class="cm"> * or anyPolicy if no match.</span>
-<a name="line-338"></a><span class="cm"> */</span>
-<a name="line-339"></a>
-<a name="line-340"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_link_nodes</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">,</span>
-<a name="line-341"></a>				<span class="k">const</span> <span class="n">X509_POLICY_CACHE</span> <span class="o">*</span><span class="n">cache</span><span class="p">)</span>
-<a name="line-342"></a>	<span class="p">{</span>
-<a name="line-343"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-344"></a><span class="hll">	<span class="n">X509_POLICY_DATA</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'data' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;data&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-345"></a>
-<a name="line-346"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_X509_POLICY_DATA_num</span><span class="p">(</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-347"></a>		<span class="p">{</span>
-<a name="line-348"></a>		<span class="n">data</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_DATA_value</span><span class="p">(</span><span class="n">cache</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-349"></a>		<span class="cm">/* If a node is mapped any it doesn&#39;t have a corresponding</span>
-<a name="line-350"></a><span class="cm">		 * CertificatePolicies entry. </span>
-<a name="line-351"></a><span class="cm">		 * However such an identical node would be created</span>
-<a name="line-352"></a><span class="cm">		 * if anyPolicy matching is enabled because there would be</span>
-<a name="line-353"></a><span class="cm">		 * no match with the parent valid_policy_set. So we create</span>
-<a name="line-354"></a><span class="cm">		 * link because then it will have the mapping flags</span>
-<a name="line-355"></a><span class="cm">		 * right and we can prune it later.</span>
-<a name="line-356"></a><span class="cm">		 */</span>
-<a name="line-357"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-358"></a><span class="c">		if ((data-&gt;flags &amp; POLICY_DATA_FLAG_MAPPED_ANY)</span>
-<a name="line-359"></a><span class="c">			&amp;&amp; !(curr-&gt;flags &amp; X509_V_FLAG_INHIBIT_ANY))</span>
-<a name="line-360"></a><span class="c">			continue;</span>
-<a name="line-361"></a><span class="cp">#endif</span>
-<a name="line-362"></a>		<span class="cm">/* Look for matching nodes in previous level */</span>
-<a name="line-363"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_link_matching_nodes</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-<a name="line-364"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-365"></a>		<span class="p">}</span>
-<a name="line-366"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-367"></a>	<span class="p">}</span>
-<a name="line-368"></a>
-<a name="line-369"></a><span class="cm">/* This corresponds to RFC3280 6.1.3(d)(2):</span>
-<a name="line-370"></a><span class="cm"> * Create new data for any unmatched policies in the parent and link</span>
-<a name="line-371"></a><span class="cm"> * to anyPolicy.</span>
-<a name="line-372"></a><span class="cm"> */</span>
-<a name="line-373"></a>
-<a name="line-374"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_add_unmatched</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">,</span>
-<a name="line-375"></a>			<span class="k">const</span> <span class="n">X509_POLICY_CACHE</span> <span class="o">*</span><span class="n">cache</span><span class="p">,</span>
-<a name="line-376"></a>			<span class="k">const</span> <span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">id</span><span class="p">,</span>
-<a name="line-377"></a>			<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span>
-<a name="line-378"></a>			<span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-379"></a>	<span class="p">{</span>
-<a name="line-380"></a>	<span class="n">X509_POLICY_DATA</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-<a name="line-381"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-382"></a>		<span class="n">id</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">valid_policy</span><span class="p">;</span>
-<a name="line-383"></a>	<span class="cm">/* Create a new node with qualifiers from anyPolicy and</span>
-<a name="line-384"></a><span class="cm">	 * id from unmatched node.</span>
-<a name="line-385"></a><span class="cm">	 */</span>
-<a name="line-386"></a>	<span class="n">data</span> <span class="o">=</span> <span class="n">policy_data_new</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">node_critical</span><span class="p">(</span><span class="n">node</span><span class="p">));</span>
-<a name="line-387"></a>
-<a name="line-388"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-389"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-390"></a>	<span class="cm">/* Curr may not have anyPolicy */</span>
-<a name="line-391"></a>	<span class="n">data</span><span class="o">-&gt;</span><span class="n">qualifier_set</span> <span class="o">=</span> <span class="n">cache</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="o">-&gt;</span><span class="n">qualifier_set</span><span class="p">;</span>
-<a name="line-392"></a>	<span class="n">data</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">POLICY_DATA_FLAG_SHARED_QUALIFIERS</span><span class="p">;</span>
-<a name="line-393"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">level_add_node</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">tree</span><span class="p">))</span>
-<a name="line-394"></a>		<span class="p">{</span>
-<a name="line-395"></a>		<span class="n">policy_data_free</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-<a name="line-396"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-397"></a>		<span class="p">}</span>
-<a name="line-398"></a>
-<a name="line-399"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-400"></a>	<span class="p">}</span>
-<a name="line-401"></a>
-<a name="line-402"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_link_unmatched</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">,</span>
-<a name="line-403"></a>			<span class="k">const</span> <span class="n">X509_POLICY_CACHE</span> <span class="o">*</span><span class="n">cache</span><span class="p">,</span>
-<a name="line-404"></a>			<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span>
-<a name="line-405"></a>			<span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-406"></a>	<span class="p">{</span>
-<a name="line-407"></a>	<span class="k">const</span> <span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">last</span> <span class="o">=</span> <span class="n">curr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-408"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-409"></a>
-<a name="line-410"></a>	<span class="k">if</span> <span class="p">(</span>	    <span class="p">(</span><span class="n">last</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_INHIBIT_MAP</span><span class="p">)</span>
-<a name="line-411"></a>		<span class="o">||</span> <span class="o">!</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">POLICY_DATA_FLAG_MAPPED</span><span class="p">))</span>
-<a name="line-412"></a>		<span class="p">{</span>
-<a name="line-413"></a>		<span class="cm">/* If no policy mapping: matched if one child present */</span>
-<a name="line-414"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">nchild</span><span class="p">)</span>
-<a name="line-415"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-416"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_add_unmatched</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">tree</span><span class="p">))</span>
-<a name="line-417"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-418"></a>		<span class="cm">/* Add it */</span>
-<a name="line-419"></a>		<span class="p">}</span>
-<a name="line-420"></a>	<span class="k">else</span>
-<a name="line-421"></a>		<span class="p">{</span>
-<a name="line-422"></a>		<span class="cm">/* If mapping: matched if one child per expected policy set */</span>
-<a name="line-423"></a>		<span class="n">STACK_OF</span><span class="p">(</span><span class="n">ASN1_OBJECT</span><span class="p">)</span> <span class="o">*</span><span class="n">expset</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">expected_policy_set</span><span class="p">;</span>
-<a name="line-424"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">nchild</span> <span class="o">==</span> <span class="n">sk_ASN1_OBJECT_num</span><span class="p">(</span><span class="n">expset</span><span class="p">))</span>
-<a name="line-425"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-426"></a>		<span class="cm">/* Locate unmatched nodes */</span>
-<a name="line-427"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_ASN1_OBJECT_num</span><span class="p">(</span><span class="n">expset</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-428"></a>			<span class="p">{</span>
-<a name="line-429"></a>			<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">oid</span> <span class="o">=</span> <span class="n">sk_ASN1_OBJECT_value</span><span class="p">(</span><span class="n">expset</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-430"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">level_find_node</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">oid</span><span class="p">))</span>
-<a name="line-431"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-432"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_add_unmatched</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">oid</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">tree</span><span class="p">))</span>
-<a name="line-433"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-434"></a>			<span class="p">}</span>
-<a name="line-435"></a>
-<a name="line-436"></a>		<span class="p">}</span>
-<a name="line-437"></a>
-<a name="line-438"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-439"></a>
-<a name="line-440"></a>	<span class="p">}</span>
-<a name="line-441"></a>
-<a name="line-442"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_link_any</span><span class="p">(</span><span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">,</span>
-<a name="line-443"></a>			<span class="k">const</span> <span class="n">X509_POLICY_CACHE</span> <span class="o">*</span><span class="n">cache</span><span class="p">,</span>
-<a name="line-444"></a>			<span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-445"></a>	<span class="p">{</span>
-<a name="line-446"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-447"></a>	<span class="cm">/*X509_POLICY_DATA *data;*/</span>
-<a name="line-448"></a><span class="hll">	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'node' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;node&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-449"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">last</span> <span class="o">=</span> <span class="n">curr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-450"></a>
-<a name="line-451"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">last</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-452"></a>		<span class="p">{</span>
-<a name="line-453"></a>		<span class="n">node</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_value</span><span class="p">(</span><span class="n">last</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-454"></a>
-<a name="line-455"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_link_unmatched</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">tree</span><span class="p">))</span>
-<a name="line-456"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-457"></a>
-<a name="line-458"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-459"></a>
-<a name="line-460"></a><span class="c">		/* Skip any node with any children: we only want unmathced</span>
-<a name="line-461"></a><span class="c">		 * nodes.</span>
-<a name="line-462"></a><span class="c">		 *</span>
-<a name="line-463"></a><span class="c">		 * Note: need something better for policy mapping</span>
-<a name="line-464"></a><span class="c">		 * because each node may have multiple children </span>
-<a name="line-465"></a><span class="c">		 */</span>
-<a name="line-466"></a><span class="c">		if (node-&gt;nchild)</span>
-<a name="line-467"></a><span class="c">			continue;</span>
-<a name="line-468"></a>
-<a name="line-469"></a><span class="c">		/* Create a new node with qualifiers from anyPolicy and</span>
-<a name="line-470"></a><span class="c">		 * id from unmatched node.</span>
-<a name="line-471"></a><span class="c">		 */</span>
-<a name="line-472"></a><span class="c">		data = policy_data_new(NULL, node-&gt;data-&gt;valid_policy, </span>
-<a name="line-473"></a><span class="c">						node_critical(node));</span>
-<a name="line-474"></a>
-<a name="line-475"></a><span class="c">		if (data == NULL)</span>
-<a name="line-476"></a><span class="c">			return 0;</span>
-<a name="line-477"></a><span class="c">		/* Curr may not have anyPolicy */</span>
-<a name="line-478"></a><span class="c">		data-&gt;qualifier_set = cache-&gt;anyPolicy-&gt;qualifier_set;</span>
-<a name="line-479"></a><span class="c">		data-&gt;flags |= POLICY_DATA_FLAG_SHARED_QUALIFIERS;</span>
-<a name="line-480"></a><span class="c">		if (!level_add_node(curr, data, node, tree))</span>
-<a name="line-481"></a><span class="c">			{</span>
-<a name="line-482"></a><span class="c">			policy_data_free(data);</span>
-<a name="line-483"></a><span class="c">			return 0;</span>
-<a name="line-484"></a><span class="c">			}</span>
-<a name="line-485"></a>
-<a name="line-486"></a><span class="cp">#endif</span>
-<a name="line-487"></a>
-<a name="line-488"></a>		<span class="p">}</span>
-<a name="line-489"></a>	<span class="cm">/* Finally add link to anyPolicy */</span>
-<a name="line-490"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">last</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-491"></a>		<span class="p">{</span>
-<a name="line-492"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">level_add_node</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">cache</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">,</span>
-<a name="line-493"></a>						<span class="n">last</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-494"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-495"></a>		<span class="p">}</span>
-<a name="line-496"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-497"></a>	<span class="p">}</span>
-<a name="line-498"></a>
-<a name="line-499"></a><span class="cm">/* Prune the tree: delete any child mapped child data on the current level</span>
-<a name="line-500"></a><span class="cm"> * then proceed up the tree deleting any data with no children. If we ever</span>
-<a name="line-501"></a><span class="cm"> * have no data on a level we can halt because the tree will be empty.</span>
-<a name="line-502"></a><span class="cm"> */</span>
-<a name="line-503"></a>
-<a name="line-504"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_prune</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">,</span> <span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">)</span>
-<a name="line-505"></a>	<span class="p">{</span>
-<a name="line-506"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span><span class="p">)</span> <span class="o">*</span><span class="n">nodes</span><span class="p">;</span>
-<a name="line-507"></a>	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span>
-<a name="line-508"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-509"></a>	<span class="n">nodes</span> <span class="o">=</span> <span class="n">curr</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">;</span>
-<a name="line-510"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_INHIBIT_MAP</span><span class="p">)</span>
-<a name="line-511"></a>		<span class="p">{</span>
-<a name="line-512"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
-<a name="line-513"></a>			<span class="p">{</span>
-<a name="line-514"></a>			<span class="n">node</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_value</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-515"></a>			<span class="cm">/* Delete any mapped data: see RFC3280 XXXX */</span>
-<a name="line-516"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">POLICY_DATA_FLAG_MAP_MASK</span><span class="p">)</span>
-<a name="line-517"></a>				<span class="p">{</span>
-<a name="line-518"></a>				<span class="n">node</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">-&gt;</span><span class="n">nchild</span><span class="o">--</span><span class="p">;</span>
-<a name="line-519"></a>				<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-<a name="line-520"></a>				<span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sk_X509_POLICY_NODE_delete</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
-<a name="line-521"></a>				<span class="p">}</span>
-<a name="line-522"></a>			<span class="p">}</span>
-<a name="line-523"></a>		<span class="p">}</span>
-<a name="line-524"></a>
-<a name="line-525"></a>	<span class="k">for</span><span class="p">(;;)</span>	<span class="p">{</span>
-<a name="line-526"></a>		<span class="o">--</span><span class="n">curr</span><span class="p">;</span>
-<a name="line-527"></a>		<span class="n">nodes</span> <span class="o">=</span> <span class="n">curr</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">;</span>
-<a name="line-528"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
-<a name="line-529"></a>			<span class="p">{</span>
-<a name="line-530"></a>			<span class="n">node</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_value</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-531"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">nchild</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-532"></a>				<span class="p">{</span>
-<a name="line-533"></a>				<span class="n">node</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">-&gt;</span><span class="n">nchild</span><span class="o">--</span><span class="p">;</span>
-<a name="line-534"></a>				<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-<a name="line-535"></a>				<span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">sk_X509_POLICY_NODE_delete</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-536"></a>				<span class="p">}</span>
-<a name="line-537"></a>			<span class="p">}</span>
-<a name="line-538"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="o">-&gt;</span><span class="n">nchild</span><span class="p">)</span>
-<a name="line-539"></a>			<span class="p">{</span>
-<a name="line-540"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">)</span>
-<a name="line-541"></a>				<span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">-&gt;</span><span class="n">nchild</span><span class="o">--</span><span class="p">;</span>
-<a name="line-542"></a>			<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">);</span>
-<a name="line-543"></a>			<span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-544"></a>			<span class="p">}</span>
-<a name="line-545"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">curr</span> <span class="o">==</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">)</span>
-<a name="line-546"></a>			<span class="p">{</span>
-<a name="line-547"></a>			<span class="cm">/* If we zapped anyPolicy at top then tree is empty */</span>
-<a name="line-548"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-549"></a>					<span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
-<a name="line-550"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-551"></a>			<span class="p">}</span>
-<a name="line-552"></a>		<span class="p">}</span>
-<a name="line-553"></a>
-<a name="line-554"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-555"></a>
-<a name="line-556"></a>	<span class="p">}</span>
-<a name="line-557"></a>
-<a name="line-558"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_add_auth_node</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span><span class="p">)</span> <span class="o">**</span><span class="n">pnodes</span><span class="p">,</span>
-<a name="line-559"></a>						 <span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">pcy</span><span class="p">)</span>
-<a name="line-560"></a>	<span class="p">{</span>
-<a name="line-561"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">pnodes</span><span class="p">)</span>
-<a name="line-562"></a>		<span class="p">{</span>
-<a name="line-563"></a>		<span class="o">*</span><span class="n">pnodes</span> <span class="o">=</span> <span class="n">policy_node_cmp_new</span><span class="p">();</span>
-<a name="line-564"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">pnodes</span><span class="p">)</span>
-<a name="line-565"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-566"></a>		<span class="p">}</span>
-<a name="line-567"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sk_X509_POLICY_NODE_find</span><span class="p">(</span><span class="o">*</span><span class="n">pnodes</span><span class="p">,</span> <span class="n">pcy</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a name="line-568"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-569"></a>
-<a name="line-570"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sk_X509_POLICY_NODE_push</span><span class="p">(</span><span class="o">*</span><span class="n">pnodes</span><span class="p">,</span> <span class="n">pcy</span><span class="p">))</span>
-<a name="line-571"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-572"></a>
-<a name="line-573"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-574"></a>
-<a name="line-575"></a>	<span class="p">}</span>
-<a name="line-576"></a>
-<a name="line-577"></a><span class="cm">/* Calculate the authority set based on policy tree.</span>
-<a name="line-578"></a><span class="cm"> * The &#39;pnodes&#39; parameter is used as a store for the set of policy nodes</span>
-<a name="line-579"></a><span class="cm"> * used to calculate the user set. If the authority set is not anyPolicy</span>
-<a name="line-580"></a><span class="cm"> * then pnodes will just point to the authority set. If however the authority</span>
-<a name="line-581"></a><span class="cm"> * set is anyPolicy then the set of valid policies (other than anyPolicy)</span>
-<a name="line-582"></a><span class="cm"> * is store in pnodes. The return value of &#39;2&#39; is used in this case to indicate</span>
-<a name="line-583"></a><span class="cm"> * that pnodes should be freed.</span>
-<a name="line-584"></a><span class="cm"> */</span>
-<a name="line-585"></a>
-<a name="line-586"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_calculate_authority_set</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">,</span>
-<a name="line-587"></a>					<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span><span class="p">)</span> <span class="o">**</span><span class="n">pnodes</span><span class="p">)</span>
-<a name="line-588"></a>	<span class="p">{</span>
-<a name="line-589"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">;</span>
-<a name="line-590"></a><span class="hll">	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">anyptr</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'anyptr' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;anyptr&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-591"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span><span class="p">)</span> <span class="o">**</span><span class="n">addnodes</span><span class="p">;</span>
-<a name="line-592"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
-<a name="line-593"></a><span class="hll">	<span class="n">curr</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span> <span class="o">+</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span><span class='inconclusive2'>&lt;--- Either the condition 'if(tree)' is redundant or there is possible null pointer dereference: tree.</span>
-</span><a name="line-594"></a>
-<a name="line-595"></a>	<span class="cm">/* If last level contains anyPolicy set is anyPolicy */</span>
-<a name="line-596"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-597"></a>		<span class="p">{</span>
-<a name="line-598"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_add_auth_node</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">auth_policies</span><span class="p">,</span> <span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">))</span>
-<a name="line-599"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-600"></a>		<span class="n">addnodes</span> <span class="o">=</span> <span class="n">pnodes</span><span class="p">;</span>
-<a name="line-601"></a>		<span class="p">}</span>
-<a name="line-602"></a>	<span class="k">else</span>
-<a name="line-603"></a>		<span class="cm">/* Add policies to authority set */</span>
-<a name="line-604"></a>		<span class="n">addnodes</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">auth_policies</span><span class="p">;</span>
-<a name="line-605"></a>
-<a name="line-606"></a>	<span class="n">curr</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">;</span>
-<a name="line-607"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-608"></a>		<span class="p">{</span>
-<a name="line-609"></a>		<span class="cm">/* If no anyPolicy node on this this level it can&#39;t</span>
-<a name="line-610"></a><span class="cm">		 * appear on lower levels so end search.</span>
-<a name="line-611"></a><span class="cm">		 */</span>
-<a name="line-612"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">anyptr</span> <span class="o">=</span> <span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">))</span>
-<a name="line-613"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-614"></a>		<span class="n">curr</span><span class="o">++</span><span class="p">;</span>
-<a name="line-615"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">);</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-<a name="line-616"></a>			<span class="p">{</span>
-<a name="line-617"></a>			<span class="n">node</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_value</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
-<a name="line-618"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">parent</span> <span class="o">==</span> <span class="n">anyptr</span><span class="p">)</span>
-<a name="line-619"></a>				<span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">tree_add_auth_node</span><span class="p">(</span><span class="n">addnodes</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span>
-<a name="line-620"></a>					<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-621"></a>			<span class="p">}</span>
-<a name="line-622"></a>		<span class="p">}</span>
-<a name="line-623"></a>
-<a name="line-624"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">addnodes</span> <span class="o">==</span> <span class="n">pnodes</span><span class="p">)</span>
-<a name="line-625"></a>		<span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
-<a name="line-626"></a>
-<a name="line-627"></a>	<span class="o">*</span><span class="n">pnodes</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">auth_policies</span><span class="p">;</span>
-<a name="line-628"></a>
-<a name="line-629"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-630"></a>	<span class="p">}</span>
-<a name="line-631"></a>
-<a name="line-632"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_calculate_user_set</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">,</span>
-<a name="line-633"></a>				<span class="n">STACK_OF</span><span class="p">(</span><span class="n">ASN1_OBJECT</span><span class="p">)</span> <span class="o">*</span><span class="n">policy_oids</span><span class="p">,</span>
-<a name="line-634"></a>				<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span><span class="p">)</span> <span class="o">*</span><span class="n">auth_nodes</span><span class="p">)</span>
-<a name="line-635"></a>	<span class="p">{</span>
-<a name="line-636"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-637"></a><span class="hll">	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'node' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;node&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-638"></a>	<span class="n">ASN1_OBJECT</span> <span class="o">*</span><span class="n">oid</span><span class="p">;</span>
-<a name="line-639"></a>
-<a name="line-640"></a>	<span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">anyPolicy</span><span class="p">;</span>
-<a name="line-641"></a>	<span class="n">X509_POLICY_DATA</span> <span class="o">*</span><span class="n">extra</span><span class="p">;</span>
-<a name="line-642"></a>
-<a name="line-643"></a>	<span class="cm">/* Check if anyPolicy present in authority constrained policy set:</span>
-<a name="line-644"></a><span class="cm">	 * this will happen if it is a leaf node.</span>
-<a name="line-645"></a><span class="cm">	 */</span>
-<a name="line-646"></a>
-<a name="line-647"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sk_ASN1_OBJECT_num</span><span class="p">(</span><span class="n">policy_oids</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-648"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-649"></a>
-<a name="line-650"></a>	<span class="n">anyPolicy</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">[</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="n">anyPolicy</span><span class="p">;</span>
-<a name="line-651"></a>
-<a name="line-652"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_ASN1_OBJECT_num</span><span class="p">(</span><span class="n">policy_oids</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-653"></a>		<span class="p">{</span>
-<a name="line-654"></a>		<span class="n">oid</span> <span class="o">=</span> <span class="n">sk_ASN1_OBJECT_value</span><span class="p">(</span><span class="n">policy_oids</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-655"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">OBJ_obj2nid</span><span class="p">(</span><span class="n">oid</span><span class="p">)</span> <span class="o">==</span> <span class="n">NID_any_policy</span><span class="p">)</span>
-<a name="line-656"></a>			<span class="p">{</span>
-<a name="line-657"></a>			<span class="n">tree</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">POLICY_FLAG_ANY_POLICY</span><span class="p">;</span>
-<a name="line-658"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-659"></a>			<span class="p">}</span>
-<a name="line-660"></a>		<span class="p">}</span>
-<a name="line-661"></a>
-<a name="line-662"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_ASN1_OBJECT_num</span><span class="p">(</span><span class="n">policy_oids</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-663"></a>		<span class="p">{</span>
-<a name="line-664"></a>		<span class="n">oid</span> <span class="o">=</span> <span class="n">sk_ASN1_OBJECT_value</span><span class="p">(</span><span class="n">policy_oids</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-<a name="line-665"></a>		<span class="n">node</span> <span class="o">=</span> <span class="n">tree_find_sk</span><span class="p">(</span><span class="n">auth_nodes</span><span class="p">,</span> <span class="n">oid</span><span class="p">);</span>
-<a name="line-666"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">node</span><span class="p">)</span>
-<a name="line-667"></a>			<span class="p">{</span>
-<a name="line-668"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-669"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-670"></a>			<span class="cm">/* Create a new node with policy ID from user set</span>
-<a name="line-671"></a><span class="cm">			 * and qualifiers from anyPolicy.</span>
-<a name="line-672"></a><span class="cm">			 */</span>
-<a name="line-673"></a>			<span class="n">extra</span> <span class="o">=</span> <span class="n">policy_data_new</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">oid</span><span class="p">,</span>
-<a name="line-674"></a>						<span class="n">node_critical</span><span class="p">(</span><span class="n">anyPolicy</span><span class="p">));</span>
-<a name="line-675"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">extra</span><span class="p">)</span>
-<a name="line-676"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-677"></a>			<span class="n">extra</span><span class="o">-&gt;</span><span class="n">qualifier_set</span> <span class="o">=</span> <span class="n">anyPolicy</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">qualifier_set</span><span class="p">;</span>
-<a name="line-678"></a>			<span class="n">extra</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">=</span> <span class="n">POLICY_DATA_FLAG_SHARED_QUALIFIERS</span>
-<a name="line-679"></a>						<span class="o">|</span> <span class="n">POLICY_DATA_FLAG_EXTRA_NODE</span><span class="p">;</span>
-<a name="line-680"></a>			<span class="n">node</span> <span class="o">=</span> <span class="n">level_add_node</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">extra</span><span class="p">,</span> <span class="n">anyPolicy</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">,</span>
-<a name="line-681"></a>						<span class="n">tree</span><span class="p">);</span>
-<a name="line-682"></a>			<span class="p">}</span>
-<a name="line-683"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">user_policies</span><span class="p">)</span>
-<a name="line-684"></a>			<span class="p">{</span>
-<a name="line-685"></a>			<span class="n">tree</span><span class="o">-&gt;</span><span class="n">user_policies</span> <span class="o">=</span> <span class="n">sk_X509_POLICY_NODE_new_null</span><span class="p">();</span>
-<a name="line-686"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">user_policies</span><span class="p">)</span>
-<a name="line-687"></a>				<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-688"></a>			<span class="p">}</span>
-<a name="line-689"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sk_X509_POLICY_NODE_push</span><span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">user_policies</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span>
-<a name="line-690"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-691"></a>		<span class="p">}</span>
-<a name="line-692"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-693"></a>
-<a name="line-694"></a>	<span class="p">}</span>
-<a name="line-695"></a>
-<a name="line-696"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">tree_evaluate</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-697"></a>	<span class="p">{</span>
-<a name="line-698"></a><span class="hll">	<span class="kt">int</span> <span class="n">ret</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ret' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ret&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-699"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-700"></a><span class="hll">	<span class="k">const</span> <span class="n">X509_POLICY_CACHE</span> <span class="o">*</span><span class="n">cache</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'cache' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;cache&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-701"></a>
-<a name="line-702"></a>	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">curr</span><span class="o">++</span><span class="p">)</span>
-<a name="line-703"></a>		<span class="p">{</span>
-<a name="line-704"></a>		<span class="n">cache</span> <span class="o">=</span> <span class="n">policy_cache_set</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">cert</span><span class="p">);</span>
-<a name="line-705"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_link_nodes</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">cache</span><span class="p">))</span>
-<a name="line-706"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-707"></a>
-<a name="line-708"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">X509_V_FLAG_INHIBIT_ANY</span><span class="p">)</span>
-<a name="line-709"></a>			<span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">tree_link_any</span><span class="p">(</span><span class="n">curr</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">tree</span><span class="p">))</span>
-<a name="line-710"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-711"></a>	<span class="n">tree_print</span><span class="p">(</span><span class="s">&quot;before tree_prune()&quot;</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">curr</span><span class="p">);</span>
-<a name="line-712"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">tree_prune</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">curr</span><span class="p">);</span>
-<a name="line-713"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-714"></a>			<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-715"></a>		<span class="p">}</span>
-<a name="line-716"></a>
-<a name="line-717"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-718"></a>
-<a name="line-719"></a>	<span class="p">}</span>
-<a name="line-720"></a>
-<a name="line-721"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">exnode_free</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span> <span class="o">*</span><span class="n">node</span><span class="p">)</span>
-<a name="line-722"></a>	<span class="p">{</span>
-<a name="line-723"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">POLICY_DATA_FLAG_EXTRA_NODE</span><span class="p">))</span>
-<a name="line-724"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-<a name="line-725"></a>	<span class="p">}</span>
-<a name="line-726"></a>
-<a name="line-727"></a>
-<a name="line-728"></a><span class="kt">void</span> <span class="nf">X509_policy_tree_free</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-729"></a>	<span class="p">{</span>
-<a name="line-730"></a>	<span class="n">X509_POLICY_LEVEL</span> <span class="o">*</span><span class="n">curr</span><span class="p">;</span>
-<a name="line-731"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-732"></a>
-<a name="line-733"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-734"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-735"></a>
-<a name="line-736"></a>	<span class="n">sk_X509_POLICY_NODE_free</span><span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">auth_policies</span><span class="p">);</span>
-<a name="line-737"></a>	<span class="n">sk_X509_POLICY_NODE_pop_free</span><span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">user_policies</span><span class="p">,</span> <span class="n">exnode_free</span><span class="p">);</span>
-<a name="line-738"></a>
-<a name="line-739"></a>	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">nlevel</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">curr</span><span class="o">++</span><span class="p">)</span>
-<a name="line-740"></a>		<span class="p">{</span>
-<a name="line-741"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">cert</span><span class="p">)</span>
-<a name="line-742"></a>			<span class="n">X509_free</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">cert</span><span class="p">);</span>
-<a name="line-743"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">)</span>
-<a name="line-744"></a>			<span class="n">sk_X509_POLICY_NODE_pop_free</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">nodes</span><span class="p">,</span>
-<a name="line-745"></a>						<span class="n">policy_node_free</span><span class="p">);</span>
-<a name="line-746"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">)</span>
-<a name="line-747"></a>			<span class="n">policy_node_free</span><span class="p">(</span><span class="n">curr</span><span class="o">-&gt;</span><span class="n">anyPolicy</span><span class="p">);</span>
-<a name="line-748"></a>		<span class="p">}</span>
-<a name="line-749"></a>
-<a name="line-750"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">extra_data</span><span class="p">)</span>
-<a name="line-751"></a>		<span class="n">sk_X509_POLICY_DATA_pop_free</span><span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">extra_data</span><span class="p">,</span>
-<a name="line-752"></a>						<span class="n">policy_data_free</span><span class="p">);</span>
-<a name="line-753"></a>
-<a name="line-754"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">levels</span><span class="p">);</span>
-<a name="line-755"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-756"></a>
-<a name="line-757"></a>	<span class="p">}</span>
-<a name="line-758"></a>
-<a name="line-759"></a><span class="cm">/* Application policy checking function.</span>
-<a name="line-760"></a><span class="cm"> * Return codes:</span>
-<a name="line-761"></a><span class="cm"> *  0 	Internal Error.</span>
-<a name="line-762"></a><span class="cm"> *  1   Successful.</span>
-<a name="line-763"></a><span class="cm"> * -1   One or more certificates contain invalid or inconsistent extensions</span>
-<a name="line-764"></a><span class="cm"> * -2	User constrained policy set empty and requireExplicit true.</span>
-<a name="line-765"></a><span class="cm"> */</span>
-<a name="line-766"></a>
-<a name="line-767"></a><span class="kt">int</span> <span class="nf">X509_policy_check</span><span class="p">(</span><span class="n">X509_POLICY_TREE</span> <span class="o">**</span><span class="n">ptree</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">pexplicit_policy</span><span class="p">,</span>
-<a name="line-768"></a>			<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
-<a name="line-769"></a>			<span class="n">STACK_OF</span><span class="p">(</span><span class="n">ASN1_OBJECT</span><span class="p">)</span> <span class="o">*</span><span class="n">policy_oids</span><span class="p">,</span>
-<a name="line-770"></a>			<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">)</span>
-<a name="line-771"></a>	<span class="p">{</span>
-<a name="line-772"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-773"></a>	<span class="n">X509_POLICY_TREE</span> <span class="o">*</span><span class="n">tree</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-774"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509_POLICY_NODE</span><span class="p">)</span> <span class="o">*</span><span class="n">nodes</span><span class="p">,</span> <span class="o">*</span><span class="n">auth_nodes</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-775"></a>	<span class="o">*</span><span class="n">ptree</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-776"></a>
-<a name="line-777"></a>	<span class="o">*</span><span class="n">pexplicit_policy</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-778"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">tree_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tree</span><span class="p">,</span> <span class="n">certs</span><span class="p">,</span> <span class="n">flags</span><span class="p">);</span>
-<a name="line-779"></a>
-<a name="line-780"></a>	<span class="k">switch</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-<a name="line-781"></a>		<span class="p">{</span>
-<a name="line-782"></a>
-<a name="line-783"></a>		<span class="cm">/* Tree empty requireExplicit False: OK */</span>
-<a name="line-784"></a>		<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
-<a name="line-785"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-786"></a>
-<a name="line-787"></a>		<span class="cm">/* Some internal error */</span>
-<a name="line-788"></a>		<span class="k">case</span> <span class="o">-</span><span class="mi">1</span><span class="o">:</span>
-<a name="line-789"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-790"></a>
-<a name="line-791"></a>		<span class="cm">/* Some internal error */</span>
-<a name="line-792"></a>		<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
-<a name="line-793"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-794"></a>
-<a name="line-795"></a>		<span class="cm">/* Tree empty requireExplicit True: Error */</span>
-<a name="line-796"></a>
-<a name="line-797"></a>		<span class="k">case</span> <span class="mi">6</span><span class="o">:</span>
-<a name="line-798"></a>		<span class="o">*</span><span class="n">pexplicit_policy</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-799"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
-<a name="line-800"></a>
-<a name="line-801"></a>		<span class="cm">/* Tree OK requireExplicit True: OK and continue */</span>
-<a name="line-802"></a>		<span class="k">case</span> <span class="mi">5</span><span class="o">:</span>
-<a name="line-803"></a>		<span class="o">*</span><span class="n">pexplicit_policy</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-804"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-805"></a>
-<a name="line-806"></a>		<span class="cm">/* Tree OK: continue */</span>
-<a name="line-807"></a>
-<a name="line-808"></a>		<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-<a name="line-809"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-810"></a>			<span class="cm">/*</span>
-<a name="line-811"></a><span class="cm">			 * tree_init() returns success and a null tree</span>
-<a name="line-812"></a><span class="cm">			 * if it&#39;s just looking at a trust anchor.</span>
-<a name="line-813"></a><span class="cm">			 * I&#39;m not sure that returning success here is</span>
-<a name="line-814"></a><span class="cm">			 * correct, but I&#39;m sure that reporting this</span>
-<a name="line-815"></a><span class="cm">			 * as an internal error which our caller</span>
-<a name="line-816"></a><span class="cm">			 * interprets as a malloc failure is wrong.</span>
-<a name="line-817"></a><span class="cm">			 */</span>
-<a name="line-818"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-819"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-820"></a>		<span class="p">}</span>
-<a name="line-821"></a>
-<a name="line-822"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree</span><span class="p">)</span> <span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-823"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">tree_evaluate</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-824"></a>
-<a name="line-825"></a>	<span class="n">tree_print</span><span class="p">(</span><span class="s">&quot;tree_evaluate()&quot;</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-826"></a>
-<a name="line-827"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-828"></a>		<span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-829"></a>
-<a name="line-830"></a>	<span class="cm">/* Return value 2 means tree empty */</span>
-<a name="line-831"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-<a name="line-832"></a>		<span class="p">{</span>
-<a name="line-833"></a>		<span class="n">X509_policy_tree_free</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-834"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">pexplicit_policy</span><span class="p">)</span>
-<a name="line-835"></a>			<span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
-<a name="line-836"></a>		<span class="k">else</span>
-<a name="line-837"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-838"></a>		<span class="p">}</span>
-<a name="line-839"></a>
-<a name="line-840"></a>	<span class="cm">/* Tree is not empty: continue */</span>
-<a name="line-841"></a>
-<a name="line-842"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">tree_calculate_authority_set</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">auth_nodes</span><span class="p">);</span>
-<a name="line-843"></a>
-<a name="line-844"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ret</span><span class="p">)</span>
-<a name="line-845"></a>		<span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-846"></a>
-<a name="line-847"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tree_calculate_user_set</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">policy_oids</span><span class="p">,</span> <span class="n">auth_nodes</span><span class="p">))</span>
-<a name="line-848"></a>		<span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-849"></a>	
-<a name="line-850"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-<a name="line-851"></a>		<span class="n">sk_X509_POLICY_NODE_free</span><span class="p">(</span><span class="n">auth_nodes</span><span class="p">);</span>
-<a name="line-852"></a>
-<a name="line-853"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<a name="line-854"></a>		<span class="o">*</span><span class="n">ptree</span> <span class="o">=</span> <span class="n">tree</span><span class="p">;</span>
-<a name="line-855"></a>
-<a name="line-856"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">pexplicit_policy</span><span class="p">)</span>
-<a name="line-857"></a>		<span class="p">{</span>
-<a name="line-858"></a>		<span class="n">nodes</span> <span class="o">=</span> <span class="n">X509_policy_tree_get0_user_policies</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-859"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">sk_X509_POLICY_NODE_num</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-860"></a>			<span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
-<a name="line-861"></a>		<span class="p">}</span>
-<a name="line-862"></a>
-<a name="line-863"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-864"></a>
-<a name="line-865"></a>	<span class="nl">error</span><span class="p">:</span>
-<a name="line-866"></a>
-<a name="line-867"></a>	<span class="n">X509_policy_tree_free</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-868"></a>
-<a name="line-869"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-870"></a>
-<a name="line-871"></a>	<span class="p">}</span>
+<a name="line-335"></a>
+<a name="line-336"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-337"></a>	
+<a name="line-338"></a>	<span class="n">on</span><span class="o">=</span><span class="n">p_enabled</span><span class="p">;</span>
+<a name="line-339"></a><span class="p">}</span>
+<a name="line-340"></a>
+<a name="line-341"></a><span class="kt">bool</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">is_enabled</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-342"></a>	
+<a name="line-343"></a>	<span class="k">return</span> <span class="n">on</span><span class="p">;</span>	
+<a name="line-344"></a><span class="p">}</span>
+<a name="line-345"></a>
+<a name="line-346"></a><span class="kt">void</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">set_carry_enabled</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-347"></a>	
+<a name="line-348"></a>	<span class="n">carry</span><span class="o">=</span><span class="n">p_enabled</span><span class="p">;</span>
+<a name="line-349"></a><span class="p">}</span>
+<a name="line-350"></a><span class="kt">bool</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">is_carry_enabled</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-351"></a>
+<a name="line-352"></a>	<span class="k">return</span> <span class="n">carry</span><span class="p">;</span>
+<a name="line-353"></a><span class="p">}</span>
+<a name="line-354"></a>
+<a name="line-355"></a><span class="kt">uint8_t</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_node_count</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-356"></a>	
+<a name="line-357"></a>	<span class="k">return</span> <span class="n">node_count</span><span class="p">;</span>	
+<a name="line-358"></a><span class="p">}</span>
+<a name="line-359"></a>
+<a name="line-360"></a><span class="k">const</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">Point</span><span class="o">&amp;</span> <span class="n">CPEnvelope</span><span class="o">::</span><span class="n">get_node</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-361"></a>	
+<a name="line-362"></a><span class="hll">	<span class="k">static</span> <span class="n">Point</span> <span class="n">errpoint</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'errpoint' is assigned a value that is never used.</span>
+</span><a name="line-363"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_idx</span><span class="o">&lt;</span><span class="mi">0</span> <span class="o">||</span> <span class="n">p_idx</span><span class="o">&gt;=</span><span class="n">node_count</span><span class="p">)</span>
+<a name="line-364"></a>		<span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="n">node_count</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-365"></a>	
+<a name="line-366"></a>	<span class="k">return</span> <span class="n">node</span><span class="p">[</span><span class="n">p_idx</span><span class="p">];</span>
+<a name="line-367"></a>	
+<a name="line-368"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: core/io/resource_loader.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/asn1/x_long.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> resource_loader.h</p>
-<a href='149.html#line-40'> cstyleCast 40</a><a href='149.html#line-40'> operatorEqVarError 40</a><a href='149.html#line-40'> functionStatic 40</a>
+       <p id="filename"><a href="index.html">Defects:</a> x_long.c</p>
+<a href='149.html#line-109'> variableScope 109</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -238,131 +238,251 @@
 122
 123
 124
-125</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  resource_loader.h                                                    */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef RESOURCE_LOADER_H</span>
-<a name="line-30"></a><span class="cp">#define RESOURCE_LOADER_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;resource.h&quot;</span>
-<a name="line-33"></a>
-<a name="line-34"></a><span class="cm">/**</span>
-<a name="line-35"></a><span class="cm">	@author Juan Linietsky &lt;reduzio@gmail.com&gt;</span>
-<a name="line-36"></a><span class="cm">*/</span>
-<a name="line-37"></a>
-<a name="line-38"></a><span class="n">class</span> <span class="nl">ResourceInteractiveLoader</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Reference</span> <span class="p">{</span>
-<a name="line-39"></a>
-<a name="line-40"></a><span class="hll">	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">ResourceInteractiveLoader</span><span class="p">,</span><span class="n">Reference</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div><span class='error2'>&lt;--- Member variable 'ResourceInteractiveLoader::_type_name' is not assigned a value in 'ResourceInteractiveLoader::operator='.</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'ResourceInteractiveLoader::*' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;ResourceInteractiveLoader::*&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-41"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-42"></a>
-<a name="line-43"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
-<a name="line-44"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-45"></a>
-<a name="line-46"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_local_path</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_local_path</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-47"></a>	<span class="n">virtual</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">get_resource</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-48"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="n">poll</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-49"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_stage</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-50"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_stage_count</span><span class="p">()</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>	
-<a name="line-51"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">wait</span><span class="p">();</span>
-<a name="line-52"></a>
-<a name="line-53"></a>	<span class="n">ResourceInteractiveLoader</span><span class="p">()</span> <span class="p">{}</span>
-<a name="line-54"></a><span class="p">};</span>
-<a name="line-55"></a>
-<a name="line-56"></a>
-<a name="line-57"></a><span class="n">class</span> <span class="n">ResourceFormatLoader</span> <span class="p">{</span>
-<a name="line-58"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-59"></a>
-<a name="line-60"></a>	<span class="n">virtual</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceInteractiveLoader</span><span class="o">&gt;</span> <span class="n">load_interactive</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="n">Error</span> <span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-61"></a>	<span class="n">virtual</span> <span class="n">RES</span> <span class="nf">load</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_original_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">Error</span> <span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-62"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_recognized_extensions</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_extensions</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-63"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_recognized_extensions_for_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_extensions</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-64"></a>	<span class="kt">bool</span> <span class="n">recognize</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_extension</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-65"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">handles_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-66"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_resource_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-67"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">get_dependencies</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_dependencies</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_add_types</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-68"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="n">load_import_metadata</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceImportMetadata</span><span class="o">&gt;&amp;</span> <span class="n">r_var</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ERR_UNAVAILABLE</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-69"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="n">rename_dependencies</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="o">&gt;&amp;</span> <span class="n">p_map</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">OK</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-70"></a>
-<a name="line-71"></a>	<span class="n">virtual</span> <span class="o">~</span><span class="n">ResourceFormatLoader</span><span class="p">()</span> <span class="p">{}</span>
-<a name="line-72"></a><span class="p">};</span>
-<a name="line-73"></a>
-<a name="line-74"></a>
-<a name="line-75"></a><span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">ResourceLoadErrorNotify</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_ud</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">);</span>
-<a name="line-76"></a><span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">DependencyErrorNotify</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_ud</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_loading</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_which</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">);</span>
-<a name="line-77"></a>
-<a name="line-78"></a>
-<a name="line-79"></a><span class="n">class</span> <span class="n">ResourceLoader</span> <span class="p">{</span>	
-<a name="line-80"></a>	
-<a name="line-81"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-82"></a>		<span class="n">MAX_LOADERS</span><span class="o">=</span><span class="mi">64</span>
-<a name="line-83"></a>	<span class="p">};</span>
-<a name="line-84"></a>	
-<a name="line-85"></a>	<span class="k">static</span> <span class="n">ResourceFormatLoader</span> <span class="o">*</span><span class="n">loader</span><span class="p">[</span><span class="n">MAX_LOADERS</span><span class="p">];</span>
-<a name="line-86"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">loader_count</span><span class="p">;</span>
-<a name="line-87"></a>	<span class="k">static</span> <span class="kt">bool</span> <span class="n">timestamp_on_load</span><span class="p">;</span>
-<a name="line-88"></a>
-<a name="line-89"></a>	<span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">err_notify_ud</span><span class="p">;</span>
-<a name="line-90"></a>	<span class="k">static</span> <span class="n">ResourceLoadErrorNotify</span> <span class="n">err_notify</span><span class="p">;</span>
-<a name="line-91"></a>	<span class="k">static</span> <span class="kt">void</span><span class="o">*</span> <span class="n">dep_err_notify_ud</span><span class="p">;</span>
-<a name="line-92"></a>	<span class="k">static</span> <span class="n">DependencyErrorNotify</span> <span class="n">dep_err_notify</span><span class="p">;</span>
-<a name="line-93"></a>	<span class="k">static</span> <span class="kt">bool</span> <span class="n">abort_on_missing_resource</span><span class="p">;</span>
-<a name="line-94"></a>
-<a name="line-95"></a>	<span class="k">static</span> <span class="n">String</span> <span class="nf">find_complete_path</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">);</span>
-<a name="line-96"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-97"></a>
-<a name="line-98"></a>
-<a name="line-99"></a>	
-<a name="line-100"></a>	<span class="k">static</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceInteractiveLoader</span><span class="o">&gt;</span> <span class="n">load_interactive</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type_hint</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_no_cache</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="n">Error</span> <span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-101"></a>	<span class="k">static</span> <span class="n">RES</span> <span class="nf">load</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type_hint</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_no_cache</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="n">Error</span> <span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-102"></a>	<span class="k">static</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">ResourceImportMetadata</span><span class="o">&gt;</span> <span class="n">load_import_metadata</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">);</span>
-<a name="line-103"></a>
-<a name="line-104"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">get_recognized_extensions_for_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_extensions</span><span class="p">);</span>
-<a name="line-105"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">add_resource_format_loader</span><span class="p">(</span><span class="n">ResourceFormatLoader</span> <span class="o">*</span><span class="n">p_format_loader</span><span class="p">);</span>
-<a name="line-106"></a>	<span class="k">static</span> <span class="n">String</span> <span class="nf">get_resource_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">);</span>
-<a name="line-107"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">get_dependencies</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_dependencies</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_add_types</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-108"></a>	<span class="k">static</span> <span class="n">Error</span> <span class="nf">rename_dependencies</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="o">&gt;&amp;</span> <span class="n">p_map</span><span class="p">);</span>
-<a name="line-109"></a>
-<a name="line-110"></a>	<span class="k">static</span> <span class="n">String</span> <span class="nf">guess_full_filename</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">);</span>
-<a name="line-111"></a>
-<a name="line-112"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">set_timestamp_on_load</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_timestamp</span><span class="p">)</span> <span class="p">{</span> <span class="n">timestamp_on_load</span><span class="o">=</span><span class="n">p_timestamp</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-113"></a>
-<a name="line-114"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">notify_load_error</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_err</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="n">err_notify</span><span class="p">)</span> <span class="n">err_notify</span><span class="p">(</span><span class="n">err_notify_ud</span><span class="p">,</span><span class="n">p_err</span><span class="p">);</span> <span class="p">}</span>
-<a name="line-115"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">set_error_notify_func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_ud</span><span class="p">,</span><span class="n">ResourceLoadErrorNotify</span> <span class="n">p_err_notify</span><span class="p">)</span> <span class="p">{</span> <span class="n">err_notify</span><span class="o">=</span><span class="n">p_err_notify</span><span class="p">;</span> <span class="n">err_notify_ud</span><span class="o">=</span><span class="n">p_ud</span><span class="p">;}</span>
-<a name="line-116"></a>
-<a name="line-117"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">notify_dependency_error</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_dependency</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="n">dep_err_notify</span><span class="p">)</span> <span class="n">dep_err_notify</span><span class="p">(</span><span class="n">dep_err_notify_ud</span><span class="p">,</span><span class="n">p_path</span><span class="p">,</span><span class="n">p_dependency</span><span class="p">,</span><span class="n">p_type</span><span class="p">);</span> <span class="p">}</span>
-<a name="line-118"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">set_dependency_error_notify_func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_ud</span><span class="p">,</span><span class="n">DependencyErrorNotify</span> <span class="n">p_err_notify</span><span class="p">)</span> <span class="p">{</span> <span class="n">dep_err_notify</span><span class="o">=</span><span class="n">p_err_notify</span><span class="p">;</span> <span class="n">dep_err_notify_ud</span><span class="o">=</span><span class="n">p_ud</span><span class="p">;}</span>
-<a name="line-119"></a>
-<a name="line-120"></a>
-<a name="line-121"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">set_abort_on_missing_resources</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_abort</span><span class="p">)</span> <span class="p">{</span> <span class="n">abort_on_missing_resource</span><span class="o">=</span><span class="n">p_abort</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-122"></a>	<span class="k">static</span> <span class="kt">bool</span> <span class="nf">get_abort_on_missing_resources</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">abort_on_missing_resource</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-123"></a><span class="p">};</span>
-<a name="line-124"></a>
-<a name="line-125"></a><span class="cp">#endif</span>
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* x_long.c */</span>
+<a name="line-2"></a><span class="cm">/* Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL</span>
+<a name="line-3"></a><span class="cm"> * project 2000.</span>
+<a name="line-4"></a><span class="cm"> */</span>
+<a name="line-5"></a><span class="cm">/* ====================================================================</span>
+<a name="line-6"></a><span class="cm"> * Copyright (c) 2000 The OpenSSL Project.  All rights reserved.</span>
+<a name="line-7"></a><span class="cm"> *</span>
+<a name="line-8"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-9"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-10"></a><span class="cm"> * are met:</span>
+<a name="line-11"></a><span class="cm"> *</span>
+<a name="line-12"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
+<a name="line-13"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
+<a name="line-14"></a><span class="cm"> *</span>
+<a name="line-15"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-16"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
+<a name="line-17"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
+<a name="line-18"></a><span class="cm"> *    distribution.</span>
+<a name="line-19"></a><span class="cm"> *</span>
+<a name="line-20"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
+<a name="line-21"></a><span class="cm"> *    software must display the following acknowledgment:</span>
+<a name="line-22"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-23"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-24"></a><span class="cm"> *</span>
+<a name="line-25"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
+<a name="line-26"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
+<a name="line-27"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
+<a name="line-28"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
+<a name="line-29"></a><span class="cm"> *</span>
+<a name="line-30"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
+<a name="line-31"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
+<a name="line-32"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
+<a name="line-33"></a><span class="cm"> *</span>
+<a name="line-34"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
+<a name="line-35"></a><span class="cm"> *    acknowledgment:</span>
+<a name="line-36"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-37"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-38"></a><span class="cm"> *</span>
+<a name="line-39"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
+<a name="line-40"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-41"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
+<a name="line-42"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
+<a name="line-43"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<a name="line-44"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
+<a name="line-45"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<a name="line-46"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-47"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
+<a name="line-48"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
+<a name="line-49"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
+<a name="line-50"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<a name="line-51"></a><span class="cm"> * ====================================================================</span>
+<a name="line-52"></a><span class="cm"> *</span>
+<a name="line-53"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
+<a name="line-54"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
+<a name="line-55"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
+<a name="line-56"></a><span class="cm"> *</span>
+<a name="line-57"></a><span class="cm"> */</span>
+<a name="line-58"></a>
+<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-61"></a><span class="cp">#include &lt;openssl/asn1t.h&gt;</span>
+<a name="line-62"></a><span class="cp">#include &lt;openssl/bn.h&gt;</span>
+<a name="line-63"></a>
+<a name="line-64"></a><span class="cm">/* Custom primitive type for long handling. This converts between an ASN1_INTEGER</span>
+<a name="line-65"></a><span class="cm"> * and a long directly.</span>
+<a name="line-66"></a><span class="cm"> */</span>
+<a name="line-67"></a>
+<a name="line-68"></a>
+<a name="line-69"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">long_new</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">);</span>
+<a name="line-70"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">long_free</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">);</span>
+<a name="line-71"></a>
+<a name="line-72"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">long_i2c</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cont</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">putype</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">);</span>
+<a name="line-73"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">long_c2i</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cont</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">utype</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">free_cont</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">);</span>
+<a name="line-74"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">long_print</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">,</span> <span class="kt">int</span> <span class="n">indent</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_PCTX</span> <span class="o">*</span><span class="n">pctx</span><span class="p">);</span>
+<a name="line-75"></a>
+<a name="line-76"></a><span class="k">static</span> <span class="n">ASN1_PRIMITIVE_FUNCS</span> <span class="n">long_pf</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-77"></a>	<span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a name="line-78"></a>	<span class="n">long_new</span><span class="p">,</span>
+<a name="line-79"></a>	<span class="n">long_free</span><span class="p">,</span>
+<a name="line-80"></a>	<span class="n">long_free</span><span class="p">,</span>	<span class="cm">/* Clear should set to initial value */</span>
+<a name="line-81"></a>	<span class="n">long_c2i</span><span class="p">,</span>
+<a name="line-82"></a>	<span class="n">long_i2c</span><span class="p">,</span>
+<a name="line-83"></a>	<span class="n">long_print</span>
+<a name="line-84"></a><span class="p">};</span>
+<a name="line-85"></a>
+<a name="line-86"></a><span class="n">ASN1_ITEM_start</span><span class="p">(</span><span class="n">LONG</span><span class="p">)</span>
+<a name="line-87"></a>	<span class="n">ASN1_ITYPE_PRIMITIVE</span><span class="p">,</span> <span class="n">V_ASN1_INTEGER</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">long_pf</span><span class="p">,</span> <span class="n">ASN1_LONG_UNDEF</span><span class="p">,</span> <span class="s">&quot;LONG&quot;</span>
+<a name="line-88"></a><span class="n">ASN1_ITEM_end</span><span class="p">(</span><span class="n">LONG</span><span class="p">)</span>
+<a name="line-89"></a>
+<a name="line-90"></a><span class="n">ASN1_ITEM_start</span><span class="p">(</span><span class="n">ZLONG</span><span class="p">)</span>
+<a name="line-91"></a>	<span class="n">ASN1_ITYPE_PRIMITIVE</span><span class="p">,</span> <span class="n">V_ASN1_INTEGER</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">long_pf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;ZLONG&quot;</span>
+<a name="line-92"></a><span class="n">ASN1_ITEM_end</span><span class="p">(</span><span class="n">ZLONG</span><span class="p">)</span>
+<a name="line-93"></a>
+<a name="line-94"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">long_new</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">)</span>
+<a name="line-95"></a><span class="p">{</span>
+<a name="line-96"></a>	<span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">pval</span> <span class="o">=</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">;</span>
+<a name="line-97"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-98"></a><span class="p">}</span>
+<a name="line-99"></a>
+<a name="line-100"></a><span class="k">static</span> <span class="kt">void</span> <span class="n">long_free</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">)</span>
+<a name="line-101"></a><span class="p">{</span>
+<a name="line-102"></a>	<span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">pval</span> <span class="o">=</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">;</span>
+<a name="line-103"></a><span class="p">}</span>
+<a name="line-104"></a>
+<a name="line-105"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">long_i2c</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cont</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">putype</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">)</span>
+<a name="line-106"></a><span class="p">{</span>
+<a name="line-107"></a>	<span class="kt">long</span> <span class="n">ltmp</span><span class="p">;</span>
+<a name="line-108"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">utmp</span><span class="p">;</span>
+<a name="line-109"></a><span class="hll">	<span class="kt">int</span> <span class="n">clen</span><span class="p">,</span> <span class="n">pad</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-110"></a>	<span class="cm">/* this exists to bypass broken gcc optimization */</span>
+<a name="line-111"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">cp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">pval</span><span class="p">;</span>
+<a name="line-112"></a>
+<a name="line-113"></a>	<span class="cm">/* use memcpy, because we may not be long aligned */</span>
+<a name="line-114"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ltmp</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">));</span>
+<a name="line-115"></a>
+<a name="line-116"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ltmp</span> <span class="o">==</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-117"></a>	<span class="cm">/* Convert the long to positive: we subtract one if negative so</span>
+<a name="line-118"></a><span class="cm">	 * we can cleanly handle the padding if only the MSB of the leading</span>
+<a name="line-119"></a><span class="cm">	 * octet is set. </span>
+<a name="line-120"></a><span class="cm">	 */</span>
+<a name="line-121"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ltmp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">utmp</span> <span class="o">=</span> <span class="o">-</span><span class="n">ltmp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-122"></a>	<span class="k">else</span> <span class="n">utmp</span> <span class="o">=</span> <span class="n">ltmp</span><span class="p">;</span>
+<a name="line-123"></a>	<span class="n">clen</span> <span class="o">=</span> <span class="n">BN_num_bits_word</span><span class="p">(</span><span class="n">utmp</span><span class="p">);</span>
+<a name="line-124"></a>	<span class="cm">/* If MSB of leading octet set we need to pad */</span>
+<a name="line-125"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">clen</span> <span class="o">&amp;</span> <span class="mh">0x7</span><span class="p">))</span> <span class="n">pad</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-126"></a>	<span class="k">else</span> <span class="n">pad</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-127"></a>
+<a name="line-128"></a>	<span class="cm">/* Convert number of bits to number of octets */</span>
+<a name="line-129"></a>	<span class="n">clen</span> <span class="o">=</span> <span class="p">(</span><span class="n">clen</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">;</span>
+<a name="line-130"></a>
+<a name="line-131"></a>	<span class="k">if</span><span class="p">(</span><span class="n">cont</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-132"></a>		<span class="k">if</span><span class="p">(</span><span class="n">pad</span><span class="p">)</span> <span class="o">*</span><span class="n">cont</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ltmp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="mh">0xff</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-133"></a>		<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">clen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-134"></a>			<span class="n">cont</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)(</span><span class="n">utmp</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">);</span>
+<a name="line-135"></a>			<span class="k">if</span><span class="p">(</span><span class="n">ltmp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">cont</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^=</span> <span class="mh">0xff</span><span class="p">;</span>
+<a name="line-136"></a>			<span class="n">utmp</span> <span class="o">&gt;&gt;=</span> <span class="mi">8</span><span class="p">;</span>
+<a name="line-137"></a>		<span class="p">}</span>
+<a name="line-138"></a>	<span class="p">}</span>
+<a name="line-139"></a>	<span class="k">return</span> <span class="n">clen</span> <span class="o">+</span> <span class="n">pad</span><span class="p">;</span>
+<a name="line-140"></a><span class="p">}</span>
+<a name="line-141"></a>
+<a name="line-142"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">long_c2i</span><span class="p">(</span><span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cont</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span>
+<a name="line-143"></a>		    <span class="kt">int</span> <span class="n">utype</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">free_cont</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">)</span>
+<a name="line-144"></a><span class="p">{</span>
+<a name="line-145"></a>	<span class="kt">int</span> <span class="n">neg</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-146"></a>	<span class="kt">long</span> <span class="n">ltmp</span><span class="p">;</span>
+<a name="line-147"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">utmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-148"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">cp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">pval</span><span class="p">;</span>
+<a name="line-149"></a>	<span class="k">if</span><span class="p">(</span><span class="n">len</span> <span class="o">&gt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">))</span> <span class="p">{</span>
+<a name="line-150"></a>		<span class="n">ASN1err</span><span class="p">(</span><span class="n">ASN1_F_LONG_C2I</span><span class="p">,</span> <span class="n">ASN1_R_INTEGER_TOO_LARGE_FOR_LONG</span><span class="p">);</span>
+<a name="line-151"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-152"></a>	<span class="p">}</span>
+<a name="line-153"></a>	<span class="cm">/* Is it negative? */</span>
+<a name="line-154"></a>	<span class="k">if</span><span class="p">(</span><span class="n">len</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">cont</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">))</span> <span class="n">neg</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-155"></a>	<span class="k">else</span> <span class="n">neg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-156"></a>	<span class="n">utmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-157"></a>	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-158"></a>		<span class="n">utmp</span> <span class="o">&lt;&lt;=</span> <span class="mi">8</span><span class="p">;</span>
+<a name="line-159"></a>		<span class="k">if</span><span class="p">(</span><span class="n">neg</span><span class="p">)</span> <span class="n">utmp</span> <span class="o">|=</span> <span class="n">cont</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="mh">0xff</span><span class="p">;</span>
+<a name="line-160"></a>		<span class="k">else</span> <span class="n">utmp</span> <span class="o">|=</span> <span class="n">cont</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<a name="line-161"></a>	<span class="p">}</span>
+<a name="line-162"></a>	<span class="n">ltmp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">utmp</span><span class="p">;</span>
+<a name="line-163"></a>	<span class="k">if</span><span class="p">(</span><span class="n">neg</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-164"></a>		<span class="n">ltmp</span><span class="o">++</span><span class="p">;</span>
+<a name="line-165"></a>		<span class="n">ltmp</span> <span class="o">=</span> <span class="o">-</span><span class="n">ltmp</span><span class="p">;</span>
+<a name="line-166"></a>	<span class="p">}</span>
+<a name="line-167"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ltmp</span> <span class="o">==</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-168"></a>		<span class="n">ASN1err</span><span class="p">(</span><span class="n">ASN1_F_LONG_C2I</span><span class="p">,</span> <span class="n">ASN1_R_INTEGER_TOO_LARGE_FOR_LONG</span><span class="p">);</span>
+<a name="line-169"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-170"></a>	<span class="p">}</span>
+<a name="line-171"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ltmp</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">));</span>
+<a name="line-172"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-173"></a><span class="p">}</span>
+<a name="line-174"></a>
+<a name="line-175"></a><span class="k">static</span> <span class="kt">int</span> <span class="n">long_print</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="n">ASN1_VALUE</span> <span class="o">**</span><span class="n">pval</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_ITEM</span> <span class="o">*</span><span class="n">it</span><span class="p">,</span>
+<a name="line-176"></a>			<span class="kt">int</span> <span class="n">indent</span><span class="p">,</span> <span class="k">const</span> <span class="n">ASN1_PCTX</span> <span class="o">*</span><span class="n">pctx</span><span class="p">)</span>
+<a name="line-177"></a>	<span class="p">{</span>
+<a name="line-178"></a>	<span class="k">return</span> <span class="n">BIO_printf</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;%ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">pval</span><span class="p">);</span>
+<a name="line-179"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

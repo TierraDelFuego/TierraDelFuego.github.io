@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: platform/android/thread_jandroid.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/scene/resources/font.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> thread_jandroid.cpp</p>
-<a href='679.html#line-120'> unreadVariable 120</a>
+       <p id="filename"><a href="index.html">Defects:</a> font.h</p>
+<a href='679.html#line-54'> uninitMemberVar 54</a><a href='679.html#line-54'> uninitMemberVar 54</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -246,8 +246,35 @@
 130
 131
 132
-133</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  thread_jandroid.cpp                                                  */</span>
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  font.h                                                               */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -274,111 +301,138 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;thread_jandroid.h&quot;</span>
-<a name="line-30"></a>
-<a name="line-31"></a><span class="cp">#include &quot;os/memory.h&quot;</span>
-<a name="line-32"></a>
-<a name="line-33"></a><span class="n">Thread</span><span class="o">::</span><span class="n">ID</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_ID</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-34"></a>
-<a name="line-35"></a>	<span class="k">return</span> <span class="n">id</span><span class="p">;</span>
-<a name="line-36"></a><span class="p">}</span>
-<a name="line-37"></a>
-<a name="line-38"></a><span class="n">Thread</span><span class="o">*</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">create_thread_jandroid</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-39"></a>
-<a name="line-40"></a>	<span class="k">return</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ThreadAndroid</span> <span class="p">);</span>
-<a name="line-41"></a><span class="p">}</span>
-<a name="line-42"></a>
-<a name="line-43"></a><span class="kt">void</span> <span class="o">*</span><span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">thread_callback</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">userdata</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-29"></a><span class="cp">#ifndef FONT_H</span>
+<a name="line-30"></a><span class="cp">#define FONT_H</span>
+<a name="line-31"></a>
+<a name="line-32"></a><span class="cp">#include &quot;resource.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;scene/resources/texture.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;map.h&quot;</span>
+<a name="line-35"></a><span class="cm">/**</span>
+<a name="line-36"></a><span class="cm">	@author Juan Linietsky &lt;reduzio@gmail.com&gt;</span>
+<a name="line-37"></a><span class="cm">*/</span>
+<a name="line-38"></a><span class="n">class</span> <span class="nl">Font</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Resource</span> <span class="p">{</span>
+<a name="line-39"></a>	
+<a name="line-40"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">Font</span><span class="p">,</span> <span class="n">Resource</span> <span class="p">);</span>
+<a name="line-41"></a>	<span class="n">RES_BASE_EXTENSION</span><span class="p">(</span><span class="s">&quot;fnt&quot;</span><span class="p">);</span>
+<a name="line-42"></a>	
+<a name="line-43"></a>	<span class="n">Vector</span><span class="o">&lt;</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">textures</span><span class="p">;</span>
 <a name="line-44"></a>
-<a name="line-45"></a>	<span class="n">ThreadAndroid</span> <span class="o">*</span><span class="n">t</span><span class="o">=</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">ThreadAndroid</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">userdata</span><span class="p">);</span>
-<a name="line-46"></a>	<span class="n">setup_thread</span><span class="p">();</span>
-<a name="line-47"></a>	<span class="n">t</span><span class="o">-&gt;</span><span class="n">id</span><span class="o">=</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span><span class="n">pthread_self</span><span class="p">();</span>
-<a name="line-48"></a>	<span class="n">t</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">user</span><span class="p">);</span>
-<a name="line-49"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-50"></a><span class="p">}</span>
-<a name="line-51"></a>
-<a name="line-52"></a><span class="n">Thread</span><span class="o">*</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">create_func_jandroid</span><span class="p">(</span><span class="n">ThreadCreateCallback</span> <span class="n">p_callback</span><span class="p">,</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_user</span><span class="p">,</span><span class="k">const</span> <span class="n">Settings</span><span class="o">&amp;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-53"></a>
-<a name="line-54"></a>	<span class="n">ThreadAndroid</span> <span class="o">*</span><span class="n">tr</span><span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">ThreadAndroid</span><span class="p">);</span>
-<a name="line-55"></a>	<span class="n">tr</span><span class="o">-&gt;</span><span class="n">callback</span><span class="o">=</span><span class="n">p_callback</span><span class="p">;</span>
-<a name="line-56"></a>	<span class="n">tr</span><span class="o">-&gt;</span><span class="n">user</span><span class="o">=</span><span class="n">p_user</span><span class="p">;</span>
-<a name="line-57"></a>	<span class="n">pthread_attr_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tr</span><span class="o">-&gt;</span><span class="n">pthread_attr</span><span class="p">);</span>
-<a name="line-58"></a>	 <span class="n">pthread_attr_setdetachstate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tr</span><span class="o">-&gt;</span><span class="n">pthread_attr</span><span class="p">,</span> <span class="n">PTHREAD_CREATE_JOINABLE</span><span class="p">);</span>
-<a name="line-59"></a>
-<a name="line-60"></a>	<span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tr</span><span class="o">-&gt;</span><span class="n">pthread</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tr</span><span class="o">-&gt;</span><span class="n">pthread_attr</span><span class="p">,</span> <span class="n">thread_callback</span><span class="p">,</span> <span class="n">tr</span><span class="p">);</span>
-<a name="line-61"></a>
-<a name="line-62"></a>	<span class="k">return</span> <span class="n">tr</span><span class="p">;</span>
-<a name="line-63"></a><span class="p">}</span>
-<a name="line-64"></a><span class="n">Thread</span><span class="o">::</span><span class="n">ID</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_thread_ID_func_jandroid</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-65"></a>
-<a name="line-66"></a>	<span class="k">return</span> <span class="p">(</span><span class="n">ID</span><span class="p">)</span><span class="n">pthread_self</span><span class="p">();</span>
-<a name="line-67"></a><span class="p">}</span>
-<a name="line-68"></a><span class="kt">void</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">wait_to_finish_func_jandroid</span><span class="p">(</span><span class="n">Thread</span><span class="o">*</span> <span class="n">p_thread</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-45"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-46"></a>	<span class="k">struct</span> <span class="n">Character</span> <span class="p">{</span>
+<a name="line-47"></a>		
+<a name="line-48"></a>		<span class="kt">int</span> <span class="n">texture_idx</span><span class="p">;</span>
+<a name="line-49"></a>		<span class="n">Rect2</span> <span class="n">rect</span><span class="p">;</span>
+<a name="line-50"></a>		<span class="kt">float</span> <span class="n">v_align</span><span class="p">;</span>
+<a name="line-51"></a>		<span class="kt">float</span> <span class="n">h_align</span><span class="p">;</span>
+<a name="line-52"></a>		<span class="kt">float</span> <span class="n">advance</span><span class="p">;</span>
+<a name="line-53"></a>		
+<a name="line-54"></a><span class="hll">		<span class="n">Character</span><span class="p">()</span> <span class="p">{</span> <span class="n">texture_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">v_align</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="p">}</span><span class='error2'>&lt;--- Member variable 'Character::h_align' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'Character::advance' is not initialized in the constructor.</span>
+</span><a name="line-55"></a>	<span class="p">};</span>
+<a name="line-56"></a>
+<a name="line-57"></a>	<span class="k">struct</span> <span class="n">KerningPairKey</span> <span class="p">{</span>
+<a name="line-58"></a>
+<a name="line-59"></a>		<span class="k">union</span> <span class="p">{</span>
+<a name="line-60"></a>			<span class="k">struct</span> <span class="p">{</span>
+<a name="line-61"></a>				<span class="kt">uint32_t</span> <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">;</span>
+<a name="line-62"></a>			<span class="p">};</span>
+<a name="line-63"></a>
+<a name="line-64"></a>			<span class="kt">uint64_t</span> <span class="n">pair</span><span class="p">;</span>
+<a name="line-65"></a>		<span class="p">};</span>
+<a name="line-66"></a>
+<a name="line-67"></a>		<span class="n">_FORCE_INLINE_</span> <span class="kt">bool</span> <span class="n">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="k">const</span> <span class="n">KerningPairKey</span><span class="o">&amp;</span> <span class="n">p_r</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">p_r</span><span class="p">.</span><span class="n">pair</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-68"></a>	<span class="p">};</span>
 <a name="line-69"></a>
-<a name="line-70"></a>	<span class="n">ThreadAndroid</span> <span class="o">*</span><span class="n">tp</span><span class="o">=</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">ThreadAndroid</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">p_thread</span><span class="p">);</span>
-<a name="line-71"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">tp</span><span class="p">);</span>
-<a name="line-72"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="n">tp</span><span class="o">-&gt;</span><span class="n">pthread</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-73"></a>
-<a name="line-74"></a>	<span class="n">pthread_join</span><span class="p">(</span><span class="n">tp</span><span class="o">-&gt;</span><span class="n">pthread</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-75"></a>	<span class="n">tp</span><span class="o">-&gt;</span><span class="n">pthread</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-76"></a><span class="p">}</span>
-<a name="line-77"></a>
-<a name="line-78"></a><span class="kt">void</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">_thread_destroyed</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-70"></a><span class="nl">private</span><span class="p">:</span>
+<a name="line-71"></a>
+<a name="line-72"></a>	
+<a name="line-73"></a>	<span class="n">HashMap</span><span class="o">&lt;</span> <span class="n">CharType</span><span class="p">,</span> <span class="n">Character</span> <span class="o">&gt;</span> <span class="n">char_map</span><span class="p">;</span>
+<a name="line-74"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">KerningPairKey</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">kerning_map</span><span class="p">;</span>
+<a name="line-75"></a>	
+<a name="line-76"></a>	<span class="kt">float</span> <span class="n">height</span><span class="p">;</span>
+<a name="line-77"></a>	<span class="kt">float</span> <span class="n">ascent</span><span class="p">;</span>
+<a name="line-78"></a>	<span class="kt">bool</span> <span class="n">distance_field_hint</span><span class="p">;</span>
 <a name="line-79"></a>
-<a name="line-80"></a>	<span class="cm">/* The thread is being destroyed, detach it from the Java VM and set the mThreadKey value to NULL as required */</span>
-<a name="line-81"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span> <span class="o">=</span> <span class="p">(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">)</span> <span class="n">value</span><span class="p">;</span>
-<a name="line-82"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">env</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-83"></a>		<span class="n">java_vm</span><span class="o">-&gt;</span><span class="n">DetachCurrentThread</span><span class="p">();</span>
-<a name="line-84"></a>		<span class="n">pthread_setspecific</span><span class="p">(</span><span class="n">jvm_key</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-85"></a>	<span class="p">}</span>
+<a name="line-80"></a>	<span class="kt">void</span> <span class="nf">_set_chars</span><span class="p">(</span><span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">p_chars</span><span class="p">);</span>
+<a name="line-81"></a>	<span class="n">DVector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">_get_chars</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-82"></a>	<span class="kt">void</span> <span class="nf">_set_kernings</span><span class="p">(</span><span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">p_kernings</span><span class="p">);</span>
+<a name="line-83"></a>	<span class="n">DVector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">_get_kernings</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-84"></a>	<span class="kt">void</span> <span class="nf">_set_textures</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">p_textures</span><span class="p">);</span>
+<a name="line-85"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">_get_textures</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <a name="line-86"></a>
-<a name="line-87"></a><span class="p">}</span>
-<a name="line-88"></a>
-<a name="line-89"></a><span class="kt">pthread_key_t</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">jvm_key</span><span class="p">;</span>
-<a name="line-90"></a><span class="n">JavaVM</span><span class="o">*</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">java_vm</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-91"></a>
-<a name="line-92"></a><span class="kt">void</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">setup_thread</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-93"></a>
-<a name="line-94"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pthread_getspecific</span><span class="p">(</span><span class="n">jvm_key</span><span class="p">))</span>
-<a name="line-95"></a>		<span class="k">return</span><span class="p">;</span> <span class="c1">//already setup</span>
-<a name="line-96"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">;</span>
-<a name="line-97"></a>	<span class="n">java_vm</span><span class="o">-&gt;</span><span class="n">AttachCurrentThread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">env</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-98"></a>	<span class="n">pthread_setspecific</span><span class="p">(</span><span class="n">jvm_key</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> <span class="n">env</span><span class="p">);</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class="p">}</span>
-<a name="line-101"></a>
-<a name="line-102"></a><span class="kt">void</span> <span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">make_default</span><span class="p">(</span><span class="n">JavaVM</span><span class="o">*</span> <span class="n">p_java_vm</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-103"></a>
-<a name="line-104"></a>	<span class="n">java_vm</span><span class="o">=</span><span class="n">p_java_vm</span><span class="p">;</span>
-<a name="line-105"></a>	<span class="n">create_func</span><span class="o">=</span><span class="n">create_func_jandroid</span><span class="p">;</span>
-<a name="line-106"></a>	<span class="n">get_thread_ID_func</span><span class="o">=</span><span class="n">get_thread_ID_func_jandroid</span><span class="p">;</span>
-<a name="line-107"></a>	<span class="n">wait_to_finish_func</span><span class="o">=</span><span class="n">wait_to_finish_func_jandroid</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="n">pthread_key_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">jvm_key</span><span class="p">,</span> <span class="n">_thread_destroyed</span><span class="p">);</span>
-<a name="line-109"></a>	<span class="n">setup_thread</span><span class="p">();</span>
-<a name="line-110"></a>
-<a name="line-111"></a><span class="p">}</span>
-<a name="line-112"></a>
-<a name="line-113"></a><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">get_env</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-114"></a>
-<a name="line-115"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pthread_getspecific</span><span class="p">(</span><span class="n">jvm_key</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-116"></a>		<span class="n">setup_thread</span><span class="p">();</span>
-<a name="line-117"></a>	<span class="p">}</span>
-<a name="line-118"></a>
-<a name="line-119"></a>	<span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-120"></a><span class="hll">	<span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">java_vm</span><span class="o">-&gt;</span><span class="n">AttachCurrentThread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">env</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span><span class='error2'>&lt;--- Variable 'status' is assigned a value that is never used.</span>
-</span><a name="line-121"></a>	<span class="k">return</span> <span class="n">env</span><span class="p">;</span>
-<a name="line-122"></a><span class="p">}</span>
-<a name="line-123"></a>
-<a name="line-124"></a>
-<a name="line-125"></a><span class="n">ThreadAndroid</span><span class="o">::</span><span class="n">ThreadAndroid</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-126"></a>
-<a name="line-127"></a>	<span class="n">pthread</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-128"></a><span class="p">}</span>
-<a name="line-129"></a>
-<a name="line-130"></a>
-<a name="line-131"></a><span class="n">ThreadAndroid</span><span class="o">::~</span><span class="n">ThreadAndroid</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-87"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-88"></a>	
+<a name="line-89"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
+<a name="line-90"></a>
+<a name="line-91"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-92"></a>
+<a name="line-93"></a>	<span class="n">Error</span> <span class="n">create_from_fnt</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_file</span><span class="p">);</span>
+<a name="line-94"></a>	
+<a name="line-95"></a>	<span class="kt">void</span> <span class="nf">set_height</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_height</span><span class="p">);</span>
+<a name="line-96"></a>	<span class="kt">float</span> <span class="n">get_height</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-97"></a>	
+<a name="line-98"></a>	<span class="kt">void</span> <span class="nf">set_ascent</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_ascent</span><span class="p">);</span>
+<a name="line-99"></a>	<span class="kt">float</span> <span class="n">get_ascent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>	
+<a name="line-100"></a>	<span class="kt">float</span> <span class="n">get_descent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-101"></a>	
+<a name="line-102"></a>	<span class="kt">void</span> <span class="nf">add_texture</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;&amp;</span> <span class="n">p_texture</span><span class="p">);</span>
+<a name="line-103"></a>	<span class="kt">void</span> <span class="nf">add_char</span><span class="p">(</span><span class="n">CharType</span> <span class="n">p_char</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_texture_idx</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rect2</span><span class="o">&amp;</span> <span class="n">p_rect</span><span class="p">,</span> <span class="k">const</span> <span class="n">Size2</span><span class="o">&amp;</span> <span class="n">p_align</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_advance</span><span class="o">=-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-104"></a>
+<a name="line-105"></a>	<span class="kt">int</span> <span class="n">get_character_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-106"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">CharType</span><span class="o">&gt;</span> <span class="n">get_char_keys</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-107"></a>	<span class="n">Character</span> <span class="n">get_character</span><span class="p">(</span><span class="n">CharType</span> <span class="n">p_char</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-108"></a>
+<a name="line-109"></a>	<span class="kt">int</span> <span class="n">get_texture_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-110"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">get_texture</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-111"></a>
+<a name="line-112"></a>	<span class="kt">void</span> <span class="nf">add_kerning_pair</span><span class="p">(</span><span class="n">CharType</span> <span class="n">p_A</span><span class="p">,</span><span class="n">CharType</span> <span class="n">p_B</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_kerning</span><span class="p">);</span>
+<a name="line-113"></a>	<span class="kt">int</span> <span class="n">get_kerning_pair</span><span class="p">(</span><span class="n">CharType</span> <span class="n">p_A</span><span class="p">,</span><span class="n">CharType</span> <span class="n">p_B</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-114"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">KerningPairKey</span><span class="o">&gt;</span> <span class="n">get_kerning_pair_keys</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-115"></a>
+<a name="line-116"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">Size2</span> <span class="n">get_char_size</span><span class="p">(</span><span class="n">CharType</span> <span class="n">p_char</span><span class="p">,</span><span class="n">CharType</span> <span class="n">p_next</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-117"></a>	<span class="n">Size2</span> <span class="n">get_string_size</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_string</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-118"></a>	
+<a name="line-119"></a>	<span class="kt">void</span> <span class="nf">clear</span><span class="p">();</span>
+<a name="line-120"></a>
+<a name="line-121"></a>	<span class="kt">void</span> <span class="nf">set_distance_field_hint</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_distance_field</span><span class="p">);</span>
+<a name="line-122"></a>	<span class="kt">bool</span> <span class="n">is_distance_field_hint</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-123"></a>	
+<a name="line-124"></a>	<span class="kt">void</span> <span class="n">draw</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_canvas_item</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point2</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">,</span><span class="k">const</span> <span class="n">Color</span><span class="o">&amp;</span> <span class="n">p_modulate</span><span class="o">=</span><span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="kt">int</span> <span class="n">p_clip_w</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-125"></a>	<span class="kt">void</span> <span class="n">draw_halign</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_canvas_item</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point2</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="p">,</span> <span class="n">HAlign</span> <span class="n">p_align</span><span class="p">,</span><span class="kt">float</span> <span class="n">p_width</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">,</span><span class="k">const</span> <span class="n">Color</span><span class="o">&amp;</span> <span class="n">p_modulate</span><span class="o">=</span><span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-126"></a>	<span class="kt">float</span> <span class="n">draw_char</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_canvas_item</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point2</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="p">,</span> <span class="k">const</span> <span class="n">CharType</span><span class="o">&amp;</span> <span class="n">p_char</span><span class="p">,</span><span class="k">const</span> <span class="n">CharType</span><span class="o">&amp;</span> <span class="n">p_next</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="k">const</span> <span class="n">Color</span><span class="o">&amp;</span> <span class="n">p_modulate</span><span class="o">=</span><span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-127"></a>	
+<a name="line-128"></a>	<span class="n">Font</span><span class="p">();</span>
+<a name="line-129"></a>	<span class="o">~</span><span class="n">Font</span><span class="p">();</span>
+<a name="line-130"></a><span class="p">};</span>
+<a name="line-131"></a>
 <a name="line-132"></a>
-<a name="line-133"></a><span class="p">}</span>
+<a name="line-133"></a><span class="n">Size2</span> <span class="n">Font</span><span class="o">::</span><span class="n">get_char_size</span><span class="p">(</span><span class="n">CharType</span> <span class="n">p_char</span><span class="p">,</span><span class="n">CharType</span> <span class="n">p_next</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-134"></a>
+<a name="line-135"></a>	<span class="k">const</span> <span class="n">Character</span> <span class="o">*</span> <span class="n">c</span> <span class="o">=</span> <span class="n">char_map</span><span class="p">.</span><span class="n">getptr</span><span class="p">(</span><span class="n">p_char</span><span class="p">);</span>
+<a name="line-136"></a>
+<a name="line-137"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span>
+<a name="line-138"></a>		<span class="k">return</span> <span class="n">Size2</span><span class="p">();</span>
+<a name="line-139"></a>
+<a name="line-140"></a>	<span class="n">Size2</span> <span class="nf">ret</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">advance</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">rect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<a name="line-141"></a>
+<a name="line-142"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_next</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-143"></a>
+<a name="line-144"></a>		<span class="n">KerningPairKey</span> <span class="n">kpk</span><span class="p">;</span>
+<a name="line-145"></a>		<span class="n">kpk</span><span class="p">.</span><span class="n">A</span><span class="o">=</span><span class="n">p_char</span><span class="p">;</span>
+<a name="line-146"></a>		<span class="n">kpk</span><span class="p">.</span><span class="n">B</span><span class="o">=</span><span class="n">p_next</span><span class="p">;</span>
+<a name="line-147"></a>
+<a name="line-148"></a>		<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">KerningPairKey</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">kerning_map</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">kpk</span><span class="p">);</span>
+<a name="line-149"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-150"></a>
+<a name="line-151"></a>			<span class="n">ret</span><span class="p">.</span><span class="n">width</span><span class="o">-=</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">();</span>
+<a name="line-152"></a>		<span class="p">}</span>
+<a name="line-153"></a>	<span class="p">}</span>
+<a name="line-154"></a>
+<a name="line-155"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<a name="line-156"></a><span class="p">}</span>
+<a name="line-157"></a>
+<a name="line-158"></a>
+<a name="line-159"></a>
+<a name="line-160"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

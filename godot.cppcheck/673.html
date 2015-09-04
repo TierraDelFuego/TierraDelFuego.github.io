@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: servers/spatial_sound_2d/spatial_sound_2d_server_sw.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/scene/gui/text_edit.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> spatial_sound_2d_server_sw.h</p>
-<a href='673.html#line-140'> uninitMemberVar 140</a>
+       <p id="filename"><a href="index.html">Defects:</a> text_edit.h</p>
+<a href='673.html#line-144'> uninitMemberVar 144</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -378,8 +378,144 @@
 262
 263
 264
-265</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  spatial_sound_2d_server_sw.h                                         */</span>
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  text_edit.h                                                          */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -406,243 +542,379 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef SPATIAL_SOUND_2D_SERVER_SW_H</span>
-<a name="line-30"></a><span class="cp">#define SPATIAL_SOUND_2D_SERVER_SW_H</span>
+<a name="line-29"></a><span class="cp">#ifndef TEXT_EDIT_H</span>
+<a name="line-30"></a><span class="cp">#define TEXT_EDIT_H</span>
 <a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;servers/spatial_sound_2d_server.h&quot;</span>
-<a name="line-33"></a>
-<a name="line-34"></a><span class="cp">#include &quot;os/thread_safe.h&quot;</span>
+<a name="line-32"></a><span class="cp">#include &quot;scene/gui/control.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;scene/gui/scroll_bar.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;scene/main/timer.h&quot;</span>
 <a name="line-35"></a>
 <a name="line-36"></a>
-<a name="line-37"></a><span class="n">class</span> <span class="nl">SpatialSound2DServerSW</span> <span class="p">:</span> <span class="n">public</span> <span class="n">SpatialSound2DServer</span> <span class="p">{</span>
+<a name="line-37"></a><span class="n">class</span> <span class="nl">TextEdit</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Control</span>  <span class="p">{</span>
 <a name="line-38"></a>
-<a name="line-39"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">SpatialSound2DServerSW</span><span class="p">,</span><span class="n">SpatialSound2DServer</span><span class="p">);</span>
+<a name="line-39"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">TextEdit</span><span class="p">,</span> <span class="n">Control</span> <span class="p">);</span>
 <a name="line-40"></a>
-<a name="line-41"></a>	<span class="n">_THREAD_SAFE_CLASS_</span>
-<a name="line-42"></a>
-<a name="line-43"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-44"></a>	       <span class="n">INTERNAL_BUFFER_SIZE</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
-<a name="line-45"></a>	       <span class="n">INTERNAL_BUFFER_MAX_CHANNELS</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-<a name="line-46"></a>	       <span class="n">VOICE_IS_STREAM</span><span class="o">=-</span><span class="mi">1</span>
-<a name="line-47"></a>
-<a name="line-48"></a>	<span class="p">};</span>
-<a name="line-49"></a>
+<a name="line-41"></a>	<span class="k">struct</span> <span class="n">Cursor</span> <span class="p">{</span>
+<a name="line-42"></a>		<span class="kt">int</span> <span class="n">last_fit_x</span><span class="p">;</span>
+<a name="line-43"></a>		<span class="kt">int</span> <span class="n">line</span><span class="p">,</span><span class="n">column</span><span class="p">;</span>	    <span class="c1">///&lt; cursor</span>
+<a name="line-44"></a>		<span class="kt">int</span> <span class="n">x_ofs</span><span class="p">,</span><span class="n">line_ofs</span><span class="p">;</span>
+<a name="line-45"></a>	<span class="p">}</span> <span class="n">cursor</span><span class="p">;</span>
+<a name="line-46"></a>
+<a name="line-47"></a>	<span class="k">struct</span> <span class="n">Selection</span> <span class="p">{</span>
+<a name="line-48"></a>
+<a name="line-49"></a>		<span class="k">enum</span> <span class="n">Mode</span> <span class="p">{</span>
 <a name="line-50"></a>
-<a name="line-51"></a>	<span class="k">struct</span> <span class="nl">InternalAudioStream</span> <span class="p">:</span> <span class="n">public</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">AudioStream</span> <span class="p">{</span>
-<a name="line-52"></a>
-<a name="line-53"></a>		<span class="o">::</span><span class="n">SpatialSound2DServerSW</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
-<a name="line-54"></a>		<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_channel_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-55"></a>		<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_mix_rate</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_rate</span><span class="p">);</span> <span class="c1">//notify the stream of the mix rate</span>
-<a name="line-56"></a>		<span class="n">virtual</span> <span class="kt">bool</span> <span class="nf">mix</span><span class="p">(</span><span class="kt">int32_t</span> <span class="o">*</span><span class="n">p_buffer</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">);</span>
-<a name="line-57"></a>		<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">();</span>
-<a name="line-58"></a>	<span class="p">};</span>
+<a name="line-51"></a>			<span class="n">MODE_NONE</span><span class="p">,</span>
+<a name="line-52"></a>			<span class="n">MODE_SHIFT</span><span class="p">,</span>
+<a name="line-53"></a>			<span class="n">MODE_POINTER</span>
+<a name="line-54"></a>		<span class="p">};</span>
+<a name="line-55"></a>
+<a name="line-56"></a>		<span class="n">Mode</span> <span class="n">selecting_mode</span><span class="p">;</span>
+<a name="line-57"></a>		<span class="kt">int</span> <span class="n">selecting_line</span><span class="p">,</span><span class="n">selecting_column</span><span class="p">;</span>
+<a name="line-58"></a>		<span class="kt">bool</span> <span class="n">selecting_test</span><span class="p">;</span>
 <a name="line-59"></a>
-<a name="line-60"></a>	<span class="n">InternalAudioStream</span> <span class="o">*</span><span class="n">internal_audio_stream</span><span class="p">;</span>
-<a name="line-61"></a>	<span class="n">RID</span> <span class="n">internal_audio_stream_rid</span><span class="p">;</span>
-<a name="line-62"></a>	<span class="kt">int32_t</span> <span class="o">*</span><span class="n">internal_buffer</span><span class="p">;</span>
-<a name="line-63"></a>	<span class="kt">int</span> <span class="n">internal_buffer_channels</span><span class="p">;</span>
-<a name="line-64"></a>
-<a name="line-65"></a>	<span class="kt">bool</span> <span class="nf">internal_buffer_mix</span><span class="p">(</span><span class="kt">int32_t</span> <span class="o">*</span><span class="n">p_buffer</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_frames</span><span class="p">);</span>
-<a name="line-66"></a>
-<a name="line-67"></a>	<span class="k">struct</span> <span class="n">Room</span><span class="p">;</span>
-<a name="line-68"></a>
-<a name="line-69"></a>	<span class="k">struct</span> <span class="n">Space</span> <span class="p">{</span>
-<a name="line-70"></a>
-<a name="line-71"></a>		<span class="n">RID</span> <span class="n">default_room</span><span class="p">;</span>
-<a name="line-72"></a>		<span class="n">Set</span><span class="o">&lt;</span><span class="n">RID</span><span class="o">&gt;</span> <span class="n">rooms</span><span class="p">;</span>
-<a name="line-73"></a>		<span class="n">Set</span><span class="o">&lt;</span><span class="n">RID</span><span class="o">&gt;</span> <span class="n">sources</span><span class="p">;</span>
-<a name="line-74"></a>		<span class="n">Set</span><span class="o">&lt;</span><span class="n">RID</span><span class="o">&gt;</span> <span class="n">listeners</span><span class="p">;</span>
-<a name="line-75"></a>
-<a name="line-76"></a>		<span class="c1">//Octree&lt;Room&gt; octree;</span>
-<a name="line-77"></a>	<span class="p">};</span>
-<a name="line-78"></a>
-<a name="line-79"></a>	<span class="n">mutable</span> <span class="n">RID_Owner</span><span class="o">&lt;</span><span class="n">Space</span><span class="o">&gt;</span> <span class="n">space_owner</span><span class="p">;</span>
-<a name="line-80"></a>
-<a name="line-81"></a>	<span class="k">struct</span> <span class="n">Room</span> <span class="p">{</span>
-<a name="line-82"></a>		<span class="n">RID</span> <span class="n">space</span><span class="p">;</span>
-<a name="line-83"></a>		<span class="n">Matrix32</span> <span class="n">transform</span><span class="p">;</span>
-<a name="line-84"></a>		<span class="n">Matrix32</span> <span class="n">inverse_transform</span><span class="p">;</span>
-<a name="line-85"></a>		<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Point2</span><span class="o">&gt;</span> <span class="n">bounds</span><span class="p">;</span>
-<a name="line-86"></a>		<span class="n">RoomReverb</span> <span class="n">reverb</span><span class="p">;</span>
-<a name="line-87"></a>		<span class="kt">float</span> <span class="n">params</span><span class="p">[</span><span class="n">ROOM_PARAM_MAX</span><span class="p">];</span>
-<a name="line-88"></a>		<span class="kt">bool</span> <span class="n">override_other_sources</span><span class="p">;</span>
-<a name="line-89"></a>		<span class="c1">//OctreeElementID octree_id;</span>
-<a name="line-90"></a>		<span class="kt">int</span> <span class="n">level</span><span class="p">;</span>
-<a name="line-91"></a>
-<a name="line-92"></a>		<span class="n">Room</span><span class="p">();</span>
-<a name="line-93"></a>	<span class="p">};</span>
-<a name="line-94"></a>
-<a name="line-95"></a>	<span class="n">mutable</span> <span class="n">RID_Owner</span><span class="o">&lt;</span><span class="n">Room</span><span class="o">&gt;</span> <span class="n">room_owner</span><span class="p">;</span>
-<a name="line-96"></a>
-<a name="line-97"></a>
-<a name="line-98"></a>
-<a name="line-99"></a>	<span class="k">struct</span> <span class="n">Source</span> <span class="p">{</span>
+<a name="line-60"></a>
+<a name="line-61"></a>		<span class="kt">bool</span> <span class="n">active</span><span class="p">;</span>
+<a name="line-62"></a>
+<a name="line-63"></a>		<span class="kt">int</span> <span class="n">from_line</span><span class="p">,</span><span class="n">from_column</span><span class="p">;</span>
+<a name="line-64"></a>		<span class="kt">int</span> <span class="n">to_line</span><span class="p">,</span><span class="n">to_column</span><span class="p">;</span>
+<a name="line-65"></a>
+<a name="line-66"></a>		<span class="kt">bool</span> <span class="n">shiftclick_left</span><span class="p">;</span>
+<a name="line-67"></a>
+<a name="line-68"></a>	<span class="p">}</span> <span class="n">selection</span><span class="p">;</span>
+<a name="line-69"></a>
+<a name="line-70"></a>	<span class="k">struct</span> <span class="n">Cache</span> <span class="p">{</span>
+<a name="line-71"></a>
+<a name="line-72"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">tab_icon</span><span class="p">;</span>
+<a name="line-73"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">style_normal</span><span class="p">;</span>
+<a name="line-74"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">style_focus</span><span class="p">;</span>
+<a name="line-75"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Font</span><span class="o">&gt;</span> <span class="n">font</span><span class="p">;</span>
+<a name="line-76"></a>		<span class="n">Color</span> <span class="n">font_color</span><span class="p">;</span>
+<a name="line-77"></a>		<span class="n">Color</span> <span class="n">font_selected_color</span><span class="p">;</span>
+<a name="line-78"></a>		<span class="n">Color</span> <span class="n">keyword_color</span><span class="p">;</span>
+<a name="line-79"></a>		<span class="n">Color</span> <span class="n">selection_color</span><span class="p">;</span>
+<a name="line-80"></a>		<span class="n">Color</span> <span class="n">mark_color</span><span class="p">;</span>
+<a name="line-81"></a>		<span class="n">Color</span> <span class="n">breakpoint_color</span><span class="p">;</span>
+<a name="line-82"></a>		<span class="n">Color</span> <span class="n">current_line_color</span><span class="p">;</span>
+<a name="line-83"></a>		<span class="n">Color</span> <span class="n">brace_mismatch_color</span><span class="p">;</span>
+<a name="line-84"></a>
+<a name="line-85"></a>		<span class="kt">int</span> <span class="n">row_height</span><span class="p">;</span>
+<a name="line-86"></a>		<span class="kt">int</span> <span class="n">line_spacing</span><span class="p">;</span>
+<a name="line-87"></a>		<span class="kt">int</span> <span class="n">line_number_w</span><span class="p">;</span>
+<a name="line-88"></a>		<span class="n">Size2</span> <span class="n">size</span><span class="p">;</span>
+<a name="line-89"></a>	<span class="p">}</span> <span class="n">cache</span><span class="p">;</span>
+<a name="line-90"></a>
+<a name="line-91"></a>	<span class="k">struct</span> <span class="n">ColorRegion</span> <span class="p">{</span>
+<a name="line-92"></a>
+<a name="line-93"></a>		<span class="n">Color</span> <span class="n">color</span><span class="p">;</span>
+<a name="line-94"></a>		<span class="n">String</span> <span class="n">begin_key</span><span class="p">;</span>
+<a name="line-95"></a>		<span class="n">String</span> <span class="n">end_key</span><span class="p">;</span>
+<a name="line-96"></a>		<span class="kt">bool</span> <span class="n">line_only</span><span class="p">;</span>
+<a name="line-97"></a>		<span class="kt">bool</span> <span class="n">eq</span><span class="p">;</span>
+<a name="line-98"></a>		<span class="n">ColorRegion</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_begin_key</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_end_key</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">p_color</span><span class="o">=</span><span class="n">Color</span><span class="p">(),</span><span class="kt">bool</span> <span class="n">p_line_only</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span> <span class="n">begin_key</span><span class="o">=</span><span class="n">p_begin_key</span><span class="p">;</span> <span class="n">end_key</span><span class="o">=</span><span class="n">p_end_key</span><span class="p">;</span> <span class="n">color</span><span class="o">=</span><span class="n">p_color</span><span class="p">;</span> <span class="n">line_only</span><span class="o">=</span><span class="n">p_line_only</span> <span class="o">||</span> <span class="n">p_end_key</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">;</span> <span class="n">eq</span><span class="o">=</span><span class="n">begin_key</span><span class="o">==</span><span class="n">end_key</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-99"></a>	<span class="p">};</span>
 <a name="line-100"></a>
-<a name="line-101"></a>		<span class="k">struct</span> <span class="n">Voice</span> <span class="p">{</span>
-<a name="line-102"></a>
-<a name="line-103"></a>			<span class="n">RID</span> <span class="n">voice_rid</span><span class="p">;</span>
-<a name="line-104"></a>			<span class="n">RID</span> <span class="n">sample_rid</span><span class="p">;</span>
-<a name="line-105"></a>			<span class="kt">bool</span> <span class="n">active</span><span class="p">;</span>
-<a name="line-106"></a>			<span class="kt">bool</span> <span class="n">restart</span><span class="p">;</span>
-<a name="line-107"></a>			<span class="kt">float</span> <span class="n">pitch_scale</span><span class="p">;</span>
-<a name="line-108"></a>			<span class="kt">float</span> <span class="n">volume_scale</span><span class="p">;</span>
-<a name="line-109"></a>			<span class="kt">int</span> <span class="n">sample_mix_rate</span><span class="p">;</span>
-<a name="line-110"></a>
-<a name="line-111"></a>
-<a name="line-112"></a>			<span class="kt">float</span> <span class="n">last_volume</span><span class="p">;</span>
-<a name="line-113"></a>			<span class="kt">float</span> <span class="n">last_filter_gain</span><span class="p">;</span>
-<a name="line-114"></a>			<span class="kt">float</span> <span class="n">last_filter_cutoff</span><span class="p">;</span>
-<a name="line-115"></a>			<span class="n">Vector2</span> <span class="n">last_panning</span><span class="p">;</span>
-<a name="line-116"></a>			<span class="kt">int</span> <span class="n">last_mix_rate</span><span class="p">;</span>
-<a name="line-117"></a>			<span class="n">RoomReverb</span> <span class="n">last_reverb_room</span><span class="p">;</span>
-<a name="line-118"></a>			<span class="kt">float</span> <span class="n">last_reverb_send</span><span class="p">;</span>
-<a name="line-119"></a>
-<a name="line-120"></a>			<span class="n">Voice</span><span class="p">();</span>
-<a name="line-121"></a>			<span class="o">~</span><span class="n">Voice</span><span class="p">();</span>
-<a name="line-122"></a>		<span class="p">};</span>
+<a name="line-101"></a>	<span class="n">class</span> <span class="n">Text</span> <span class="p">{</span>
+<a name="line-102"></a>	<span class="nl">public</span><span class="p">:</span>
+<a name="line-103"></a>		<span class="k">struct</span> <span class="n">ColorRegionInfo</span> <span class="p">{</span>
+<a name="line-104"></a>
+<a name="line-105"></a>			<span class="kt">int</span> <span class="n">region</span><span class="p">;</span>
+<a name="line-106"></a>			<span class="kt">bool</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-107"></a>		<span class="p">};</span>
+<a name="line-108"></a>
+<a name="line-109"></a>	       <span class="k">struct</span> <span class="n">Line</span> <span class="p">{</span>
+<a name="line-110"></a>		       <span class="kt">int</span> <span class="nl">width_cache</span> <span class="p">:</span> <span class="mi">24</span><span class="p">;</span>
+<a name="line-111"></a>		       <span class="kt">bool</span> <span class="nl">marked</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-112"></a>		       <span class="kt">bool</span> <span class="nl">breakpoint</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-113"></a>		       <span class="n">Map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">ColorRegionInfo</span><span class="o">&gt;</span> <span class="n">region_info</span><span class="p">;</span>
+<a name="line-114"></a>		       <span class="n">String</span> <span class="n">data</span><span class="p">;</span>
+<a name="line-115"></a>	       <span class="p">};</span>
+<a name="line-116"></a>	<span class="nl">private</span><span class="p">:</span>
+<a name="line-117"></a>	       <span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">ColorRegion</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">color_regions</span><span class="p">;</span>
+<a name="line-118"></a>	       <span class="n">mutable</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Line</span><span class="o">&gt;</span> <span class="n">text</span><span class="p">;</span>
+<a name="line-119"></a>	       <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Font</span><span class="o">&gt;</span> <span class="n">font</span><span class="p">;</span>
+<a name="line-120"></a>	       <span class="kt">int</span> <span class="n">tab_size</span><span class="p">;</span>
+<a name="line-121"></a>
+<a name="line-122"></a>	       <span class="kt">void</span> <span class="n">_update_line_cache</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <a name="line-123"></a>
-<a name="line-124"></a>		<span class="k">struct</span> <span class="n">StreamData</span> <span class="p">{</span>
+<a name="line-124"></a>	<span class="nl">public</span><span class="p">:</span>
 <a name="line-125"></a>
 <a name="line-126"></a>
-<a name="line-127"></a>			<span class="n">Vector2</span> <span class="n">panning</span><span class="p">;</span>
-<a name="line-128"></a>			<span class="n">RoomReverb</span> <span class="n">reverb</span><span class="p">;</span>
-<a name="line-129"></a>			<span class="kt">float</span> <span class="n">reverb_send</span><span class="p">;</span>
-<a name="line-130"></a>			<span class="kt">float</span> <span class="n">volume</span><span class="p">;</span>
-<a name="line-131"></a>			<span class="kt">float</span> <span class="n">filter_gain</span><span class="p">;</span>
-<a name="line-132"></a>			<span class="kt">float</span> <span class="n">filter_cutoff</span><span class="p">;</span>
-<a name="line-133"></a>
-<a name="line-134"></a>			<span class="k">struct</span> <span class="n">FilterState</span> <span class="p">{</span>
-<a name="line-135"></a>
-<a name="line-136"></a>				<span class="kt">float</span> <span class="n">ha</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a name="line-137"></a>				<span class="kt">float</span> <span class="n">hb</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a name="line-138"></a>			<span class="p">}</span> <span class="n">filter_state</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
-<a name="line-139"></a>
-<a name="line-140"></a><span class="hll">			<span class="n">StreamData</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'StreamData::filter_state' is not initialized in the constructor.</span>
-</span><a name="line-141"></a>
-<a name="line-142"></a>				<span class="n">reverb_send</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-143"></a>				<span class="n">reverb</span><span class="o">=</span><span class="n">ROOM_REVERB_HALL</span><span class="p">;</span>
-<a name="line-144"></a>				<span class="n">volume</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span>
-<a name="line-145"></a>				<span class="n">filter_gain</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-146"></a>				<span class="n">filter_cutoff</span><span class="o">=</span><span class="mi">5000</span><span class="p">;</span>
-<a name="line-147"></a>
-<a name="line-148"></a>			<span class="p">}</span>
-<a name="line-149"></a>		<span class="p">}</span> <span class="n">stream_data</span><span class="p">;</span>
-<a name="line-150"></a>
-<a name="line-151"></a>		<span class="n">RID</span> <span class="n">space</span><span class="p">;</span>
-<a name="line-152"></a>		<span class="n">Matrix32</span> <span class="n">transform</span><span class="p">;</span>
-<a name="line-153"></a>		<span class="kt">float</span> <span class="n">params</span><span class="p">[</span><span class="n">SOURCE_PARAM_MAX</span><span class="p">];</span>
-<a name="line-154"></a>		<span class="n">AudioServer</span><span class="o">::</span><span class="n">AudioStream</span> <span class="o">*</span><span class="n">stream</span><span class="p">;</span>
-<a name="line-155"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Voice</span><span class="o">&gt;</span> <span class="n">voices</span><span class="p">;</span>
-<a name="line-156"></a>		<span class="kt">int</span> <span class="n">last_voice</span><span class="p">;</span>
-<a name="line-157"></a>
-<a name="line-158"></a>		<span class="n">Source</span><span class="p">();</span>
-<a name="line-159"></a>	<span class="p">};</span>
-<a name="line-160"></a>
-<a name="line-161"></a>	<span class="n">mutable</span> <span class="n">RID_Owner</span><span class="o">&lt;</span><span class="n">Source</span><span class="o">&gt;</span> <span class="n">source_owner</span><span class="p">;</span>
-<a name="line-162"></a>
-<a name="line-163"></a>	<span class="k">struct</span> <span class="n">Listener</span> <span class="p">{</span>
-<a name="line-164"></a>
-<a name="line-165"></a>		<span class="n">RID</span> <span class="n">space</span><span class="p">;</span>
-<a name="line-166"></a>		<span class="n">Matrix32</span> <span class="n">transform</span><span class="p">;</span>
-<a name="line-167"></a>		<span class="kt">float</span> <span class="n">params</span><span class="p">[</span><span class="n">LISTENER_PARAM_MAX</span><span class="p">];</span>
+<a name="line-127"></a>		<span class="kt">void</span> <span class="n">set_tab_size</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_tab_size</span><span class="p">);</span>
+<a name="line-128"></a>		<span class="kt">void</span> <span class="nf">set_font</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Font</span><span class="o">&gt;&amp;</span> <span class="n">p_font</span><span class="p">);</span>
+<a name="line-129"></a>		<span class="kt">void</span> <span class="nf">set_color_regions</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">ColorRegion</span><span class="o">&gt;*</span><span class="n">p_regions</span><span class="p">)</span> <span class="p">{</span> <span class="n">color_regions</span><span class="o">=</span><span class="n">p_regions</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-130"></a>		<span class="kt">int</span> <span class="n">get_line_width</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-131"></a>		<span class="kt">int</span> <span class="n">get_max_width</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>		
+<a name="line-132"></a>		<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">ColorRegionInfo</span><span class="o">&gt;&amp;</span> <span class="n">get_color_region_info</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">);</span>
+<a name="line-133"></a>		<span class="kt">void</span> <span class="nf">set</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_string</span><span class="p">);</span>
+<a name="line-134"></a>		<span class="kt">void</span> <span class="nf">set_marked</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_marked</span><span class="p">)</span> <span class="p">{</span> <span class="n">text</span><span class="p">[</span><span class="n">p_line</span><span class="p">].</span><span class="n">marked</span><span class="o">=</span><span class="n">p_marked</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-135"></a>		<span class="kt">bool</span> <span class="n">is_marked</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="n">p_line</span><span class="p">].</span><span class="n">marked</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-136"></a>		<span class="kt">void</span> <span class="n">set_breakpoint</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_breakpoint</span><span class="p">)</span> <span class="p">{</span> <span class="n">text</span><span class="p">[</span><span class="n">p_line</span><span class="p">].</span><span class="n">breakpoint</span><span class="o">=</span><span class="n">p_breakpoint</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-137"></a>		<span class="kt">bool</span> <span class="n">is_breakpoint</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="n">p_line</span><span class="p">].</span><span class="n">breakpoint</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-138"></a>		<span class="kt">void</span> <span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_at</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">);</span>
+<a name="line-139"></a>		<span class="kt">void</span> <span class="nf">remove</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_at</span><span class="p">);</span>
+<a name="line-140"></a>		<span class="kt">int</span> <span class="nf">size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">text</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="p">}</span>
+<a name="line-141"></a>		<span class="kt">void</span> <span class="n">clear</span><span class="p">();</span>
+<a name="line-142"></a>		<span class="kt">void</span> <span class="nf">clear_caches</span><span class="p">();</span>
+<a name="line-143"></a>        <span class="n">_FORCE_INLINE_</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="n">p_line</span><span class="p">].</span><span class="n">data</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-144"></a><span class="hll">		<span class="n">Text</span><span class="p">()</span> <span class="p">{</span> <span class="n">tab_size</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span> <span class="p">}</span><span class='error2'>&lt;--- Member variable 'Text::color_regions' is not initialized in the constructor.</span>
+</span><a name="line-145"></a>       <span class="p">};</span>
+<a name="line-146"></a>
+<a name="line-147"></a>	<span class="k">struct</span> <span class="n">TextOperation</span> <span class="p">{</span>
+<a name="line-148"></a>
+<a name="line-149"></a>		<span class="k">enum</span> <span class="n">Type</span> <span class="p">{</span>
+<a name="line-150"></a>			<span class="n">TYPE_NONE</span><span class="p">,</span>
+<a name="line-151"></a>			<span class="n">TYPE_INSERT</span><span class="p">,</span>
+<a name="line-152"></a>			<span class="n">TYPE_REMOVE</span>
+<a name="line-153"></a>		<span class="p">};</span>
+<a name="line-154"></a>
+<a name="line-155"></a>		<span class="n">Type</span> <span class="n">type</span><span class="p">;</span>
+<a name="line-156"></a>		<span class="kt">int</span> <span class="n">from_line</span><span class="p">,</span><span class="n">from_column</span><span class="p">;</span>
+<a name="line-157"></a>		<span class="kt">int</span> <span class="n">to_line</span><span class="p">,</span> <span class="n">to_column</span><span class="p">;</span>
+<a name="line-158"></a>		<span class="n">String</span> <span class="n">text</span><span class="p">;</span>
+<a name="line-159"></a>		<span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>
+<a name="line-160"></a>		<span class="kt">bool</span> <span class="n">chain_forward</span><span class="p">;</span>
+<a name="line-161"></a>		<span class="kt">bool</span> <span class="n">chain_backward</span><span class="p">;</span>
+<a name="line-162"></a>	<span class="p">};</span>
+<a name="line-163"></a>
+<a name="line-164"></a>	<span class="n">TextOperation</span> <span class="n">current_op</span><span class="p">;</span>
+<a name="line-165"></a>
+<a name="line-166"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">TextOperation</span><span class="o">&gt;</span> <span class="n">undo_stack</span><span class="p">;</span>
+<a name="line-167"></a>    <span class="n">List</span><span class="o">&lt;</span><span class="n">TextOperation</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">undo_stack_pos</span><span class="p">;</span>
 <a name="line-168"></a>
-<a name="line-169"></a>		<span class="n">Listener</span><span class="p">();</span>
-<a name="line-170"></a>	<span class="p">};</span>
+<a name="line-169"></a>	<span class="kt">void</span> <span class="nf">_clear_redo</span><span class="p">();</span>
+<a name="line-170"></a>	<span class="kt">void</span> <span class="nf">_do_text_op</span><span class="p">(</span><span class="k">const</span> <span class="n">TextOperation</span><span class="o">&amp;</span> <span class="n">p_op</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_reverse</span><span class="p">);</span>
 <a name="line-171"></a>
-<a name="line-172"></a>	<span class="n">mutable</span> <span class="n">RID_Owner</span><span class="o">&lt;</span><span class="n">Listener</span><span class="o">&gt;</span> <span class="n">listener_owner</span><span class="p">;</span>
-<a name="line-173"></a>
-<a name="line-174"></a>	<span class="k">struct</span> <span class="n">ActiveVoice</span> <span class="p">{</span>
-<a name="line-175"></a>
-<a name="line-176"></a>		<span class="n">Source</span> <span class="o">*</span><span class="n">source</span><span class="p">;</span>
-<a name="line-177"></a>		<span class="kt">int</span> <span class="n">voice</span><span class="p">;</span>
-<a name="line-178"></a>		<span class="kt">bool</span> <span class="n">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="k">const</span> <span class="n">ActiveVoice</span><span class="o">&amp;</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="n">voice</span><span class="o">==</span><span class="n">p_voice</span><span class="p">.</span><span class="n">voice</span><span class="p">)</span><span class="o">?</span><span class="p">(</span><span class="n">source</span><span class="o">&lt;</span><span class="n">p_voice</span><span class="p">.</span><span class="n">source</span><span class="p">)</span><span class="o">:</span><span class="p">(</span><span class="n">voice</span><span class="o">&lt;</span><span class="n">p_voice</span><span class="p">.</span><span class="n">voice</span><span class="p">);</span> <span class="p">}</span>
-<a name="line-179"></a>		<span class="n">ActiveVoice</span><span class="p">(</span><span class="n">Source</span> <span class="o">*</span><span class="n">p_source</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_voice</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">source</span><span class="o">=</span><span class="n">p_source</span><span class="p">;</span> <span class="n">voice</span><span class="o">=</span><span class="n">p_voice</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-180"></a>	<span class="p">};</span>
-<a name="line-181"></a>
-<a name="line-182"></a><span class="c1">//	Room *cull_rooms[MAX_CULL_ROOMS];</span>
-<a name="line-183"></a>
-<a name="line-184"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">Source</span><span class="o">*&gt;</span> <span class="n">streaming_sources</span><span class="p">;</span>
-<a name="line-185"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">ActiveVoice</span><span class="o">&gt;</span> <span class="n">active_voices</span><span class="p">;</span>
-<a name="line-186"></a>
-<a name="line-187"></a>	<span class="kt">void</span> <span class="nf">_clean_up_owner</span><span class="p">(</span><span class="n">RID_OwnerBase</span> <span class="o">*</span><span class="n">p_owner</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p_area</span><span class="p">);</span>
-<a name="line-188"></a>	<span class="kt">void</span> <span class="nf">_update_sources</span><span class="p">();</span>
-<a name="line-189"></a>
-<a name="line-190"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-191"></a>
-<a name="line-192"></a>	<span class="cm">/* SPACE */</span>
-<a name="line-193"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">space_create</span><span class="p">();</span>
+<a name="line-172"></a>
+<a name="line-173"></a>	<span class="c1">//syntax coloring</span>
+<a name="line-174"></a>	<span class="n">Color</span> <span class="n">symbol_color</span><span class="p">;</span>
+<a name="line-175"></a>	<span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">Color</span><span class="o">&gt;</span> <span class="n">keywords</span><span class="p">;</span>
+<a name="line-176"></a>	<span class="n">Color</span> <span class="n">custom_bg_color</span><span class="p">;</span>
+<a name="line-177"></a>
+<a name="line-178"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">ColorRegion</span><span class="o">&gt;</span> <span class="n">color_regions</span><span class="p">;</span>
+<a name="line-179"></a>
+<a name="line-180"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">completion_prefixes</span><span class="p">;</span>
+<a name="line-181"></a>	<span class="kt">bool</span> <span class="n">completion_enabled</span><span class="p">;</span>
+<a name="line-182"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">completion_strings</span><span class="p">;</span>
+<a name="line-183"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">completion_options</span><span class="p">;</span>
+<a name="line-184"></a>	<span class="kt">bool</span> <span class="n">completion_active</span><span class="p">;</span>
+<a name="line-185"></a>	<span class="n">String</span> <span class="n">completion_current</span><span class="p">;</span>
+<a name="line-186"></a>	<span class="n">String</span> <span class="n">completion_base</span><span class="p">;</span>
+<a name="line-187"></a>	<span class="kt">int</span> <span class="n">completion_index</span><span class="p">;</span>
+<a name="line-188"></a>	<span class="n">Rect2i</span> <span class="n">completion_rect</span><span class="p">;</span>
+<a name="line-189"></a>	<span class="kt">int</span> <span class="n">completion_line_ofs</span><span class="p">;</span>
+<a name="line-190"></a>	<span class="n">String</span> <span class="n">completion_hint</span><span class="p">;</span>
+<a name="line-191"></a>	<span class="kt">int</span> <span class="n">completion_hint_offset</span><span class="p">;</span>
+<a name="line-192"></a>
+<a name="line-193"></a>	<span class="kt">bool</span> <span class="n">setting_text</span><span class="p">;</span>
 <a name="line-194"></a>
-<a name="line-195"></a>	<span class="cm">/* ROOM */</span>
-<a name="line-196"></a>
-<a name="line-197"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="nf">room_create</span><span class="p">();</span>
-<a name="line-198"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_space</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span><span class="n">RID</span> <span class="n">p_space</span><span class="p">);</span>
-<a name="line-199"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">room_get_space</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-195"></a>	<span class="c1">// data</span>
+<a name="line-196"></a>	<span class="n">Text</span> <span class="n">text</span><span class="p">;</span>
+<a name="line-197"></a>
+<a name="line-198"></a>	<span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>
+<a name="line-199"></a>	<span class="kt">uint32_t</span> <span class="n">saved_version</span><span class="p">;</span>
 <a name="line-200"></a>
-<a name="line-201"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_bounds</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="n">Point2</span><span class="o">&gt;&amp;</span> <span class="n">p_bounds</span><span class="p">);</span>
-<a name="line-202"></a>	<span class="n">virtual</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="n">Point2</span><span class="o">&gt;</span> <span class="n">room_get_bounds</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-203"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix32</span><span class="o">&amp;</span> <span class="n">p_transform</span><span class="p">);</span>
-<a name="line-204"></a>	<span class="n">virtual</span> <span class="n">Matrix32</span> <span class="n">room_get_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-201"></a>	<span class="kt">int</span> <span class="n">max_chars</span><span class="p">;</span>
+<a name="line-202"></a>	<span class="kt">bool</span> <span class="n">readonly</span><span class="p">;</span>
+<a name="line-203"></a>	<span class="kt">bool</span> <span class="n">syntax_coloring</span><span class="p">;</span>
+<a name="line-204"></a>	<span class="kt">int</span> <span class="n">tab_size</span><span class="p">;</span>
 <a name="line-205"></a>
-<a name="line-206"></a>
-<a name="line-207"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="n">RoomParam</span> <span class="n">p_param</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-208"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">room_get_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="n">RoomParam</span> <span class="n">p_param</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-209"></a>
-<a name="line-210"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_level</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_level</span><span class="p">);</span>
-<a name="line-211"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">room_get_level</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-212"></a>
-<a name="line-213"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="n">RoomReverb</span> <span class="n">p_reverb</span><span class="p">);</span>
-<a name="line-214"></a>	<span class="n">virtual</span> <span class="n">RoomReverb</span> <span class="n">room_get_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-215"></a>
-<a name="line-216"></a>	<span class="c1">//useful for underwater or rooms with very strange conditions</span>
-<a name="line-217"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">room_set_force_params_to_all_sources</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_force</span><span class="p">);</span>
-<a name="line-218"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">room_is_forcing_params_to_all_sources</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-206"></a>	<span class="kt">bool</span> <span class="n">setting_row</span><span class="p">;</span>
+<a name="line-207"></a>	<span class="kt">bool</span> <span class="n">wrap</span><span class="p">;</span>
+<a name="line-208"></a>	<span class="kt">bool</span> <span class="n">draw_tabs</span><span class="p">;</span>
+<a name="line-209"></a>	<span class="kt">bool</span> <span class="n">cursor_changed_dirty</span><span class="p">;</span>
+<a name="line-210"></a>	<span class="kt">bool</span> <span class="n">text_changed_dirty</span><span class="p">;</span>
+<a name="line-211"></a>	<span class="kt">bool</span> <span class="n">undo_enabled</span><span class="p">;</span>
+<a name="line-212"></a>	<span class="kt">bool</span> <span class="n">line_numbers</span><span class="p">;</span>
+<a name="line-213"></a>	
+<a name="line-214"></a>	<span class="kt">bool</span> <span class="n">auto_brace_completion_enabled</span><span class="p">;</span>
+<a name="line-215"></a>	<span class="kt">bool</span> <span class="n">brace_matching_enabled</span><span class="p">;</span>
+<a name="line-216"></a>	<span class="kt">bool</span> <span class="n">cut_copy_line</span><span class="p">;</span>
+<a name="line-217"></a>
+<a name="line-218"></a>	<span class="kt">uint64_t</span> <span class="n">last_dblclk</span><span class="p">;</span>
 <a name="line-219"></a>
-<a name="line-220"></a>	<span class="cm">/* SOURCE */</span>
-<a name="line-221"></a>
-<a name="line-222"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="nf">source_create</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_space</span><span class="p">);</span>
-<a name="line-223"></a>
-<a name="line-224"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_set_polyphony</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_voice_count</span><span class="p">);</span>
-<a name="line-225"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">source_get_polyphony</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-226"></a>
-<a name="line-227"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_set_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix32</span><span class="o">&amp;</span> <span class="n">p_transform</span><span class="p">);</span>
-<a name="line-228"></a>	<span class="n">virtual</span> <span class="n">Matrix32</span> <span class="n">source_get_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-229"></a>
-<a name="line-230"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_set_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceParam</span> <span class="n">p_param</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-231"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">source_get_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceParam</span> <span class="n">p_param</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-232"></a>
-<a name="line-233"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_set_audio_stream</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">AudioStream</span> <span class="o">*</span><span class="n">p_stream</span><span class="p">);</span> <span class="c1">//null to unset</span>
-<a name="line-234"></a>	<span class="n">virtual</span> <span class="n">SourceVoiceID</span> <span class="nf">source_play_sample</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_mix_rate</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_voice</span><span class="o">=</span><span class="n">SOURCE_NEXT_VOICE</span><span class="p">);</span>
-<a name="line-235"></a>	<span class="cm">/* VOICES */</span>
-<a name="line-236"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_voice_set_pitch_scale</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_pitch_scale</span><span class="p">);</span>
-<a name="line-237"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_voice_set_volume_scale_db</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_volume</span><span class="p">);</span>
+<a name="line-220"></a>	<span class="n">Timer</span> <span class="o">*</span><span class="n">idle_detect</span><span class="p">;</span>
+<a name="line-221"></a>	<span class="n">HScrollBar</span> <span class="o">*</span><span class="n">h_scroll</span><span class="p">;</span>
+<a name="line-222"></a>	<span class="n">VScrollBar</span> <span class="o">*</span><span class="n">v_scroll</span><span class="p">;</span>
+<a name="line-223"></a>	<span class="kt">bool</span> <span class="n">updating_scrolls</span><span class="p">;</span>
+<a name="line-224"></a>
+<a name="line-225"></a>
+<a name="line-226"></a>	<span class="n">Object</span> <span class="o">*</span><span class="n">tooltip_obj</span><span class="p">;</span>
+<a name="line-227"></a>	<span class="n">StringName</span> <span class="n">tooltip_func</span><span class="p">;</span>
+<a name="line-228"></a>	<span class="n">Variant</span> <span class="n">tooltip_ud</span><span class="p">;</span>
+<a name="line-229"></a>	
+<a name="line-230"></a>	<span class="kt">bool</span> <span class="n">next_operation_is_complex</span><span class="p">;</span>
+<a name="line-231"></a>
+<a name="line-232"></a>	<span class="kt">int</span> <span class="n">get_visible_rows</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-233"></a>
+<a name="line-234"></a>	<span class="kt">int</span> <span class="nf">get_char_count</span><span class="p">();</span>
+<a name="line-235"></a>
+<a name="line-236"></a>	<span class="kt">int</span> <span class="n">get_char_pos_for</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_px</span><span class="p">,</span><span class="n">String</span> <span class="n">p_pos</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-237"></a>	<span class="kt">int</span> <span class="nf">get_column_x_offset</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_column</span><span class="p">,</span><span class="n">String</span> <span class="n">p_pos</span><span class="p">);</span>
 <a name="line-238"></a>
-<a name="line-239"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">source_is_voice_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-240"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">source_stop_voice</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">);</span>
-<a name="line-241"></a>
-<a name="line-242"></a>	<span class="cm">/* LISTENER */</span>
-<a name="line-243"></a>
-<a name="line-244"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="nf">listener_create</span><span class="p">();</span>
-<a name="line-245"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">listener_set_space</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="n">RID</span> <span class="n">p_space</span><span class="p">);</span>
-<a name="line-246"></a>
-<a name="line-247"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">listener_set_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix32</span><span class="o">&amp;</span> <span class="n">p_transform</span><span class="p">);</span>
-<a name="line-248"></a>	<span class="n">virtual</span> <span class="n">Matrix32</span> <span class="n">listener_get_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-249"></a>
-<a name="line-250"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">listener_set_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="n">ListenerParam</span> <span class="n">p_param</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-251"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">listener_get_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="n">ListenerParam</span> <span class="n">p_param</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-252"></a>
-<a name="line-253"></a>
-<a name="line-254"></a>	<span class="cm">/* MISC */</span>
-<a name="line-255"></a>
-<a name="line-256"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">free</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_id</span><span class="p">);</span>
-<a name="line-257"></a>
-<a name="line-258"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">();</span>
-<a name="line-259"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_delta</span><span class="p">);</span>
-<a name="line-260"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">finish</span><span class="p">();</span>
-<a name="line-261"></a>
-<a name="line-262"></a>	<span class="n">SpatialSound2DServerSW</span><span class="p">();</span>
-<a name="line-263"></a><span class="p">};</span>
+<a name="line-239"></a>	<span class="kt">void</span> <span class="nf">adjust_viewport_to_cursor</span><span class="p">();</span>
+<a name="line-240"></a>	<span class="kt">void</span> <span class="nf">_scroll_moved</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+<a name="line-241"></a>	<span class="kt">void</span> <span class="nf">_update_scrollbars</span><span class="p">();</span>
+<a name="line-242"></a>
+<a name="line-243"></a>	<span class="kt">void</span> <span class="nf">_pre_shift_selection</span><span class="p">();</span>
+<a name="line-244"></a>	<span class="kt">void</span> <span class="nf">_post_shift_selection</span><span class="p">();</span>
+<a name="line-245"></a>
+<a name="line-246"></a><span class="c1">//	void mouse_motion(const Point&amp; p_pos, const Point&amp; p_rel, int p_button_mask);</span>
+<a name="line-247"></a>	<span class="n">Size2</span> <span class="nf">get_minimum_size</span><span class="p">();</span>
+<a name="line-248"></a>
+<a name="line-249"></a>	<span class="kt">int</span> <span class="n">get_row_height</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-250"></a>
+<a name="line-251"></a>	<span class="kt">void</span> <span class="nf">_update_caches</span><span class="p">();</span>
+<a name="line-252"></a>	<span class="kt">void</span> <span class="nf">_cursor_changed_emit</span><span class="p">();</span>
+<a name="line-253"></a>	<span class="kt">void</span> <span class="nf">_text_changed_emit</span><span class="p">();</span>
+<a name="line-254"></a>	
+<a name="line-255"></a>	<span class="kt">void</span> <span class="nf">_begin_compex_operation</span><span class="p">();</span>
+<a name="line-256"></a>	<span class="kt">void</span> <span class="nf">_end_compex_operation</span><span class="p">();</span>
+<a name="line-257"></a>	<span class="kt">void</span> <span class="nf">_push_current_op</span><span class="p">();</span>
+<a name="line-258"></a>
+<a name="line-259"></a>	<span class="cm">/* super internal api, undo/redo builds on it */</span>
+<a name="line-260"></a>	
+<a name="line-261"></a>	<span class="kt">void</span> <span class="nf">_base_insert_text</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_column</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">,</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_end_line</span><span class="p">,</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_end_column</span><span class="p">);</span>
+<a name="line-262"></a>	<span class="n">String</span> <span class="n">_base_get_text</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_from_column</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_column</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-263"></a>	<span class="kt">void</span> <span class="nf">_base_remove_text</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_from_column</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_column</span><span class="p">);</span>
 <a name="line-264"></a>
-<a name="line-265"></a><span class="cp">#endif </span><span class="c1">// SPATIAL_SOUND_2D_SERVER_SW_H</span>
+<a name="line-265"></a>	<span class="n">DVector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">_search_bind</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_key</span><span class="p">,</span><span class="kt">uint32_t</span> <span class="n">p_search_flags</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_from_column</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-266"></a>
+<a name="line-267"></a>	<span class="kt">void</span> <span class="nf">_clear</span><span class="p">();</span>
+<a name="line-268"></a>	<span class="kt">void</span> <span class="nf">_cancel_completion</span><span class="p">();</span>
+<a name="line-269"></a>	<span class="kt">void</span> <span class="nf">_cancel_code_hint</span><span class="p">();</span>
+<a name="line-270"></a>	<span class="kt">void</span> <span class="nf">_confirm_completion</span><span class="p">();</span>
+<a name="line-271"></a>	<span class="kt">void</span> <span class="nf">_update_completion_candidates</span><span class="p">();</span>
+<a name="line-272"></a>
+<a name="line-273"></a>	<span class="kt">bool</span> <span class="n">_get_mouse_pos</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2i</span><span class="o">&amp;</span> <span class="n">p_mouse</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_row</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_col</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-274"></a>
+<a name="line-275"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-276"></a>
+<a name="line-277"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_tooltip</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-278"></a>	
+<a name="line-279"></a>	<span class="kt">void</span> <span class="nf">_insert_text</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_column</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">,</span><span class="kt">int</span> <span class="o">*</span><span class="n">r_end_line</span><span class="o">=</span><span class="nb">NULL</span><span class="p">,</span><span class="kt">int</span> <span class="o">*</span><span class="n">r_end_char</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-280"></a>	<span class="kt">void</span> <span class="nf">_remove_text</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_from_column</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_column</span><span class="p">);</span>
+<a name="line-281"></a>	<span class="kt">void</span> <span class="nf">_insert_text_at_cursor</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">);</span>
+<a name="line-282"></a>	<span class="kt">void</span> <span class="nf">_input_event</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_input</span><span class="p">);</span>
+<a name="line-283"></a>	<span class="kt">void</span> <span class="nf">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">);</span>
+<a name="line-284"></a>	
+<a name="line-285"></a>	<span class="kt">void</span> <span class="nf">_consume_pair_symbol</span><span class="p">(</span><span class="n">CharType</span> <span class="n">ch</span><span class="p">);</span>
+<a name="line-286"></a>	<span class="kt">void</span> <span class="nf">_consume_backspace_for_pair_symbol</span><span class="p">(</span><span class="kt">int</span> <span class="n">prev_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">prev_column</span><span class="p">);</span>
+<a name="line-287"></a>	
+<a name="line-288"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
+<a name="line-289"></a>
+<a name="line-290"></a>
+<a name="line-291"></a>
+<a name="line-292"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-293"></a>
+<a name="line-294"></a>	<span class="k">enum</span> <span class="n">SearchFlags</span> <span class="p">{</span>
+<a name="line-295"></a>
+<a name="line-296"></a>		<span class="n">SEARCH_MATCH_CASE</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a name="line-297"></a>		<span class="n">SEARCH_WHOLE_WORDS</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<a name="line-298"></a>		<span class="n">SEARCH_BACKWARDS</span><span class="o">=</span><span class="mi">4</span>
+<a name="line-299"></a>	<span class="p">};</span>
+<a name="line-300"></a>	
+<a name="line-301"></a>	<span class="n">virtual</span> <span class="n">CursorShape</span> <span class="n">get_cursor_shape</span><span class="p">(</span><span class="k">const</span> <span class="n">Point2</span><span class="o">&amp;</span> <span class="n">p_pos</span><span class="o">=</span><span class="n">Point2i</span><span class="p">())</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-302"></a>
+<a name="line-303"></a>	<span class="c1">//void delete_char();</span>
+<a name="line-304"></a>	<span class="c1">//void delete_line();</span>
+<a name="line-305"></a>
+<a name="line-306"></a>	<span class="kt">void</span> <span class="nf">set_text</span><span class="p">(</span><span class="n">String</span> <span class="n">p_text</span><span class="p">);</span>
+<a name="line-307"></a>	<span class="kt">void</span> <span class="nf">insert_text_at_cursor</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">);</span>
+<a name="line-308"></a>    <span class="kt">void</span> <span class="nf">insert_at</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_text</span><span class="p">,</span> <span class="kt">int</span> <span class="n">at</span><span class="p">);</span>
+<a name="line-309"></a>	<span class="kt">int</span> <span class="n">get_line_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-310"></a>	<span class="kt">void</span> <span class="nf">set_line_as_marked</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_marked</span><span class="p">);</span>
+<a name="line-311"></a>	<span class="kt">void</span> <span class="nf">set_line_as_breakpoint</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_breakpoint</span><span class="p">);</span>
+<a name="line-312"></a>	<span class="kt">bool</span> <span class="n">is_line_set_as_breakpoint</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-313"></a>	<span class="kt">void</span> <span class="n">get_breakpoints</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_breakpoints</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-314"></a>	<span class="n">String</span> <span class="nf">get_text</span><span class="p">();</span>
+<a name="line-315"></a>	<span class="n">String</span> <span class="n">get_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">line</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-316"></a>    <span class="kt">void</span> <span class="nf">set_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">line</span><span class="p">,</span> <span class="n">String</span> <span class="n">new_text</span><span class="p">);</span>
+<a name="line-317"></a>	<span class="kt">void</span> <span class="nf">backspace_at_cursor</span><span class="p">();</span>
+<a name="line-318"></a>	
+<a name="line-319"></a>	<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">set_auto_brace_completion</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-320"></a>		<span class="n">auto_brace_completion_enabled</span> <span class="o">=</span> <span class="n">p_enabled</span><span class="p">;</span>
+<a name="line-321"></a>	<span class="p">}</span>
+<a name="line-322"></a>	<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">set_brace_matching</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-323"></a>		<span class="n">brace_matching_enabled</span><span class="o">=</span><span class="n">p_enabled</span><span class="p">;</span>
+<a name="line-324"></a>		<span class="n">update</span><span class="p">();</span>
+<a name="line-325"></a>	<span class="p">}</span>
+<a name="line-326"></a>
+<a name="line-327"></a>	<span class="kt">void</span> <span class="nf">cursor_set_column</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_col</span><span class="p">);</span>
+<a name="line-328"></a>	<span class="kt">void</span> <span class="nf">cursor_set_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_row</span><span class="p">);</span>
+<a name="line-329"></a>
+<a name="line-330"></a>	<span class="kt">int</span> <span class="n">cursor_get_column</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-331"></a>	<span class="kt">int</span> <span class="n">cursor_get_line</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-332"></a>
+<a name="line-333"></a>	<span class="kt">void</span> <span class="nf">set_readonly</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_readonly</span><span class="p">);</span>
+<a name="line-334"></a>
+<a name="line-335"></a>	<span class="kt">void</span> <span class="nf">set_max_chars</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_max_chars</span><span class="p">);</span>
+<a name="line-336"></a>	<span class="kt">void</span> <span class="nf">set_wrap</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_wrap</span><span class="p">);</span>
+<a name="line-337"></a>
+<a name="line-338"></a>	<span class="kt">void</span> <span class="nf">clear</span><span class="p">();</span>
+<a name="line-339"></a>
+<a name="line-340"></a>	<span class="kt">void</span> <span class="nf">set_syntax_coloring</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">);</span>
+<a name="line-341"></a>	<span class="kt">bool</span> <span class="n">is_syntax_coloring_enabled</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-342"></a>
+<a name="line-343"></a>	<span class="kt">void</span> <span class="nf">cut</span><span class="p">();</span>
+<a name="line-344"></a>	<span class="kt">void</span> <span class="nf">copy</span><span class="p">();</span>
+<a name="line-345"></a>	<span class="kt">void</span> <span class="nf">paste</span><span class="p">();</span>
+<a name="line-346"></a>	<span class="kt">void</span> <span class="nf">select_all</span><span class="p">();</span>
+<a name="line-347"></a>	<span class="kt">void</span> <span class="nf">select</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_from_column</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_column</span><span class="p">);</span>
+<a name="line-348"></a>	<span class="kt">void</span> <span class="nf">deselect</span><span class="p">();</span>
+<a name="line-349"></a>
+<a name="line-350"></a>	<span class="kt">bool</span> <span class="n">is_selection_active</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-351"></a>	<span class="kt">int</span> <span class="n">get_selection_from_line</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-352"></a>    <span class="kt">int</span> <span class="n">get_selection_from_column</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-353"></a>	<span class="kt">int</span> <span class="n">get_selection_to_line</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-354"></a>	<span class="kt">int</span> <span class="n">get_selection_to_column</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-355"></a>	<span class="n">String</span> <span class="n">get_selection_text</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-356"></a>
+<a name="line-357"></a>	<span class="n">String</span> <span class="n">get_word_under_cursor</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-358"></a>
+<a name="line-359"></a>	<span class="kt">bool</span> <span class="n">search</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_key</span><span class="p">,</span><span class="kt">uint32_t</span> <span class="n">p_search_flags</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_from_column</span><span class="p">,</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_line</span><span class="p">,</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_column</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-360"></a>
+<a name="line-361"></a>	<span class="kt">void</span> <span class="nf">undo</span><span class="p">();</span>
+<a name="line-362"></a>	<span class="kt">void</span> <span class="nf">redo</span><span class="p">();</span>
+<a name="line-363"></a>	<span class="kt">void</span> <span class="nf">clear_undo_history</span><span class="p">();</span>
+<a name="line-364"></a>
+<a name="line-365"></a>
+<a name="line-366"></a>	<span class="kt">void</span> <span class="nf">set_draw_tabs</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_draw</span><span class="p">);</span>
+<a name="line-367"></a>	<span class="kt">bool</span> <span class="n">is_drawing_tabs</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-368"></a>
+<a name="line-369"></a>	<span class="kt">void</span> <span class="nf">add_keyword_color</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_keyword</span><span class="p">,</span><span class="k">const</span> <span class="n">Color</span><span class="o">&amp;</span> <span class="n">p_color</span><span class="p">);</span>
+<a name="line-370"></a>	<span class="kt">void</span> <span class="nf">add_color_region</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_begin_key</span><span class="o">=</span><span class="n">String</span><span class="p">(),</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_end_key</span><span class="o">=</span><span class="n">String</span><span class="p">(),</span><span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">p_color</span><span class="o">=</span><span class="n">Color</span><span class="p">(),</span><span class="kt">bool</span> <span class="n">p_line_only</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+<a name="line-371"></a>	<span class="kt">void</span> <span class="nf">set_symbol_color</span><span class="p">(</span><span class="k">const</span> <span class="n">Color</span><span class="o">&amp;</span> <span class="n">p_color</span><span class="p">);</span>
+<a name="line-372"></a>	<span class="kt">void</span> <span class="nf">set_custom_bg_color</span><span class="p">(</span><span class="k">const</span> <span class="n">Color</span><span class="o">&amp;</span> <span class="n">p_color</span><span class="p">);</span>
+<a name="line-373"></a>	<span class="kt">void</span> <span class="nf">clear_colors</span><span class="p">();</span>
+<a name="line-374"></a>
+<a name="line-375"></a>	<span class="kt">int</span> <span class="n">get_v_scroll</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-376"></a>	<span class="kt">void</span> <span class="nf">set_v_scroll</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_scroll</span><span class="p">);</span>
+<a name="line-377"></a>
+<a name="line-378"></a>	<span class="kt">int</span> <span class="n">get_h_scroll</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-379"></a>	<span class="kt">void</span> <span class="nf">set_h_scroll</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_scroll</span><span class="p">);</span>
+<a name="line-380"></a>
+<a name="line-381"></a>	<span class="kt">uint32_t</span> <span class="n">get_version</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-382"></a>	<span class="kt">uint32_t</span> <span class="n">get_saved_version</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-383"></a>	<span class="kt">void</span> <span class="nf">tag_saved_version</span><span class="p">();</span>
+<a name="line-384"></a>
+<a name="line-385"></a>	<span class="kt">void</span> <span class="nf">set_show_line_numbers</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_show</span><span class="p">);</span>
+<a name="line-386"></a>
+<a name="line-387"></a>	<span class="kt">void</span> <span class="nf">set_tooltip_request_func</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_obj</span><span class="p">,</span> <span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_function</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_udata</span><span class="p">);</span>
+<a name="line-388"></a>
+<a name="line-389"></a>	<span class="kt">void</span> <span class="nf">set_completion</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">,</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&amp;</span> <span class="n">p_prefixes</span><span class="p">);</span>	
+<a name="line-390"></a>	<span class="kt">void</span> <span class="nf">code_complete</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p_strings</span><span class="p">);</span>
+<a name="line-391"></a>	<span class="kt">void</span> <span class="nf">set_code_hint</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_hint</span><span class="p">);</span>
+<a name="line-392"></a>	<span class="kt">void</span> <span class="nf">query_code_comple</span><span class="p">();</span>
+<a name="line-393"></a>
+<a name="line-394"></a>	<span class="n">String</span> <span class="nf">get_text_for_completion</span><span class="p">();</span>
+<a name="line-395"></a>
+<a name="line-396"></a>	<span class="n">TextEdit</span><span class="p">();</span>
+<a name="line-397"></a>	<span class="o">~</span><span class="n">TextEdit</span><span class="p">();</span>
+<a name="line-398"></a><span class="p">};</span>
+<a name="line-399"></a>
+<a name="line-400"></a>
+<a name="line-401"></a><span class="cp">#endif </span><span class="c1">// TEXT_EDIT_H</span>
 </pre></div>
 </td></tr></table>
       </div>

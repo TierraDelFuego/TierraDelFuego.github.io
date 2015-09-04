@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: tools/editor/plugins/particles_editor_plugin.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/freetype/freetype/src/otvalid/otvmod.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> particles_editor_plugin.cpp</p>
-<a href='903.html#line-282'> redundantAssignment 282</a>
+       <p id="filename"><a href="index.html">Defects:</a> otvmod.c</p>
+<a href='903.html#line-219'> unreadVariable 219</a><a href='903.html#line-230'> unreadVariable 230</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -395,638 +395,288 @@
 279
 280
 281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  particles_editor_plugin.cpp                                          */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;particles_editor_plugin.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;io/resource_loader.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;servers/visual/particle_system_sw.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;tools/editor/plugins/spatial_editor_plugin.h&quot;</span>
-<a name="line-33"></a>
-<a name="line-34"></a>
-<a name="line-35"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_node_removed</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-36"></a>
-<a name="line-37"></a>	<span class="k">if</span><span class="p">(</span><span class="n">p_node</span><span class="o">==</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-38"></a>		<span class="n">node</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-39"></a>		<span class="n">hide</span><span class="p">();</span>
-<a name="line-40"></a>	<span class="p">}</span>
-<a name="line-41"></a>
-<a name="line-42"></a><span class="p">}</span>
-<a name="line-43"></a>
-<a name="line-44"></a>
-<a name="line-45"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_resource_seleted</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_res</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-46"></a>
-<a name="line-47"></a>	<span class="c1">//print_line(&quot;selected resource path: &quot;+p_res);</span>
-<a name="line-48"></a><span class="p">}</span>
+282</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*                                                                         */</span>
+<a name="line-3"></a><span class="cm">/*  otvmod.c                                                               */</span>
+<a name="line-4"></a><span class="cm">/*                                                                         */</span>
+<a name="line-5"></a><span class="cm">/*    FreeType&#39;s OpenType validation module implementation (body).         */</span>
+<a name="line-6"></a><span class="cm">/*                                                                         */</span>
+<a name="line-7"></a><span class="cm">/*  Copyright 2004-2008, 2013 by                                           */</span>
+<a name="line-8"></a><span class="cm">/*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */</span>
+<a name="line-9"></a><span class="cm">/*                                                                         */</span>
+<a name="line-10"></a><span class="cm">/*  This file is part of the FreeType project, and may only be used,       */</span>
+<a name="line-11"></a><span class="cm">/*  modified, and distributed under the terms of the FreeType project      */</span>
+<a name="line-12"></a><span class="cm">/*  license, LICENSE.TXT.  By continuing to use, modify, or distribute     */</span>
+<a name="line-13"></a><span class="cm">/*  this file you indicate that you have read the license and              */</span>
+<a name="line-14"></a><span class="cm">/*  understand and accept it fully.                                        */</span>
+<a name="line-15"></a><span class="cm">/*                                                                         */</span>
+<a name="line-16"></a><span class="cm">/***************************************************************************/</span>
+<a name="line-17"></a>
+<a name="line-18"></a>
+<a name="line-19"></a><span class="cp">#include &lt;ft2build.h&gt;</span>
+<a name="line-20"></a><span class="cp">#include FT_TRUETYPE_TABLES_H</span>
+<a name="line-21"></a><span class="cp">#include FT_TRUETYPE_TAGS_H</span>
+<a name="line-22"></a><span class="cp">#include FT_OPENTYPE_VALIDATE_H</span>
+<a name="line-23"></a><span class="cp">#include FT_INTERNAL_OBJECTS_H</span>
+<a name="line-24"></a><span class="cp">#include FT_SERVICE_OPENTYPE_VALIDATE_H</span>
+<a name="line-25"></a>
+<a name="line-26"></a><span class="cp">#include &quot;otvmod.h&quot;</span>
+<a name="line-27"></a><span class="cp">#include &quot;otvalid.h&quot;</span>
+<a name="line-28"></a><span class="cp">#include &quot;otvcommn.h&quot;</span>
+<a name="line-29"></a>
+<a name="line-30"></a>
+<a name="line-31"></a>  <span class="cm">/*************************************************************************/</span>
+<a name="line-32"></a>  <span class="cm">/*                                                                       */</span>
+<a name="line-33"></a>  <span class="cm">/* The macro FT_COMPONENT is used in trace mode.  It is an implicit      */</span>
+<a name="line-34"></a>  <span class="cm">/* parameter of the FT_TRACE() and FT_ERROR() macros, used to print/log  */</span>
+<a name="line-35"></a>  <span class="cm">/* messages during execution.                                            */</span>
+<a name="line-36"></a>  <span class="cm">/*                                                                       */</span>
+<a name="line-37"></a><span class="cp">#undef  FT_COMPONENT</span>
+<a name="line-38"></a><span class="cp">#define FT_COMPONENT  trace_otvmodule</span>
+<a name="line-39"></a>
+<a name="line-40"></a>
+<a name="line-41"></a>  <span class="k">static</span> <span class="n">FT_Error</span>
+<a name="line-42"></a>  <span class="nf">otv_load_table</span><span class="p">(</span> <span class="n">FT_Face</span>             <span class="n">face</span><span class="p">,</span>
+<a name="line-43"></a>                  <span class="n">FT_Tag</span>              <span class="n">tag</span><span class="p">,</span>
+<a name="line-44"></a>                  <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span><span class="o">*</span>  <span class="n">table</span><span class="p">,</span>
+<a name="line-45"></a>                  <span class="n">FT_ULong</span><span class="o">*</span>           <span class="n">table_len</span> <span class="p">)</span>
+<a name="line-46"></a>  <span class="p">{</span>
+<a name="line-47"></a>    <span class="n">FT_Error</span>   <span class="n">error</span><span class="p">;</span>
+<a name="line-48"></a>    <span class="n">FT_Memory</span>  <span class="n">memory</span> <span class="o">=</span> <span class="n">FT_FACE_MEMORY</span><span class="p">(</span> <span class="n">face</span> <span class="p">);</span>
 <a name="line-49"></a>
-<a name="line-50"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_node_selected</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">){</span>
-<a name="line-51"></a>
-<a name="line-52"></a>
-<a name="line-53"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">sel</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="n">p_path</span><span class="p">);</span>
-<a name="line-54"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sel</span><span class="p">)</span>
-<a name="line-55"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-50"></a>
+<a name="line-51"></a>    <span class="n">error</span> <span class="o">=</span> <span class="n">FT_Load_Sfnt_Table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">table_len</span> <span class="p">);</span>
+<a name="line-52"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">FT_ERR_EQ</span><span class="p">(</span> <span class="n">error</span><span class="p">,</span> <span class="n">Table_Missing</span> <span class="p">)</span> <span class="p">)</span>
+<a name="line-53"></a>      <span class="k">return</span> <span class="n">FT_Err_Ok</span><span class="p">;</span>
+<a name="line-54"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-55"></a>      <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
 <a name="line-56"></a>
-<a name="line-57"></a>	<span class="n">VisualInstance</span> <span class="o">*</span><span class="n">vi</span> <span class="o">=</span> <span class="n">sel</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">VisualInstance</span><span class="o">&gt;</span><span class="p">();</span>
-<a name="line-58"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vi</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-57"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">FT_ALLOC</span><span class="p">(</span> <span class="o">*</span><span class="n">table</span><span class="p">,</span> <span class="o">*</span><span class="n">table_len</span> <span class="p">)</span> <span class="p">)</span>
+<a name="line-58"></a>      <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
 <a name="line-59"></a>
-<a name="line-60"></a>		<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Node does not contain geometry.&quot;</span><span class="p">);</span>
-<a name="line-61"></a>		<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered_minsize</span><span class="p">();</span>
-<a name="line-62"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-63"></a>	<span class="p">}</span>
-<a name="line-64"></a>
-<a name="line-65"></a>	<span class="n">geometry</span> <span class="o">=</span> <span class="n">vi</span><span class="o">-&gt;</span><span class="n">get_faces</span><span class="p">(</span><span class="n">VisualInstance</span><span class="o">::</span><span class="n">FACES_SOLID</span><span class="p">);</span>
+<a name="line-60"></a>    <span class="n">error</span> <span class="o">=</span> <span class="n">FT_Load_Sfnt_Table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">table</span><span class="p">,</span> <span class="n">table_len</span> <span class="p">);</span>
+<a name="line-61"></a>
+<a name="line-62"></a>  <span class="nl">Exit</span><span class="p">:</span>
+<a name="line-63"></a>    <span class="k">return</span> <span class="n">error</span><span class="p">;</span>
+<a name="line-64"></a>  <span class="p">}</span>
+<a name="line-65"></a>
 <a name="line-66"></a>
-<a name="line-67"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">geometry</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-68"></a>
-<a name="line-69"></a>		<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Node does not contain geometry (faces).&quot;</span><span class="p">);</span>
-<a name="line-70"></a>		<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered_minsize</span><span class="p">();</span>
-<a name="line-71"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-72"></a>
-<a name="line-73"></a>	<span class="p">}</span>
-<a name="line-74"></a>
-<a name="line-75"></a>	<span class="n">Transform</span> <span class="n">geom_xform</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">get_global_transform</span><span class="p">().</span><span class="n">affine_inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">vi</span><span class="o">-&gt;</span><span class="n">get_global_transform</span><span class="p">();</span>
-<a name="line-76"></a>
-<a name="line-77"></a>	<span class="kt">int</span> <span class="n">gc</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-<a name="line-78"></a>	<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Face3</span><span class="o">&gt;::</span><span class="n">Write</span> <span class="n">w</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">.</span><span class="n">write</span><span class="p">();</span>
-<a name="line-79"></a>
-<a name="line-80"></a>
-<a name="line-81"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">gc</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-82"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-83"></a>			<span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">vertex</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">geom_xform</span><span class="p">.</span><span class="n">xform</span><span class="p">(</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">vertex</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="p">);</span>
-<a name="line-84"></a>		<span class="p">}</span>
-<a name="line-85"></a>	<span class="p">}</span>
-<a name="line-86"></a>
+<a name="line-67"></a>  <span class="k">static</span> <span class="n">FT_Error</span>
+<a name="line-68"></a>  <span class="nf">otv_validate</span><span class="p">(</span> <span class="n">FT_Face</span> <span class="k">volatile</span>   <span class="n">face</span><span class="p">,</span>
+<a name="line-69"></a>                <span class="n">FT_UInt</span>            <span class="n">ot_flags</span><span class="p">,</span>
+<a name="line-70"></a>                <span class="n">FT_Bytes</span>          <span class="o">*</span><span class="n">ot_base</span><span class="p">,</span>
+<a name="line-71"></a>                <span class="n">FT_Bytes</span>          <span class="o">*</span><span class="n">ot_gdef</span><span class="p">,</span>
+<a name="line-72"></a>                <span class="n">FT_Bytes</span>          <span class="o">*</span><span class="n">ot_gpos</span><span class="p">,</span>
+<a name="line-73"></a>                <span class="n">FT_Bytes</span>          <span class="o">*</span><span class="n">ot_gsub</span><span class="p">,</span>
+<a name="line-74"></a>                <span class="n">FT_Bytes</span>          <span class="o">*</span><span class="n">ot_jstf</span> <span class="p">)</span>
+<a name="line-75"></a>  <span class="p">{</span>
+<a name="line-76"></a>    <span class="n">FT_Error</span>                  <span class="n">error</span> <span class="o">=</span> <span class="n">FT_Err_Ok</span><span class="p">;</span>
+<a name="line-77"></a>    <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span>         <span class="n">base</span><span class="p">;</span>
+<a name="line-78"></a>    <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span>         <span class="n">gdef</span><span class="p">;</span>
+<a name="line-79"></a>    <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span>         <span class="n">gpos</span><span class="p">;</span>
+<a name="line-80"></a>    <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span>         <span class="n">gsub</span><span class="p">;</span>
+<a name="line-81"></a>    <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span>         <span class="n">jstf</span><span class="p">;</span>
+<a name="line-82"></a>    <span class="n">FT_Byte</span><span class="o">*</span> <span class="k">volatile</span>         <span class="n">math</span><span class="p">;</span>
+<a name="line-83"></a>    <span class="n">FT_ULong</span>                  <span class="n">len_base</span><span class="p">,</span> <span class="n">len_gdef</span><span class="p">,</span> <span class="n">len_gpos</span><span class="p">,</span> <span class="n">len_gsub</span><span class="p">,</span> <span class="n">len_jstf</span><span class="p">;</span>
+<a name="line-84"></a>    <span class="n">FT_ULong</span>                  <span class="n">len_math</span><span class="p">;</span>
+<a name="line-85"></a>    <span class="n">FT_UInt</span>                   <span class="n">num_glyphs</span> <span class="o">=</span> <span class="p">(</span><span class="n">FT_UInt</span><span class="p">)</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">num_glyphs</span><span class="p">;</span>
+<a name="line-86"></a>    <span class="n">FT_ValidatorRec</span> <span class="k">volatile</span>  <span class="n">valid</span><span class="p">;</span>
 <a name="line-87"></a>
-<a name="line-88"></a>	<span class="n">w</span> <span class="o">=</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="n">Face3</span><span class="o">&gt;::</span><span class="n">Write</span><span class="p">();</span>
-<a name="line-89"></a>
-<a name="line-90"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">130</span><span class="p">));</span>
-<a name="line-91"></a><span class="p">}</span>
-<a name="line-92"></a>
-<a name="line-93"></a>
-<a name="line-94"></a><span class="cm">/*</span>
-<a name="line-95"></a>
-<a name="line-96"></a><span class="cm">void ParticlesEditor::_populate() {</span>
-<a name="line-97"></a>
-<a name="line-98"></a><span class="cm">	if(!node)</span>
-<a name="line-99"></a><span class="cm">		return;</span>
-<a name="line-100"></a>
-<a name="line-101"></a>
-<a name="line-102"></a><span class="cm">	if (node-&gt;get_particles().is_null())</span>
-<a name="line-103"></a><span class="cm">		return;</span>
-<a name="line-104"></a>
-<a name="line-105"></a><span class="cm">	node-&gt;get_particles()-&gt;set_instance_count(populate_amount-&gt;get_text().to_int());</span>
-<a name="line-106"></a><span class="cm">	node-&gt;populate_parent(populate_rotate_random-&gt;get_val(),populate_tilt_random-&gt;get_val(),populate_scale_random-&gt;get_text().to_double(),populate_scale-&gt;get_text().to_double());</span>
-<a name="line-107"></a>
-<a name="line-108"></a><span class="cm">}</span>
-<a name="line-109"></a><span class="cm">*/</span>
-<a name="line-110"></a>
-<a name="line-111"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_notification</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-88"></a>
+<a name="line-89"></a>    <span class="n">base</span>     <span class="o">=</span> <span class="n">gdef</span>     <span class="o">=</span> <span class="n">gpos</span>     <span class="o">=</span> <span class="n">gsub</span>     <span class="o">=</span> <span class="n">jstf</span>     <span class="o">=</span> <span class="n">math</span>     <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-90"></a>    <span class="n">len_base</span> <span class="o">=</span> <span class="n">len_gdef</span> <span class="o">=</span> <span class="n">len_gpos</span> <span class="o">=</span> <span class="n">len_gsub</span> <span class="o">=</span> <span class="n">len_jstf</span> <span class="o">=</span> <span class="n">len_math</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-91"></a>
+<a name="line-92"></a>    <span class="cm">/*</span>
+<a name="line-93"></a><span class="cm">     * XXX: OpenType tables cannot handle 32-bit glyph index,</span>
+<a name="line-94"></a><span class="cm">     *      although broken TrueType can have 32-bit glyph index.</span>
+<a name="line-95"></a><span class="cm">     */</span>
+<a name="line-96"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">face</span><span class="o">-&gt;</span><span class="n">num_glyphs</span> <span class="o">&gt;</span> <span class="mh">0xFFFFL</span> <span class="p">)</span>
+<a name="line-97"></a>    <span class="p">{</span>
+<a name="line-98"></a>      <span class="n">FT_TRACE1</span><span class="p">((</span> <span class="s">&quot;otv_validate: Invalid glyphs index (0x0000FFFF - 0x%08x) &quot;</span><span class="p">,</span>
+<a name="line-99"></a>                  <span class="n">face</span><span class="o">-&gt;</span><span class="n">num_glyphs</span> <span class="p">));</span>
+<a name="line-100"></a>      <span class="n">FT_TRACE1</span><span class="p">((</span> <span class="s">&quot;are not handled by OpenType tables</span><span class="se">\n</span><span class="s">&quot;</span> <span class="p">));</span>
+<a name="line-101"></a>      <span class="n">num_glyphs</span> <span class="o">=</span> <span class="mh">0xFFFF</span><span class="p">;</span>
+<a name="line-102"></a>    <span class="p">}</span>
+<a name="line-103"></a>
+<a name="line-104"></a>    <span class="cm">/* load tables */</span>
+<a name="line-105"></a>
+<a name="line-106"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">ot_flags</span> <span class="o">&amp;</span> <span class="n">FT_VALIDATE_BASE</span> <span class="p">)</span>
+<a name="line-107"></a>    <span class="p">{</span>
+<a name="line-108"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">otv_load_table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">TTAG_BASE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">base</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len_base</span> <span class="p">);</span>
+<a name="line-109"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-110"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-111"></a>    <span class="p">}</span>
 <a name="line-112"></a>
-<a name="line-113"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_notification</span><span class="o">==</span><span class="n">NOTIFICATION_ENTER_TREE</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-114"></a>		<span class="n">options</span><span class="o">-&gt;</span><span class="n">set_icon</span><span class="p">(</span><span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Particles&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">));</span>
-<a name="line-115"></a>
-<a name="line-116"></a>	<span class="p">}</span>
-<a name="line-117"></a><span class="p">}</span>
-<a name="line-118"></a>
+<a name="line-113"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">ot_flags</span> <span class="o">&amp;</span> <span class="n">FT_VALIDATE_GDEF</span> <span class="p">)</span>
+<a name="line-114"></a>    <span class="p">{</span>
+<a name="line-115"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">otv_load_table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">TTAG_GDEF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">gdef</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len_gdef</span> <span class="p">);</span>
+<a name="line-116"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-117"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-118"></a>    <span class="p">}</span>
 <a name="line-119"></a>
-<a name="line-120"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_menu_option</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_option</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-121"></a>
-<a name="line-122"></a>
-<a name="line-123"></a>	<span class="k">switch</span><span class="p">(</span><span class="n">p_option</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-124"></a>
-<a name="line-125"></a>		<span class="k">case</span> <span class="nl">MENU_OPTION_GENERATE_AABB</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-120"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">ot_flags</span> <span class="o">&amp;</span> <span class="n">FT_VALIDATE_GPOS</span> <span class="p">)</span>
+<a name="line-121"></a>    <span class="p">{</span>
+<a name="line-122"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">otv_load_table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">TTAG_GPOS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">gpos</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len_gpos</span> <span class="p">);</span>
+<a name="line-123"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-124"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-125"></a>    <span class="p">}</span>
 <a name="line-126"></a>
-<a name="line-127"></a>			<span class="n">Transform</span> <span class="n">globalizer</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">get_global_transform</span><span class="p">();</span>
-<a name="line-128"></a>			<span class="n">ParticleSystemSW</span> <span class="n">pssw</span><span class="p">;</span>
-<a name="line-129"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">VS</span><span class="o">::</span><span class="n">PARTICLE_VAR_MAX</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-130"></a>
-<a name="line-131"></a>				<span class="n">pssw</span><span class="p">.</span><span class="n">particle_vars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_variable</span><span class="p">((</span><span class="n">Particles</span><span class="o">::</span><span class="n">Variable</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
-<a name="line-132"></a>				<span class="n">pssw</span><span class="p">.</span><span class="n">particle_randomness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_randomness</span><span class="p">((</span><span class="n">Particles</span><span class="o">::</span><span class="n">Variable</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
-<a name="line-133"></a>			<span class="p">}</span>
-<a name="line-134"></a>
-<a name="line-135"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">emission_half_extents</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_emission_half_extents</span><span class="p">();</span>
-<a name="line-136"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">emission_points</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_emission_points</span><span class="p">();</span>
-<a name="line-137"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">emission_base_velocity</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_emission_base_velocity</span><span class="p">();</span>
-<a name="line-138"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">amount</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_amount</span><span class="p">();</span>
-<a name="line-139"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">gravity_normal</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">get_gravity_normal</span><span class="p">();</span>
-<a name="line-140"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">emitting</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-141"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">height_from_velocity</span><span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">has_height_from_velocity</span><span class="p">();</span>
-<a name="line-142"></a>			<span class="n">pssw</span><span class="p">.</span><span class="n">color_phase_count</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-143"></a>
-<a name="line-144"></a>
-<a name="line-145"></a>			<span class="n">ParticleSystemProcessSW</span> <span class="n">pp</span><span class="p">;</span>
-<a name="line-146"></a>			<span class="kt">float</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">;</span>
-<a name="line-147"></a>			<span class="kt">float</span> <span class="n">lifetime</span><span class="o">=</span><span class="n">pssw</span><span class="p">.</span><span class="n">particle_vars</span><span class="p">[</span><span class="n">VS</span><span class="o">::</span><span class="n">PARTICLE_LIFETIME</span><span class="p">];</span>
-<a name="line-148"></a>
+<a name="line-127"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">ot_flags</span> <span class="o">&amp;</span> <span class="n">FT_VALIDATE_GSUB</span> <span class="p">)</span>
+<a name="line-128"></a>    <span class="p">{</span>
+<a name="line-129"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">otv_load_table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">TTAG_GSUB</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">gsub</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len_gsub</span> <span class="p">);</span>
+<a name="line-130"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-131"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-132"></a>    <span class="p">}</span>
+<a name="line-133"></a>
+<a name="line-134"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">ot_flags</span> <span class="o">&amp;</span> <span class="n">FT_VALIDATE_JSTF</span> <span class="p">)</span>
+<a name="line-135"></a>    <span class="p">{</span>
+<a name="line-136"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">otv_load_table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">TTAG_JSTF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">jstf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len_jstf</span> <span class="p">);</span>
+<a name="line-137"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-138"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-139"></a>    <span class="p">}</span>
+<a name="line-140"></a>
+<a name="line-141"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">ot_flags</span> <span class="o">&amp;</span> <span class="n">FT_VALIDATE_MATH</span> <span class="p">)</span>
+<a name="line-142"></a>    <span class="p">{</span>
+<a name="line-143"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">otv_load_table</span><span class="p">(</span> <span class="n">face</span><span class="p">,</span> <span class="n">TTAG_MATH</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">math</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len_math</span> <span class="p">);</span>
+<a name="line-144"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-145"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-146"></a>    <span class="p">}</span>
+<a name="line-147"></a>
+<a name="line-148"></a>    <span class="cm">/* validate tables */</span>
 <a name="line-149"></a>
-<a name="line-150"></a>			<span class="n">Transform</span> <span class="n">localizer</span> <span class="o">=</span> <span class="n">globalizer</span><span class="p">.</span><span class="n">affine_inverse</span><span class="p">();</span>
-<a name="line-151"></a>			<span class="n">AABB</span> <span class="n">aabb</span><span class="p">;</span>
-<a name="line-152"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">float</span> <span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">t</span><span class="o">&lt;</span><span class="n">lifetime</span><span class="p">;</span><span class="n">t</span><span class="o">+=</span><span class="n">delta</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-153"></a>
-<a name="line-154"></a>				<span class="n">pp</span><span class="p">.</span><span class="n">process</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pssw</span><span class="p">,</span><span class="n">globalizer</span><span class="p">,</span><span class="n">delta</span><span class="p">);</span>
-<a name="line-155"></a>				<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">pp</span><span class="p">.</span><span class="n">particle_data</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-156"></a>
-<a name="line-157"></a>					<span class="n">Vector3</span> <span class="n">p</span> <span class="o">=</span> <span class="n">localizer</span><span class="p">.</span><span class="n">xform</span><span class="p">(</span><span class="n">pp</span><span class="p">.</span><span class="n">particle_data</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pos</span><span class="p">);</span>
-<a name="line-158"></a>
-<a name="line-159"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-160"></a>						<span class="n">aabb</span><span class="p">.</span><span class="n">pos</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
-<a name="line-161"></a>					<span class="k">else</span>
-<a name="line-162"></a>						<span class="n">aabb</span><span class="p">.</span><span class="n">expand_to</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<a name="line-163"></a>				<span class="p">}</span>
-<a name="line-164"></a>			<span class="p">}</span>
-<a name="line-165"></a>
-<a name="line-166"></a>			<span class="n">aabb</span><span class="p">.</span><span class="n">grow_by</span><span class="p">(</span> <span class="n">aabb</span><span class="p">.</span><span class="n">get_longest_axis_size</span><span class="p">()</span><span class="o">*</span><span class="mf">0.2</span><span class="p">);</span>
-<a name="line-167"></a>
-<a name="line-168"></a>			<span class="n">node</span><span class="o">-&gt;</span><span class="n">set_visibility_aabb</span><span class="p">(</span><span class="n">aabb</span><span class="p">);</span>
+<a name="line-150"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">base</span> <span class="p">)</span>
+<a name="line-151"></a>    <span class="p">{</span>
+<a name="line-152"></a>      <span class="n">ft_validator_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">valid</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">base</span> <span class="o">+</span> <span class="n">len_base</span><span class="p">,</span> <span class="n">FT_VALIDATE_DEFAULT</span> <span class="p">);</span>
+<a name="line-153"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">ft_setjmp</span><span class="p">(</span> <span class="n">valid</span><span class="p">.</span><span class="n">jump_buffer</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-154"></a>        <span class="n">otv_BASE_validate</span><span class="p">(</span> <span class="n">base</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valid</span> <span class="p">);</span>
+<a name="line-155"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">error</span><span class="p">;</span>
+<a name="line-156"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-157"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-158"></a>    <span class="p">}</span>
+<a name="line-159"></a>
+<a name="line-160"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">gpos</span> <span class="p">)</span>
+<a name="line-161"></a>    <span class="p">{</span>
+<a name="line-162"></a>      <span class="n">ft_validator_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">valid</span><span class="p">,</span> <span class="n">gpos</span><span class="p">,</span> <span class="n">gpos</span> <span class="o">+</span> <span class="n">len_gpos</span><span class="p">,</span> <span class="n">FT_VALIDATE_DEFAULT</span> <span class="p">);</span>
+<a name="line-163"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">ft_setjmp</span><span class="p">(</span> <span class="n">valid</span><span class="p">.</span><span class="n">jump_buffer</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-164"></a>        <span class="n">otv_GPOS_validate</span><span class="p">(</span> <span class="n">gpos</span><span class="p">,</span> <span class="n">num_glyphs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valid</span> <span class="p">);</span>
+<a name="line-165"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">error</span><span class="p">;</span>
+<a name="line-166"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-167"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-168"></a>    <span class="p">}</span>
 <a name="line-169"></a>
-<a name="line-170"></a>
-<a name="line-171"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-172"></a>		<span class="k">case</span> <span class="nl">MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_MESH</span><span class="p">:</span> <span class="p">{</span>
-<a name="line-173"></a>
-<a name="line-174"></a>
-<a name="line-175"></a>			<span class="n">emission_file_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered_ratio</span><span class="p">();</span>
-<a name="line-176"></a>
-<a name="line-177"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-178"></a>
-<a name="line-179"></a>		<span class="k">case</span> <span class="nl">MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_NODE</span><span class="p">:</span> <span class="p">{</span>
-<a name="line-180"></a><span class="cm">/*</span>
-<a name="line-181"></a><span class="cm">			Node *root = get_scene()-&gt;get_root_node();</span>
-<a name="line-182"></a><span class="cm">			ERR_FAIL_COND(!root);</span>
-<a name="line-183"></a><span class="cm">			EditorNode *en = root-&gt;cast_to&lt;EditorNode&gt;();</span>
-<a name="line-184"></a><span class="cm">			ERR_FAIL_COND(!en);</span>
-<a name="line-185"></a><span class="cm">			Node * node = en-&gt;get_edited_scene();</span>
-<a name="line-186"></a><span class="cm">*/</span>
-<a name="line-187"></a>			<span class="n">emission_tree_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered_ratio</span><span class="p">();</span>
-<a name="line-188"></a>
-<a name="line-189"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-190"></a>	<span class="p">}</span>
-<a name="line-191"></a><span class="p">}</span>
-<a name="line-192"></a>
-<a name="line-193"></a>
-<a name="line-194"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">edit</span><span class="p">(</span><span class="n">Particles</span> <span class="o">*</span><span class="n">p_particles</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-195"></a>
-<a name="line-196"></a>	<span class="n">node</span><span class="o">=</span><span class="n">p_particles</span><span class="p">;</span>
-<a name="line-197"></a>
-<a name="line-198"></a><span class="p">}</span>
+<a name="line-170"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">gsub</span> <span class="p">)</span>
+<a name="line-171"></a>    <span class="p">{</span>
+<a name="line-172"></a>      <span class="n">ft_validator_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">valid</span><span class="p">,</span> <span class="n">gsub</span><span class="p">,</span> <span class="n">gsub</span> <span class="o">+</span> <span class="n">len_gsub</span><span class="p">,</span> <span class="n">FT_VALIDATE_DEFAULT</span> <span class="p">);</span>
+<a name="line-173"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">ft_setjmp</span><span class="p">(</span> <span class="n">valid</span><span class="p">.</span><span class="n">jump_buffer</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-174"></a>        <span class="n">otv_GSUB_validate</span><span class="p">(</span> <span class="n">gsub</span><span class="p">,</span> <span class="n">num_glyphs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valid</span> <span class="p">);</span>
+<a name="line-175"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">error</span><span class="p">;</span>
+<a name="line-176"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-177"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-178"></a>    <span class="p">}</span>
+<a name="line-179"></a>
+<a name="line-180"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">gdef</span> <span class="p">)</span>
+<a name="line-181"></a>    <span class="p">{</span>
+<a name="line-182"></a>      <span class="n">ft_validator_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">valid</span><span class="p">,</span> <span class="n">gdef</span><span class="p">,</span> <span class="n">gdef</span> <span class="o">+</span> <span class="n">len_gdef</span><span class="p">,</span> <span class="n">FT_VALIDATE_DEFAULT</span> <span class="p">);</span>
+<a name="line-183"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">ft_setjmp</span><span class="p">(</span> <span class="n">valid</span><span class="p">.</span><span class="n">jump_buffer</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-184"></a>        <span class="n">otv_GDEF_validate</span><span class="p">(</span> <span class="n">gdef</span><span class="p">,</span> <span class="n">gsub</span><span class="p">,</span> <span class="n">gpos</span><span class="p">,</span> <span class="n">num_glyphs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valid</span> <span class="p">);</span>
+<a name="line-185"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">error</span><span class="p">;</span>
+<a name="line-186"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-187"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-188"></a>    <span class="p">}</span>
+<a name="line-189"></a>
+<a name="line-190"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">jstf</span> <span class="p">)</span>
+<a name="line-191"></a>    <span class="p">{</span>
+<a name="line-192"></a>      <span class="n">ft_validator_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">valid</span><span class="p">,</span> <span class="n">jstf</span><span class="p">,</span> <span class="n">jstf</span> <span class="o">+</span> <span class="n">len_jstf</span><span class="p">,</span> <span class="n">FT_VALIDATE_DEFAULT</span> <span class="p">);</span>
+<a name="line-193"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">ft_setjmp</span><span class="p">(</span> <span class="n">valid</span><span class="p">.</span><span class="n">jump_buffer</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-194"></a>        <span class="n">otv_JSTF_validate</span><span class="p">(</span> <span class="n">jstf</span><span class="p">,</span> <span class="n">gsub</span><span class="p">,</span> <span class="n">gpos</span><span class="p">,</span> <span class="n">num_glyphs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valid</span> <span class="p">);</span>
+<a name="line-195"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">error</span><span class="p">;</span>
+<a name="line-196"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-197"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-198"></a>    <span class="p">}</span>
 <a name="line-199"></a>
-<a name="line-200"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_generate_emission_points</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-201"></a>
-<a name="line-202"></a>	<span class="c1">/// hacer codigo aca</span>
-<a name="line-203"></a>	<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span> <span class="n">points</span><span class="p">;</span>
-<a name="line-204"></a>
-<a name="line-205"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">emission_fill</span><span class="o">-&gt;</span><span class="n">get_selected</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-206"></a>
-<a name="line-207"></a>		<span class="kt">float</span> <span class="n">area_accum</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-208"></a>		<span class="n">Map</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">triangle_area_map</span><span class="p">;</span>
-<a name="line-209"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;geometry size: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">geometry</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
-<a name="line-210"></a>
-<a name="line-211"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">geometry</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-212"></a>
-<a name="line-213"></a>			<span class="kt">float</span> <span class="n">area</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">get_area</span><span class="p">();;</span>
-<a name="line-214"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">area</span><span class="o">&lt;</span><span class="n">CMP_EPSILON</span><span class="p">)</span>
-<a name="line-215"></a>				<span class="k">continue</span><span class="p">;</span>
-<a name="line-216"></a>			<span class="n">triangle_area_map</span><span class="p">[</span><span class="n">area_accum</span><span class="p">]</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-217"></a>			<span class="n">area_accum</span><span class="o">+=</span><span class="n">area</span><span class="p">;</span>
-<a name="line-218"></a>		<span class="p">}</span>
-<a name="line-219"></a>
-<a name="line-220"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">triangle_area_map</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">||</span> <span class="n">area_accum</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-200"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">math</span> <span class="p">)</span>
+<a name="line-201"></a>    <span class="p">{</span>
+<a name="line-202"></a>      <span class="n">ft_validator_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">valid</span><span class="p">,</span> <span class="n">math</span><span class="p">,</span> <span class="n">math</span> <span class="o">+</span> <span class="n">len_math</span><span class="p">,</span> <span class="n">FT_VALIDATE_DEFAULT</span> <span class="p">);</span>
+<a name="line-203"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">ft_setjmp</span><span class="p">(</span> <span class="n">valid</span><span class="p">.</span><span class="n">jump_buffer</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-204"></a>        <span class="n">otv_MATH_validate</span><span class="p">(</span> <span class="n">math</span><span class="p">,</span> <span class="n">num_glyphs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valid</span> <span class="p">);</span>
+<a name="line-205"></a>      <span class="n">error</span> <span class="o">=</span> <span class="n">valid</span><span class="p">.</span><span class="n">error</span><span class="p">;</span>
+<a name="line-206"></a>      <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-207"></a>        <span class="k">goto</span> <span class="n">Exit</span><span class="p">;</span>
+<a name="line-208"></a>    <span class="p">}</span>
+<a name="line-209"></a>
+<a name="line-210"></a>    <span class="o">*</span><span class="n">ot_base</span> <span class="o">=</span> <span class="p">(</span><span class="n">FT_Bytes</span><span class="p">)</span><span class="n">base</span><span class="p">;</span>
+<a name="line-211"></a>    <span class="o">*</span><span class="n">ot_gdef</span> <span class="o">=</span> <span class="p">(</span><span class="n">FT_Bytes</span><span class="p">)</span><span class="n">gdef</span><span class="p">;</span>
+<a name="line-212"></a>    <span class="o">*</span><span class="n">ot_gpos</span> <span class="o">=</span> <span class="p">(</span><span class="n">FT_Bytes</span><span class="p">)</span><span class="n">gpos</span><span class="p">;</span>
+<a name="line-213"></a>    <span class="o">*</span><span class="n">ot_gsub</span> <span class="o">=</span> <span class="p">(</span><span class="n">FT_Bytes</span><span class="p">)</span><span class="n">gsub</span><span class="p">;</span>
+<a name="line-214"></a>    <span class="o">*</span><span class="n">ot_jstf</span> <span class="o">=</span> <span class="p">(</span><span class="n">FT_Bytes</span><span class="p">)</span><span class="n">jstf</span><span class="p">;</span>
+<a name="line-215"></a>
+<a name="line-216"></a>  <span class="nl">Exit</span><span class="p">:</span>
+<a name="line-217"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
+<a name="line-218"></a>    <span class="p">{</span>
+<a name="line-219"></a><span class="hll">      <span class="n">FT_Memory</span>  <span class="n">memory</span> <span class="o">=</span> <span class="n">FT_FACE_MEMORY</span><span class="p">(</span> <span class="n">face</span> <span class="p">);</span><span class='error2'>&lt;--- Variable 'memory' is assigned a value that is never used.</span>
+</span><a name="line-220"></a>
 <a name="line-221"></a>
-<a name="line-222"></a>			<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Faces contain no area!&quot;</span><span class="p">);</span>
-<a name="line-223"></a>			<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered_minsize</span><span class="p">();</span>
-<a name="line-224"></a>			<span class="k">return</span><span class="p">;</span>
-<a name="line-225"></a>		<span class="p">}</span>
-<a name="line-226"></a>
-<a name="line-227"></a>		<span class="kt">int</span> <span class="n">emissor_count</span><span class="o">=</span><span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">get_val</span><span class="p">();</span>
+<a name="line-222"></a>      <span class="n">FT_FREE</span><span class="p">(</span> <span class="n">base</span> <span class="p">);</span>
+<a name="line-223"></a>      <span class="n">FT_FREE</span><span class="p">(</span> <span class="n">gdef</span> <span class="p">);</span>
+<a name="line-224"></a>      <span class="n">FT_FREE</span><span class="p">(</span> <span class="n">gpos</span> <span class="p">);</span>
+<a name="line-225"></a>      <span class="n">FT_FREE</span><span class="p">(</span> <span class="n">gsub</span> <span class="p">);</span>
+<a name="line-226"></a>      <span class="n">FT_FREE</span><span class="p">(</span> <span class="n">jstf</span> <span class="p">);</span>
+<a name="line-227"></a>    <span class="p">}</span>
 <a name="line-228"></a>
-<a name="line-229"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">emissor_count</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-230"></a>
-<a name="line-231"></a>			<span class="kt">float</span> <span class="n">areapos</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">area_accum</span><span class="p">);</span>
+<a name="line-229"></a>    <span class="p">{</span>
+<a name="line-230"></a><span class="hll">      <span class="n">FT_Memory</span>  <span class="n">memory</span> <span class="o">=</span> <span class="n">FT_FACE_MEMORY</span><span class="p">(</span> <span class="n">face</span> <span class="p">);</span><span class='error2'>&lt;--- Variable 'memory' is assigned a value that is never used.</span>
+</span><a name="line-231"></a>
 <a name="line-232"></a>
-<a name="line-233"></a>			<span class="n">Map</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span> <span class="o">=</span> <span class="n">triangle_area_map</span><span class="p">.</span><span class="n">find_closest</span><span class="p">(</span><span class="n">areapos</span><span class="p">);</span>
-<a name="line-234"></a>			<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">E</span><span class="p">)</span>
-<a name="line-235"></a>			<span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">E</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">();</span>
-<a name="line-236"></a>			<span class="n">ERR_FAIL_INDEX</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">geometry</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-<a name="line-237"></a>
-<a name="line-238"></a>			<span class="c1">// ok FINALLY get face</span>
-<a name="line-239"></a>			<span class="n">Face3</span> <span class="n">face</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-<a name="line-240"></a>			<span class="c1">//now compute some position inside the face...</span>
-<a name="line-241"></a>
-<a name="line-242"></a>			<span class="n">Vector3</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">face</span><span class="p">.</span><span class="n">get_random_point_inside</span><span class="p">();</span>
-<a name="line-243"></a>
-<a name="line-244"></a>			<span class="n">points</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pos</span><span class="p">);</span>
-<a name="line-245"></a>		<span class="p">}</span>
-<a name="line-246"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-247"></a>
-<a name="line-248"></a>		<span class="kt">int</span> <span class="n">gcount</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-<a name="line-249"></a>
-<a name="line-250"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">gcount</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-251"></a>
-<a name="line-252"></a>			<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;No Faces!&quot;</span><span class="p">);</span>
-<a name="line-253"></a>			<span class="n">err_dialog</span><span class="o">-&gt;</span><span class="n">popup_centered_minsize</span><span class="p">();</span>
-<a name="line-254"></a>			<span class="k">return</span><span class="p">;</span>
-<a name="line-255"></a>		<span class="p">}</span>
-<a name="line-256"></a>
-<a name="line-257"></a>		<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Face3</span><span class="o">&gt;::</span><span class="n">Read</span> <span class="n">r</span> <span class="o">=</span> <span class="n">geometry</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
-<a name="line-258"></a>
-<a name="line-259"></a>		<span class="n">AABB</span> <span class="n">aabb</span><span class="p">;</span>
+<a name="line-233"></a>      <span class="n">FT_FREE</span><span class="p">(</span> <span class="n">math</span> <span class="p">);</span>                 <span class="cm">/* Can&#39;t return this as API is frozen */</span>
+<a name="line-234"></a>    <span class="p">}</span>
+<a name="line-235"></a>
+<a name="line-236"></a>    <span class="k">return</span> <span class="n">error</span><span class="p">;</span>
+<a name="line-237"></a>  <span class="p">}</span>
+<a name="line-238"></a>
+<a name="line-239"></a>
+<a name="line-240"></a>  <span class="k">static</span>
+<a name="line-241"></a>  <span class="k">const</span> <span class="n">FT_Service_OTvalidateRec</span>  <span class="n">otvalid_interface</span> <span class="o">=</span>
+<a name="line-242"></a>  <span class="p">{</span>
+<a name="line-243"></a>    <span class="n">otv_validate</span>
+<a name="line-244"></a>  <span class="p">};</span>
+<a name="line-245"></a>
+<a name="line-246"></a>
+<a name="line-247"></a>  <span class="k">static</span>
+<a name="line-248"></a>  <span class="k">const</span> <span class="n">FT_ServiceDescRec</span>  <span class="n">otvalid_services</span><span class="p">[]</span> <span class="o">=</span>
+<a name="line-249"></a>  <span class="p">{</span>
+<a name="line-250"></a>    <span class="p">{</span> <span class="n">FT_SERVICE_ID_OPENTYPE_VALIDATE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">otvalid_interface</span> <span class="p">},</span>
+<a name="line-251"></a>    <span class="p">{</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">}</span>
+<a name="line-252"></a>  <span class="p">};</span>
+<a name="line-253"></a>
+<a name="line-254"></a>
+<a name="line-255"></a>  <span class="k">static</span> <span class="n">FT_Pointer</span>
+<a name="line-256"></a>  <span class="nf">otvalid_get_service</span><span class="p">(</span> <span class="n">FT_Module</span>    <span class="n">module</span><span class="p">,</span>
+<a name="line-257"></a>                       <span class="k">const</span> <span class="kt">char</span><span class="o">*</span>  <span class="n">service_id</span> <span class="p">)</span>
+<a name="line-258"></a>  <span class="p">{</span>
+<a name="line-259"></a>    <span class="n">FT_UNUSED</span><span class="p">(</span> <span class="n">module</span> <span class="p">);</span>
 <a name="line-260"></a>
-<a name="line-261"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">gcount</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-262"></a>
-<a name="line-263"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-261"></a>    <span class="k">return</span> <span class="n">ft_service_list_lookup</span><span class="p">(</span> <span class="n">otvalid_services</span><span class="p">,</span> <span class="n">service_id</span> <span class="p">);</span>
+<a name="line-262"></a>  <span class="p">}</span>
+<a name="line-263"></a>
 <a name="line-264"></a>
-<a name="line-265"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-266"></a>					<span class="n">aabb</span><span class="p">.</span><span class="n">pos</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">vertex</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<a name="line-267"></a>				<span class="k">else</span>
-<a name="line-268"></a>					<span class="n">aabb</span><span class="p">.</span><span class="n">expand_to</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">vertex</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
-<a name="line-269"></a>			<span class="p">}</span>
-<a name="line-270"></a>		<span class="p">}</span>
-<a name="line-271"></a>
-<a name="line-272"></a>		<span class="kt">int</span> <span class="n">emissor_count</span><span class="o">=</span><span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">get_val</span><span class="p">();</span>
+<a name="line-265"></a>  <span class="n">FT_CALLBACK_TABLE_DEF</span>
+<a name="line-266"></a>  <span class="k">const</span> <span class="n">FT_Module_Class</span>  <span class="n">otv_module_class</span> <span class="o">=</span>
+<a name="line-267"></a>  <span class="p">{</span>
+<a name="line-268"></a>    <span class="mi">0</span><span class="p">,</span>
+<a name="line-269"></a>    <span class="k">sizeof</span> <span class="p">(</span> <span class="n">FT_ModuleRec</span> <span class="p">),</span>
+<a name="line-270"></a>    <span class="s">&quot;otvalid&quot;</span><span class="p">,</span>
+<a name="line-271"></a>    <span class="mh">0x10000L</span><span class="p">,</span>
+<a name="line-272"></a>    <span class="mh">0x20000L</span><span class="p">,</span>
 <a name="line-273"></a>
-<a name="line-274"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">emissor_count</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-274"></a>    <span class="mi">0</span><span class="p">,</span>              <span class="cm">/* module-specific interface */</span>
 <a name="line-275"></a>
-<a name="line-276"></a>			<span class="kt">int</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span>
-<a name="line-277"></a>
-<a name="line-278"></a>			<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">attempts</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-279"></a>
-<a name="line-280"></a>				<span class="n">Vector3</span> <span class="n">dir</span><span class="p">;</span>
-<a name="line-281"></a>				<span class="n">dir</span><span class="p">[</span><span class="n">Math</span><span class="o">::</span><span class="n">rand</span><span class="p">()</span><span class="o">%</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span>
-<a name="line-282"></a><span class="hll">				<span class="n">Vector3</span> <span class="n">ofs</span> <span class="o">=</span> <span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">dir</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'ofs' is reassigned a value before the old one has been used.</span>
-</span><a name="line-283"></a>				<span class="n">ofs</span><span class="o">=</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">dir</span><span class="p">)</span><span class="o">*</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Math</span><span class="o">::</span><span class="n">randf</span><span class="p">(),</span><span class="n">Math</span><span class="o">::</span><span class="n">randf</span><span class="p">(),</span><span class="n">Math</span><span class="o">::</span><span class="n">randf</span><span class="p">())</span><span class="o">*</span><span class="n">aabb</span><span class="p">.</span><span class="n">size</span><span class="p">;</span>
-<a name="line-284"></a>				<span class="n">ofs</span><span class="o">+=</span><span class="n">aabb</span><span class="p">.</span><span class="n">pos</span><span class="p">;</span>
-<a name="line-285"></a>
-<a name="line-286"></a>				<span class="n">Vector3</span> <span class="n">dirv</span> <span class="o">=</span> <span class="o">-</span><span class="n">dir</span><span class="p">;</span>
-<a name="line-287"></a>				<span class="n">Vector3</span> <span class="n">ofsv</span> <span class="o">=</span> <span class="n">ofs</span> <span class="o">+</span> <span class="n">aabb</span><span class="p">.</span><span class="n">size</span> <span class="o">*</span> <span class="n">dir</span><span class="p">;</span>
-<a name="line-288"></a>
-<a name="line-289"></a>				<span class="c1">//space it a little</span>
-<a name="line-290"></a>				<span class="n">ofs</span> <span class="o">-=</span> <span class="n">dir</span><span class="p">;</span>
-<a name="line-291"></a>				<span class="n">ofsv</span> <span class="o">+=</span> <span class="n">dir</span><span class="p">;</span>
-<a name="line-292"></a>
-<a name="line-293"></a>				<span class="kt">float</span> <span class="n">max</span><span class="o">=-</span><span class="mf">1e7</span><span class="p">,</span><span class="n">min</span><span class="o">=</span><span class="mf">1e7</span><span class="p">;</span>
-<a name="line-294"></a>
-<a name="line-295"></a>				<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="n">gcount</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-296"></a>
-<a name="line-297"></a>					<span class="k">const</span> <span class="n">Face3</span><span class="o">&amp;</span> <span class="n">f3</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
-<a name="line-298"></a>
-<a name="line-299"></a>					<span class="n">Vector3</span> <span class="n">res</span><span class="p">;</span>
-<a name="line-300"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">f3</span><span class="p">.</span><span class="n">intersects_segment</span><span class="p">(</span><span class="n">ofs</span><span class="p">,</span><span class="n">ofsv</span><span class="p">,</span><span class="o">&amp;</span><span class="n">res</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-301"></a>
-<a name="line-302"></a>						<span class="n">res</span><span class="o">-=</span><span class="n">ofs</span><span class="p">;</span>
-<a name="line-303"></a>						<span class="kt">float</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dir</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
-<a name="line-304"></a>
-<a name="line-305"></a>						<span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">&lt;</span><span class="n">min</span><span class="p">)</span>
-<a name="line-306"></a>							<span class="n">min</span><span class="o">=</span><span class="n">d</span><span class="p">;</span>
-<a name="line-307"></a>						<span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">&gt;</span><span class="n">max</span><span class="p">)</span>
-<a name="line-308"></a>							<span class="n">max</span><span class="o">=</span><span class="n">d</span><span class="p">;</span>
-<a name="line-309"></a>
-<a name="line-310"></a>					<span class="p">}</span>
-<a name="line-311"></a>				<span class="p">}</span>
-<a name="line-312"></a>
-<a name="line-313"></a>
-<a name="line-314"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">max</span><span class="o">&lt;</span><span class="n">min</span><span class="p">)</span>
-<a name="line-315"></a>					<span class="k">continue</span><span class="p">;</span> <span class="c1">//lost attempt</span>
-<a name="line-316"></a>
-<a name="line-317"></a>				<span class="kt">float</span> <span class="n">val</span> <span class="o">=</span> <span class="n">min</span> <span class="o">+</span> <span class="p">(</span><span class="n">max</span><span class="o">-</span><span class="n">min</span><span class="p">)</span><span class="o">*</span><span class="n">Math</span><span class="o">::</span><span class="n">randf</span><span class="p">();</span>
-<a name="line-318"></a>
-<a name="line-319"></a>				<span class="n">Vector3</span> <span class="n">point</span> <span class="o">=</span> <span class="n">ofs</span> <span class="o">+</span> <span class="n">dir</span> <span class="o">*</span> <span class="n">val</span><span class="p">;</span>
-<a name="line-320"></a>
-<a name="line-321"></a>				<span class="n">points</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
-<a name="line-322"></a>				<span class="k">break</span><span class="p">;</span>
-<a name="line-323"></a>			<span class="p">}</span>
-<a name="line-324"></a>		<span class="p">}</span>
-<a name="line-325"></a>	<span class="p">}</span>
-<a name="line-326"></a>
-<a name="line-327"></a>	<span class="c1">//print_line(&quot;point count: &quot;+itos(points.size()));</span>
-<a name="line-328"></a>	<span class="n">node</span><span class="o">-&gt;</span><span class="n">set_emission_points</span><span class="p">(</span><span class="n">points</span><span class="p">);</span>
-<a name="line-329"></a>
-<a name="line-330"></a><span class="p">}</span>
-<a name="line-331"></a>
-<a name="line-332"></a><span class="kt">void</span> <span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-333"></a>
-<a name="line-334"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_menu_option&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_menu_option</span><span class="p">);</span>
-<a name="line-335"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_resource_seleted&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_resource_seleted</span><span class="p">);</span>
-<a name="line-336"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_node_selected&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_node_selected</span><span class="p">);</span>
-<a name="line-337"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_generate_emission_points&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">_generate_emission_points</span><span class="p">);</span>
-<a name="line-338"></a>
-<a name="line-339"></a>	<span class="c1">//ObjectTypeDB::bind_method(&quot;_populate&quot;,&amp;ParticlesEditor::_populate);</span>
-<a name="line-340"></a>
-<a name="line-341"></a><span class="p">}</span>
-<a name="line-342"></a>
-<a name="line-343"></a><span class="n">ParticlesEditor</span><span class="o">::</span><span class="n">ParticlesEditor</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-344"></a>
-<a name="line-345"></a>	<span class="n">particles_editor_hb</span> <span class="o">=</span> <span class="n">memnew</span> <span class="p">(</span> <span class="n">HBoxContainer</span> <span class="p">);</span>
-<a name="line-346"></a>	<span class="n">SpatialEditor</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_control_to_menu_panel</span><span class="p">(</span><span class="n">particles_editor_hb</span><span class="p">);</span>
-<a name="line-347"></a>	<span class="n">options</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">MenuButton</span> <span class="p">);</span>
-<a name="line-348"></a>	<span class="n">particles_editor_hb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
-<a name="line-349"></a>	<span class="n">particles_editor_hb</span><span class="o">-&gt;</span><span class="n">hide</span><span class="p">();</span>
-<a name="line-350"></a>
-<a name="line-351"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Particles&quot;</span><span class="p">);</span>
-<a name="line-352"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Generate AABB&quot;</span><span class="p">,</span><span class="n">MENU_OPTION_GENERATE_AABB</span><span class="p">);</span>
-<a name="line-353"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_separator</span><span class="p">();</span>
-<a name="line-354"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Create Emitter From Mesh&quot;</span><span class="p">,</span><span class="n">MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_MESH</span><span class="p">);</span>
-<a name="line-355"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Create Emitter From Node&quot;</span><span class="p">,</span><span class="n">MENU_OPTION_CREATE_EMISSION_VOLUME_FROM_NODE</span><span class="p">);</span>
-<a name="line-356"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Clear Emitter&quot;</span><span class="p">,</span><span class="n">MENU_OPTION_CLEAR_EMISSION_VOLUME</span><span class="p">);</span>
-<a name="line-357"></a>
-<a name="line-358"></a>	<span class="n">options</span><span class="o">-&gt;</span><span class="n">get_popup</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;item_pressed&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_menu_option&quot;</span><span class="p">);</span>
-<a name="line-359"></a>
-<a name="line-360"></a>	<span class="n">emission_dialog</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ConfirmationDialog</span> <span class="p">);</span>
-<a name="line-361"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Create Emitter&quot;</span><span class="p">);</span>
-<a name="line-362"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">emission_dialog</span><span class="p">);</span>
-<a name="line-363"></a>	<span class="n">Label</span> <span class="o">*</span><span class="n">l</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">Label</span><span class="p">);</span>
-<a name="line-364"></a>	<span class="n">l</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span><span class="n">Point2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">));</span>
-<a name="line-365"></a>	<span class="n">l</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Emission Positions:&quot;</span><span class="p">);</span>
-<a name="line-366"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
-<a name="line-367"></a>
-<a name="line-368"></a>
-<a name="line-369"></a>	<span class="n">emission_amount</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">SpinBox</span> <span class="p">);</span>
-<a name="line-370"></a>	<span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">set_anchor</span><span class="p">(</span><span class="n">MARGIN_RIGHT</span><span class="p">,</span><span class="n">ANCHOR_END</span><span class="p">);</span>
-<a name="line-371"></a>	<span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">set_begin</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">23</span><span class="p">));</span>
-<a name="line-372"></a>	<span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">set_end</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">25</span><span class="p">));</span>
-<a name="line-373"></a>	<span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">set_min</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-374"></a>	<span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">set_max</span><span class="p">(</span><span class="mi">65536</span><span class="p">);</span>
-<a name="line-375"></a>	<span class="n">emission_amount</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="mi">512</span><span class="p">);</span>
-<a name="line-376"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">emission_amount</span><span class="p">);</span>
-<a name="line-377"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">get_ok</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Create&quot;</span><span class="p">);</span>
-<a name="line-378"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;confirmed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_generate_emission_points&quot;</span><span class="p">);</span>
-<a name="line-379"></a>
-<a name="line-380"></a>	<span class="n">l</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span><span class="n">Label</span><span class="p">);</span>
-<a name="line-381"></a>	<span class="n">l</span><span class="o">-&gt;</span><span class="n">set_pos</span><span class="p">(</span><span class="n">Point2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">50</span><span class="p">));</span>
-<a name="line-382"></a>	<span class="n">l</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Emission Fill:&quot;</span><span class="p">);</span>
-<a name="line-383"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
-<a name="line-384"></a>
-<a name="line-385"></a>	<span class="n">emission_fill</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">OptionButton</span> <span class="p">);</span>
-<a name="line-386"></a>	<span class="n">emission_fill</span><span class="o">-&gt;</span><span class="n">set_anchor</span><span class="p">(</span><span class="n">MARGIN_RIGHT</span><span class="p">,</span><span class="n">ANCHOR_END</span><span class="p">);</span>
-<a name="line-387"></a>	<span class="n">emission_fill</span><span class="o">-&gt;</span><span class="n">set_begin</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">70</span><span class="p">));</span>
-<a name="line-388"></a>	<span class="n">emission_fill</span><span class="o">-&gt;</span><span class="n">set_end</span><span class="p">(</span> <span class="n">Point2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">75</span><span class="p">));</span>
-<a name="line-389"></a>	<span class="n">emission_fill</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Surface&quot;</span><span class="p">);</span>
-<a name="line-390"></a>	<span class="n">emission_fill</span><span class="o">-&gt;</span><span class="n">add_item</span><span class="p">(</span><span class="s">&quot;Volume&quot;</span><span class="p">);</span>
-<a name="line-391"></a>	<span class="n">emission_dialog</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">emission_fill</span><span class="p">);</span>
-<a name="line-392"></a>
-<a name="line-393"></a>	<span class="n">err_dialog</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ConfirmationDialog</span> <span class="p">);</span>
-<a name="line-394"></a>	<span class="c1">//err_dialog-&gt;get_cancel()-&gt;hide();</span>
-<a name="line-395"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">err_dialog</span><span class="p">);</span>
-<a name="line-396"></a>
-<a name="line-397"></a>
-<a name="line-398"></a>	<span class="n">emission_file_dialog</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">EditorFileDialog</span> <span class="p">);</span>
-<a name="line-399"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">emission_file_dialog</span><span class="p">);</span>
-<a name="line-400"></a>	<span class="n">emission_file_dialog</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;file_selected&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_resource_seleted&quot;</span><span class="p">);</span>
-<a name="line-401"></a>	<span class="n">emission_tree_dialog</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">SceneTreeDialog</span> <span class="p">);</span>
-<a name="line-402"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">emission_tree_dialog</span><span class="p">);</span>
-<a name="line-403"></a>	<span class="n">emission_tree_dialog</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;selected&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_node_selected&quot;</span><span class="p">);</span>
-<a name="line-404"></a>
-<a name="line-405"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">extensions</span><span class="p">;</span>
-<a name="line-406"></a>	<span class="n">ResourceLoader</span><span class="o">::</span><span class="n">get_recognized_extensions_for_type</span><span class="p">(</span><span class="s">&quot;Mesh&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">extensions</span><span class="p">);</span>
-<a name="line-407"></a>
-<a name="line-408"></a>	<span class="n">emission_file_dialog</span><span class="o">-&gt;</span><span class="n">clear_filters</span><span class="p">();</span>
-<a name="line-409"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">extensions</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-410"></a>
-<a name="line-411"></a>		<span class="n">emission_file_dialog</span><span class="o">-&gt;</span><span class="n">add_filter</span><span class="p">(</span><span class="s">&quot;*.&quot;</span><span class="o">+</span><span class="n">extensions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s">&quot; ; &quot;</span><span class="o">+</span><span class="n">extensions</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">to_upper</span><span class="p">());</span>
-<a name="line-412"></a>	<span class="p">}</span>
-<a name="line-413"></a>
-<a name="line-414"></a>	<span class="n">emission_file_dialog</span><span class="o">-&gt;</span><span class="n">set_mode</span><span class="p">(</span><span class="n">EditorFileDialog</span><span class="o">::</span><span class="n">MODE_OPEN_FILE</span><span class="p">);</span>
-<a name="line-415"></a>
-<a name="line-416"></a>	<span class="c1">//options-&gt;set_anchor(MARGIN_LEFT,Control::ANCHOR_END);</span>
-<a name="line-417"></a>	<span class="c1">//options-&gt;set_anchor(MARGIN_RIGHT,Control::ANCHOR_END);</span>
-<a name="line-418"></a>
-<a name="line-419"></a><span class="p">}</span>
-<a name="line-420"></a>
-<a name="line-421"></a>
-<a name="line-422"></a><span class="kt">void</span> <span class="n">ParticlesEditorPlugin</span><span class="o">::</span><span class="n">edit</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-423"></a>
-<a name="line-424"></a>	<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">edit</span><span class="p">(</span><span class="n">p_object</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">Particles</span><span class="o">&gt;</span><span class="p">());</span>
-<a name="line-425"></a><span class="p">}</span>
-<a name="line-426"></a>
-<a name="line-427"></a><span class="kt">bool</span> <span class="n">ParticlesEditorPlugin</span><span class="o">::</span><span class="n">handles</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-428"></a>
-<a name="line-429"></a>	<span class="k">return</span> <span class="n">p_object</span><span class="o">-&gt;</span><span class="n">is_type</span><span class="p">(</span><span class="s">&quot;Particles&quot;</span><span class="p">);</span>
-<a name="line-430"></a><span class="p">}</span>
-<a name="line-431"></a>
-<a name="line-432"></a><span class="kt">void</span> <span class="n">ParticlesEditorPlugin</span><span class="o">::</span><span class="n">make_visible</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_visible</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-433"></a>
-<a name="line-434"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_visible</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-435"></a>		<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">();</span>
-<a name="line-436"></a>		<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">particles_editor_hb</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">();</span>
-<a name="line-437"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-438"></a>		<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">particles_editor_hb</span><span class="o">-&gt;</span><span class="n">hide</span><span class="p">();</span>
-<a name="line-439"></a>		<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">hide</span><span class="p">();</span>
-<a name="line-440"></a>		<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">edit</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-441"></a>	<span class="p">}</span>
-<a name="line-442"></a>
-<a name="line-443"></a><span class="p">}</span>
-<a name="line-444"></a>
-<a name="line-445"></a><span class="n">ParticlesEditorPlugin</span><span class="o">::</span><span class="n">ParticlesEditorPlugin</span><span class="p">(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-446"></a>
-<a name="line-447"></a>	<span class="n">editor</span><span class="o">=</span><span class="n">p_node</span><span class="p">;</span>
-<a name="line-448"></a>	<span class="n">particles_editor</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ParticlesEditor</span> <span class="p">);</span>
-<a name="line-449"></a>	<span class="n">editor</span><span class="o">-&gt;</span><span class="n">get_viewport</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">particles_editor</span><span class="p">);</span>
-<a name="line-450"></a>
-<a name="line-451"></a>	<span class="n">particles_editor</span><span class="o">-&gt;</span><span class="n">hide</span><span class="p">();</span>
-<a name="line-452"></a><span class="p">}</span>
-<a name="line-453"></a>
-<a name="line-454"></a>
-<a name="line-455"></a><span class="n">ParticlesEditorPlugin</span><span class="o">::~</span><span class="n">ParticlesEditorPlugin</span><span class="p">()</span>
-<a name="line-456"></a><span class="p">{</span>
-<a name="line-457"></a><span class="p">}</span>
+<a name="line-276"></a>    <span class="p">(</span><span class="n">FT_Module_Constructor</span><span class="p">)</span><span class="mi">0</span><span class="p">,</span>
+<a name="line-277"></a>    <span class="p">(</span><span class="n">FT_Module_Destructor</span><span class="p">)</span> <span class="mi">0</span><span class="p">,</span>
+<a name="line-278"></a>    <span class="p">(</span><span class="n">FT_Module_Requester</span><span class="p">)</span>  <span class="n">otvalid_get_service</span>
+<a name="line-279"></a>  <span class="p">};</span>
+<a name="line-280"></a>
+<a name="line-281"></a>
+<a name="line-282"></a><span class="cm">/* END */</span>
 </pre></div>
 </td></tr></table>
       </div>

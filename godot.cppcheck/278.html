@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/ec/ec_mult.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/ocsp/ocsp_vfy.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> ec_mult.c</p>
-<a href='278.html#line-505'> oppositeInnerCondition 505</a>
+       <p id="filename"><a href="index.html">Defects:</a> ocsp_vfy.c</p>
+<a href='278.html#line-193'> variableScope 193</a><a href='278.html#line-219'> variableScope 219</a><a href='278.html#line-263'> variableScope 263</a><a href='278.html#line-335'> variableScope 335</a><a href='278.html#line-336'> variableScope 336</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -563,502 +563,12 @@
 447
 448
 449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592
-593
-594
-595
-596
-597
-598
-599
-600
-601
-602
-603
-604
-605
-606
-607
-608
-609
-610
-611
-612
-613
-614
-615
-616
-617
-618
-619
-620
-621
-622
-623
-624
-625
-626
-627
-628
-629
-630
-631
-632
-633
-634
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648
-649
-650
-651
-652
-653
-654
-655
-656
-657
-658
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736
-737
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747
-748
-749
-750
-751
-752
-753
-754
-755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767
-768
-769
-770
-771
-772
-773
-774
-775
-776
-777
-778
-779
-780
-781
-782
-783
-784
-785
-786
-787
-788
-789
-790
-791
-792
-793
-794
-795
-796
-797
-798
-799
-800
-801
-802
-803
-804
-805
-806
-807
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
-824
-825
-826
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838
-839
-840
-841
-842
-843
-844
-845
-846
-847
-848
-849
-850
-851
-852
-853
-854
-855
-856
-857
-858
-859
-860
-861
-862
-863
-864
-865
-866
-867
-868
-869
-870
-871
-872
-873
-874
-875
-876
-877
-878
-879
-880
-881
-882
-883
-884
-885
-886
-887
-888
-889
-890
-891
-892
-893
-894
-895
-896
-897
-898
-899
-900
-901
-902
-903
-904
-905
-906
-907
-908
-909
-910
-911
-912
-913
-914
-915
-916
-917
-918
-919
-920
-921
-922
-923
-924
-925
-926
-927
-928
-929
-930
-931
-932
-933
-934
-935
-936
-937
-938
-939
-940</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/ec/ec_mult.c */</span>
-<a name="line-2"></a><span class="cm">/*</span>
-<a name="line-3"></a><span class="cm"> * Originally written by Bodo Moeller and Nils Larsch for the OpenSSL project.</span>
+450</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* ocsp_vfy.c */</span>
+<a name="line-2"></a><span class="cm">/* Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL</span>
+<a name="line-3"></a><span class="cm"> * project 2000.</span>
 <a name="line-4"></a><span class="cm"> */</span>
 <a name="line-5"></a><span class="cm">/* ====================================================================</span>
-<a name="line-6"></a><span class="cm"> * Copyright (c) 1998-2007 The OpenSSL Project.  All rights reserved.</span>
+<a name="line-6"></a><span class="cm"> * Copyright (c) 2000-2004 The OpenSSL Project.  All rights reserved.</span>
 <a name="line-7"></a><span class="cm"> *</span>
 <a name="line-8"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
 <a name="line-9"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
@@ -1075,12 +585,12 @@
 <a name="line-20"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
 <a name="line-21"></a><span class="cm"> *    software must display the following acknowledgment:</span>
 <a name="line-22"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
-<a name="line-23"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)&quot;</span>
+<a name="line-23"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
 <a name="line-24"></a><span class="cm"> *</span>
 <a name="line-25"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
 <a name="line-26"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
 <a name="line-27"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
-<a name="line-28"></a><span class="cm"> *    openssl-core@openssl.org.</span>
+<a name="line-28"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
 <a name="line-29"></a><span class="cm"> *</span>
 <a name="line-30"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
 <a name="line-31"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
@@ -1089,7 +599,7 @@
 <a name="line-34"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
 <a name="line-35"></a><span class="cm"> *    acknowledgment:</span>
 <a name="line-36"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
-<a name="line-37"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.openssl.org/)&quot;</span>
+<a name="line-37"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
 <a name="line-38"></a><span class="cm"> *</span>
 <a name="line-39"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
 <a name="line-40"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
@@ -1110,889 +620,459 @@
 <a name="line-55"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
 <a name="line-56"></a><span class="cm"> *</span>
 <a name="line-57"></a><span class="cm"> */</span>
-<a name="line-58"></a><span class="cm">/* ====================================================================</span>
-<a name="line-59"></a><span class="cm"> * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.</span>
-<a name="line-60"></a><span class="cm"> * Portions of this software developed by SUN MICROSYSTEMS, INC.,</span>
-<a name="line-61"></a><span class="cm"> * and contributed to the OpenSSL project.</span>
-<a name="line-62"></a><span class="cm"> */</span>
-<a name="line-63"></a>
-<a name="line-64"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-65"></a>
-<a name="line-66"></a><span class="cp">#include &lt;openssl/err.h&gt;</span>
-<a name="line-67"></a>
-<a name="line-68"></a><span class="cp">#include &quot;ec_lcl.h&quot;</span>
-<a name="line-69"></a>
-<a name="line-70"></a>
-<a name="line-71"></a><span class="cm">/*</span>
-<a name="line-72"></a><span class="cm"> * This file implements the wNAF-based interleaving multi-exponentation method</span>
-<a name="line-73"></a><span class="cm"> * (&lt;URL:http://www.informatik.tu-darmstadt.de/TI/Mitarbeiter/moeller.html#multiexp&gt;);</span>
-<a name="line-74"></a><span class="cm"> * for multiplication with precomputation, we use wNAF splitting</span>
-<a name="line-75"></a><span class="cm"> * (&lt;URL:http://www.informatik.tu-darmstadt.de/TI/Mitarbeiter/moeller.html#fastexp&gt;).</span>
-<a name="line-76"></a><span class="cm"> */</span>
-<a name="line-77"></a>
-<a name="line-78"></a>
-<a name="line-79"></a>
-<a name="line-80"></a>
-<a name="line-81"></a><span class="cm">/* structure for precomputed multiples of the generator */</span>
-<a name="line-82"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="n">ec_pre_comp_st</span> <span class="p">{</span>
-<a name="line-83"></a>	<span class="k">const</span> <span class="n">EC_GROUP</span> <span class="o">*</span><span class="n">group</span><span class="p">;</span> <span class="cm">/* parent EC_GROUP object */</span>
-<a name="line-84"></a>	<span class="kt">size_t</span> <span class="n">blocksize</span><span class="p">;</span>      <span class="cm">/* block size for wNAF splitting */</span>
-<a name="line-85"></a>	<span class="kt">size_t</span> <span class="n">numblocks</span><span class="p">;</span>      <span class="cm">/* max. number of blocks for which we have precomputation */</span>
-<a name="line-86"></a>	<span class="kt">size_t</span> <span class="n">w</span><span class="p">;</span>              <span class="cm">/* window size */</span>
-<a name="line-87"></a>	<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">points</span><span class="p">;</span>     <span class="cm">/* array with pre-calculated multiples of generator:</span>
-<a name="line-88"></a><span class="cm">	                        * &#39;num&#39; pointers to EC_POINT objects followed by a NULL */</span>
-<a name="line-89"></a>	<span class="kt">size_t</span> <span class="n">num</span><span class="p">;</span>            <span class="cm">/* numblocks * 2^(w-1) */</span>
-<a name="line-90"></a>	<span class="kt">int</span> <span class="n">references</span><span class="p">;</span>
-<a name="line-91"></a><span class="p">}</span> <span class="n">EC_PRE_COMP</span><span class="p">;</span>
-<a name="line-92"></a> 
-<a name="line-93"></a><span class="cm">/* functions to manage EC_PRE_COMP within the EC_GROUP extra_data framework */</span>
-<a name="line-94"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">ec_pre_comp_dup</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-95"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">ec_pre_comp_free</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-96"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">ec_pre_comp_clear_free</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
-<a name="line-97"></a>
-<a name="line-98"></a><span class="k">static</span> <span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="nf">ec_pre_comp_new</span><span class="p">(</span><span class="k">const</span> <span class="n">EC_GROUP</span> <span class="o">*</span><span class="n">group</span><span class="p">)</span>
-<a name="line-99"></a>	<span class="p">{</span>
-<a name="line-100"></a>	<span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="n">ret</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-101"></a>
-<a name="line-102"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">group</span><span class="p">)</span>
-<a name="line-103"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-104"></a>
-<a name="line-105"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EC_PRE_COMP</span><span class="p">));</span>
-<a name="line-106"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ret</span><span class="p">)</span>
-<a name="line-107"></a>		<span class="p">{</span>
-<a name="line-108"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_PRE_COMP_NEW</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-109"></a>		<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-110"></a>		<span class="p">}</span>
-<a name="line-111"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="p">;</span>
-<a name="line-112"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">blocksize</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="cm">/* default */</span>
-<a name="line-113"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">numblocks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-114"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">w</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="cm">/* default */</span>
-<a name="line-115"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">points</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-116"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-117"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">references</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-118"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-119"></a>	<span class="p">}</span>
-<a name="line-120"></a>
-<a name="line-121"></a><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">ec_pre_comp_dup</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">src_</span><span class="p">)</span>
-<a name="line-122"></a>	<span class="p">{</span>
-<a name="line-123"></a>	<span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="n">src</span> <span class="o">=</span> <span class="n">src_</span><span class="p">;</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="cm">/* no need to actually copy, these objects never change! */</span>
-<a name="line-126"></a>
-<a name="line-127"></a>	<span class="n">CRYPTO_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">src</span><span class="o">-&gt;</span><span class="n">references</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CRYPTO_LOCK_EC_PRE_COMP</span><span class="p">);</span>
-<a name="line-128"></a>
-<a name="line-129"></a>	<span class="k">return</span> <span class="n">src_</span><span class="p">;</span>
-<a name="line-130"></a>	<span class="p">}</span>
-<a name="line-131"></a>
-<a name="line-132"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">ec_pre_comp_free</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">pre_</span><span class="p">)</span>
-<a name="line-133"></a>	<span class="p">{</span>
-<a name="line-134"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-135"></a>	<span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="n">pre</span> <span class="o">=</span> <span class="n">pre_</span><span class="p">;</span>
-<a name="line-136"></a>
-<a name="line-137"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pre</span><span class="p">)</span>
-<a name="line-138"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-139"></a>
-<a name="line-140"></a>	<span class="n">i</span> <span class="o">=</span> <span class="n">CRYPTO_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">references</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">CRYPTO_LOCK_EC_PRE_COMP</span><span class="p">);</span>
-<a name="line-141"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-142"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-58"></a>
+<a name="line-59"></a><span class="cp">#include &lt;openssl/ocsp.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &lt;openssl/err.h&gt;</span>
+<a name="line-61"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-62"></a>
+<a name="line-63"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_find_signer</span><span class="p">(</span><span class="n">X509</span> <span class="o">**</span><span class="n">psigner</span><span class="p">,</span> <span class="n">OCSP_BASICRESP</span> <span class="o">*</span><span class="n">bs</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
+<a name="line-64"></a>				<span class="n">X509_STORE</span> <span class="o">*</span><span class="n">st</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-65"></a><span class="k">static</span> <span class="n">X509</span> <span class="o">*</span><span class="nf">ocsp_find_signer_sk</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span> <span class="n">OCSP_RESPID</span> <span class="o">*</span><span class="n">id</span><span class="p">);</span>
+<a name="line-66"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_check_issuer</span><span class="p">(</span><span class="n">OCSP_BASICRESP</span> <span class="o">*</span><span class="n">bs</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">chain</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-67"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_check_ids</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">OCSP_SINGLERESP</span><span class="p">)</span> <span class="o">*</span><span class="n">sresp</span><span class="p">,</span> <span class="n">OCSP_CERTID</span> <span class="o">**</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-68"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_match_issuerid</span><span class="p">(</span><span class="n">X509</span> <span class="o">*</span><span class="n">cert</span><span class="p">,</span> <span class="n">OCSP_CERTID</span> <span class="o">*</span><span class="n">cid</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">OCSP_SINGLERESP</span><span class="p">)</span> <span class="o">*</span><span class="n">sresp</span><span class="p">);</span>
+<a name="line-69"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_check_delegated</span><span class="p">(</span><span class="n">X509</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-70"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_req_find_signer</span><span class="p">(</span><span class="n">X509</span> <span class="o">**</span><span class="n">psigner</span><span class="p">,</span> <span class="n">OCSP_REQUEST</span> <span class="o">*</span><span class="n">req</span><span class="p">,</span> <span class="n">X509_NAME</span> <span class="o">*</span><span class="n">nm</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
+<a name="line-71"></a>				<span class="n">X509_STORE</span> <span class="o">*</span><span class="n">st</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-72"></a>
+<a name="line-73"></a><span class="cm">/* Verify a basic response message */</span>
+<a name="line-74"></a>
+<a name="line-75"></a><span class="kt">int</span> <span class="nf">OCSP_basic_verify</span><span class="p">(</span><span class="n">OCSP_BASICRESP</span> <span class="o">*</span><span class="n">bs</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
+<a name="line-76"></a>				<span class="n">X509_STORE</span> <span class="o">*</span><span class="n">st</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">)</span>
+<a name="line-77"></a>	<span class="p">{</span>
+<a name="line-78"></a>	<span class="n">X509</span> <span class="o">*</span><span class="n">signer</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">chain</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-80"></a>	<span class="n">X509_STORE_CTX</span> <span class="n">ctx</span><span class="p">;</span>
+<a name="line-81"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-82"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">ocsp_find_signer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">signer</span><span class="p">,</span> <span class="n">bs</span><span class="p">,</span> <span class="n">certs</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-83"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ret</span><span class="p">)</span>
+<a name="line-84"></a>		<span class="p">{</span>
+<a name="line-85"></a>		<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_BASIC_VERIFY</span><span class="p">,</span> <span class="n">OCSP_R_SIGNER_CERTIFICATE_NOT_FOUND</span><span class="p">);</span>
+<a name="line-86"></a>		<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-87"></a>		<span class="p">}</span>
+<a name="line-88"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_TRUSTOTHER</span><span class="p">))</span>
+<a name="line-89"></a>		<span class="n">flags</span> <span class="o">|=</span> <span class="n">OCSP_NOVERIFY</span><span class="p">;</span>
+<a name="line-90"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOSIGS</span><span class="p">))</span>
+<a name="line-91"></a>		<span class="p">{</span>
+<a name="line-92"></a>		<span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">skey</span><span class="p">;</span>
+<a name="line-93"></a>		<span class="n">skey</span> <span class="o">=</span> <span class="n">X509_get_pubkey</span><span class="p">(</span><span class="n">signer</span><span class="p">);</span>
+<a name="line-94"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">skey</span><span class="p">)</span>
+<a name="line-95"></a>			<span class="p">{</span>
+<a name="line-96"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="n">OCSP_BASICRESP_verify</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="n">skey</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-97"></a>			<span class="n">EVP_PKEY_free</span><span class="p">(</span><span class="n">skey</span><span class="p">);</span>
+<a name="line-98"></a>			<span class="p">}</span>
+<a name="line-99"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">skey</span> <span class="o">||</span> <span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-100"></a>			<span class="p">{</span>
+<a name="line-101"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_BASIC_VERIFY</span><span class="p">,</span> <span class="n">OCSP_R_SIGNATURE_FAILURE</span><span class="p">);</span>
+<a name="line-102"></a>			<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-103"></a>			<span class="p">}</span>
+<a name="line-104"></a>		<span class="p">}</span>
+<a name="line-105"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOVERIFY</span><span class="p">))</span>
+<a name="line-106"></a>		<span class="p">{</span>
+<a name="line-107"></a>		<span class="kt">int</span> <span class="n">init_res</span><span class="p">;</span>
+<a name="line-108"></a>		<span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOCHAIN</span><span class="p">)</span>
+<a name="line-109"></a>			<span class="n">init_res</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">signer</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-110"></a>		<span class="k">else</span>
+<a name="line-111"></a>			<span class="n">init_res</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">signer</span><span class="p">,</span> <span class="n">bs</span><span class="o">-&gt;</span><span class="n">certs</span><span class="p">);</span>
+<a name="line-112"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">init_res</span><span class="p">)</span>
+<a name="line-113"></a>			<span class="p">{</span>
+<a name="line-114"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-115"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_BASIC_VERIFY</span><span class="p">,</span><span class="n">ERR_R_X509_LIB</span><span class="p">);</span>
+<a name="line-116"></a>			<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-117"></a>			<span class="p">}</span>
+<a name="line-118"></a>
+<a name="line-119"></a>		<span class="n">X509_STORE_CTX_set_purpose</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">X509_PURPOSE_OCSP_HELPER</span><span class="p">);</span>
+<a name="line-120"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">X509_verify_cert</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+<a name="line-121"></a>		<span class="n">chain</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_get1_chain</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+<a name="line-122"></a>		<span class="n">X509_STORE_CTX_cleanup</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+<a name="line-123"></a>                <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-124"></a>			<span class="p">{</span>
+<a name="line-125"></a>			<span class="n">i</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_get_error</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>	
+<a name="line-126"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_BASIC_VERIFY</span><span class="p">,</span><span class="n">OCSP_R_CERTIFICATE_VERIFY_ERROR</span><span class="p">);</span>
+<a name="line-127"></a>			<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;Verify error:&quot;</span><span class="p">,</span>
+<a name="line-128"></a>					<span class="n">X509_verify_cert_error_string</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<a name="line-129"></a>                        <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-130"></a>                	<span class="p">}</span>
+<a name="line-131"></a>		<span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOCHECKS</span><span class="p">)</span>
+<a name="line-132"></a>			<span class="p">{</span>
+<a name="line-133"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-134"></a>			<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-135"></a>			<span class="p">}</span>
+<a name="line-136"></a>		<span class="cm">/* At this point we have a valid certificate chain</span>
+<a name="line-137"></a><span class="cm">		 * need to verify it against the OCSP issuer criteria.</span>
+<a name="line-138"></a><span class="cm">		 */</span>
+<a name="line-139"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">ocsp_check_issuer</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="n">chain</span><span class="p">,</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-140"></a>
+<a name="line-141"></a>		<span class="cm">/* If fatal error or valid match then finish */</span>
+<a name="line-142"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
 <a name="line-143"></a>
-<a name="line-144"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">)</span>
-<a name="line-145"></a>		<span class="p">{</span>
-<a name="line-146"></a>		<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">p</span><span class="p">;</span>
-<a name="line-147"></a>
-<a name="line-148"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">pre</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span>
-<a name="line-149"></a>			<span class="n">EC_POINT_free</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span>
-<a name="line-150"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">);</span>
-<a name="line-151"></a>		<span class="p">}</span>
-<a name="line-152"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">pre</span><span class="p">);</span>
-<a name="line-153"></a>	<span class="p">}</span>
-<a name="line-154"></a>
-<a name="line-155"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">ec_pre_comp_clear_free</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">pre_</span><span class="p">)</span>
-<a name="line-156"></a>	<span class="p">{</span>
-<a name="line-157"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-158"></a>	<span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="n">pre</span> <span class="o">=</span> <span class="n">pre_</span><span class="p">;</span>
+<a name="line-144"></a>		<span class="cm">/* Easy case: explicitly trusted. Get root CA and</span>
+<a name="line-145"></a><span class="cm">		 * check for explicit trust</span>
+<a name="line-146"></a><span class="cm">		 */</span>
+<a name="line-147"></a>		<span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOEXPLICIT</span><span class="p">)</span> <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-148"></a>
+<a name="line-149"></a>		<span class="n">x</span> <span class="o">=</span> <span class="n">sk_X509_value</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">sk_X509_num</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-150"></a>		<span class="k">if</span><span class="p">(</span><span class="n">X509_check_trust</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">NID_OCSP_sign</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">X509_TRUST_TRUSTED</span><span class="p">)</span>
+<a name="line-151"></a>			<span class="p">{</span>
+<a name="line-152"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_BASIC_VERIFY</span><span class="p">,</span><span class="n">OCSP_R_ROOT_CA_NOT_TRUSTED</span><span class="p">);</span>
+<a name="line-153"></a>			<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-154"></a>			<span class="p">}</span>
+<a name="line-155"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-156"></a>		<span class="p">}</span>
+<a name="line-157"></a>
+<a name="line-158"></a>
 <a name="line-159"></a>
-<a name="line-160"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pre</span><span class="p">)</span>
-<a name="line-161"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-162"></a>
-<a name="line-163"></a>	<span class="n">i</span> <span class="o">=</span> <span class="n">CRYPTO_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">references</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">CRYPTO_LOCK_EC_PRE_COMP</span><span class="p">);</span>
-<a name="line-164"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-165"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-166"></a>
-<a name="line-167"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">)</span>
-<a name="line-168"></a>		<span class="p">{</span>
-<a name="line-169"></a>		<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">p</span><span class="p">;</span>
-<a name="line-170"></a>
-<a name="line-171"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">pre</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span>
-<a name="line-172"></a>			<span class="p">{</span>
-<a name="line-173"></a>			<span class="n">EC_POINT_clear_free</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span>
-<a name="line-174"></a>			<span class="n">OPENSSL_cleanse</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="k">sizeof</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
-<a name="line-175"></a>			<span class="p">}</span>
-<a name="line-176"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">);</span>
-<a name="line-177"></a>		<span class="p">}</span>
-<a name="line-178"></a>	<span class="n">OPENSSL_cleanse</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="k">sizeof</span> <span class="o">*</span><span class="n">pre</span><span class="p">);</span>
-<a name="line-179"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">pre</span><span class="p">);</span>
-<a name="line-180"></a>	<span class="p">}</span>
-<a name="line-181"></a>
-<a name="line-182"></a>
+<a name="line-160"></a>	<span class="nl">end</span><span class="p">:</span>
+<a name="line-161"></a>	<span class="k">if</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="n">sk_X509_pop_free</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">X509_free</span><span class="p">);</span>
+<a name="line-162"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<a name="line-163"></a>	<span class="p">}</span>
+<a name="line-164"></a>
+<a name="line-165"></a>
+<a name="line-166"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_find_signer</span><span class="p">(</span><span class="n">X509</span> <span class="o">**</span><span class="n">psigner</span><span class="p">,</span> <span class="n">OCSP_BASICRESP</span> <span class="o">*</span><span class="n">bs</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
+<a name="line-167"></a>				<span class="n">X509_STORE</span> <span class="o">*</span><span class="n">st</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">)</span>
+<a name="line-168"></a>	<span class="p">{</span>
+<a name="line-169"></a>	<span class="n">X509</span> <span class="o">*</span><span class="n">signer</span><span class="p">;</span>
+<a name="line-170"></a>	<span class="n">OCSP_RESPID</span> <span class="o">*</span><span class="n">rid</span> <span class="o">=</span> <span class="n">bs</span><span class="o">-&gt;</span><span class="n">tbsResponseData</span><span class="o">-&gt;</span><span class="n">responderId</span><span class="p">;</span>
+<a name="line-171"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">signer</span> <span class="o">=</span> <span class="n">ocsp_find_signer_sk</span><span class="p">(</span><span class="n">certs</span><span class="p">,</span> <span class="n">rid</span><span class="p">)))</span>
+<a name="line-172"></a>		<span class="p">{</span>
+<a name="line-173"></a>		<span class="o">*</span><span class="n">psigner</span> <span class="o">=</span> <span class="n">signer</span><span class="p">;</span>
+<a name="line-174"></a>		<span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-175"></a>		<span class="p">}</span>
+<a name="line-176"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOINTERN</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-177"></a>	    <span class="p">(</span><span class="n">signer</span> <span class="o">=</span> <span class="n">ocsp_find_signer_sk</span><span class="p">(</span><span class="n">bs</span><span class="o">-&gt;</span><span class="n">certs</span><span class="p">,</span> <span class="n">rid</span><span class="p">)))</span>
+<a name="line-178"></a>		<span class="p">{</span>
+<a name="line-179"></a>		<span class="o">*</span><span class="n">psigner</span> <span class="o">=</span> <span class="n">signer</span><span class="p">;</span>
+<a name="line-180"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-181"></a>		<span class="p">}</span>
+<a name="line-182"></a>	<span class="cm">/* Maybe lookup from store if by subject name */</span>
 <a name="line-183"></a>
-<a name="line-184"></a>
-<a name="line-185"></a><span class="cm">/* Determine the modified width-(w+1) Non-Adjacent Form (wNAF) of &#39;scalar&#39;.</span>
-<a name="line-186"></a><span class="cm"> * This is an array  r[]  of values that are either zero or odd with an</span>
-<a name="line-187"></a><span class="cm"> * absolute value less than  2^w  satisfying</span>
-<a name="line-188"></a><span class="cm"> *     scalar = \sum_j r[j]*2^j</span>
-<a name="line-189"></a><span class="cm"> * where at most one of any  w+1  consecutive digits is non-zero</span>
-<a name="line-190"></a><span class="cm"> * with the exception that the most significant digit may be only</span>
-<a name="line-191"></a><span class="cm"> * w-1 zeros away from that next non-zero digit.</span>
-<a name="line-192"></a><span class="cm"> */</span>
-<a name="line-193"></a><span class="k">static</span> <span class="kt">signed</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">compute_wNAF</span><span class="p">(</span><span class="k">const</span> <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">scalar</span><span class="p">,</span> <span class="kt">int</span> <span class="n">w</span><span class="p">,</span> <span class="kt">size_t</span> <span class="o">*</span><span class="n">ret_len</span><span class="p">)</span>
-<a name="line-194"></a>	<span class="p">{</span>
-<a name="line-195"></a>	<span class="kt">int</span> <span class="n">window_val</span><span class="p">;</span>
-<a name="line-196"></a>	<span class="kt">int</span> <span class="n">ok</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-197"></a>	<span class="kt">signed</span> <span class="kt">char</span> <span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-198"></a>	<span class="kt">int</span> <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-199"></a>	<span class="kt">int</span> <span class="n">bit</span><span class="p">,</span> <span class="n">next_bit</span><span class="p">,</span> <span class="n">mask</span><span class="p">;</span>
-<a name="line-200"></a>	<span class="kt">size_t</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
-<a name="line-201"></a>	
-<a name="line-202"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">BN_is_zero</span><span class="p">(</span><span class="n">scalar</span><span class="p">))</span>
-<a name="line-203"></a>		<span class="p">{</span>
-<a name="line-204"></a>		<span class="n">r</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-205"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">r</span><span class="p">)</span>
-<a name="line-206"></a>			<span class="p">{</span>
-<a name="line-207"></a>			<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-208"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-209"></a>			<span class="p">}</span>
-<a name="line-210"></a>		<span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-211"></a>		<span class="o">*</span><span class="n">ret_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-212"></a>		<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
-<a name="line-213"></a>		<span class="p">}</span>
-<a name="line-214"></a>		
-<a name="line-215"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">w</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">)</span> <span class="cm">/* &#39;signed char&#39; can represent integers with absolute values less than 2^7 */</span>
-<a name="line-216"></a>		<span class="p">{</span>
-<a name="line-217"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-218"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-219"></a>		<span class="p">}</span>
-<a name="line-220"></a>	<span class="n">bit</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">w</span><span class="p">;</span> <span class="cm">/* at most 128 */</span>
-<a name="line-221"></a>	<span class="n">next_bit</span> <span class="o">=</span> <span class="n">bit</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* at most 256 */</span>
-<a name="line-222"></a>	<span class="n">mask</span> <span class="o">=</span> <span class="n">next_bit</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* at most 255 */</span>
+<a name="line-184"></a>	<span class="o">*</span><span class="n">psigner</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-185"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-186"></a>	<span class="p">}</span>
+<a name="line-187"></a>
+<a name="line-188"></a>
+<a name="line-189"></a><span class="k">static</span> <span class="n">X509</span> <span class="o">*</span><span class="nf">ocsp_find_signer_sk</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span> <span class="n">OCSP_RESPID</span> <span class="o">*</span><span class="n">id</span><span class="p">)</span>
+<a name="line-190"></a>	<span class="p">{</span>
+<a name="line-191"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-192"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">tmphash</span><span class="p">[</span><span class="n">SHA_DIGEST_LENGTH</span><span class="p">],</span> <span class="o">*</span><span class="n">keyhash</span><span class="p">;</span>
+<a name="line-193"></a><span class="hll">	<span class="n">X509</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'x' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;x&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-194"></a>
+<a name="line-195"></a>	<span class="cm">/* Easy if lookup by name */</span>
+<a name="line-196"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">id</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">==</span> <span class="n">V_OCSP_RESPID_NAME</span><span class="p">)</span>
+<a name="line-197"></a>		<span class="k">return</span> <span class="n">X509_find_by_subject</span><span class="p">(</span><span class="n">certs</span><span class="p">,</span> <span class="n">id</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">byName</span><span class="p">);</span>
+<a name="line-198"></a>
+<a name="line-199"></a>	<span class="cm">/* Lookup by key hash */</span>
+<a name="line-200"></a>
+<a name="line-201"></a>	<span class="cm">/* If key hash isn&#39;t SHA1 length then forget it */</span>
+<a name="line-202"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">id</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">byKey</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">!=</span> <span class="n">SHA_DIGEST_LENGTH</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-203"></a>	<span class="n">keyhash</span> <span class="o">=</span> <span class="n">id</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">byKey</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+<a name="line-204"></a>	<span class="cm">/* Calculate hash of each key and compare */</span>
+<a name="line-205"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_X509_num</span><span class="p">(</span><span class="n">certs</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-206"></a>		<span class="p">{</span>
+<a name="line-207"></a>		<span class="n">x</span> <span class="o">=</span> <span class="n">sk_X509_value</span><span class="p">(</span><span class="n">certs</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<a name="line-208"></a>		<span class="n">X509_pubkey_digest</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">EVP_sha1</span><span class="p">(),</span> <span class="n">tmphash</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-209"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">memcmp</span><span class="p">(</span><span class="n">keyhash</span><span class="p">,</span> <span class="n">tmphash</span><span class="p">,</span> <span class="n">SHA_DIGEST_LENGTH</span><span class="p">))</span>
+<a name="line-210"></a>			<span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<a name="line-211"></a>		<span class="p">}</span>
+<a name="line-212"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-213"></a>	<span class="p">}</span>
+<a name="line-214"></a>
+<a name="line-215"></a>
+<a name="line-216"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_check_issuer</span><span class="p">(</span><span class="n">OCSP_BASICRESP</span> <span class="o">*</span><span class="n">bs</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">chain</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">)</span>
+<a name="line-217"></a>	<span class="p">{</span>
+<a name="line-218"></a>	<span class="n">STACK_OF</span><span class="p">(</span><span class="n">OCSP_SINGLERESP</span><span class="p">)</span> <span class="o">*</span><span class="n">sresp</span><span class="p">;</span>
+<a name="line-219"></a><span class="hll">	<span class="n">X509</span> <span class="o">*</span><span class="n">signer</span><span class="p">,</span> <span class="o">*</span><span class="n">sca</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'sca' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;sca&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-220"></a>	<span class="n">OCSP_CERTID</span> <span class="o">*</span><span class="n">caid</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-221"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-222"></a>	<span class="n">sresp</span> <span class="o">=</span> <span class="n">bs</span><span class="o">-&gt;</span><span class="n">tbsResponseData</span><span class="o">-&gt;</span><span class="n">responses</span><span class="p">;</span>
 <a name="line-223"></a>
-<a name="line-224"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">BN_is_negative</span><span class="p">(</span><span class="n">scalar</span><span class="p">))</span>
+<a name="line-224"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sk_X509_num</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
 <a name="line-225"></a>		<span class="p">{</span>
-<a name="line-226"></a>		<span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-227"></a>		<span class="p">}</span>
-<a name="line-228"></a>
-<a name="line-229"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">scalar</span><span class="o">-&gt;</span><span class="n">d</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">scalar</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-230"></a>		<span class="p">{</span>
-<a name="line-231"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-232"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-233"></a>		<span class="p">}</span>
-<a name="line-234"></a>
-<a name="line-235"></a>	<span class="n">len</span> <span class="o">=</span> <span class="n">BN_num_bits</span><span class="p">(</span><span class="n">scalar</span><span class="p">);</span>
-<a name="line-236"></a>	<span class="n">r</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span> <span class="cm">/* modified wNAF may be one digit longer than binary representation</span>
-<a name="line-237"></a><span class="cm">	                              * (*ret_len will be set to the actual length, i.e. at most</span>
-<a name="line-238"></a><span class="cm">	                              * BN_num_bits(scalar) + 1) */</span>
-<a name="line-239"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-240"></a>		<span class="p">{</span>
-<a name="line-241"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-242"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-243"></a>		<span class="p">}</span>
-<a name="line-244"></a>	<span class="n">window_val</span> <span class="o">=</span> <span class="n">scalar</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">;</span>
-<a name="line-245"></a>	<span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-246"></a>	<span class="k">while</span> <span class="p">((</span><span class="n">window_val</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">))</span> <span class="cm">/* if j+w+1 &gt;= len, window_val will not increase */</span>
-<a name="line-247"></a>		<span class="p">{</span>
-<a name="line-248"></a>		<span class="kt">int</span> <span class="n">digit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-249"></a>
-<a name="line-250"></a>		<span class="cm">/* 0 &lt;= window_val &lt;= 2^(w+1) */</span>
-<a name="line-251"></a>
-<a name="line-252"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">window_val</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-253"></a>			<span class="p">{</span>
-<a name="line-254"></a>			<span class="cm">/* 0 &lt; window_val &lt; 2^(w+1) */</span>
+<a name="line-226"></a>		<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_CHECK_ISSUER</span><span class="p">,</span> <span class="n">OCSP_R_NO_CERTIFICATES_IN_CHAIN</span><span class="p">);</span>
+<a name="line-227"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-228"></a>		<span class="p">}</span>
+<a name="line-229"></a>
+<a name="line-230"></a>	<span class="cm">/* See if the issuer IDs match. */</span>
+<a name="line-231"></a>	<span class="n">i</span> <span class="o">=</span> <span class="n">ocsp_check_ids</span><span class="p">(</span><span class="n">sresp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">caid</span><span class="p">);</span>
+<a name="line-232"></a>
+<a name="line-233"></a>	<span class="cm">/* If ID mismatch or other error then return */</span>
+<a name="line-234"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-235"></a>
+<a name="line-236"></a>	<span class="n">signer</span> <span class="o">=</span> <span class="n">sk_X509_value</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-237"></a>	<span class="cm">/* Check to see if OCSP responder CA matches request CA */</span>
+<a name="line-238"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">sk_X509_num</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-239"></a>		<span class="p">{</span>
+<a name="line-240"></a>		<span class="n">sca</span> <span class="o">=</span> <span class="n">sk_X509_value</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-241"></a>		<span class="n">i</span> <span class="o">=</span> <span class="n">ocsp_match_issuerid</span><span class="p">(</span><span class="n">sca</span><span class="p">,</span> <span class="n">caid</span><span class="p">,</span> <span class="n">sresp</span><span class="p">);</span>
+<a name="line-242"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-243"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a name="line-244"></a>			<span class="p">{</span>
+<a name="line-245"></a>			<span class="cm">/* We have a match, if extensions OK then success */</span>
+<a name="line-246"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ocsp_check_delegated</span><span class="p">(</span><span class="n">signer</span><span class="p">,</span> <span class="n">flags</span><span class="p">))</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-247"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-248"></a>			<span class="p">}</span>
+<a name="line-249"></a>		<span class="p">}</span>
+<a name="line-250"></a>
+<a name="line-251"></a>	<span class="cm">/* Otherwise check if OCSP request signed directly by request CA */</span>
+<a name="line-252"></a>	<span class="k">return</span> <span class="n">ocsp_match_issuerid</span><span class="p">(</span><span class="n">signer</span><span class="p">,</span> <span class="n">caid</span><span class="p">,</span> <span class="n">sresp</span><span class="p">);</span>
+<a name="line-253"></a>	<span class="p">}</span>
+<a name="line-254"></a>
 <a name="line-255"></a>
-<a name="line-256"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">window_val</span> <span class="o">&amp;</span> <span class="n">bit</span><span class="p">)</span>
-<a name="line-257"></a>				<span class="p">{</span>
-<a name="line-258"></a>				<span class="n">digit</span> <span class="o">=</span> <span class="n">window_val</span> <span class="o">-</span> <span class="n">next_bit</span><span class="p">;</span> <span class="cm">/* -2^w &lt; digit &lt; 0 */</span>
-<a name="line-259"></a>
-<a name="line-260"></a><span class="cp">#if 1 </span><span class="cm">/* modified wNAF */</span><span class="cp"></span>
-<a name="line-261"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-262"></a>					<span class="p">{</span>
-<a name="line-263"></a>					<span class="cm">/* special case for generating modified wNAFs:</span>
-<a name="line-264"></a><span class="cm">					 * no new bits will be added into window_val,</span>
-<a name="line-265"></a><span class="cm">					 * so using a positive digit here will decrease</span>
-<a name="line-266"></a><span class="cm">					 * the total length of the representation */</span>
-<a name="line-267"></a>					
-<a name="line-268"></a>					<span class="n">digit</span> <span class="o">=</span> <span class="n">window_val</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mask</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">);</span> <span class="cm">/* 0 &lt; digit &lt; 2^w */</span>
-<a name="line-269"></a>					<span class="p">}</span>
-<a name="line-270"></a><span class="cp">#endif</span>
-<a name="line-271"></a>				<span class="p">}</span>
-<a name="line-272"></a>			<span class="k">else</span>
-<a name="line-273"></a>				<span class="p">{</span>
-<a name="line-274"></a>				<span class="n">digit</span> <span class="o">=</span> <span class="n">window_val</span><span class="p">;</span> <span class="cm">/* 0 &lt; digit &lt; 2^w */</span>
-<a name="line-275"></a>				<span class="p">}</span>
-<a name="line-276"></a>			
-<a name="line-277"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">digit</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">bit</span> <span class="o">||</span> <span class="n">digit</span> <span class="o">&gt;=</span> <span class="n">bit</span> <span class="o">||</span> <span class="o">!</span><span class="p">(</span><span class="n">digit</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">))</span>
-<a name="line-278"></a>				<span class="p">{</span>
-<a name="line-279"></a>				<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-280"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-281"></a>				<span class="p">}</span>
-<a name="line-282"></a>
-<a name="line-283"></a>			<span class="n">window_val</span> <span class="o">-=</span> <span class="n">digit</span><span class="p">;</span>
-<a name="line-284"></a>
-<a name="line-285"></a>			<span class="cm">/* now window_val is 0 or 2^(w+1) in standard wNAF generation;</span>
-<a name="line-286"></a><span class="cm">			 * for modified window NAFs, it may also be 2^w</span>
-<a name="line-287"></a><span class="cm">			 */</span>
-<a name="line-288"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">window_val</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">window_val</span> <span class="o">!=</span> <span class="n">next_bit</span> <span class="o">&amp;&amp;</span> <span class="n">window_val</span> <span class="o">!=</span> <span class="n">bit</span><span class="p">)</span>
-<a name="line-289"></a>				<span class="p">{</span>
-<a name="line-290"></a>				<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-291"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-292"></a>				<span class="p">}</span>
-<a name="line-293"></a>			<span class="p">}</span>
-<a name="line-294"></a>
-<a name="line-295"></a>		<span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">digit</span><span class="p">;</span>
+<a name="line-256"></a><span class="cm">/* Check the issuer certificate IDs for equality. If there is a mismatch with the same</span>
+<a name="line-257"></a><span class="cm"> * algorithm then there&#39;s no point trying to match any certificates against the issuer.</span>
+<a name="line-258"></a><span class="cm"> * If the issuer IDs all match then we just need to check equality against one of them.</span>
+<a name="line-259"></a><span class="cm"> */</span>
+<a name="line-260"></a>	
+<a name="line-261"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_check_ids</span><span class="p">(</span><span class="n">STACK_OF</span><span class="p">(</span><span class="n">OCSP_SINGLERESP</span><span class="p">)</span> <span class="o">*</span><span class="n">sresp</span><span class="p">,</span> <span class="n">OCSP_CERTID</span> <span class="o">**</span><span class="n">ret</span><span class="p">)</span>
+<a name="line-262"></a>	<span class="p">{</span>
+<a name="line-263"></a><span class="hll">	<span class="n">OCSP_CERTID</span> <span class="o">*</span><span class="n">tmpid</span><span class="p">,</span> <span class="o">*</span><span class="n">cid</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'tmpid' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;tmpid&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-264"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">idcount</span><span class="p">;</span>
+<a name="line-265"></a>
+<a name="line-266"></a>	<span class="n">idcount</span> <span class="o">=</span> <span class="n">sk_OCSP_SINGLERESP_num</span><span class="p">(</span><span class="n">sresp</span><span class="p">);</span>
+<a name="line-267"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">idcount</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-268"></a>		<span class="p">{</span>
+<a name="line-269"></a>		<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_CHECK_IDS</span><span class="p">,</span> <span class="n">OCSP_R_RESPONSE_CONTAINS_NO_REVOCATION_DATA</span><span class="p">);</span>
+<a name="line-270"></a>		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-271"></a>		<span class="p">}</span>
+<a name="line-272"></a>
+<a name="line-273"></a>	<span class="n">cid</span> <span class="o">=</span> <span class="n">sk_OCSP_SINGLERESP_value</span><span class="p">(</span><span class="n">sresp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">certId</span><span class="p">;</span>
+<a name="line-274"></a>
+<a name="line-275"></a>	<span class="o">*</span><span class="n">ret</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-276"></a>
+<a name="line-277"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">idcount</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-278"></a>		<span class="p">{</span>
+<a name="line-279"></a>		<span class="n">tmpid</span> <span class="o">=</span> <span class="n">sk_OCSP_SINGLERESP_value</span><span class="p">(</span><span class="n">sresp</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">certId</span><span class="p">;</span>
+<a name="line-280"></a>		<span class="cm">/* Check to see if IDs match */</span>
+<a name="line-281"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">OCSP_id_issuer_cmp</span><span class="p">(</span><span class="n">cid</span><span class="p">,</span> <span class="n">tmpid</span><span class="p">))</span>
+<a name="line-282"></a>			<span class="p">{</span>
+<a name="line-283"></a>			<span class="cm">/* If algoritm mismatch let caller deal with it */</span>
+<a name="line-284"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">OBJ_cmp</span><span class="p">(</span><span class="n">tmpid</span><span class="o">-&gt;</span><span class="n">hashAlgorithm</span><span class="o">-&gt;</span><span class="n">algorithm</span><span class="p">,</span>
+<a name="line-285"></a>					<span class="n">cid</span><span class="o">-&gt;</span><span class="n">hashAlgorithm</span><span class="o">-&gt;</span><span class="n">algorithm</span><span class="p">))</span>
+<a name="line-286"></a>					<span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-287"></a>			<span class="cm">/* Else mismatch */</span>
+<a name="line-288"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-289"></a>			<span class="p">}</span>
+<a name="line-290"></a>		<span class="p">}</span>
+<a name="line-291"></a>
+<a name="line-292"></a>	<span class="cm">/* All IDs match: only need to check one ID */</span>
+<a name="line-293"></a>	<span class="o">*</span><span class="n">ret</span> <span class="o">=</span> <span class="n">cid</span><span class="p">;</span>
+<a name="line-294"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-295"></a>	<span class="p">}</span>
 <a name="line-296"></a>
-<a name="line-297"></a>		<span class="n">window_val</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-298"></a>		<span class="n">window_val</span> <span class="o">+=</span> <span class="n">bit</span> <span class="o">*</span> <span class="n">BN_is_bit_set</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">w</span><span class="p">);</span>
-<a name="line-299"></a>
-<a name="line-300"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">window_val</span> <span class="o">&gt;</span> <span class="n">next_bit</span><span class="p">)</span>
-<a name="line-301"></a>			<span class="p">{</span>
-<a name="line-302"></a>			<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-303"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-304"></a>			<span class="p">}</span>
-<a name="line-305"></a>		<span class="p">}</span>
-<a name="line-306"></a>
-<a name="line-307"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-308"></a>		<span class="p">{</span>
-<a name="line-309"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_COMPUTE_WNAF</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-310"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-311"></a>		<span class="p">}</span>
-<a name="line-312"></a>	<span class="n">len</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
-<a name="line-313"></a>	<span class="n">ok</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-314"></a>
-<a name="line-315"></a> <span class="nl">err</span><span class="p">:</span>
-<a name="line-316"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ok</span><span class="p">)</span>
-<a name="line-317"></a>		<span class="p">{</span>
-<a name="line-318"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
-<a name="line-319"></a>		<span class="n">r</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-320"></a>		<span class="p">}</span>
-<a name="line-321"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ok</span><span class="p">)</span>
-<a name="line-322"></a>		<span class="o">*</span><span class="n">ret_len</span> <span class="o">=</span> <span class="n">len</span><span class="p">;</span>
-<a name="line-323"></a>	<span class="k">return</span> <span class="n">r</span><span class="p">;</span>
-<a name="line-324"></a>	<span class="p">}</span>
-<a name="line-325"></a>
-<a name="line-326"></a>
-<a name="line-327"></a><span class="cm">/* TODO: table should be optimised for the wNAF-based implementation,</span>
-<a name="line-328"></a><span class="cm"> *       sometimes smaller windows will give better performance</span>
-<a name="line-329"></a><span class="cm"> *       (thus the boundaries should be increased)</span>
-<a name="line-330"></a><span class="cm"> */</span>
-<a name="line-331"></a><span class="cp">#define EC_window_bits_for_scalar_size(b) \</span>
-<a name="line-332"></a><span class="cp">		((size_t) \</span>
-<a name="line-333"></a><span class="cp">		 ((b) &gt;= 2000 ? 6 : \</span>
-<a name="line-334"></a><span class="cp">		  (b) &gt;=  800 ? 5 : \</span>
-<a name="line-335"></a><span class="cp">		  (b) &gt;=  300 ? 4 : \</span>
-<a name="line-336"></a><span class="cp">		  (b) &gt;=   70 ? 3 : \</span>
-<a name="line-337"></a><span class="cp">		  (b) &gt;=   20 ? 2 : \</span>
-<a name="line-338"></a><span class="cp">		  1))</span>
-<a name="line-339"></a>
-<a name="line-340"></a><span class="cm">/* Compute</span>
-<a name="line-341"></a><span class="cm"> *      \sum scalars[i]*points[i],</span>
-<a name="line-342"></a><span class="cm"> * also including</span>
-<a name="line-343"></a><span class="cm"> *      scalar*generator</span>
-<a name="line-344"></a><span class="cm"> * in the addition if scalar != NULL</span>
-<a name="line-345"></a><span class="cm"> */</span>
-<a name="line-346"></a><span class="kt">int</span> <span class="nf">ec_wNAF_mul</span><span class="p">(</span><span class="k">const</span> <span class="n">EC_GROUP</span> <span class="o">*</span><span class="n">group</span><span class="p">,</span> <span class="n">EC_POINT</span> <span class="o">*</span><span class="n">r</span><span class="p">,</span> <span class="k">const</span> <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">scalar</span><span class="p">,</span>
-<a name="line-347"></a>	<span class="kt">size_t</span> <span class="n">num</span><span class="p">,</span> <span class="k">const</span> <span class="n">EC_POINT</span> <span class="o">*</span><span class="n">points</span><span class="p">[],</span> <span class="k">const</span> <span class="n">BIGNUM</span> <span class="o">*</span><span class="n">scalars</span><span class="p">[],</span> <span class="n">BN_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-348"></a>	<span class="p">{</span>
-<a name="line-349"></a>	<span class="n">BN_CTX</span> <span class="o">*</span><span class="n">new_ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-350"></a>	<span class="k">const</span> <span class="n">EC_POINT</span> <span class="o">*</span><span class="n">generator</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-351"></a>	<span class="n">EC_POINT</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-352"></a>	<span class="kt">size_t</span> <span class="n">totalnum</span><span class="p">;</span>
-<a name="line-353"></a>	<span class="kt">size_t</span> <span class="n">blocksize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">numblocks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* for wNAF splitting */</span>
-<a name="line-354"></a>	<span class="kt">size_t</span> <span class="n">pre_points_per_block</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-355"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
-<a name="line-356"></a>	<span class="kt">int</span> <span class="n">k</span><span class="p">;</span>
-<a name="line-357"></a>	<span class="kt">int</span> <span class="n">r_is_inverted</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-358"></a>	<span class="kt">int</span> <span class="n">r_is_at_infinity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-359"></a>	<span class="kt">size_t</span> <span class="o">*</span><span class="n">wsize</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* individual window sizes */</span>
-<a name="line-360"></a>	<span class="kt">signed</span> <span class="kt">char</span> <span class="o">**</span><span class="n">wNAF</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* individual wNAFs */</span>
-<a name="line-361"></a>	<span class="kt">size_t</span> <span class="o">*</span><span class="n">wNAF_len</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-362"></a>	<span class="kt">size_t</span> <span class="n">max_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-363"></a>	<span class="kt">size_t</span> <span class="n">num_val</span><span class="p">;</span>
-<a name="line-364"></a>	<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">val</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* precomputation */</span>
-<a name="line-365"></a>	<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">v</span><span class="p">;</span>
-<a name="line-366"></a>	<span class="n">EC_POINT</span> <span class="o">***</span><span class="n">val_sub</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* pointers to sub-arrays of &#39;val&#39; or &#39;pre_comp-&gt;points&#39; */</span>
-<a name="line-367"></a>	<span class="k">const</span> <span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="n">pre_comp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-368"></a>	<span class="kt">int</span> <span class="n">num_scalar</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* flag: will be set to 1 if &#39;scalar&#39; must be treated like other scalars,</span>
-<a name="line-369"></a><span class="cm">	                     * i.e. precomputation is not available */</span>
-<a name="line-370"></a>	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-371"></a>	
-<a name="line-372"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">group</span><span class="o">-&gt;</span><span class="n">meth</span> <span class="o">!=</span> <span class="n">r</span><span class="o">-&gt;</span><span class="n">meth</span><span class="p">)</span>
-<a name="line-373"></a>		<span class="p">{</span>
-<a name="line-374"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">EC_R_INCOMPATIBLE_OBJECTS</span><span class="p">);</span>
-<a name="line-375"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-376"></a>		<span class="p">}</span>
-<a name="line-377"></a>
-<a name="line-378"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">scalar</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
-<a name="line-379"></a>		<span class="p">{</span>
-<a name="line-380"></a>		<span class="k">return</span> <span class="n">EC_POINT_set_to_infinity</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
-<a name="line-381"></a>		<span class="p">}</span>
-<a name="line-382"></a>
-<a name="line-383"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-297"></a>
+<a name="line-298"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_match_issuerid</span><span class="p">(</span><span class="n">X509</span> <span class="o">*</span><span class="n">cert</span><span class="p">,</span> <span class="n">OCSP_CERTID</span> <span class="o">*</span><span class="n">cid</span><span class="p">,</span>
+<a name="line-299"></a>			<span class="n">STACK_OF</span><span class="p">(</span><span class="n">OCSP_SINGLERESP</span><span class="p">)</span> <span class="o">*</span><span class="n">sresp</span><span class="p">)</span>
+<a name="line-300"></a>	<span class="p">{</span>
+<a name="line-301"></a>	<span class="cm">/* If only one ID to match then do it */</span>
+<a name="line-302"></a>	<span class="k">if</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span>
+<a name="line-303"></a>		<span class="p">{</span>
+<a name="line-304"></a>		<span class="k">const</span> <span class="n">EVP_MD</span> <span class="o">*</span><span class="n">dgst</span><span class="p">;</span>
+<a name="line-305"></a>		<span class="n">X509_NAME</span> <span class="o">*</span><span class="n">iname</span><span class="p">;</span>
+<a name="line-306"></a>		<span class="kt">int</span> <span class="n">mdlen</span><span class="p">;</span>
+<a name="line-307"></a>		<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">md</span><span class="p">[</span><span class="n">EVP_MAX_MD_SIZE</span><span class="p">];</span>
+<a name="line-308"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">dgst</span> <span class="o">=</span> <span class="n">EVP_get_digestbyobj</span><span class="p">(</span><span class="n">cid</span><span class="o">-&gt;</span><span class="n">hashAlgorithm</span><span class="o">-&gt;</span><span class="n">algorithm</span><span class="p">)))</span>
+<a name="line-309"></a>			<span class="p">{</span>
+<a name="line-310"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_MATCH_ISSUERID</span><span class="p">,</span> <span class="n">OCSP_R_UNKNOWN_MESSAGE_DIGEST</span><span class="p">);</span>
+<a name="line-311"></a>			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-312"></a>			<span class="p">}</span>
+<a name="line-313"></a>
+<a name="line-314"></a>		<span class="n">mdlen</span> <span class="o">=</span> <span class="n">EVP_MD_size</span><span class="p">(</span><span class="n">dgst</span><span class="p">);</span>
+<a name="line-315"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">mdlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-316"></a>		    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-317"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">cid</span><span class="o">-&gt;</span><span class="n">issuerNameHash</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">!=</span> <span class="n">mdlen</span><span class="p">)</span> <span class="o">||</span>
+<a name="line-318"></a>		   <span class="p">(</span><span class="n">cid</span><span class="o">-&gt;</span><span class="n">issuerKeyHash</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">!=</span> <span class="n">mdlen</span><span class="p">))</span>
+<a name="line-319"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-320"></a>		<span class="n">iname</span> <span class="o">=</span> <span class="n">X509_get_subject_name</span><span class="p">(</span><span class="n">cert</span><span class="p">);</span>
+<a name="line-321"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">X509_NAME_digest</span><span class="p">(</span><span class="n">iname</span><span class="p">,</span> <span class="n">dgst</span><span class="p">,</span> <span class="n">md</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span>
+<a name="line-322"></a>			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-323"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">md</span><span class="p">,</span> <span class="n">cid</span><span class="o">-&gt;</span><span class="n">issuerNameHash</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="n">mdlen</span><span class="p">))</span>
+<a name="line-324"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-325"></a>		<span class="n">X509_pubkey_digest</span><span class="p">(</span><span class="n">cert</span><span class="p">,</span> <span class="n">dgst</span><span class="p">,</span> <span class="n">md</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-326"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">md</span><span class="p">,</span> <span class="n">cid</span><span class="o">-&gt;</span><span class="n">issuerKeyHash</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="n">mdlen</span><span class="p">))</span>
+<a name="line-327"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-328"></a>
+<a name="line-329"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-330"></a>
+<a name="line-331"></a>		<span class="p">}</span>
+<a name="line-332"></a>	<span class="k">else</span>
+<a name="line-333"></a>		<span class="p">{</span>
+<a name="line-334"></a>		<span class="cm">/* We have to match the whole lot */</span>
+<a name="line-335"></a><span class="hll">		<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">ret</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ret' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ret&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-336"></a><span class="hll">		<span class="n">OCSP_CERTID</span> <span class="o">*</span><span class="n">tmpid</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'tmpid' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;tmpid&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-337"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sk_OCSP_SINGLERESP_num</span><span class="p">(</span><span class="n">sresp</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-338"></a>			<span class="p">{</span>
+<a name="line-339"></a>			<span class="n">tmpid</span> <span class="o">=</span> <span class="n">sk_OCSP_SINGLERESP_value</span><span class="p">(</span><span class="n">sresp</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">certId</span><span class="p">;</span>
+<a name="line-340"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="n">ocsp_match_issuerid</span><span class="p">(</span><span class="n">cert</span><span class="p">,</span> <span class="n">tmpid</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-341"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<a name="line-342"></a>			<span class="p">}</span>
+<a name="line-343"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-344"></a>		<span class="p">}</span>
+<a name="line-345"></a>			
+<a name="line-346"></a>	<span class="p">}</span>
+<a name="line-347"></a>
+<a name="line-348"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_check_delegated</span><span class="p">(</span><span class="n">X509</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">)</span>
+<a name="line-349"></a>	<span class="p">{</span>
+<a name="line-350"></a>	<span class="n">X509_check_purpose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-351"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_flags</span> <span class="o">&amp;</span> <span class="n">EXFLAG_XKUSAGE</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+<a name="line-352"></a>	    <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">ex_xkusage</span> <span class="o">&amp;</span> <span class="n">XKU_OCSP_SIGN</span><span class="p">))</span>
+<a name="line-353"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-354"></a>	<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_CHECK_DELEGATED</span><span class="p">,</span> <span class="n">OCSP_R_MISSING_OCSPSIGNING_USAGE</span><span class="p">);</span>
+<a name="line-355"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-356"></a>	<span class="p">}</span>
+<a name="line-357"></a>
+<a name="line-358"></a><span class="cm">/* Verify an OCSP request. This is fortunately much easier than OCSP</span>
+<a name="line-359"></a><span class="cm"> * response verify. Just find the signers certificate and verify it</span>
+<a name="line-360"></a><span class="cm"> * against a given trust value.</span>
+<a name="line-361"></a><span class="cm"> */</span>
+<a name="line-362"></a>
+<a name="line-363"></a><span class="kt">int</span> <span class="nf">OCSP_request_verify</span><span class="p">(</span><span class="n">OCSP_REQUEST</span> <span class="o">*</span><span class="n">req</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span> <span class="n">X509_STORE</span> <span class="o">*</span><span class="n">store</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">)</span>
+<a name="line-364"></a>        <span class="p">{</span>
+<a name="line-365"></a>	<span class="n">X509</span> <span class="o">*</span><span class="n">signer</span><span class="p">;</span>
+<a name="line-366"></a>	<span class="n">X509_NAME</span> <span class="o">*</span><span class="n">nm</span><span class="p">;</span>
+<a name="line-367"></a>	<span class="n">GENERAL_NAME</span> <span class="o">*</span><span class="n">gen</span><span class="p">;</span>
+<a name="line-368"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+<a name="line-369"></a>	<span class="n">X509_STORE_CTX</span> <span class="n">ctx</span><span class="p">;</span>
+<a name="line-370"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">req</span><span class="o">-&gt;</span><span class="n">optionalSignature</span><span class="p">)</span> 
+<a name="line-371"></a>		<span class="p">{</span>
+<a name="line-372"></a>		<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_REQUEST_VERIFY</span><span class="p">,</span> <span class="n">OCSP_R_REQUEST_NOT_SIGNED</span><span class="p">);</span>
+<a name="line-373"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-374"></a>		<span class="p">}</span>
+<a name="line-375"></a>	<span class="n">gen</span> <span class="o">=</span> <span class="n">req</span><span class="o">-&gt;</span><span class="n">tbsRequest</span><span class="o">-&gt;</span><span class="n">requestorName</span><span class="p">;</span>
+<a name="line-376"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">gen</span> <span class="o">||</span> <span class="n">gen</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">!=</span> <span class="n">GEN_DIRNAME</span><span class="p">)</span>
+<a name="line-377"></a>		<span class="p">{</span>
+<a name="line-378"></a>		<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_REQUEST_VERIFY</span><span class="p">,</span> <span class="n">OCSP_R_UNSUPPORTED_REQUESTORNAME_TYPE</span><span class="p">);</span>
+<a name="line-379"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-380"></a>		<span class="p">}</span>
+<a name="line-381"></a>	<span class="n">nm</span> <span class="o">=</span> <span class="n">gen</span><span class="o">-&gt;</span><span class="n">d</span><span class="p">.</span><span class="n">directoryName</span><span class="p">;</span>
+<a name="line-382"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">ocsp_req_find_signer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">signer</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">nm</span><span class="p">,</span> <span class="n">certs</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">flags</span><span class="p">);</span>
+<a name="line-383"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
 <a name="line-384"></a>		<span class="p">{</span>
-<a name="line-385"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">group</span><span class="o">-&gt;</span><span class="n">meth</span> <span class="o">!=</span> <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">meth</span><span class="p">)</span>
-<a name="line-386"></a>			<span class="p">{</span>
-<a name="line-387"></a>			<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">EC_R_INCOMPATIBLE_OBJECTS</span><span class="p">);</span>
-<a name="line-388"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-389"></a>			<span class="p">}</span>
-<a name="line-390"></a>		<span class="p">}</span>
-<a name="line-391"></a>
-<a name="line-392"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-393"></a>		<span class="p">{</span>
-<a name="line-394"></a>		<span class="n">ctx</span> <span class="o">=</span> <span class="n">new_ctx</span> <span class="o">=</span> <span class="n">BN_CTX_new</span><span class="p">();</span>
-<a name="line-395"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-396"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-397"></a>		<span class="p">}</span>
-<a name="line-398"></a>
-<a name="line-399"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">scalar</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-400"></a>		<span class="p">{</span>
-<a name="line-401"></a>		<span class="n">generator</span> <span class="o">=</span> <span class="n">EC_GROUP_get0_generator</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
-<a name="line-402"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">generator</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-403"></a>			<span class="p">{</span>
-<a name="line-404"></a>			<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">EC_R_UNDEFINED_GENERATOR</span><span class="p">);</span>
-<a name="line-405"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-406"></a>			<span class="p">}</span>
-<a name="line-407"></a>		
-<a name="line-408"></a>		<span class="cm">/* look if we can use precomputed multiples of generator */</span>
-<a name="line-409"></a>
-<a name="line-410"></a>		<span class="n">pre_comp</span> <span class="o">=</span> <span class="n">EC_EX_DATA_get_data</span><span class="p">(</span><span class="n">group</span><span class="o">-&gt;</span><span class="n">extra_data</span><span class="p">,</span> <span class="n">ec_pre_comp_dup</span><span class="p">,</span> <span class="n">ec_pre_comp_free</span><span class="p">,</span> <span class="n">ec_pre_comp_clear_free</span><span class="p">);</span>
-<a name="line-411"></a>
-<a name="line-412"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">pre_comp</span> <span class="o">&amp;&amp;</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">numblocks</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">EC_POINT_cmp</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
-<a name="line-413"></a>			<span class="p">{</span>
-<a name="line-414"></a>			<span class="n">blocksize</span> <span class="o">=</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">blocksize</span><span class="p">;</span>
+<a name="line-385"></a>		<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_REQUEST_VERIFY</span><span class="p">,</span> <span class="n">OCSP_R_SIGNER_CERTIFICATE_NOT_FOUND</span><span class="p">);</span>
+<a name="line-386"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-387"></a>		<span class="p">}</span>
+<a name="line-388"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_TRUSTOTHER</span><span class="p">))</span>
+<a name="line-389"></a>		<span class="n">flags</span> <span class="o">|=</span> <span class="n">OCSP_NOVERIFY</span><span class="p">;</span>
+<a name="line-390"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOSIGS</span><span class="p">))</span>
+<a name="line-391"></a>		<span class="p">{</span>
+<a name="line-392"></a>		<span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">skey</span><span class="p">;</span>
+<a name="line-393"></a>		<span class="n">skey</span> <span class="o">=</span> <span class="n">X509_get_pubkey</span><span class="p">(</span><span class="n">signer</span><span class="p">);</span>
+<a name="line-394"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">OCSP_REQUEST_verify</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">skey</span><span class="p">);</span>
+<a name="line-395"></a>		<span class="n">EVP_PKEY_free</span><span class="p">(</span><span class="n">skey</span><span class="p">);</span>
+<a name="line-396"></a>		<span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-397"></a>			<span class="p">{</span>
+<a name="line-398"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_REQUEST_VERIFY</span><span class="p">,</span> <span class="n">OCSP_R_SIGNATURE_FAILURE</span><span class="p">);</span>
+<a name="line-399"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-400"></a>			<span class="p">}</span>
+<a name="line-401"></a>		<span class="p">}</span>
+<a name="line-402"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOVERIFY</span><span class="p">))</span>
+<a name="line-403"></a>		<span class="p">{</span>
+<a name="line-404"></a>		<span class="kt">int</span> <span class="n">init_res</span><span class="p">;</span>
+<a name="line-405"></a>		<span class="k">if</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOCHAIN</span><span class="p">)</span>
+<a name="line-406"></a>			<span class="n">init_res</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">signer</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-407"></a>		<span class="k">else</span>
+<a name="line-408"></a>			<span class="n">init_res</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">signer</span><span class="p">,</span>
+<a name="line-409"></a>					<span class="n">req</span><span class="o">-&gt;</span><span class="n">optionalSignature</span><span class="o">-&gt;</span><span class="n">certs</span><span class="p">);</span>
+<a name="line-410"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">init_res</span><span class="p">)</span>
+<a name="line-411"></a>			<span class="p">{</span>
+<a name="line-412"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_REQUEST_VERIFY</span><span class="p">,</span><span class="n">ERR_R_X509_LIB</span><span class="p">);</span>
+<a name="line-413"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-414"></a>			<span class="p">}</span>
 <a name="line-415"></a>
-<a name="line-416"></a>			<span class="cm">/* determine maximum number of blocks that wNAF splitting may yield</span>
-<a name="line-417"></a><span class="cm">			 * (NB: maximum wNAF length is bit length plus one) */</span>
-<a name="line-418"></a>			<span class="n">numblocks</span> <span class="o">=</span> <span class="p">(</span><span class="n">BN_num_bits</span><span class="p">(</span><span class="n">scalar</span><span class="p">)</span> <span class="o">/</span> <span class="n">blocksize</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-419"></a>
-<a name="line-420"></a>			<span class="cm">/* we cannot use more blocks than we have precomputation for */</span>
-<a name="line-421"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">numblocks</span> <span class="o">&gt;</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">numblocks</span><span class="p">)</span>
-<a name="line-422"></a>				<span class="n">numblocks</span> <span class="o">=</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">numblocks</span><span class="p">;</span>
-<a name="line-423"></a>
-<a name="line-424"></a>			<span class="n">pre_points_per_block</span> <span class="o">=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-425"></a>
-<a name="line-426"></a>			<span class="cm">/* check that pre_comp looks sane */</span>
-<a name="line-427"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">!=</span> <span class="p">(</span><span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">numblocks</span> <span class="o">*</span> <span class="n">pre_points_per_block</span><span class="p">))</span>
-<a name="line-428"></a>				<span class="p">{</span>
-<a name="line-429"></a>				<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-430"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-431"></a>				<span class="p">}</span>
-<a name="line-432"></a>			<span class="p">}</span>
-<a name="line-433"></a>		<span class="k">else</span>
-<a name="line-434"></a>			<span class="p">{</span>
-<a name="line-435"></a>			<span class="cm">/* can&#39;t use precomputation */</span>
-<a name="line-436"></a>			<span class="n">pre_comp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-437"></a>			<span class="n">numblocks</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-438"></a>			<span class="n">num_scalar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* treat &#39;scalar&#39; like &#39;num&#39;-th element of &#39;scalars&#39; */</span>
-<a name="line-439"></a>			<span class="p">}</span>
-<a name="line-440"></a>		<span class="p">}</span>
-<a name="line-441"></a>	
-<a name="line-442"></a>	<span class="n">totalnum</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="n">numblocks</span><span class="p">;</span>
-<a name="line-443"></a>
-<a name="line-444"></a>	<span class="n">wsize</span>    <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">totalnum</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="n">wsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<a name="line-445"></a>	<span class="n">wNAF_len</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">totalnum</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="n">wNAF_len</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<a name="line-446"></a>	<span class="n">wNAF</span>     <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">((</span><span class="n">totalnum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="n">wNAF</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="cm">/* includes space for pivot */</span>
-<a name="line-447"></a>	<span class="n">val_sub</span>  <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">totalnum</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="n">val_sub</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<a name="line-448"></a>		 
-<a name="line-449"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">wsize</span> <span class="o">||</span> <span class="o">!</span><span class="n">wNAF_len</span> <span class="o">||</span> <span class="o">!</span><span class="n">wNAF</span> <span class="o">||</span> <span class="o">!</span><span class="n">val_sub</span><span class="p">)</span>
-<a name="line-450"></a>		<span class="p">{</span>
-<a name="line-451"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-452"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-453"></a>		<span class="p">}</span>
-<a name="line-454"></a>
-<a name="line-455"></a>	<span class="n">wNAF</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>	<span class="cm">/* preliminary pivot */</span>
-<a name="line-456"></a>
-<a name="line-457"></a>	<span class="cm">/* num_val will be the total number of temporarily precomputed points */</span>
-<a name="line-458"></a>	<span class="n">num_val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-459"></a>
-<a name="line-460"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="o">+</span> <span class="n">num_scalar</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-461"></a>		<span class="p">{</span>
-<a name="line-462"></a>		<span class="kt">size_t</span> <span class="n">bits</span><span class="p">;</span>
-<a name="line-463"></a>
-<a name="line-464"></a>		<span class="n">bits</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="o">?</span> <span class="n">BN_num_bits</span><span class="p">(</span><span class="n">scalars</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">:</span> <span class="n">BN_num_bits</span><span class="p">(</span><span class="n">scalar</span><span class="p">);</span>
-<a name="line-465"></a>		<span class="n">wsize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">EC_window_bits_for_scalar_size</span><span class="p">(</span><span class="n">bits</span><span class="p">);</span>
-<a name="line-466"></a>		<span class="n">num_val</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">wsize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-467"></a>		<span class="n">wNAF</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* make sure we always have a pivot */</span>
-<a name="line-468"></a>		<span class="n">wNAF</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_wNAF</span><span class="p">((</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="o">?</span> <span class="n">scalars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">:</span> <span class="n">scalar</span><span class="p">),</span> <span class="n">wsize</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-469"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">wNAF</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-470"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-471"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">)</span>
-<a name="line-472"></a>			<span class="n">max_len</span> <span class="o">=</span> <span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-473"></a>		<span class="p">}</span>
-<a name="line-474"></a>
-<a name="line-475"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">numblocks</span><span class="p">)</span>
-<a name="line-476"></a>		<span class="p">{</span>
-<a name="line-477"></a>		<span class="cm">/* we go here iff scalar != NULL */</span>
-<a name="line-478"></a>		
-<a name="line-479"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">pre_comp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-480"></a>			<span class="p">{</span>
-<a name="line-481"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">num_scalar</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-482"></a>				<span class="p">{</span>
-<a name="line-483"></a>				<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-484"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-485"></a>				<span class="p">}</span>
-<a name="line-486"></a>			<span class="cm">/* we have already generated a wNAF for &#39;scalar&#39; */</span>
-<a name="line-487"></a>			<span class="p">}</span>
-<a name="line-488"></a>		<span class="k">else</span>
-<a name="line-489"></a>			<span class="p">{</span>
-<a name="line-490"></a>			<span class="kt">signed</span> <span class="kt">char</span> <span class="o">*</span><span class="n">tmp_wNAF</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-491"></a>			<span class="kt">size_t</span> <span class="n">tmp_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-492"></a>			
-<a name="line-493"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">num_scalar</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-494"></a>				<span class="p">{</span>
-<a name="line-495"></a>				<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-496"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-497"></a>				<span class="p">}</span>
-<a name="line-498"></a>
-<a name="line-499"></a>			<span class="cm">/* use the window size for which we have precomputation */</span>
-<a name="line-500"></a>			<span class="n">wsize</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
-<a name="line-501"></a>			<span class="n">tmp_wNAF</span> <span class="o">=</span> <span class="n">compute_wNAF</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">wsize</span><span class="p">[</span><span class="n">num</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">tmp_len</span><span class="p">);</span>
-<a name="line-502"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tmp_wNAF</span><span class="p">)</span>
-<a name="line-503"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-504"></a>
-<a name="line-505"></a><span class="hll">			<span class="k">if</span> <span class="p">(</span><span class="n">tmp_len</span> <span class="o">&lt;=</span> <span class="n">max_len</span><span class="p">)</span><span class='error2'>&lt;--- Opposite conditions in nested 'if' blocks lead to a dead code block.</span>
-</span><a name="line-506"></a>				<span class="p">{</span>
-<a name="line-507"></a>				<span class="cm">/* One of the other wNAFs is at least as long</span>
-<a name="line-508"></a><span class="cm">				 * as the wNAF belonging to the generator,</span>
-<a name="line-509"></a><span class="cm">				 * so wNAF splitting will not buy us anything. */</span>
-<a name="line-510"></a>
-<a name="line-511"></a>				<span class="n">numblocks</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-512"></a>				<span class="n">totalnum</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* don&#39;t use wNAF splitting */</span>
-<a name="line-513"></a>				<span class="n">wNAF</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_wNAF</span><span class="p">;</span>
-<a name="line-514"></a>				<span class="n">wNAF</span><span class="p">[</span><span class="n">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-515"></a>				<span class="n">wNAF_len</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_len</span><span class="p">;</span>
-<a name="line-516"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">tmp_len</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">)</span>
-<a name="line-517"></a>					<span class="n">max_len</span> <span class="o">=</span> <span class="n">tmp_len</span><span class="p">;</span>
-<a name="line-518"></a>				<span class="cm">/* pre_comp-&gt;points starts with the points that we need here: */</span>
-<a name="line-519"></a>				<span class="n">val_sub</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">;</span>
-<a name="line-520"></a>				<span class="p">}</span>
-<a name="line-521"></a>			<span class="k">else</span>
-<a name="line-522"></a>				<span class="p">{</span>
-<a name="line-523"></a>				<span class="cm">/* don&#39;t include tmp_wNAF directly into wNAF array</span>
-<a name="line-524"></a><span class="cm">				 * - use wNAF splitting and include the blocks */</span>
-<a name="line-525"></a>
-<a name="line-526"></a>				<span class="kt">signed</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pp</span><span class="p">;</span>
-<a name="line-527"></a>				<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">tmp_points</span><span class="p">;</span>
-<a name="line-528"></a>				
-<a name="line-529"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">tmp_len</span> <span class="o">&lt;</span> <span class="n">numblocks</span> <span class="o">*</span> <span class="n">blocksize</span><span class="p">)</span>
-<a name="line-530"></a>					<span class="p">{</span>
-<a name="line-531"></a>					<span class="cm">/* possibly we can do with fewer blocks than estimated */</span>
-<a name="line-532"></a>					<span class="n">numblocks</span> <span class="o">=</span> <span class="p">(</span><span class="n">tmp_len</span> <span class="o">+</span> <span class="n">blocksize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">blocksize</span><span class="p">;</span>
-<a name="line-533"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">numblocks</span> <span class="o">&gt;</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">numblocks</span><span class="p">)</span>
-<a name="line-534"></a>						<span class="p">{</span>
-<a name="line-535"></a>						<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-536"></a>						<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-537"></a>						<span class="p">}</span>
-<a name="line-538"></a>					<span class="n">totalnum</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="n">numblocks</span><span class="p">;</span>
-<a name="line-539"></a>					<span class="p">}</span>
-<a name="line-540"></a>				
-<a name="line-541"></a>				<span class="cm">/* split wNAF in &#39;numblocks&#39; parts */</span>
-<a name="line-542"></a>				<span class="n">pp</span> <span class="o">=</span> <span class="n">tmp_wNAF</span><span class="p">;</span>
-<a name="line-543"></a>				<span class="n">tmp_points</span> <span class="o">=</span> <span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">;</span>
-<a name="line-544"></a>
-<a name="line-545"></a>				<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">totalnum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-546"></a>					<span class="p">{</span>
-<a name="line-547"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">totalnum</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-548"></a>						<span class="p">{</span>
-<a name="line-549"></a>						<span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">blocksize</span><span class="p">;</span>
-<a name="line-550"></a>						<span class="k">if</span> <span class="p">(</span><span class="n">tmp_len</span> <span class="o">&lt;</span> <span class="n">blocksize</span><span class="p">)</span>
-<a name="line-551"></a>							<span class="p">{</span>
-<a name="line-552"></a>							<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-553"></a>							<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-554"></a>							<span class="p">}</span>
-<a name="line-555"></a>						<span class="n">tmp_len</span> <span class="o">-=</span> <span class="n">blocksize</span><span class="p">;</span>
-<a name="line-556"></a>						<span class="p">}</span>
-<a name="line-557"></a>					<span class="k">else</span>
-<a name="line-558"></a>						<span class="cm">/* last block gets whatever is left</span>
-<a name="line-559"></a><span class="cm">						 * (this could be more or less than &#39;blocksize&#39;!) */</span>
-<a name="line-560"></a>						<span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_len</span><span class="p">;</span>
-<a name="line-561"></a>					
-<a name="line-562"></a>					<span class="n">wNAF</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-563"></a>					<span class="n">wNAF</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-564"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">wNAF</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-565"></a>						<span class="p">{</span>
-<a name="line-566"></a>						<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-567"></a>						<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">tmp_wNAF</span><span class="p">);</span>
-<a name="line-568"></a>						<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-569"></a>						<span class="p">}</span>
-<a name="line-570"></a>					<span class="n">memcpy</span><span class="p">(</span><span class="n">wNAF</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pp</span><span class="p">,</span> <span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-571"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">)</span>
-<a name="line-572"></a>						<span class="n">max_len</span> <span class="o">=</span> <span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-573"></a>
-<a name="line-574"></a>					<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">tmp_points</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-575"></a>						<span class="p">{</span>
-<a name="line-576"></a>						<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-577"></a>						<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">tmp_wNAF</span><span class="p">);</span>
-<a name="line-578"></a>						<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-579"></a>						<span class="p">}</span>
-<a name="line-580"></a>					<span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_points</span><span class="p">;</span>
-<a name="line-581"></a>					<span class="n">tmp_points</span> <span class="o">+=</span> <span class="n">pre_points_per_block</span><span class="p">;</span>
-<a name="line-582"></a>					<span class="n">pp</span> <span class="o">+=</span> <span class="n">blocksize</span><span class="p">;</span>
-<a name="line-583"></a>					<span class="p">}</span>
-<a name="line-584"></a>				<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">tmp_wNAF</span><span class="p">);</span>
-<a name="line-585"></a>				<span class="p">}</span>
-<a name="line-586"></a>			<span class="p">}</span>
-<a name="line-587"></a>		<span class="p">}</span>
-<a name="line-588"></a>
-<a name="line-589"></a>	<span class="cm">/* All points we precompute now go into a single array &#39;val&#39;.</span>
-<a name="line-590"></a><span class="cm">	 * &#39;val_sub[i]&#39; is a pointer to the subarray for the i-th point,</span>
-<a name="line-591"></a><span class="cm">	 * or to a subarray of &#39;pre_comp-&gt;points&#39; if we already have precomputation. */</span>
-<a name="line-592"></a>	<span class="n">val</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">((</span><span class="n">num_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-<a name="line-593"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-594"></a>		<span class="p">{</span>
-<a name="line-595"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-596"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-597"></a>		<span class="p">}</span>
-<a name="line-598"></a>	<span class="n">val</span><span class="p">[</span><span class="n">num_val</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* pivot element */</span>
-<a name="line-599"></a>
-<a name="line-600"></a>	<span class="cm">/* allocate points for precomputation */</span>
-<a name="line-601"></a>	<span class="n">v</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-<a name="line-602"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="o">+</span> <span class="n">num_scalar</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-603"></a>		<span class="p">{</span>
-<a name="line-604"></a>		<span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-<a name="line-605"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">wsize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-<a name="line-606"></a>			<span class="p">{</span>
-<a name="line-607"></a>			<span class="o">*</span><span class="n">v</span> <span class="o">=</span> <span class="n">EC_POINT_new</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
-<a name="line-608"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">v</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-609"></a>			<span class="n">v</span><span class="o">++</span><span class="p">;</span>
-<a name="line-610"></a>			<span class="p">}</span>
-<a name="line-611"></a>		<span class="p">}</span>
-<a name="line-612"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="n">val</span> <span class="o">+</span> <span class="n">num_val</span><span class="p">))</span>
-<a name="line-613"></a>		<span class="p">{</span>
-<a name="line-614"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_MUL</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-615"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-616"></a>		<span class="p">}</span>
-<a name="line-617"></a>
-<a name="line-618"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">tmp</span> <span class="o">=</span> <span class="n">EC_POINT_new</span><span class="p">(</span><span class="n">group</span><span class="p">)))</span>
-<a name="line-619"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-620"></a>
-<a name="line-621"></a>	<span class="cm">/* prepare precomputed values:</span>
-<a name="line-622"></a><span class="cm">	 *    val_sub[i][0] :=     points[i]</span>
-<a name="line-623"></a><span class="cm">	 *    val_sub[i][1] := 3 * points[i]</span>
-<a name="line-624"></a><span class="cm">	 *    val_sub[i][2] := 5 * points[i]</span>
-<a name="line-625"></a><span class="cm">	 *    ...</span>
-<a name="line-626"></a><span class="cm">	 */</span>
-<a name="line-627"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span> <span class="o">+</span> <span class="n">num_scalar</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-628"></a>		<span class="p">{</span>
-<a name="line-629"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">)</span>
-<a name="line-630"></a>			<span class="p">{</span>
-<a name="line-631"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_copy</span><span class="p">(</span><span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-632"></a>			<span class="p">}</span>
-<a name="line-633"></a>		<span class="k">else</span>
-<a name="line-634"></a>			<span class="p">{</span>
-<a name="line-635"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_copy</span><span class="p">(</span><span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">generator</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-636"></a>			<span class="p">}</span>
-<a name="line-637"></a>
-<a name="line-638"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">wsize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-639"></a>			<span class="p">{</span>
-<a name="line-640"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_dbl</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-641"></a>			<span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">wsize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
-<a name="line-642"></a>				<span class="p">{</span>
-<a name="line-643"></a>				<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_add</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-644"></a>				<span class="p">}</span>
-<a name="line-645"></a>			<span class="p">}</span>
-<a name="line-646"></a>		<span class="p">}</span>
-<a name="line-647"></a>
-<a name="line-648"></a><span class="cp">#if 1 </span><span class="cm">/* optional; EC_window_bits_for_scalar_size assumes we do this step */</span><span class="cp"></span>
-<a name="line-649"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINTs_make_affine</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">num_val</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span>
-<a name="line-650"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-651"></a><span class="cp">#endif</span>
-<a name="line-652"></a>
-<a name="line-653"></a>	<span class="n">r_is_at_infinity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-654"></a>
-<a name="line-655"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="n">max_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span><span class="o">--</span><span class="p">)</span>
-<a name="line-656"></a>		<span class="p">{</span>
-<a name="line-657"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">r_is_at_infinity</span><span class="p">)</span>
-<a name="line-658"></a>			<span class="p">{</span>
-<a name="line-659"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_dbl</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-660"></a>			<span class="p">}</span>
-<a name="line-661"></a>		
-<a name="line-662"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">totalnum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-663"></a>			<span class="p">{</span>
-<a name="line-664"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">wNAF_len</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">k</span><span class="p">)</span>
-<a name="line-665"></a>				<span class="p">{</span>
-<a name="line-666"></a>				<span class="kt">int</span> <span class="n">digit</span> <span class="o">=</span> <span class="n">wNAF</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">];</span>
-<a name="line-667"></a>				<span class="kt">int</span> <span class="n">is_neg</span><span class="p">;</span>
-<a name="line-668"></a>
-<a name="line-669"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">digit</span><span class="p">)</span> 
-<a name="line-670"></a>					<span class="p">{</span>
-<a name="line-671"></a>					<span class="n">is_neg</span> <span class="o">=</span> <span class="n">digit</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-672"></a>
-<a name="line-673"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">is_neg</span><span class="p">)</span>
-<a name="line-674"></a>						<span class="n">digit</span> <span class="o">=</span> <span class="o">-</span><span class="n">digit</span><span class="p">;</span>
-<a name="line-675"></a>
-<a name="line-676"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">is_neg</span> <span class="o">!=</span> <span class="n">r_is_inverted</span><span class="p">)</span>
-<a name="line-677"></a>						<span class="p">{</span>
-<a name="line-678"></a>						<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">r_is_at_infinity</span><span class="p">)</span>
-<a name="line-679"></a>							<span class="p">{</span>
-<a name="line-680"></a>							<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_invert</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-681"></a>							<span class="p">}</span>
-<a name="line-682"></a>						<span class="n">r_is_inverted</span> <span class="o">=</span> <span class="o">!</span><span class="n">r_is_inverted</span><span class="p">;</span>
-<a name="line-683"></a>						<span class="p">}</span>
-<a name="line-684"></a>
-<a name="line-685"></a>					<span class="cm">/* digit &gt; 0 */</span>
-<a name="line-686"></a>
-<a name="line-687"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">r_is_at_infinity</span><span class="p">)</span>
-<a name="line-688"></a>						<span class="p">{</span>
-<a name="line-689"></a>						<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_copy</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">digit</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-690"></a>						<span class="n">r_is_at_infinity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-691"></a>						<span class="p">}</span>
-<a name="line-692"></a>					<span class="k">else</span>
-<a name="line-693"></a>						<span class="p">{</span>
-<a name="line-694"></a>						<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_add</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">val_sub</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">digit</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-695"></a>						<span class="p">}</span>
-<a name="line-696"></a>					<span class="p">}</span>
-<a name="line-697"></a>				<span class="p">}</span>
-<a name="line-698"></a>			<span class="p">}</span>
-<a name="line-699"></a>		<span class="p">}</span>
-<a name="line-700"></a>
-<a name="line-701"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">r_is_at_infinity</span><span class="p">)</span>
-<a name="line-702"></a>		<span class="p">{</span>
-<a name="line-703"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_set_to_infinity</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-704"></a>		<span class="p">}</span>
-<a name="line-705"></a>	<span class="k">else</span>
-<a name="line-706"></a>		<span class="p">{</span>
-<a name="line-707"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">r_is_inverted</span><span class="p">)</span>
-<a name="line-708"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_invert</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-709"></a>		<span class="p">}</span>
-<a name="line-710"></a>	
-<a name="line-711"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-712"></a>
-<a name="line-713"></a> <span class="nl">err</span><span class="p">:</span>
-<a name="line-714"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">new_ctx</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-715"></a>		<span class="n">BN_CTX_free</span><span class="p">(</span><span class="n">new_ctx</span><span class="p">);</span>
-<a name="line-716"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">tmp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-717"></a>		<span class="n">EC_POINT_free</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
-<a name="line-718"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">wsize</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-719"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">wsize</span><span class="p">);</span>
-<a name="line-720"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">wNAF_len</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-721"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">wNAF_len</span><span class="p">);</span>
-<a name="line-722"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">wNAF</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-723"></a>		<span class="p">{</span>
-<a name="line-724"></a>		<span class="kt">signed</span> <span class="kt">char</span> <span class="o">**</span><span class="n">w</span><span class="p">;</span>
-<a name="line-725"></a>		
-<a name="line-726"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">w</span> <span class="o">=</span> <span class="n">wNAF</span><span class="p">;</span> <span class="o">*</span><span class="n">w</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">w</span><span class="o">++</span><span class="p">)</span>
-<a name="line-727"></a>			<span class="n">OPENSSL_free</span><span class="p">(</span><span class="o">*</span><span class="n">w</span><span class="p">);</span>
-<a name="line-728"></a>		
-<a name="line-729"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">wNAF</span><span class="p">);</span>
-<a name="line-730"></a>		<span class="p">}</span>
-<a name="line-731"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-732"></a>		<span class="p">{</span>
-<a name="line-733"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">v</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span> <span class="o">*</span><span class="n">v</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">v</span><span class="o">++</span><span class="p">)</span>
-<a name="line-734"></a>			<span class="n">EC_POINT_clear_free</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">);</span>
-<a name="line-735"></a>
-<a name="line-736"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
-<a name="line-737"></a>		<span class="p">}</span>
-<a name="line-738"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">val_sub</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-739"></a>		<span class="p">{</span>
-<a name="line-740"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">val_sub</span><span class="p">);</span>
-<a name="line-741"></a>		<span class="p">}</span>
-<a name="line-742"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-743"></a>	<span class="p">}</span>
-<a name="line-744"></a>
-<a name="line-745"></a>
-<a name="line-746"></a><span class="cm">/* ec_wNAF_precompute_mult()</span>
-<a name="line-747"></a><span class="cm"> * creates an EC_PRE_COMP object with preprecomputed multiples of the generator</span>
-<a name="line-748"></a><span class="cm"> * for use with wNAF splitting as implemented in ec_wNAF_mul().</span>
-<a name="line-749"></a><span class="cm"> * </span>
-<a name="line-750"></a><span class="cm"> * &#39;pre_comp-&gt;points&#39; is an array of multiples of the generator</span>
-<a name="line-751"></a><span class="cm"> * of the following form:</span>
-<a name="line-752"></a><span class="cm"> * points[0] =     generator;</span>
-<a name="line-753"></a><span class="cm"> * points[1] = 3 * generator;</span>
-<a name="line-754"></a><span class="cm"> * ...</span>
-<a name="line-755"></a><span class="cm"> * points[2^(w-1)-1] =     (2^(w-1)-1) * generator;</span>
-<a name="line-756"></a><span class="cm"> * points[2^(w-1)]   =     2^blocksize * generator;</span>
-<a name="line-757"></a><span class="cm"> * points[2^(w-1)+1] = 3 * 2^blocksize * generator;</span>
-<a name="line-758"></a><span class="cm"> * ...</span>
-<a name="line-759"></a><span class="cm"> * points[2^(w-1)*(numblocks-1)-1] = (2^(w-1)) *  2^(blocksize*(numblocks-2)) * generator</span>
-<a name="line-760"></a><span class="cm"> * points[2^(w-1)*(numblocks-1)]   =              2^(blocksize*(numblocks-1)) * generator</span>
-<a name="line-761"></a><span class="cm"> * ...</span>
-<a name="line-762"></a><span class="cm"> * points[2^(w-1)*numblocks-1]     = (2^(w-1)) *  2^(blocksize*(numblocks-1)) * generator</span>
-<a name="line-763"></a><span class="cm"> * points[2^(w-1)*numblocks]       = NULL</span>
-<a name="line-764"></a><span class="cm"> */</span>
-<a name="line-765"></a><span class="kt">int</span> <span class="nf">ec_wNAF_precompute_mult</span><span class="p">(</span><span class="n">EC_GROUP</span> <span class="o">*</span><span class="n">group</span><span class="p">,</span> <span class="n">BN_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-766"></a>	<span class="p">{</span>
-<a name="line-767"></a>	<span class="k">const</span> <span class="n">EC_POINT</span> <span class="o">*</span><span class="n">generator</span><span class="p">;</span>
-<a name="line-768"></a>	<span class="n">EC_POINT</span> <span class="o">*</span><span class="n">tmp_point</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">base</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">**</span><span class="n">var</span><span class="p">;</span>
-<a name="line-769"></a>	<span class="n">BN_CTX</span> <span class="o">*</span><span class="n">new_ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-770"></a>	<span class="n">BIGNUM</span> <span class="o">*</span><span class="n">order</span><span class="p">;</span>
-<a name="line-771"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">bits</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">pre_points_per_block</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">num</span><span class="p">;</span>
-<a name="line-772"></a>	<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">points</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-773"></a>	<span class="n">EC_PRE_COMP</span> <span class="o">*</span><span class="n">pre_comp</span><span class="p">;</span>
-<a name="line-774"></a>	<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-775"></a>
-<a name="line-776"></a>	<span class="cm">/* if there is an old EC_PRE_COMP object, throw it away */</span>
-<a name="line-777"></a>	<span class="n">EC_EX_DATA_free_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">group</span><span class="o">-&gt;</span><span class="n">extra_data</span><span class="p">,</span> <span class="n">ec_pre_comp_dup</span><span class="p">,</span> <span class="n">ec_pre_comp_free</span><span class="p">,</span> <span class="n">ec_pre_comp_clear_free</span><span class="p">);</span>
-<a name="line-778"></a>
-<a name="line-779"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">pre_comp</span> <span class="o">=</span> <span class="n">ec_pre_comp_new</span><span class="p">(</span><span class="n">group</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-780"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-781"></a>
-<a name="line-782"></a>	<span class="n">generator</span> <span class="o">=</span> <span class="n">EC_GROUP_get0_generator</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
-<a name="line-783"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">generator</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-784"></a>		<span class="p">{</span>
-<a name="line-785"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_PRECOMPUTE_MULT</span><span class="p">,</span> <span class="n">EC_R_UNDEFINED_GENERATOR</span><span class="p">);</span>
-<a name="line-786"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-787"></a>		<span class="p">}</span>
-<a name="line-788"></a>
-<a name="line-789"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-790"></a>		<span class="p">{</span>
-<a name="line-791"></a>		<span class="n">ctx</span> <span class="o">=</span> <span class="n">new_ctx</span> <span class="o">=</span> <span class="n">BN_CTX_new</span><span class="p">();</span>
-<a name="line-792"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-793"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-794"></a>		<span class="p">}</span>
-<a name="line-795"></a>	
-<a name="line-796"></a>	<span class="n">BN_CTX_start</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-797"></a>	<span class="n">order</span> <span class="o">=</span> <span class="n">BN_CTX_get</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-798"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-799"></a>	
-<a name="line-800"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_GROUP_get_order</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span> <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>		
-<a name="line-801"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">BN_is_zero</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>
-<a name="line-802"></a>		<span class="p">{</span>
-<a name="line-803"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_PRECOMPUTE_MULT</span><span class="p">,</span> <span class="n">EC_R_UNKNOWN_ORDER</span><span class="p">);</span>
-<a name="line-804"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-805"></a>		<span class="p">}</span>
-<a name="line-806"></a>
-<a name="line-807"></a>	<span class="n">bits</span> <span class="o">=</span> <span class="n">BN_num_bits</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
-<a name="line-808"></a>	<span class="cm">/* The following parameters mean we precompute (approximately)</span>
-<a name="line-809"></a><span class="cm">	 * one point per bit.</span>
-<a name="line-810"></a><span class="cm">	 *</span>
-<a name="line-811"></a><span class="cm">	 * TBD: The combination  8, 4  is perfect for 160 bits; for other</span>
-<a name="line-812"></a><span class="cm">	 * bit lengths, other parameter combinations might provide better</span>
-<a name="line-813"></a><span class="cm">	 * efficiency.</span>
-<a name="line-814"></a><span class="cm">	 */</span>
-<a name="line-815"></a>	<span class="n">blocksize</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
-<a name="line-816"></a>	<span class="n">w</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-<a name="line-817"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">EC_window_bits_for_scalar_size</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">w</span><span class="p">)</span>
-<a name="line-818"></a>		<span class="p">{</span>
-<a name="line-819"></a>		<span class="cm">/* let&#39;s not make the window too small ... */</span>
-<a name="line-820"></a>		<span class="n">w</span> <span class="o">=</span> <span class="n">EC_window_bits_for_scalar_size</span><span class="p">(</span><span class="n">bits</span><span class="p">);</span>
-<a name="line-821"></a>		<span class="p">}</span>
-<a name="line-822"></a>
-<a name="line-823"></a>	<span class="n">numblocks</span> <span class="o">=</span> <span class="p">(</span><span class="n">bits</span> <span class="o">+</span> <span class="n">blocksize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">blocksize</span><span class="p">;</span> <span class="cm">/* max. number of blocks to use for wNAF splitting */</span>
-<a name="line-824"></a>	
-<a name="line-825"></a>	<span class="n">pre_points_per_block</span> <span class="o">=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-826"></a>	<span class="n">num</span> <span class="o">=</span> <span class="n">pre_points_per_block</span> <span class="o">*</span> <span class="n">numblocks</span><span class="p">;</span> <span class="cm">/* number of points to compute and store */</span>
-<a name="line-827"></a>
-<a name="line-828"></a>	<span class="n">points</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span> <span class="p">(</span><span class="n">EC_POINT</span><span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
-<a name="line-829"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">points</span><span class="p">)</span>
-<a name="line-830"></a>		<span class="p">{</span>
-<a name="line-831"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_PRECOMPUTE_MULT</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-832"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-833"></a>		<span class="p">}</span>
-<a name="line-834"></a>
-<a name="line-835"></a>	<span class="n">var</span> <span class="o">=</span> <span class="n">points</span><span class="p">;</span>
-<a name="line-836"></a>	<span class="n">var</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* pivot */</span>
-<a name="line-837"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-838"></a>		<span class="p">{</span>
-<a name="line-839"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">var</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">EC_POINT_new</span><span class="p">(</span><span class="n">group</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-840"></a>			<span class="p">{</span>
-<a name="line-841"></a>			<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_PRECOMPUTE_MULT</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-842"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-843"></a>			<span class="p">}</span>
-<a name="line-844"></a>		<span class="p">}</span>
-<a name="line-845"></a>
-<a name="line-846"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">tmp_point</span> <span class="o">=</span> <span class="n">EC_POINT_new</span><span class="p">(</span><span class="n">group</span><span class="p">))</span> <span class="o">||</span> <span class="o">!</span><span class="p">(</span><span class="n">base</span> <span class="o">=</span> <span class="n">EC_POINT_new</span><span class="p">(</span><span class="n">group</span><span class="p">)))</span>
-<a name="line-847"></a>		<span class="p">{</span>
-<a name="line-848"></a>		<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_PRECOMPUTE_MULT</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-849"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-850"></a>		<span class="p">}</span>	
-<a name="line-851"></a>	
-<a name="line-852"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_copy</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">generator</span><span class="p">))</span>
-<a name="line-853"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-854"></a>	
-<a name="line-855"></a>	<span class="cm">/* do the precomputation */</span>
-<a name="line-856"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numblocks</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-857"></a>		<span class="p">{</span>
-<a name="line-858"></a>		<span class="kt">size_t</span> <span class="n">j</span><span class="p">;</span>
-<a name="line-859"></a>
-<a name="line-860"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_dbl</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">tmp_point</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span>
-<a name="line-861"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-862"></a>
-<a name="line-863"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_copy</span><span class="p">(</span><span class="o">*</span><span class="n">var</span><span class="o">++</span><span class="p">,</span> <span class="n">base</span><span class="p">))</span>
-<a name="line-864"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-865"></a>
-<a name="line-866"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">pre_points_per_block</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">var</span><span class="o">++</span><span class="p">)</span>
-<a name="line-867"></a>			<span class="p">{</span>
-<a name="line-868"></a>			<span class="cm">/* calculate odd multiples of the current base point */</span>
-<a name="line-869"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_add</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="o">*</span><span class="n">var</span><span class="p">,</span> <span class="n">tmp_point</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">var</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ctx</span><span class="p">))</span>
-<a name="line-870"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-871"></a>			<span class="p">}</span>
-<a name="line-872"></a>
-<a name="line-873"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numblocks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-874"></a>			<span class="p">{</span>
-<a name="line-875"></a>			<span class="cm">/* get the next base (multiply current one by 2^blocksize) */</span>
-<a name="line-876"></a>			<span class="kt">size_t</span> <span class="n">k</span><span class="p">;</span>
-<a name="line-877"></a>
-<a name="line-878"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">blocksize</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span>
-<a name="line-879"></a>				<span class="p">{</span>
-<a name="line-880"></a>				<span class="n">ECerr</span><span class="p">(</span><span class="n">EC_F_EC_WNAF_PRECOMPUTE_MULT</span><span class="p">,</span> <span class="n">ERR_R_INTERNAL_ERROR</span><span class="p">);</span>
-<a name="line-881"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-882"></a>				<span class="p">}</span>				
-<a name="line-883"></a>
-<a name="line-884"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_dbl</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">tmp_point</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span>
-<a name="line-885"></a>				<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-886"></a>			<span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">blocksize</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span>
-<a name="line-887"></a>				<span class="p">{</span>
-<a name="line-888"></a>				<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINT_dbl</span><span class="p">(</span><span class="n">group</span><span class="p">,</span><span class="n">base</span><span class="p">,</span><span class="n">base</span><span class="p">,</span><span class="n">ctx</span><span class="p">))</span>
-<a name="line-889"></a>					<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-890"></a>				<span class="p">}</span>
-<a name="line-891"></a>			<span class="p">}</span>
-<a name="line-892"></a> 		<span class="p">}</span>
-<a name="line-893"></a>
-<a name="line-894"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_POINTs_make_affine</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span>
-<a name="line-895"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-896"></a>	
-<a name="line-897"></a>	<span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="p">;</span>
-<a name="line-898"></a>	<span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">blocksize</span> <span class="o">=</span> <span class="n">blocksize</span><span class="p">;</span>
-<a name="line-899"></a>	<span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">numblocks</span> <span class="o">=</span> <span class="n">numblocks</span><span class="p">;</span>
-<a name="line-900"></a>	<span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span>
-<a name="line-901"></a>	<span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="p">;</span>
-<a name="line-902"></a>	<span class="n">points</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-903"></a>	<span class="n">pre_comp</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
-<a name="line-904"></a>
-<a name="line-905"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">EC_EX_DATA_set_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">group</span><span class="o">-&gt;</span><span class="n">extra_data</span><span class="p">,</span> <span class="n">pre_comp</span><span class="p">,</span>
-<a name="line-906"></a>		<span class="n">ec_pre_comp_dup</span><span class="p">,</span> <span class="n">ec_pre_comp_free</span><span class="p">,</span> <span class="n">ec_pre_comp_clear_free</span><span class="p">))</span>
-<a name="line-907"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-908"></a>	<span class="n">pre_comp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-909"></a>
-<a name="line-910"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-911"></a> <span class="nl">err</span><span class="p">:</span>
-<a name="line-912"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-913"></a>		<span class="n">BN_CTX_end</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-914"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">new_ctx</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-915"></a>		<span class="n">BN_CTX_free</span><span class="p">(</span><span class="n">new_ctx</span><span class="p">);</span>
-<a name="line-916"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pre_comp</span><span class="p">)</span>
-<a name="line-917"></a>		<span class="n">ec_pre_comp_free</span><span class="p">(</span><span class="n">pre_comp</span><span class="p">);</span>
-<a name="line-918"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">points</span><span class="p">)</span>
-<a name="line-919"></a>		<span class="p">{</span>
-<a name="line-920"></a>		<span class="n">EC_POINT</span> <span class="o">**</span><span class="n">p</span><span class="p">;</span>
-<a name="line-921"></a>
-<a name="line-922"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">points</span><span class="p">;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span>
-<a name="line-923"></a>			<span class="n">EC_POINT_free</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">);</span>
-<a name="line-924"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">points</span><span class="p">);</span>
-<a name="line-925"></a>		<span class="p">}</span>
-<a name="line-926"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">tmp_point</span><span class="p">)</span>
-<a name="line-927"></a>		<span class="n">EC_POINT_free</span><span class="p">(</span><span class="n">tmp_point</span><span class="p">);</span>
-<a name="line-928"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">base</span><span class="p">)</span>
-<a name="line-929"></a>		<span class="n">EC_POINT_free</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>
-<a name="line-930"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-931"></a>	<span class="p">}</span>
-<a name="line-932"></a>
-<a name="line-933"></a>
-<a name="line-934"></a><span class="kt">int</span> <span class="nf">ec_wNAF_have_precompute_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">EC_GROUP</span> <span class="o">*</span><span class="n">group</span><span class="p">)</span>
-<a name="line-935"></a>	<span class="p">{</span>
-<a name="line-936"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">EC_EX_DATA_get_data</span><span class="p">(</span><span class="n">group</span><span class="o">-&gt;</span><span class="n">extra_data</span><span class="p">,</span> <span class="n">ec_pre_comp_dup</span><span class="p">,</span> <span class="n">ec_pre_comp_free</span><span class="p">,</span> <span class="n">ec_pre_comp_clear_free</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-937"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-938"></a>	<span class="k">else</span>
-<a name="line-939"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-940"></a>	<span class="p">}</span>
+<a name="line-416"></a>		<span class="n">X509_STORE_CTX_set_purpose</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">X509_PURPOSE_OCSP_HELPER</span><span class="p">);</span>
+<a name="line-417"></a>		<span class="n">X509_STORE_CTX_set_trust</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">X509_TRUST_OCSP_REQUEST</span><span class="p">);</span>
+<a name="line-418"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">X509_verify_cert</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+<a name="line-419"></a>		<span class="n">X509_STORE_CTX_cleanup</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+<a name="line-420"></a>                <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-421"></a>			<span class="p">{</span>
+<a name="line-422"></a>			<span class="n">ret</span> <span class="o">=</span> <span class="n">X509_STORE_CTX_get_error</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>	
+<a name="line-423"></a>			<span class="n">OCSPerr</span><span class="p">(</span><span class="n">OCSP_F_OCSP_REQUEST_VERIFY</span><span class="p">,</span><span class="n">OCSP_R_CERTIFICATE_VERIFY_ERROR</span><span class="p">);</span>
+<a name="line-424"></a>			<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;Verify error:&quot;</span><span class="p">,</span>
+<a name="line-425"></a>					<span class="n">X509_verify_cert_error_string</span><span class="p">(</span><span class="n">ret</span><span class="p">));</span>
+<a name="line-426"></a>                        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-427"></a>                	<span class="p">}</span>
+<a name="line-428"></a>		<span class="p">}</span>
+<a name="line-429"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-430"></a>        <span class="p">}</span>
+<a name="line-431"></a>
+<a name="line-432"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ocsp_req_find_signer</span><span class="p">(</span><span class="n">X509</span> <span class="o">**</span><span class="n">psigner</span><span class="p">,</span> <span class="n">OCSP_REQUEST</span> <span class="o">*</span><span class="n">req</span><span class="p">,</span> <span class="n">X509_NAME</span> <span class="o">*</span><span class="n">nm</span><span class="p">,</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">X509</span><span class="p">)</span> <span class="o">*</span><span class="n">certs</span><span class="p">,</span>
+<a name="line-433"></a>				<span class="n">X509_STORE</span> <span class="o">*</span><span class="n">st</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">)</span>
+<a name="line-434"></a>	<span class="p">{</span>
+<a name="line-435"></a>	<span class="n">X509</span> <span class="o">*</span><span class="n">signer</span><span class="p">;</span>
+<a name="line-436"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">OCSP_NOINTERN</span><span class="p">))</span>
+<a name="line-437"></a>		<span class="p">{</span>
+<a name="line-438"></a>		<span class="n">signer</span> <span class="o">=</span> <span class="n">X509_find_by_subject</span><span class="p">(</span><span class="n">req</span><span class="o">-&gt;</span><span class="n">optionalSignature</span><span class="o">-&gt;</span><span class="n">certs</span><span class="p">,</span> <span class="n">nm</span><span class="p">);</span>
+<a name="line-439"></a>		<span class="o">*</span><span class="n">psigner</span> <span class="o">=</span> <span class="n">signer</span><span class="p">;</span>
+<a name="line-440"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-441"></a>		<span class="p">}</span>
+<a name="line-442"></a>
+<a name="line-443"></a>	<span class="n">signer</span> <span class="o">=</span> <span class="n">X509_find_by_subject</span><span class="p">(</span><span class="n">certs</span><span class="p">,</span> <span class="n">nm</span><span class="p">);</span>
+<a name="line-444"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">signer</span><span class="p">)</span>
+<a name="line-445"></a>		<span class="p">{</span>
+<a name="line-446"></a>		<span class="o">*</span><span class="n">psigner</span> <span class="o">=</span> <span class="n">signer</span><span class="p">;</span>
+<a name="line-447"></a>		<span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-448"></a>		<span class="p">}</span>
+<a name="line-449"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-450"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

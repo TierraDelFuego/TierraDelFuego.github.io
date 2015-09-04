@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_zlib/zlib/adler32.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/png/pngerror.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> adler32.c</p>
-<a href='448.html#line-71'> variableScope 71</a>
+       <p id="filename"><a href="index.html">Defects:</a> pngerror.c</p>
+<a href='448.html#line-1'> ConfigurationNotChecked 1</a><a href='448.html#line-248'> sizeofCalculation 248</a><a href='448.html#line-322'> charLiteralWithCharPtrCompare 322</a><a href='448.html#line-423'> variableScope 423</a><a href='448.html#line-439'> variableScope 439</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -292,77 +292,925 @@
 176
 177
 178
-179</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* adler32.c -- compute the Adler-32 checksum of a data stream</span>
-<a name="line-2"></a><span class="cm"> * Copyright (C) 1995-2011 Mark Adler</span>
-<a name="line-3"></a><span class="cm"> * For conditions of distribution and use, see copyright notice in zlib.h</span>
-<a name="line-4"></a><span class="cm"> */</span>
-<a name="line-5"></a>
-<a name="line-6"></a><span class="cm">/* @(#) $Id$ */</span>
-<a name="line-7"></a>
-<a name="line-8"></a><span class="cp">#include &quot;zutil.h&quot;</span>
-<a name="line-9"></a>
-<a name="line-10"></a><span class="cp">#define local static</span>
-<a name="line-11"></a>
-<a name="line-12"></a><span class="n">local</span> <span class="n">uLong</span> <span class="n">adler32_combine_</span> <span class="nf">OF</span><span class="p">((</span><span class="n">uLong</span> <span class="n">adler1</span><span class="p">,</span> <span class="n">uLong</span> <span class="n">adler2</span><span class="p">,</span> <span class="kt">z_off64_t</span> <span class="n">len2</span><span class="p">));</span>
-<a name="line-13"></a>
-<a name="line-14"></a><span class="cp">#define BASE 65521      </span><span class="cm">/* largest prime smaller than 65536 */</span><span class="cp"></span>
-<a name="line-15"></a><span class="cp">#define NMAX 5552</span>
-<a name="line-16"></a><span class="cm">/* NMAX is the largest n such that 255n(n+1)/2 + (n+1)(BASE-1) &lt;= 2^32-1 */</span>
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* pngerror.c - stub functions for i/o and memory allocation</span><span class='error2'>&lt;--- Skipping configuration 'PNG_EXPORT_LAST_ORDINAL' since the value of 'PNG_EXPORT_LAST_ORDINAL' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+</span><a name="line-2"></a><span class="cm"> *</span>
+<a name="line-3"></a><span class="cm"> * Last changed in libpng 1.5.7 [December 15, 2011]</span>
+<a name="line-4"></a><span class="cm"> * Copyright (c) 1998-2011 Glenn Randers-Pehrson</span>
+<a name="line-5"></a><span class="cm"> * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)</span>
+<a name="line-6"></a><span class="cm"> * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)</span>
+<a name="line-7"></a><span class="cm"> *</span>
+<a name="line-8"></a><span class="cm"> * This code is released under the libpng license.</span>
+<a name="line-9"></a><span class="cm"> * For conditions of distribution and use, see the disclaimer</span>
+<a name="line-10"></a><span class="cm"> * and license in png.h</span>
+<a name="line-11"></a><span class="cm"> *</span>
+<a name="line-12"></a><span class="cm"> * This file provides a location for all error handling.  Users who</span>
+<a name="line-13"></a><span class="cm"> * need special error handling are expected to write replacement functions</span>
+<a name="line-14"></a><span class="cm"> * and use png_set_error_fn() to use those functions.  See the instructions</span>
+<a name="line-15"></a><span class="cm"> * at each function.</span>
+<a name="line-16"></a><span class="cm"> */</span>
 <a name="line-17"></a>
-<a name="line-18"></a><span class="cp">#define DO1(buf,i)  {adler += (buf)[i]; sum2 += adler;}</span>
-<a name="line-19"></a><span class="cp">#define DO2(buf,i)  DO1(buf,i); DO1(buf,i+1);</span>
-<a name="line-20"></a><span class="cp">#define DO4(buf,i)  DO2(buf,i); DO2(buf,i+2);</span>
-<a name="line-21"></a><span class="cp">#define DO8(buf,i)  DO4(buf,i); DO4(buf,i+4);</span>
-<a name="line-22"></a><span class="cp">#define DO16(buf)   DO8(buf,0); DO8(buf,8);</span>
-<a name="line-23"></a>
-<a name="line-24"></a><span class="cm">/* use NO_DIVIDE if your processor does not do division in hardware --</span>
-<a name="line-25"></a><span class="cm">   try it both ways to see which is faster */</span>
-<a name="line-26"></a><span class="cp">#ifdef NO_DIVIDE</span>
-<a name="line-27"></a><span class="cm">/* note that this assumes BASE is 65521, where 65536 % 65521 == 15</span>
-<a name="line-28"></a><span class="cm">   (thank you to John Reiser for pointing this out) */</span>
-<a name="line-29"></a><span class="cp">#  define CHOP(a) \</span>
-<a name="line-30"></a><span class="cp">    do { \</span>
-<a name="line-31"></a><span class="cp">        unsigned long tmp = a &gt;&gt; 16; \</span>
-<a name="line-32"></a><span class="cp">        a &amp;= 0xffffUL; \</span>
-<a name="line-33"></a><span class="cp">        a += (tmp &lt;&lt; 4) - tmp; \</span>
-<a name="line-34"></a><span class="cp">    } while (0)</span>
-<a name="line-35"></a><span class="cp">#  define MOD28(a) \</span>
-<a name="line-36"></a><span class="cp">    do { \</span>
-<a name="line-37"></a><span class="cp">        CHOP(a); \</span>
-<a name="line-38"></a><span class="cp">        if (a &gt;= BASE) a -= BASE; \</span>
-<a name="line-39"></a><span class="cp">    } while (0)</span>
-<a name="line-40"></a><span class="cp">#  define MOD(a) \</span>
-<a name="line-41"></a><span class="cp">    do { \</span>
-<a name="line-42"></a><span class="cp">        CHOP(a); \</span>
-<a name="line-43"></a><span class="cp">        MOD28(a); \</span>
-<a name="line-44"></a><span class="cp">    } while (0)</span>
-<a name="line-45"></a><span class="cp">#  define MOD63(a) \</span>
-<a name="line-46"></a><span class="cp">    do { </span><span class="cm">/* this assumes a is not negative */</span><span class="cp"> \</span>
-<a name="line-47"></a><span class="cp">        z_off64_t tmp = a &gt;&gt; 32; \</span>
-<a name="line-48"></a><span class="cp">        a &amp;= 0xffffffffL; \</span>
-<a name="line-49"></a><span class="cp">        a += (tmp &lt;&lt; 8) - (tmp &lt;&lt; 5) + tmp; \</span>
-<a name="line-50"></a><span class="cp">        tmp = a &gt;&gt; 16; \</span>
-<a name="line-51"></a><span class="cp">        a &amp;= 0xffffL; \</span>
-<a name="line-52"></a><span class="cp">        a += (tmp &lt;&lt; 4) - tmp; \</span>
-<a name="line-53"></a><span class="cp">        tmp = a &gt;&gt; 16; \</span>
-<a name="line-54"></a><span class="cp">        a &amp;= 0xffffL; \</span>
-<a name="line-55"></a><span class="cp">        a += (tmp &lt;&lt; 4) - tmp; \</span>
-<a name="line-56"></a><span class="cp">        if (a &gt;= BASE) a -= BASE; \</span>
-<a name="line-57"></a><span class="cp">    } while (0)</span>
-<a name="line-58"></a><span class="cp">#else</span>
-<a name="line-59"></a><span class="cp">#  define MOD(a) a %= BASE</span>
-<a name="line-60"></a><span class="cp">#  define MOD28(a) a %= BASE</span>
-<a name="line-61"></a><span class="cp">#  define MOD63(a) a %= BASE</span>
-<a name="line-62"></a><span class="cp">#endif</span>
+<a name="line-18"></a><span class="cp">#include &quot;pngpriv.h&quot;</span>
+<a name="line-19"></a>
+<a name="line-20"></a><span class="cp">#if defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED)</span>
+<a name="line-21"></a>
+<a name="line-22"></a><span class="k">static</span> <span class="nf">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span> <span class="n">png_default_error</span><span class="p">,</span><span class="n">PNGARG</span><span class="p">((</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span>
+<a name="line-23"></a>    <span class="n">png_const_charp</span> <span class="n">error_message</span><span class="p">)),</span><span class="n">PNG_NORETURN</span><span class="p">);</span>
+<a name="line-24"></a>
+<a name="line-25"></a><span class="cp">#ifdef PNG_WARNINGS_SUPPORTED</span>
+<a name="line-26"></a><span class="k">static</span> <span class="kt">void</span> <span class="cm">/* PRIVATE */</span>
+<a name="line-27"></a><span class="n">png_default_warning</span> <span class="n">PNGARG</span><span class="p">((</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span>
+<a name="line-28"></a>   <span class="n">png_const_charp</span> <span class="n">warning_message</span><span class="p">));</span>
+<a name="line-29"></a><span class="cp">#endif </span><span class="cm">/* PNG_WARNINGS_SUPPORTED */</span><span class="cp"></span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class="cm">/* This function is called whenever there is a fatal error.  This function</span>
+<a name="line-32"></a><span class="cm"> * should not be changed.  If there is a need to handle errors differently,</span>
+<a name="line-33"></a><span class="cm"> * you should supply a replacement error function and use png_set_error_fn()</span>
+<a name="line-34"></a><span class="cm"> * to replace the error function at run-time.</span>
+<a name="line-35"></a><span class="cm"> */</span>
+<a name="line-36"></a><span class="cp">#ifdef PNG_ERROR_TEXT_SUPPORTED</span>
+<a name="line-37"></a><span class="n">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span><span class="n">PNGAPI</span>
+<a name="line-38"></a><span class="n">png_error</span><span class="p">,(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">error_message</span><span class="p">),</span><span class="n">PNG_NORETURN</span><span class="p">)</span>
+<a name="line-39"></a><span class="p">{</span>
+<a name="line-40"></a><span class="cp">#ifdef PNG_ERROR_NUMBERS_SUPPORTED</span>
+<a name="line-41"></a>   <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a name="line-42"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-43"></a>   <span class="p">{</span>
+<a name="line-44"></a>      <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">&amp;</span>
+<a name="line-45"></a>         <span class="p">(</span><span class="n">PNG_FLAG_STRIP_ERROR_NUMBERS</span><span class="o">|</span><span class="n">PNG_FLAG_STRIP_ERROR_TEXT</span><span class="p">))</span>
+<a name="line-46"></a>      <span class="p">{</span>
+<a name="line-47"></a>         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">error_message</span> <span class="o">==</span> <span class="n">PNG_LITERAL_SHARP</span><span class="p">)</span>
+<a name="line-48"></a>         <span class="p">{</span>
+<a name="line-49"></a>            <span class="cm">/* Strip &quot;#nnnn &quot; from beginning of error message. */</span>
+<a name="line-50"></a>            <span class="kt">int</span> <span class="n">offset</span><span class="p">;</span>
+<a name="line-51"></a>            <span class="k">for</span> <span class="p">(</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">offset</span><span class="o">&lt;</span><span class="mi">15</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
+<a name="line-52"></a>               <span class="k">if</span> <span class="p">(</span><span class="n">error_message</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39; &#39;</span><span class="p">)</span>
+<a name="line-53"></a>                  <span class="k">break</span><span class="p">;</span>
+<a name="line-54"></a>
+<a name="line-55"></a>            <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">&amp;</span><span class="n">PNG_FLAG_STRIP_ERROR_TEXT</span><span class="p">)</span>
+<a name="line-56"></a>            <span class="p">{</span>
+<a name="line-57"></a>               <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-58"></a>               <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-59"></a>                  <span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_message</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<a name="line-60"></a>               <span class="n">msg</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-61"></a>               <span class="n">error_message</span> <span class="o">=</span> <span class="n">msg</span><span class="p">;</span>
+<a name="line-62"></a>            <span class="p">}</span>
 <a name="line-63"></a>
-<a name="line-64"></a><span class="cm">/* ========================================================================= */</span>
-<a name="line-65"></a><span class="n">uLong</span> <span class="n">ZEXPORT</span> <span class="n">adler32</span><span class="p">(</span><span class="n">adler</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">)</span>
-<a name="line-66"></a>    <span class="n">uLong</span> <span class="n">adler</span><span class="p">;</span>
-<a name="line-67"></a>    <span class="k">const</span> <span class="n">Bytef</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
-<a name="line-68"></a>    <span class="n">uInt</span> <span class="n">len</span><span class="p">;</span>
-<a name="line-69"></a><span class="p">{</span>
-<a name="line-70"></a>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">sum2</span><span class="p">;</span>
-<a name="line-71"></a><span class="hll">    <span class="kt">unsigned</span> <span class="n">n</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'n' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;n&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+<a name="line-64"></a>            <span class="k">else</span>
+<a name="line-65"></a>               <span class="n">error_message</span> <span class="o">+=</span> <span class="n">offset</span><span class="p">;</span>
+<a name="line-66"></a>      <span class="p">}</span>
+<a name="line-67"></a>
+<a name="line-68"></a>      <span class="k">else</span>
+<a name="line-69"></a>      <span class="p">{</span>
+<a name="line-70"></a>         <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">&amp;</span><span class="n">PNG_FLAG_STRIP_ERROR_TEXT</span><span class="p">)</span>
+<a name="line-71"></a>         <span class="p">{</span>
+<a name="line-72"></a>            <span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<a name="line-73"></a>            <span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-74"></a>            <span class="n">error_message</span> <span class="o">=</span> <span class="n">msg</span><span class="p">;</span>
+<a name="line-75"></a>         <span class="p">}</span>
+<a name="line-76"></a>       <span class="p">}</span>
+<a name="line-77"></a>     <span class="p">}</span>
+<a name="line-78"></a>   <span class="p">}</span>
+<a name="line-79"></a><span class="cp">#endif</span>
+<a name="line-80"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_fn</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-81"></a>      <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_fn</span><span class="p">))(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-82"></a>
+<a name="line-83"></a>   <span class="cm">/* If the custom handler doesn&#39;t exist, or if it returns,</span>
+<a name="line-84"></a><span class="cm">      use the default handler, which will not return. */</span>
+<a name="line-85"></a>   <span class="n">png_default_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-86"></a><span class="p">}</span>
+<a name="line-87"></a><span class="cp">#else</span>
+<a name="line-88"></a><span class="n">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span><span class="n">PNGAPI</span>
+<a name="line-89"></a><span class="n">png_err</span><span class="p">,(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">),</span><span class="n">PNG_NORETURN</span><span class="p">)</span>
+<a name="line-90"></a><span class="p">{</span>
+<a name="line-91"></a>   <span class="cm">/* Prior to 1.5.2 the error_fn received a NULL pointer, expressed</span>
+<a name="line-92"></a><span class="cm">    * erroneously as &#39;\0&#39;, instead of the empty string &quot;&quot;.  This was</span>
+<a name="line-93"></a><span class="cm">    * apparently an error, introduced in libpng-1.2.20, and png_default_error</span>
+<a name="line-94"></a><span class="cm">    * will crash in this case.</span>
+<a name="line-95"></a><span class="cm">    */</span>
+<a name="line-96"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_fn</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-97"></a>      <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_fn</span><span class="p">))(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<a name="line-98"></a>
+<a name="line-99"></a>   <span class="cm">/* If the custom handler doesn&#39;t exist, or if it returns,</span>
+<a name="line-100"></a><span class="cm">      use the default handler, which will not return. */</span>
+<a name="line-101"></a>   <span class="n">png_default_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<a name="line-102"></a><span class="p">}</span>
+<a name="line-103"></a><span class="cp">#endif </span><span class="cm">/* PNG_ERROR_TEXT_SUPPORTED */</span><span class="cp"></span>
+<a name="line-104"></a>
+<a name="line-105"></a><span class="cm">/* Utility to safely appends strings to a buffer.  This never errors out so</span>
+<a name="line-106"></a><span class="cm"> * error checking is not required in the caller.</span>
+<a name="line-107"></a><span class="cm"> */</span>
+<a name="line-108"></a><span class="kt">size_t</span>
+<a name="line-109"></a><span class="n">png_safecat</span><span class="p">(</span><span class="n">png_charp</span> <span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">bufsize</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">pos</span><span class="p">,</span>
+<a name="line-110"></a>   <span class="n">png_const_charp</span> <span class="n">string</span><span class="p">)</span>
+<a name="line-111"></a><span class="p">{</span>
+<a name="line-112"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="n">bufsize</span><span class="p">)</span>
+<a name="line-113"></a>   <span class="p">{</span>
+<a name="line-114"></a>      <span class="k">if</span> <span class="p">(</span><span class="n">string</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-115"></a>         <span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="n">string</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="n">bufsize</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-116"></a>           <span class="n">buffer</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="n">string</span><span class="o">++</span><span class="p">;</span>
+<a name="line-117"></a>
+<a name="line-118"></a>      <span class="n">buffer</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-119"></a>   <span class="p">}</span>
+<a name="line-120"></a>
+<a name="line-121"></a>   <span class="k">return</span> <span class="n">pos</span><span class="p">;</span>
+<a name="line-122"></a><span class="p">}</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="cp">#if defined(PNG_WARNINGS_SUPPORTED) || defined(PNG_TIME_RFC1123_SUPPORTED)</span>
+<a name="line-125"></a><span class="cm">/* Utility to dump an unsigned value into a buffer, given a start pointer and</span>
+<a name="line-126"></a><span class="cm"> * and end pointer (which should point just *beyond* the end of the buffer!)</span>
+<a name="line-127"></a><span class="cm"> * Returns the pointer to the start of the formatted string.</span>
+<a name="line-128"></a><span class="cm"> */</span>
+<a name="line-129"></a><span class="n">png_charp</span>
+<a name="line-130"></a><span class="n">png_format_number</span><span class="p">(</span><span class="n">png_const_charp</span> <span class="n">start</span><span class="p">,</span> <span class="n">png_charp</span> <span class="n">end</span><span class="p">,</span> <span class="kt">int</span> <span class="n">format</span><span class="p">,</span>
+<a name="line-131"></a>   <span class="kt">png_alloc_size_t</span> <span class="n">number</span><span class="p">)</span>
+<a name="line-132"></a><span class="p">{</span>
+<a name="line-133"></a>   <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="cm">/* number of digits output */</span>
+<a name="line-134"></a>   <span class="kt">int</span> <span class="n">mincount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="cm">/* minimum number required */</span>
+<a name="line-135"></a>   <span class="kt">int</span> <span class="n">output</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="cm">/* digit output (for the fixed point format) */</span>
+<a name="line-136"></a>
+<a name="line-137"></a>   <span class="o">*--</span><span class="n">end</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-138"></a>
+<a name="line-139"></a>   <span class="cm">/* This is written so that the loop always runs at least once, even with</span>
+<a name="line-140"></a><span class="cm">    * number zero.</span>
+<a name="line-141"></a><span class="cm">    */</span>
+<a name="line-142"></a>   <span class="k">while</span> <span class="p">(</span><span class="n">end</span> <span class="o">&gt;</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">number</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">mincount</span><span class="p">))</span>
+<a name="line-143"></a>   <span class="p">{</span>
+<a name="line-144"></a>
+<a name="line-145"></a>      <span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">digits</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;0123456789ABCDEF&quot;</span><span class="p">;</span>
+<a name="line-146"></a>
+<a name="line-147"></a>      <span class="k">switch</span> <span class="p">(</span><span class="n">format</span><span class="p">)</span>
+<a name="line-148"></a>      <span class="p">{</span>
+<a name="line-149"></a>         <span class="k">case</span> <span class="nl">PNG_NUMBER_FORMAT_fixed</span><span class="p">:</span>
+<a name="line-150"></a>            <span class="cm">/* Needs five digits (the fraction) */</span>
+<a name="line-151"></a>            <span class="n">mincount</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<a name="line-152"></a>            <span class="k">if</span> <span class="p">(</span><span class="n">output</span> <span class="o">||</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-153"></a>            <span class="p">{</span>
+<a name="line-154"></a>               <span class="o">*--</span><span class="n">end</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">number</span> <span class="o">%</span> <span class="mi">10</span><span class="p">];</span>
+<a name="line-155"></a>               <span class="n">output</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-156"></a>            <span class="p">}</span>
+<a name="line-157"></a>            <span class="n">number</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
+<a name="line-158"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-159"></a>
+<a name="line-160"></a>         <span class="k">case</span> <span class="nl">PNG_NUMBER_FORMAT_02u</span><span class="p">:</span>
+<a name="line-161"></a>            <span class="cm">/* Expects at least 2 digits. */</span>
+<a name="line-162"></a>            <span class="n">mincount</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-163"></a>            <span class="cm">/* fall through */</span>
+<a name="line-164"></a>
+<a name="line-165"></a>         <span class="k">case</span> <span class="nl">PNG_NUMBER_FORMAT_u</span><span class="p">:</span>
+<a name="line-166"></a>            <span class="o">*--</span><span class="n">end</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">number</span> <span class="o">%</span> <span class="mi">10</span><span class="p">];</span>
+<a name="line-167"></a>            <span class="n">number</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
+<a name="line-168"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-169"></a>
+<a name="line-170"></a>         <span class="k">case</span> <span class="nl">PNG_NUMBER_FORMAT_02x</span><span class="p">:</span>
+<a name="line-171"></a>            <span class="cm">/* This format expects at least two digits */</span>
+<a name="line-172"></a>            <span class="n">mincount</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-173"></a>            <span class="cm">/* fall through */</span>
+<a name="line-174"></a>
+<a name="line-175"></a>         <span class="k">case</span> <span class="nl">PNG_NUMBER_FORMAT_x</span><span class="p">:</span>
+<a name="line-176"></a>            <span class="o">*--</span><span class="n">end</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">number</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">];</span>
+<a name="line-177"></a>            <span class="n">number</span> <span class="o">&gt;&gt;=</span> <span class="mi">4</span><span class="p">;</span>
+<a name="line-178"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-179"></a>
+<a name="line-180"></a>         <span class="k">default</span><span class="o">:</span> <span class="cm">/* an error */</span>
+<a name="line-181"></a>            <span class="n">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-182"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-183"></a>      <span class="p">}</span>
+<a name="line-184"></a>
+<a name="line-185"></a>      <span class="cm">/* Keep track of the number of digits added */</span>
+<a name="line-186"></a>      <span class="o">++</span><span class="n">count</span><span class="p">;</span>
+<a name="line-187"></a>
+<a name="line-188"></a>      <span class="cm">/* Float a fixed number here: */</span>
+<a name="line-189"></a>      <span class="k">if</span> <span class="p">(</span><span class="n">format</span> <span class="o">==</span> <span class="n">PNG_NUMBER_FORMAT_fixed</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">end</span> <span class="o">&gt;</span> <span class="n">start</span><span class="p">)</span>
+<a name="line-190"></a>      <span class="p">{</span>
+<a name="line-191"></a>         <span class="cm">/* End of the fraction, but maybe nothing was output?  In that case</span>
+<a name="line-192"></a><span class="cm">          * drop the decimal point.  If the number is a true zero handle that</span>
+<a name="line-193"></a><span class="cm">          * here.</span>
+<a name="line-194"></a><span class="cm">          */</span>
+<a name="line-195"></a>         <span class="k">if</span> <span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<a name="line-196"></a>            <span class="o">*--</span><span class="n">end</span> <span class="o">=</span> <span class="sc">&#39;.&#39;</span><span class="p">;</span>
+<a name="line-197"></a>         <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="cm">/* and !output */</span>
+<a name="line-198"></a>            <span class="o">*--</span><span class="n">end</span> <span class="o">=</span> <span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<a name="line-199"></a>      <span class="p">}</span>
+<a name="line-200"></a>   <span class="p">}</span>
+<a name="line-201"></a>
+<a name="line-202"></a>   <span class="k">return</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-203"></a><span class="p">}</span>
+<a name="line-204"></a><span class="cp">#endif</span>
+<a name="line-205"></a>
+<a name="line-206"></a><span class="cp">#ifdef PNG_WARNINGS_SUPPORTED</span>
+<a name="line-207"></a><span class="cm">/* This function is called whenever there is a non-fatal error.  This function</span>
+<a name="line-208"></a><span class="cm"> * should not be changed.  If there is a need to handle warnings differently,</span>
+<a name="line-209"></a><span class="cm"> * you should supply a replacement warning function and use</span>
+<a name="line-210"></a><span class="cm"> * png_set_error_fn() to replace the warning function at run-time.</span>
+<a name="line-211"></a><span class="cm"> */</span>
+<a name="line-212"></a><span class="kt">void</span> <span class="n">PNGAPI</span>
+<a name="line-213"></a><span class="n">png_warning</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">warning_message</span><span class="p">)</span>
+<a name="line-214"></a><span class="p">{</span>
+<a name="line-215"></a>   <span class="kt">int</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-216"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-217"></a>   <span class="p">{</span>
+<a name="line-218"></a><span class="cp">#ifdef PNG_ERROR_NUMBERS_SUPPORTED</span>
+<a name="line-219"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">&amp;</span>
+<a name="line-220"></a>       <span class="p">(</span><span class="n">PNG_FLAG_STRIP_ERROR_NUMBERS</span><span class="o">|</span><span class="n">PNG_FLAG_STRIP_ERROR_TEXT</span><span class="p">))</span>
+<a name="line-221"></a><span class="cp">#endif</span>
+<a name="line-222"></a>      <span class="p">{</span>
+<a name="line-223"></a>         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">warning_message</span> <span class="o">==</span> <span class="n">PNG_LITERAL_SHARP</span><span class="p">)</span>
+<a name="line-224"></a>         <span class="p">{</span>
+<a name="line-225"></a>            <span class="k">for</span> <span class="p">(</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
+<a name="line-226"></a>               <span class="k">if</span> <span class="p">(</span><span class="n">warning_message</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39; &#39;</span><span class="p">)</span>
+<a name="line-227"></a>                  <span class="k">break</span><span class="p">;</span>
+<a name="line-228"></a>         <span class="p">}</span>
+<a name="line-229"></a>      <span class="p">}</span>
+<a name="line-230"></a>   <span class="p">}</span>
+<a name="line-231"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">warning_fn</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-232"></a>      <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">warning_fn</span><span class="p">))(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">warning_message</span> <span class="o">+</span> <span class="n">offset</span><span class="p">);</span>
+<a name="line-233"></a>   <span class="k">else</span>
+<a name="line-234"></a>      <span class="nf">png_default_warning</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">warning_message</span> <span class="o">+</span> <span class="n">offset</span><span class="p">);</span>
+<a name="line-235"></a><span class="p">}</span>
+<a name="line-236"></a>
+<a name="line-237"></a><span class="cm">/* These functions support &#39;formatted&#39; warning messages with up to</span>
+<a name="line-238"></a><span class="cm"> * PNG_WARNING_PARAMETER_COUNT parameters.  In the format string the parameter</span>
+<a name="line-239"></a><span class="cm"> * is introduced by @&lt;number&gt;, where &#39;number&#39; starts at 1.  This follows the</span>
+<a name="line-240"></a><span class="cm"> * standard established by X/Open for internationalizable error messages.</span>
+<a name="line-241"></a><span class="cm"> */</span>
+<a name="line-242"></a><span class="kt">void</span>
+<a name="line-243"></a><span class="n">png_warning_parameter</span><span class="p">(</span><span class="n">png_warning_parameters</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">number</span><span class="p">,</span>
+<a name="line-244"></a>   <span class="n">png_const_charp</span> <span class="n">string</span><span class="p">)</span>
+<a name="line-245"></a><span class="p">{</span>
+<a name="line-246"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">number</span> <span class="o">&lt;=</span> <span class="n">PNG_WARNING_PARAMETER_COUNT</span><span class="p">)</span>
+<a name="line-247"></a>      <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">png_safecat</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="k">sizeof</span> <span class="n">p</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
+<a name="line-248"></a><span class="hll"><span class="p">}</span><span class='error2'>&lt;--- Found calculation inside sizeof().</span>
+</span><a name="line-249"></a>
+<a name="line-250"></a><span class="kt">void</span>
+<a name="line-251"></a><span class="n">png_warning_parameter_unsigned</span><span class="p">(</span><span class="n">png_warning_parameters</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">number</span><span class="p">,</span> <span class="kt">int</span> <span class="n">format</span><span class="p">,</span>
+<a name="line-252"></a>   <span class="kt">png_alloc_size_t</span> <span class="n">value</span><span class="p">)</span>
+<a name="line-253"></a><span class="p">{</span>
+<a name="line-254"></a>   <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">PNG_NUMBER_BUFFER_SIZE</span><span class="p">];</span>
+<a name="line-255"></a>   <span class="n">png_warning_parameter</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">PNG_FORMAT_NUMBER</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">value</span><span class="p">));</span>
+<a name="line-256"></a><span class="p">}</span>
+<a name="line-257"></a>
+<a name="line-258"></a><span class="kt">void</span>
+<a name="line-259"></a><span class="n">png_warning_parameter_signed</span><span class="p">(</span><span class="n">png_warning_parameters</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">number</span><span class="p">,</span> <span class="kt">int</span> <span class="n">format</span><span class="p">,</span>
+<a name="line-260"></a>   <span class="n">png_int_32</span> <span class="n">value</span><span class="p">)</span>
+<a name="line-261"></a><span class="p">{</span>
+<a name="line-262"></a>   <span class="kt">png_alloc_size_t</span> <span class="n">u</span><span class="p">;</span>
+<a name="line-263"></a>   <span class="n">png_charp</span> <span class="n">str</span><span class="p">;</span>
+<a name="line-264"></a>   <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">PNG_NUMBER_BUFFER_SIZE</span><span class="p">];</span>
+<a name="line-265"></a>
+<a name="line-266"></a>   <span class="cm">/* Avoid overflow by doing the negate in a png_alloc_size_t: */</span>
+<a name="line-267"></a>   <span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="kt">png_alloc_size_t</span><span class="p">)</span><span class="n">value</span><span class="p">;</span>
+<a name="line-268"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-269"></a>      <span class="n">u</span> <span class="o">=</span> <span class="o">~</span><span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-270"></a>
+<a name="line-271"></a>   <span class="n">str</span> <span class="o">=</span> <span class="n">PNG_FORMAT_NUMBER</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">u</span><span class="p">);</span>
+<a name="line-272"></a>
+<a name="line-273"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">str</span> <span class="o">&gt;</span> <span class="n">buffer</span><span class="p">)</span>
+<a name="line-274"></a>      <span class="o">*--</span><span class="n">str</span> <span class="o">=</span> <span class="sc">&#39;-&#39;</span><span class="p">;</span>
+<a name="line-275"></a>
+<a name="line-276"></a>   <span class="n">png_warning_parameter</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+<a name="line-277"></a><span class="p">}</span>
+<a name="line-278"></a>
+<a name="line-279"></a><span class="kt">void</span>
+<a name="line-280"></a><span class="n">png_formatted_warning</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_warning_parameters</span> <span class="n">p</span><span class="p">,</span>
+<a name="line-281"></a>   <span class="n">png_const_charp</span> <span class="n">message</span><span class="p">)</span>
+<a name="line-282"></a><span class="p">{</span>
+<a name="line-283"></a>   <span class="cm">/* The internal buffer is just 128 bytes - enough for all our messages,</span>
+<a name="line-284"></a><span class="cm">    * overflow doesn&#39;t happen because this code checks!</span>
+<a name="line-285"></a><span class="cm">    */</span>
+<a name="line-286"></a>   <span class="kt">size_t</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-287"></a>   <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
+<a name="line-288"></a>
+<a name="line-289"></a>   <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="p">(</span><span class="k">sizeof</span> <span class="n">msg</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">message</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<a name="line-290"></a>   <span class="p">{</span>
+<a name="line-291"></a>      <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">message</span> <span class="o">==</span> <span class="sc">&#39;@&#39;</span><span class="p">)</span>
+<a name="line-292"></a>      <span class="p">{</span>
+<a name="line-293"></a>         <span class="kt">int</span> <span class="n">parameter</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-294"></a>         <span class="k">switch</span> <span class="p">(</span><span class="o">*++</span><span class="n">message</span><span class="p">)</span>
+<a name="line-295"></a>         <span class="p">{</span>
+<a name="line-296"></a>            <span class="k">case</span> <span class="sc">&#39;1&#39;</span><span class="o">:</span>
+<a name="line-297"></a>               <span class="n">parameter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-298"></a>               <span class="k">break</span><span class="p">;</span>
+<a name="line-299"></a>
+<a name="line-300"></a>            <span class="k">case</span> <span class="sc">&#39;2&#39;</span><span class="o">:</span>
+<a name="line-301"></a>               <span class="n">parameter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-302"></a>               <span class="k">break</span><span class="p">;</span>
+<a name="line-303"></a>
+<a name="line-304"></a>            <span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span>
+<a name="line-305"></a>               <span class="k">continue</span><span class="p">;</span> <span class="cm">/* To break out of the for loop above. */</span>
+<a name="line-306"></a>
+<a name="line-307"></a>            <span class="k">default</span><span class="o">:</span>
+<a name="line-308"></a>               <span class="k">break</span><span class="p">;</span>
+<a name="line-309"></a>         <span class="p">}</span>
+<a name="line-310"></a>
+<a name="line-311"></a>         <span class="k">if</span> <span class="p">(</span><span class="n">parameter</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">parameter</span> <span class="o">&lt;</span> <span class="n">PNG_WARNING_PARAMETER_COUNT</span><span class="p">)</span>
+<a name="line-312"></a>         <span class="p">{</span>
+<a name="line-313"></a>            <span class="cm">/* Append this parameter */</span>
+<a name="line-314"></a>            <span class="n">png_const_charp</span> <span class="n">parm</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">parameter</span><span class="p">];</span>
+<a name="line-315"></a>            <span class="n">png_const_charp</span> <span class="n">pend</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="k">sizeof</span> <span class="n">p</span><span class="p">[</span><span class="n">parameter</span><span class="p">]);</span>
+<a name="line-316"></a>
+<a name="line-317"></a>            <span class="cm">/* No need to copy the trailing &#39;\0&#39; here, but there is no guarantee</span>
+<a name="line-318"></a><span class="cm">             * that parm[] has been initialized, so there is no guarantee of a</span>
+<a name="line-319"></a><span class="cm">             * trailing &#39;\0&#39;:</span>
+<a name="line-320"></a><span class="cm">             */</span>
+<a name="line-321"></a>            <span class="k">for</span> <span class="p">(;</span> <span class="n">i</span><span class="o">&lt;</span><span class="p">(</span><span class="k">sizeof</span> <span class="n">msg</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">parm</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">parm</span> <span class="o">&lt;</span> <span class="n">pend</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<a name="line-322"></a><span class="hll">               <span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="n">parm</span><span class="o">++</span><span class="p">;</span><span class='error2'>&lt;--- Char literal compared with pointer 'parm'. Did you intend to dereference it?</span>
+</span><a name="line-323"></a>
+<a name="line-324"></a>            <span class="o">++</span><span class="n">message</span><span class="p">;</span>
+<a name="line-325"></a>            <span class="k">continue</span><span class="p">;</span>
+<a name="line-326"></a>         <span class="p">}</span>
+<a name="line-327"></a>
+<a name="line-328"></a>         <span class="cm">/* else not a parameter and there is a character after the @ sign; just</span>
+<a name="line-329"></a><span class="cm">          * copy that.</span>
+<a name="line-330"></a><span class="cm">          */</span>
+<a name="line-331"></a>      <span class="p">}</span>
+<a name="line-332"></a>
+<a name="line-333"></a>      <span class="cm">/* At this point *message can&#39;t be &#39;\0&#39;, even in the bad parameter case</span>
+<a name="line-334"></a><span class="cm">       * above where there is a lone &#39;@&#39; at the end of the message string.</span>
+<a name="line-335"></a><span class="cm">       */</span>
+<a name="line-336"></a>      <span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="n">message</span><span class="o">++</span><span class="p">;</span>
+<a name="line-337"></a>   <span class="p">}</span>
+<a name="line-338"></a>
+<a name="line-339"></a>   <span class="cm">/* i is always less than (sizeof msg), so: */</span>
+<a name="line-340"></a>   <span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-341"></a>
+<a name="line-342"></a>   <span class="cm">/* And this is the formatted message: */</span>
+<a name="line-343"></a>   <span class="n">png_warning</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+<a name="line-344"></a><span class="p">}</span>
+<a name="line-345"></a><span class="cp">#endif </span><span class="cm">/* PNG_WARNINGS_SUPPORTED */</span><span class="cp"></span>
+<a name="line-346"></a>
+<a name="line-347"></a><span class="cp">#ifdef PNG_BENIGN_ERRORS_SUPPORTED</span>
+<a name="line-348"></a><span class="kt">void</span> <span class="n">PNGAPI</span>
+<a name="line-349"></a><span class="n">png_benign_error</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">error_message</span><span class="p">)</span>
+<a name="line-350"></a><span class="p">{</span>
+<a name="line-351"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">PNG_FLAG_BENIGN_ERRORS_WARN</span><span class="p">)</span>
+<a name="line-352"></a>     <span class="n">png_warning</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-353"></a>  <span class="k">else</span>
+<a name="line-354"></a>     <span class="nf">png_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-355"></a><span class="p">}</span>
+<a name="line-356"></a><span class="cp">#endif</span>
+<a name="line-357"></a>
+<a name="line-358"></a><span class="cm">/* These utilities are used internally to build an error message that relates</span>
+<a name="line-359"></a><span class="cm"> * to the current chunk.  The chunk name comes from png_ptr-&gt;chunk_name,</span>
+<a name="line-360"></a><span class="cm"> * this is used to prefix the message.  The message is limited in length</span>
+<a name="line-361"></a><span class="cm"> * to 63 bytes, the name characters are output as hex digits wrapped in []</span>
+<a name="line-362"></a><span class="cm"> * if the character is invalid.</span>
+<a name="line-363"></a><span class="cm"> */</span>
+<a name="line-364"></a><span class="cp">#define isnonalpha(c) ((c) &lt; 65 || (c) &gt; 122 || ((c) &gt; 90 &amp;&amp; (c) &lt; 97))</span>
+<a name="line-365"></a><span class="k">static</span> <span class="n">PNG_CONST</span> <span class="kt">char</span> <span class="n">png_digit</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<a name="line-366"></a>   <span class="sc">&#39;0&#39;</span><span class="p">,</span> <span class="sc">&#39;1&#39;</span><span class="p">,</span> <span class="sc">&#39;2&#39;</span><span class="p">,</span> <span class="sc">&#39;3&#39;</span><span class="p">,</span> <span class="sc">&#39;4&#39;</span><span class="p">,</span> <span class="sc">&#39;5&#39;</span><span class="p">,</span> <span class="sc">&#39;6&#39;</span><span class="p">,</span> <span class="sc">&#39;7&#39;</span><span class="p">,</span> <span class="sc">&#39;8&#39;</span><span class="p">,</span> <span class="sc">&#39;9&#39;</span><span class="p">,</span>
+<a name="line-367"></a>   <span class="sc">&#39;A&#39;</span><span class="p">,</span> <span class="sc">&#39;B&#39;</span><span class="p">,</span> <span class="sc">&#39;C&#39;</span><span class="p">,</span> <span class="sc">&#39;D&#39;</span><span class="p">,</span> <span class="sc">&#39;E&#39;</span><span class="p">,</span> <span class="sc">&#39;F&#39;</span>
+<a name="line-368"></a><span class="p">};</span>
+<a name="line-369"></a>
+<a name="line-370"></a><span class="cp">#define PNG_MAX_ERROR_TEXT 64</span>
+<a name="line-371"></a><span class="cp">#if defined(PNG_WARNINGS_SUPPORTED) || defined(PNG_ERROR_TEXT_SUPPORTED)</span>
+<a name="line-372"></a><span class="k">static</span> <span class="kt">void</span> <span class="cm">/* PRIVATE */</span>
+<a name="line-373"></a><span class="n">png_format_buffer</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_charp</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">png_const_charp</span>
+<a name="line-374"></a>    <span class="n">error_message</span><span class="p">)</span>
+<a name="line-375"></a><span class="p">{</span>
+<a name="line-376"></a>   <span class="n">png_uint_32</span> <span class="n">chunk_name</span> <span class="o">=</span> <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">chunk_name</span><span class="p">;</span>
+<a name="line-377"></a>   <span class="kt">int</span> <span class="n">iout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ishift</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+<a name="line-378"></a>
+<a name="line-379"></a>   <span class="k">while</span> <span class="p">(</span><span class="n">ishift</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-380"></a>   <span class="p">{</span>
+<a name="line-381"></a>      <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">chunk_name</span> <span class="o">&gt;&gt;</span> <span class="n">ishift</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">;</span>
+<a name="line-382"></a>
+<a name="line-383"></a>      <span class="n">ishift</span> <span class="o">-=</span> <span class="mi">8</span><span class="p">;</span>
+<a name="line-384"></a>      <span class="k">if</span> <span class="p">(</span><span class="n">isnonalpha</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+<a name="line-385"></a>      <span class="p">{</span>
+<a name="line-386"></a>         <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">PNG_LITERAL_LEFT_SQUARE_BRACKET</span><span class="p">;</span>
+<a name="line-387"></a>         <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">png_digit</span><span class="p">[(</span><span class="n">c</span> <span class="o">&amp;</span> <span class="mh">0xf0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">];</span>
+<a name="line-388"></a>         <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">png_digit</span><span class="p">[</span><span class="n">c</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">];</span>
+<a name="line-389"></a>         <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">PNG_LITERAL_RIGHT_SQUARE_BRACKET</span><span class="p">;</span>
+<a name="line-390"></a>      <span class="p">}</span>
+<a name="line-391"></a>
+<a name="line-392"></a>      <span class="k">else</span>
+<a name="line-393"></a>      <span class="p">{</span>
+<a name="line-394"></a>         <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">c</span><span class="p">;</span>
+<a name="line-395"></a>      <span class="p">}</span>
+<a name="line-396"></a>   <span class="p">}</span>
+<a name="line-397"></a>
+<a name="line-398"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">error_message</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-399"></a>      <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-400"></a>
+<a name="line-401"></a>   <span class="k">else</span>
+<a name="line-402"></a>   <span class="p">{</span>
+<a name="line-403"></a>      <span class="kt">int</span> <span class="n">iin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-404"></a>
+<a name="line-405"></a>      <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;:&#39;</span><span class="p">;</span>
+<a name="line-406"></a>      <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+<a name="line-407"></a>
+<a name="line-408"></a>      <span class="k">while</span> <span class="p">(</span><span class="n">iin</span> <span class="o">&lt;</span> <span class="n">PNG_MAX_ERROR_TEXT</span><span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">error_message</span><span class="p">[</span><span class="n">iin</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span>
+<a name="line-409"></a>         <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_message</span><span class="p">[</span><span class="n">iin</span><span class="o">++</span><span class="p">];</span>
+<a name="line-410"></a>
+<a name="line-411"></a>      <span class="cm">/* iin &lt; PNG_MAX_ERROR_TEXT, so the following is safe: */</span>
+<a name="line-412"></a>      <span class="n">buffer</span><span class="p">[</span><span class="n">iout</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-413"></a>   <span class="p">}</span>
+<a name="line-414"></a><span class="p">}</span>
+<a name="line-415"></a><span class="cp">#endif </span><span class="cm">/* PNG_WARNINGS_SUPPORTED || PNG_ERROR_TEXT_SUPPORTED */</span><span class="cp"></span>
+<a name="line-416"></a>
+<a name="line-417"></a><span class="cp">#if defined(PNG_READ_SUPPORTED) &amp;&amp; defined(PNG_ERROR_TEXT_SUPPORTED)</span>
+<a name="line-418"></a><span class="n">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span><span class="n">PNGAPI</span>
+<a name="line-419"></a><span class="n">png_chunk_error</span><span class="p">,(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">error_message</span><span class="p">),</span>
+<a name="line-420"></a>   <span class="n">PNG_NORETURN</span><span class="p">)</span>
+<a name="line-421"></a><span class="p">{</span>
+<a name="line-422"></a>   <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">18</span><span class="o">+</span><span class="n">PNG_MAX_ERROR_TEXT</span><span class="p">];</span>
+<a name="line-423"></a><span class="hll">   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'msg' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;msg&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
 void f(int x)
 {
     int i = 0;
@@ -375,114 +1223,270 @@ void f(int x)
     }
 }
 When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-72"></a>
-<a name="line-73"></a>    <span class="cm">/* split Adler-32 into component sums */</span>
-<a name="line-74"></a>    <span class="n">sum2</span> <span class="o">=</span> <span class="p">(</span><span class="n">adler</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">;</span>
-<a name="line-75"></a>    <span class="n">adler</span> <span class="o">&amp;=</span> <span class="mh">0xffff</span><span class="p">;</span>
-<a name="line-76"></a>
-<a name="line-77"></a>    <span class="cm">/* in case user likes doing a byte at a time, keep it fast */</span>
-<a name="line-78"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-79"></a>        <span class="n">adler</span> <span class="o">+=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-80"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">adler</span> <span class="o">&gt;=</span> <span class="n">BASE</span><span class="p">)</span>
-<a name="line-81"></a>            <span class="n">adler</span> <span class="o">-=</span> <span class="n">BASE</span><span class="p">;</span>
-<a name="line-82"></a>        <span class="n">sum2</span> <span class="o">+=</span> <span class="n">adler</span><span class="p">;</span>
-<a name="line-83"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&gt;=</span> <span class="n">BASE</span><span class="p">)</span>
-<a name="line-84"></a>            <span class="n">sum2</span> <span class="o">-=</span> <span class="n">BASE</span><span class="p">;</span>
-<a name="line-85"></a>        <span class="k">return</span> <span class="n">adler</span> <span class="o">|</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">);</span>
-<a name="line-86"></a>    <span class="p">}</span>
-<a name="line-87"></a>
-<a name="line-88"></a>    <span class="cm">/* initial Adler-32 value (deferred check for len == 1 speed) */</span>
-<a name="line-89"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">buf</span> <span class="o">==</span> <span class="n">Z_NULL</span><span class="p">)</span>
-<a name="line-90"></a>        <span class="k">return</span> <span class="mi">1L</span><span class="p">;</span>
-<a name="line-91"></a>
-<a name="line-92"></a>    <span class="cm">/* in case short lengths are provided, keep it somewhat fast */</span>
-<a name="line-93"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-94"></a>        <span class="k">while</span> <span class="p">(</span><span class="n">len</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-95"></a>            <span class="n">adler</span> <span class="o">+=</span> <span class="o">*</span><span class="n">buf</span><span class="o">++</span><span class="p">;</span>
-<a name="line-96"></a>            <span class="n">sum2</span> <span class="o">+=</span> <span class="n">adler</span><span class="p">;</span>
-<a name="line-97"></a>        <span class="p">}</span>
-<a name="line-98"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">adler</span> <span class="o">&gt;=</span> <span class="n">BASE</span><span class="p">)</span>
-<a name="line-99"></a>            <span class="n">adler</span> <span class="o">-=</span> <span class="n">BASE</span><span class="p">;</span>
-<a name="line-100"></a>        <span class="n">MOD28</span><span class="p">(</span><span class="n">sum2</span><span class="p">);</span>            <span class="cm">/* only added so many BASE&#39;s */</span>
-<a name="line-101"></a>        <span class="k">return</span> <span class="n">adler</span> <span class="o">|</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">);</span>
-<a name="line-102"></a>    <span class="p">}</span>
-<a name="line-103"></a>
-<a name="line-104"></a>    <span class="cm">/* do length NMAX blocks -- requires just one modulo operation */</span>
-<a name="line-105"></a>    <span class="k">while</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;=</span> <span class="n">NMAX</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-106"></a>        <span class="n">len</span> <span class="o">-=</span> <span class="n">NMAX</span><span class="p">;</span>
-<a name="line-107"></a>        <span class="n">n</span> <span class="o">=</span> <span class="n">NMAX</span> <span class="o">/</span> <span class="mi">16</span><span class="p">;</span>          <span class="cm">/* NMAX is divisible by 16 */</span>
-<a name="line-108"></a>        <span class="k">do</span> <span class="p">{</span>
-<a name="line-109"></a>            <span class="n">DO16</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>          <span class="cm">/* 16 sums unrolled */</span>
-<a name="line-110"></a>            <span class="n">buf</span> <span class="o">+=</span> <span class="mi">16</span><span class="p">;</span>
-<a name="line-111"></a>        <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="o">--</span><span class="n">n</span><span class="p">);</span>
-<a name="line-112"></a>        <span class="n">MOD</span><span class="p">(</span><span class="n">adler</span><span class="p">);</span>
-<a name="line-113"></a>        <span class="n">MOD</span><span class="p">(</span><span class="n">sum2</span><span class="p">);</span>
-<a name="line-114"></a>    <span class="p">}</span>
-<a name="line-115"></a>
-<a name="line-116"></a>    <span class="cm">/* do remaining bytes (less than NMAX, still just one modulo) */</span>
-<a name="line-117"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>                  <span class="cm">/* avoid modulos if none remaining */</span>
-<a name="line-118"></a>        <span class="k">while</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;=</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-119"></a>            <span class="n">len</span> <span class="o">-=</span> <span class="mi">16</span><span class="p">;</span>
-<a name="line-120"></a>            <span class="n">DO16</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
-<a name="line-121"></a>            <span class="n">buf</span> <span class="o">+=</span> <span class="mi">16</span><span class="p">;</span>
-<a name="line-122"></a>        <span class="p">}</span>
-<a name="line-123"></a>        <span class="k">while</span> <span class="p">(</span><span class="n">len</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-124"></a>            <span class="n">adler</span> <span class="o">+=</span> <span class="o">*</span><span class="n">buf</span><span class="o">++</span><span class="p">;</span>
-<a name="line-125"></a>            <span class="n">sum2</span> <span class="o">+=</span> <span class="n">adler</span><span class="p">;</span>
-<a name="line-126"></a>        <span class="p">}</span>
-<a name="line-127"></a>        <span class="n">MOD</span><span class="p">(</span><span class="n">adler</span><span class="p">);</span>
-<a name="line-128"></a>        <span class="n">MOD</span><span class="p">(</span><span class="n">sum2</span><span class="p">);</span>
-<a name="line-129"></a>    <span class="p">}</span>
-<a name="line-130"></a>
-<a name="line-131"></a>    <span class="cm">/* return recombined sums */</span>
-<a name="line-132"></a>    <span class="k">return</span> <span class="n">adler</span> <span class="o">|</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">);</span>
-<a name="line-133"></a><span class="p">}</span>
-<a name="line-134"></a>
-<a name="line-135"></a><span class="cm">/* ========================================================================= */</span>
-<a name="line-136"></a><span class="n">local</span> <span class="n">uLong</span> <span class="n">adler32_combine_</span><span class="p">(</span><span class="n">adler1</span><span class="p">,</span> <span class="n">adler2</span><span class="p">,</span> <span class="n">len2</span><span class="p">)</span>
-<a name="line-137"></a>    <span class="n">uLong</span> <span class="n">adler1</span><span class="p">;</span>
-<a name="line-138"></a>    <span class="n">uLong</span> <span class="n">adler2</span><span class="p">;</span>
-<a name="line-139"></a>    <span class="kt">z_off64_t</span> <span class="n">len2</span><span class="p">;</span>
-<a name="line-140"></a><span class="p">{</span>
-<a name="line-141"></a>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">sum1</span><span class="p">;</span>
-<a name="line-142"></a>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">sum2</span><span class="p">;</span>
-<a name="line-143"></a>    <span class="kt">unsigned</span> <span class="n">rem</span><span class="p">;</span>
-<a name="line-144"></a>
-<a name="line-145"></a>    <span class="cm">/* for negative len, return invalid adler32 as a clue for debugging */</span>
-<a name="line-146"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">len2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-147"></a>        <span class="k">return</span> <span class="mh">0xffffffffUL</span><span class="p">;</span>
-<a name="line-148"></a>
-<a name="line-149"></a>    <span class="cm">/* the derivation of this formula is left as an exercise for the reader */</span>
-<a name="line-150"></a>    <span class="n">MOD63</span><span class="p">(</span><span class="n">len2</span><span class="p">);</span>                <span class="cm">/* assumes len2 &gt;= 0 */</span>
-<a name="line-151"></a>    <span class="n">rem</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">len2</span><span class="p">;</span>
-<a name="line-152"></a>    <span class="n">sum1</span> <span class="o">=</span> <span class="n">adler1</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">;</span>
-<a name="line-153"></a>    <span class="n">sum2</span> <span class="o">=</span> <span class="n">rem</span> <span class="o">*</span> <span class="n">sum1</span><span class="p">;</span>
-<a name="line-154"></a>    <span class="n">MOD</span><span class="p">(</span><span class="n">sum2</span><span class="p">);</span>
-<a name="line-155"></a>    <span class="n">sum1</span> <span class="o">+=</span> <span class="p">(</span><span class="n">adler2</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">)</span> <span class="o">+</span> <span class="n">BASE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-156"></a>    <span class="n">sum2</span> <span class="o">+=</span> <span class="p">((</span><span class="n">adler1</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">adler2</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">)</span> <span class="o">+</span> <span class="n">BASE</span> <span class="o">-</span> <span class="n">rem</span><span class="p">;</span>
-<a name="line-157"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">sum1</span> <span class="o">&gt;=</span> <span class="n">BASE</span><span class="p">)</span> <span class="n">sum1</span> <span class="o">-=</span> <span class="n">BASE</span><span class="p">;</span>
-<a name="line-158"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">sum1</span> <span class="o">&gt;=</span> <span class="n">BASE</span><span class="p">)</span> <span class="n">sum1</span> <span class="o">-=</span> <span class="n">BASE</span><span class="p">;</span>
-<a name="line-159"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">BASE</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">))</span> <span class="n">sum2</span> <span class="o">-=</span> <span class="p">(</span><span class="n">BASE</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-160"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&gt;=</span> <span class="n">BASE</span><span class="p">)</span> <span class="n">sum2</span> <span class="o">-=</span> <span class="n">BASE</span><span class="p">;</span>
-<a name="line-161"></a>    <span class="k">return</span> <span class="n">sum1</span> <span class="o">|</span> <span class="p">(</span><span class="n">sum2</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">);</span>
-<a name="line-162"></a><span class="p">}</span>
-<a name="line-163"></a>
-<a name="line-164"></a><span class="cm">/* ========================================================================= */</span>
-<a name="line-165"></a><span class="n">uLong</span> <span class="n">ZEXPORT</span> <span class="n">adler32_combine</span><span class="p">(</span><span class="n">adler1</span><span class="p">,</span> <span class="n">adler2</span><span class="p">,</span> <span class="n">len2</span><span class="p">)</span>
-<a name="line-166"></a>    <span class="n">uLong</span> <span class="n">adler1</span><span class="p">;</span>
-<a name="line-167"></a>    <span class="n">uLong</span> <span class="n">adler2</span><span class="p">;</span>
-<a name="line-168"></a>    <span class="kt">z_off_t</span> <span class="n">len2</span><span class="p">;</span>
-<a name="line-169"></a><span class="p">{</span>
-<a name="line-170"></a>    <span class="k">return</span> <span class="n">adler32_combine_</span><span class="p">(</span><span class="n">adler1</span><span class="p">,</span> <span class="n">adler2</span><span class="p">,</span> <span class="n">len2</span><span class="p">);</span>
-<a name="line-171"></a><span class="p">}</span>
-<a name="line-172"></a>
-<a name="line-173"></a><span class="n">uLong</span> <span class="n">ZEXPORT</span> <span class="n">adler32_combine64</span><span class="p">(</span><span class="n">adler1</span><span class="p">,</span> <span class="n">adler2</span><span class="p">,</span> <span class="n">len2</span><span class="p">)</span>
-<a name="line-174"></a>    <span class="n">uLong</span> <span class="n">adler1</span><span class="p">;</span>
-<a name="line-175"></a>    <span class="n">uLong</span> <span class="n">adler2</span><span class="p">;</span>
-<a name="line-176"></a>    <span class="kt">z_off64_t</span> <span class="n">len2</span><span class="p">;</span>
-<a name="line-177"></a><span class="p">{</span>
-<a name="line-178"></a>    <span class="k">return</span> <span class="n">adler32_combine_</span><span class="p">(</span><span class="n">adler1</span><span class="p">,</span> <span class="n">adler2</span><span class="p">,</span> <span class="n">len2</span><span class="p">);</span>
-<a name="line-179"></a><span class="p">}</span>
+</span><a name="line-424"></a>      <span class="n">png_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-425"></a>
+<a name="line-426"></a>   <span class="k">else</span>
+<a name="line-427"></a>   <span class="p">{</span>
+<a name="line-428"></a>      <span class="n">png_format_buffer</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-429"></a>      <span class="n">png_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+<a name="line-430"></a>   <span class="p">}</span>
+<a name="line-431"></a><span class="p">}</span>
+<a name="line-432"></a><span class="cp">#endif </span><span class="cm">/* PNG_READ_SUPPORTED &amp;&amp; PNG_ERROR_TEXT_SUPPORTED */</span><span class="cp"></span>
+<a name="line-433"></a>
+<a name="line-434"></a><span class="cp">#ifdef PNG_WARNINGS_SUPPORTED</span>
+<a name="line-435"></a><span class="kt">void</span> <span class="n">PNGAPI</span>
+<a name="line-436"></a><span class="n">png_chunk_warning</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">warning_message</span><span class="p">)</span>
+<a name="line-437"></a><span class="p">{</span>
+<a name="line-438"></a>   <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">18</span><span class="o">+</span><span class="n">PNG_MAX_ERROR_TEXT</span><span class="p">];</span>
+<a name="line-439"></a><span class="hll">   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'msg' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;msg&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-440"></a>      <span class="n">png_warning</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">warning_message</span><span class="p">);</span>
+<a name="line-441"></a>
+<a name="line-442"></a>   <span class="k">else</span>
+<a name="line-443"></a>   <span class="p">{</span>
+<a name="line-444"></a>      <span class="n">png_format_buffer</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">warning_message</span><span class="p">);</span>
+<a name="line-445"></a>      <span class="n">png_warning</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+<a name="line-446"></a>   <span class="p">}</span>
+<a name="line-447"></a><span class="p">}</span>
+<a name="line-448"></a><span class="cp">#endif </span><span class="cm">/* PNG_WARNINGS_SUPPORTED */</span><span class="cp"></span>
+<a name="line-449"></a>
+<a name="line-450"></a><span class="cp">#ifdef PNG_READ_SUPPORTED</span>
+<a name="line-451"></a><span class="cp">#ifdef PNG_BENIGN_ERRORS_SUPPORTED</span>
+<a name="line-452"></a><span class="kt">void</span> <span class="n">PNGAPI</span>
+<a name="line-453"></a><span class="n">png_chunk_benign_error</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">error_message</span><span class="p">)</span>
+<a name="line-454"></a><span class="p">{</span>
+<a name="line-455"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">PNG_FLAG_BENIGN_ERRORS_WARN</span><span class="p">)</span>
+<a name="line-456"></a>      <span class="n">png_chunk_warning</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-457"></a>
+<a name="line-458"></a>   <span class="k">else</span>
+<a name="line-459"></a>      <span class="nf">png_chunk_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">error_message</span><span class="p">);</span>
+<a name="line-460"></a><span class="p">}</span>
+<a name="line-461"></a><span class="cp">#endif</span>
+<a name="line-462"></a><span class="cp">#endif </span><span class="cm">/* PNG_READ_SUPPORTED */</span><span class="cp"></span>
+<a name="line-463"></a>
+<a name="line-464"></a><span class="cp">#ifdef PNG_ERROR_TEXT_SUPPORTED</span>
+<a name="line-465"></a><span class="cp">#ifdef PNG_FLOATING_POINT_SUPPORTED</span>
+<a name="line-466"></a><span class="n">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span>
+<a name="line-467"></a><span class="n">png_fixed_error</span><span class="p">,(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">name</span><span class="p">),</span><span class="n">PNG_NORETURN</span><span class="p">)</span>
+<a name="line-468"></a><span class="p">{</span>
+<a name="line-469"></a><span class="cp">#  define fixed_message &quot;fixed point overflow in &quot;</span>
+<a name="line-470"></a><span class="cp">#  define fixed_message_ln ((sizeof fixed_message)-1)</span>
+<a name="line-471"></a>   <span class="kt">int</span>  <span class="n">iin</span><span class="p">;</span>
+<a name="line-472"></a>   <span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="n">fixed_message_ln</span><span class="o">+</span><span class="n">PNG_MAX_ERROR_TEXT</span><span class="p">];</span>
+<a name="line-473"></a>   <span class="n">png_memcpy</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">fixed_message</span><span class="p">,</span> <span class="n">fixed_message_ln</span><span class="p">);</span>
+<a name="line-474"></a>   <span class="n">iin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-475"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">while</span> <span class="p">(</span><span class="n">iin</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">PNG_MAX_ERROR_TEXT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">name</span><span class="p">[</span><span class="n">iin</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-476"></a>   <span class="p">{</span>
+<a name="line-477"></a>      <span class="n">msg</span><span class="p">[</span><span class="n">fixed_message_ln</span> <span class="o">+</span> <span class="n">iin</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="n">iin</span><span class="p">];</span>
+<a name="line-478"></a>      <span class="o">++</span><span class="n">iin</span><span class="p">;</span>
+<a name="line-479"></a>   <span class="p">}</span>
+<a name="line-480"></a>   <span class="n">msg</span><span class="p">[</span><span class="n">fixed_message_ln</span> <span class="o">+</span> <span class="n">iin</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-481"></a>   <span class="n">png_error</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+<a name="line-482"></a><span class="p">}</span>
+<a name="line-483"></a><span class="cp">#endif</span>
+<a name="line-484"></a><span class="cp">#endif</span>
+<a name="line-485"></a>
+<a name="line-486"></a><span class="cp">#ifdef PNG_SETJMP_SUPPORTED</span>
+<a name="line-487"></a><span class="cm">/* This API only exists if ANSI-C style error handling is used,</span>
+<a name="line-488"></a><span class="cm"> * otherwise it is necessary for png_default_error to be overridden.</span>
+<a name="line-489"></a><span class="cm"> */</span>
+<a name="line-490"></a><span class="kt">jmp_buf</span><span class="o">*</span> <span class="n">PNGAPI</span>
+<a name="line-491"></a><span class="n">png_set_longjmp_fn</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_longjmp_ptr</span> <span class="n">longjmp_fn</span><span class="p">,</span>
+<a name="line-492"></a>    <span class="kt">size_t</span> <span class="n">jmp_buf_size</span><span class="p">)</span>
+<a name="line-493"></a><span class="p">{</span>
+<a name="line-494"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">jmp_buf_size</span> <span class="o">!=</span> <span class="n">png_sizeof</span><span class="p">(</span><span class="kt">jmp_buf</span><span class="p">))</span>
+<a name="line-495"></a>      <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-496"></a>
+<a name="line-497"></a>   <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_fn</span> <span class="o">=</span> <span class="n">longjmp_fn</span><span class="p">;</span>
+<a name="line-498"></a>   <span class="k">return</span> <span class="o">&amp;</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_buffer</span><span class="p">;</span>
+<a name="line-499"></a><span class="p">}</span>
+<a name="line-500"></a><span class="cp">#endif</span>
+<a name="line-501"></a>
+<a name="line-502"></a><span class="cm">/* This is the default error handling function.  Note that replacements for</span>
+<a name="line-503"></a><span class="cm"> * this function MUST NOT RETURN, or the program will likely crash.  This</span>
+<a name="line-504"></a><span class="cm"> * function is used by default, or if the program supplies NULL for the</span>
+<a name="line-505"></a><span class="cm"> * error function pointer in png_set_error_fn().</span>
+<a name="line-506"></a><span class="cm"> */</span>
+<a name="line-507"></a><span class="k">static</span> <span class="n">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span> <span class="cm">/* PRIVATE */</span><span class="p">,</span>
+<a name="line-508"></a><span class="n">png_default_error</span><span class="p">,(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">error_message</span><span class="p">),</span>
+<a name="line-509"></a>   <span class="n">PNG_NORETURN</span><span class="p">)</span>
+<a name="line-510"></a><span class="p">{</span>
+<a name="line-511"></a><span class="cp">#ifdef PNG_CONSOLE_IO_SUPPORTED</span>
+<a name="line-512"></a><span class="cp">#ifdef PNG_ERROR_NUMBERS_SUPPORTED</span>
+<a name="line-513"></a>   <span class="cm">/* Check on NULL only added in 1.5.4 */</span>
+<a name="line-514"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">error_message</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">error_message</span> <span class="o">==</span> <span class="n">PNG_LITERAL_SHARP</span><span class="p">)</span>
+<a name="line-515"></a>   <span class="p">{</span>
+<a name="line-516"></a>      <span class="cm">/* Strip &quot;#nnnn &quot; from beginning of error message. */</span>
+<a name="line-517"></a>      <span class="kt">int</span> <span class="n">offset</span><span class="p">;</span>
+<a name="line-518"></a>      <span class="kt">char</span> <span class="n">error_number</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a name="line-519"></a>      <span class="k">for</span> <span class="p">(</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">offset</span><span class="o">&lt;</span><span class="mi">15</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
+<a name="line-520"></a>      <span class="p">{</span>
+<a name="line-521"></a>         <span class="n">error_number</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">error_message</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<a name="line-522"></a>         <span class="k">if</span> <span class="p">(</span><span class="n">error_message</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39; &#39;</span><span class="p">)</span>
+<a name="line-523"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-524"></a>      <span class="p">}</span>
+<a name="line-525"></a>
+<a name="line-526"></a>      <span class="k">if</span> <span class="p">((</span><span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">))</span>
+<a name="line-527"></a>      <span class="p">{</span>
+<a name="line-528"></a>         <span class="n">error_number</span><span class="p">[</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-529"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;libpng error no. %s: %s&quot;</span><span class="p">,</span>
+<a name="line-530"></a>             <span class="n">error_number</span><span class="p">,</span> <span class="n">error_message</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-531"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">PNG_STRING_NEWLINE</span><span class="p">);</span>
+<a name="line-532"></a>      <span class="p">}</span>
+<a name="line-533"></a>
+<a name="line-534"></a>      <span class="k">else</span>
+<a name="line-535"></a>      <span class="p">{</span>
+<a name="line-536"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;libpng error: %s, offset=%d&quot;</span><span class="p">,</span>
+<a name="line-537"></a>             <span class="n">error_message</span><span class="p">,</span> <span class="n">offset</span><span class="p">);</span>
+<a name="line-538"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">PNG_STRING_NEWLINE</span><span class="p">);</span>
+<a name="line-539"></a>      <span class="p">}</span>
+<a name="line-540"></a>   <span class="p">}</span>
+<a name="line-541"></a>   <span class="k">else</span>
+<a name="line-542"></a><span class="cp">#endif</span>
+<a name="line-543"></a>   <span class="p">{</span>
+<a name="line-544"></a>      <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;libpng error: %s&quot;</span><span class="p">,</span> <span class="n">error_message</span> <span class="o">?</span> <span class="nl">error_message</span> <span class="p">:</span>
+<a name="line-545"></a>         <span class="s">&quot;undefined&quot;</span><span class="p">);</span>
+<a name="line-546"></a>      <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">PNG_STRING_NEWLINE</span><span class="p">);</span>
+<a name="line-547"></a>   <span class="p">}</span>
+<a name="line-548"></a><span class="cp">#else</span>
+<a name="line-549"></a>   <span class="n">PNG_UNUSED</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span> <span class="cm">/* Make compiler happy */</span>
+<a name="line-550"></a><span class="cp">#endif</span>
+<a name="line-551"></a>   <span class="n">png_longjmp</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-552"></a><span class="p">}</span>
+<a name="line-553"></a>
+<a name="line-554"></a><span class="n">PNG_FUNCTION</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span><span class="n">PNGAPI</span>
+<a name="line-555"></a><span class="n">png_longjmp</span><span class="p">,(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">),</span><span class="n">PNG_NORETURN</span><span class="p">)</span>
+<a name="line-556"></a><span class="p">{</span>
+<a name="line-557"></a><span class="cp">#ifdef PNG_SETJMP_SUPPORTED</span>
+<a name="line-558"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">&amp;&amp;</span> <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_fn</span><span class="p">)</span>
+<a name="line-559"></a>   <span class="p">{</span>
+<a name="line-560"></a><span class="cp">#  ifdef USE_FAR_KEYWORD</span>
+<a name="line-561"></a>      <span class="p">{</span>
+<a name="line-562"></a>         <span class="kt">jmp_buf</span> <span class="n">tmp_jmpbuf</span><span class="p">;</span>
+<a name="line-563"></a>         <span class="n">png_memcpy</span><span class="p">(</span><span class="n">tmp_jmpbuf</span><span class="p">,</span> <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_buffer</span><span class="p">,</span> <span class="n">png_sizeof</span><span class="p">(</span><span class="kt">jmp_buf</span><span class="p">));</span>
+<a name="line-564"></a>         <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_fn</span><span class="p">(</span><span class="n">tmp_jmpbuf</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+<a name="line-565"></a>      <span class="p">}</span>
+<a name="line-566"></a>
+<a name="line-567"></a><span class="cp">#  else</span>
+<a name="line-568"></a>   <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_fn</span><span class="p">(</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">longjmp_buffer</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+<a name="line-569"></a><span class="cp">#  endif</span>
+<a name="line-570"></a>   <span class="p">}</span>
+<a name="line-571"></a><span class="cp">#endif</span>
+<a name="line-572"></a>   <span class="cm">/* Here if not setjmp support or if png_ptr is null. */</span>
+<a name="line-573"></a>   <span class="n">PNG_ABORT</span><span class="p">();</span>
+<a name="line-574"></a><span class="p">}</span>
+<a name="line-575"></a>
+<a name="line-576"></a><span class="cp">#ifdef PNG_WARNINGS_SUPPORTED</span>
+<a name="line-577"></a><span class="cm">/* This function is called when there is a warning, but the library thinks</span>
+<a name="line-578"></a><span class="cm"> * it can continue anyway.  Replacement functions don&#39;t have to do anything</span>
+<a name="line-579"></a><span class="cm"> * here if you don&#39;t want them to.  In the default configuration, png_ptr is</span>
+<a name="line-580"></a><span class="cm"> * not used, but it is passed in case it may be useful.</span>
+<a name="line-581"></a><span class="cm"> */</span>
+<a name="line-582"></a><span class="k">static</span> <span class="kt">void</span> <span class="cm">/* PRIVATE */</span>
+<a name="line-583"></a><span class="n">png_default_warning</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_const_charp</span> <span class="n">warning_message</span><span class="p">)</span>
+<a name="line-584"></a><span class="p">{</span>
+<a name="line-585"></a><span class="cp">#ifdef PNG_CONSOLE_IO_SUPPORTED</span>
+<a name="line-586"></a><span class="cp">#  ifdef PNG_ERROR_NUMBERS_SUPPORTED</span>
+<a name="line-587"></a>   <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">warning_message</span> <span class="o">==</span> <span class="n">PNG_LITERAL_SHARP</span><span class="p">)</span>
+<a name="line-588"></a>   <span class="p">{</span>
+<a name="line-589"></a>      <span class="kt">int</span> <span class="n">offset</span><span class="p">;</span>
+<a name="line-590"></a>      <span class="kt">char</span> <span class="n">warning_number</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a name="line-591"></a>      <span class="k">for</span> <span class="p">(</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
+<a name="line-592"></a>      <span class="p">{</span>
+<a name="line-593"></a>         <span class="n">warning_number</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">warning_message</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<a name="line-594"></a>         <span class="k">if</span> <span class="p">(</span><span class="n">warning_message</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39; &#39;</span><span class="p">)</span>
+<a name="line-595"></a>            <span class="k">break</span><span class="p">;</span>
+<a name="line-596"></a>      <span class="p">}</span>
+<a name="line-597"></a>
+<a name="line-598"></a>      <span class="k">if</span> <span class="p">((</span><span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">))</span>
+<a name="line-599"></a>      <span class="p">{</span>
+<a name="line-600"></a>         <span class="n">warning_number</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-601"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;libpng warning no. %s: %s&quot;</span><span class="p">,</span>
+<a name="line-602"></a>             <span class="n">warning_number</span><span class="p">,</span> <span class="n">warning_message</span> <span class="o">+</span> <span class="n">offset</span><span class="p">);</span>
+<a name="line-603"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">PNG_STRING_NEWLINE</span><span class="p">);</span>
+<a name="line-604"></a>      <span class="p">}</span>
+<a name="line-605"></a>
+<a name="line-606"></a>      <span class="k">else</span>
+<a name="line-607"></a>      <span class="p">{</span>
+<a name="line-608"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;libpng warning: %s&quot;</span><span class="p">,</span>
+<a name="line-609"></a>             <span class="n">warning_message</span><span class="p">);</span>
+<a name="line-610"></a>         <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">PNG_STRING_NEWLINE</span><span class="p">);</span>
+<a name="line-611"></a>      <span class="p">}</span>
+<a name="line-612"></a>   <span class="p">}</span>
+<a name="line-613"></a>   <span class="k">else</span>
+<a name="line-614"></a><span class="cp">#  endif</span>
+<a name="line-615"></a>
+<a name="line-616"></a>   <span class="p">{</span>
+<a name="line-617"></a>      <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;libpng warning: %s&quot;</span><span class="p">,</span> <span class="n">warning_message</span><span class="p">);</span>
+<a name="line-618"></a>      <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">PNG_STRING_NEWLINE</span><span class="p">);</span>
+<a name="line-619"></a>   <span class="p">}</span>
+<a name="line-620"></a><span class="cp">#else</span>
+<a name="line-621"></a>   <span class="n">PNG_UNUSED</span><span class="p">(</span><span class="n">warning_message</span><span class="p">)</span> <span class="cm">/* Make compiler happy */</span>
+<a name="line-622"></a><span class="cp">#endif</span>
+<a name="line-623"></a>   <span class="n">PNG_UNUSED</span><span class="p">(</span><span class="n">png_ptr</span><span class="p">)</span> <span class="cm">/* Make compiler happy */</span>
+<a name="line-624"></a><span class="p">}</span>
+<a name="line-625"></a><span class="cp">#endif </span><span class="cm">/* PNG_WARNINGS_SUPPORTED */</span><span class="cp"></span>
+<a name="line-626"></a>
+<a name="line-627"></a><span class="cm">/* This function is called when the application wants to use another method</span>
+<a name="line-628"></a><span class="cm"> * of handling errors and warnings.  Note that the error function MUST NOT</span>
+<a name="line-629"></a><span class="cm"> * return to the calling routine or serious problems will occur.  The return</span>
+<a name="line-630"></a><span class="cm"> * method used in the default routine calls longjmp(png_ptr-&gt;longjmp_buffer, 1)</span>
+<a name="line-631"></a><span class="cm"> */</span>
+<a name="line-632"></a><span class="kt">void</span> <span class="n">PNGAPI</span>
+<a name="line-633"></a><span class="n">png_set_error_fn</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_voidp</span> <span class="n">error_ptr</span><span class="p">,</span>
+<a name="line-634"></a>    <span class="n">png_error_ptr</span> <span class="n">error_fn</span><span class="p">,</span> <span class="n">png_error_ptr</span> <span class="n">warning_fn</span><span class="p">)</span>
+<a name="line-635"></a><span class="p">{</span>
+<a name="line-636"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-637"></a>      <span class="k">return</span><span class="p">;</span>
+<a name="line-638"></a>
+<a name="line-639"></a>   <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_ptr</span> <span class="o">=</span> <span class="n">error_ptr</span><span class="p">;</span>
+<a name="line-640"></a>   <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_fn</span> <span class="o">=</span> <span class="n">error_fn</span><span class="p">;</span>
+<a name="line-641"></a><span class="cp">#ifdef PNG_WARNINGS_SUPPORTED</span>
+<a name="line-642"></a>   <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">warning_fn</span> <span class="o">=</span> <span class="n">warning_fn</span><span class="p">;</span>
+<a name="line-643"></a><span class="cp">#else</span>
+<a name="line-644"></a>   <span class="n">PNG_UNUSED</span><span class="p">(</span><span class="n">warning_fn</span><span class="p">)</span>
+<a name="line-645"></a><span class="cp">#endif</span>
+<a name="line-646"></a><span class="p">}</span>
+<a name="line-647"></a>
+<a name="line-648"></a>
+<a name="line-649"></a><span class="cm">/* This function returns a pointer to the error_ptr associated with the user</span>
+<a name="line-650"></a><span class="cm"> * functions.  The application should free any memory associated with this</span>
+<a name="line-651"></a><span class="cm"> * pointer before png_write_destroy and png_read_destroy are called.</span>
+<a name="line-652"></a><span class="cm"> */</span>
+<a name="line-653"></a><span class="n">png_voidp</span> <span class="n">PNGAPI</span>
+<a name="line-654"></a><span class="n">png_get_error_ptr</span><span class="p">(</span><span class="n">png_const_structp</span> <span class="n">png_ptr</span><span class="p">)</span>
+<a name="line-655"></a><span class="p">{</span>
+<a name="line-656"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-657"></a>      <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-658"></a>
+<a name="line-659"></a>   <span class="k">return</span> <span class="p">((</span><span class="n">png_voidp</span><span class="p">)</span><span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">error_ptr</span><span class="p">);</span>
+<a name="line-660"></a><span class="p">}</span>
+<a name="line-661"></a>
+<a name="line-662"></a>
+<a name="line-663"></a><span class="cp">#ifdef PNG_ERROR_NUMBERS_SUPPORTED</span>
+<a name="line-664"></a><span class="kt">void</span> <span class="n">PNGAPI</span>
+<a name="line-665"></a><span class="n">png_set_strip_error_numbers</span><span class="p">(</span><span class="n">png_structp</span> <span class="n">png_ptr</span><span class="p">,</span> <span class="n">png_uint_32</span> <span class="n">strip_mode</span><span class="p">)</span>
+<a name="line-666"></a><span class="p">{</span>
+<a name="line-667"></a>   <span class="k">if</span> <span class="p">(</span><span class="n">png_ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-668"></a>   <span class="p">{</span>
+<a name="line-669"></a>      <span class="n">png_ptr</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;=</span>
+<a name="line-670"></a>         <span class="p">((</span><span class="o">~</span><span class="p">(</span><span class="n">PNG_FLAG_STRIP_ERROR_NUMBERS</span> <span class="o">|</span>
+<a name="line-671"></a>         <span class="n">PNG_FLAG_STRIP_ERROR_TEXT</span><span class="p">))</span><span class="o">&amp;</span><span class="n">strip_mode</span><span class="p">);</span>
+<a name="line-672"></a>   <span class="p">}</span>
+<a name="line-673"></a><span class="p">}</span>
+<a name="line-674"></a><span class="cp">#endif</span>
+<a name="line-675"></a><span class="cp">#endif </span><span class="cm">/* PNG_READ_SUPPORTED || PNG_WRITE_SUPPORTED */</span><span class="cp"></span>
 </pre></div>
 </td></tr></table>
       </div>

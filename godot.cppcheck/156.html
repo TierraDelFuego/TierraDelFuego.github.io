@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: servers/spatial_sound_server.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/bf/bf_ofb64.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> spatial_sound_server.h</p>
-<a href='156.html#line-37'> cstyleCast 37</a><a href='156.html#line-37'> operatorEqVarError 37</a><a href='156.html#line-37'> functionStatic 37</a>
+       <p id="filename"><a href="index.html">Defects:</a> bf_ofb64.c</p>
+<a href='156.html#line-72'> unassignedVariable 72</a><a href='156.html#line-107'> unreadVariable 107</a><a href='156.html#line-107'> unreadVariable 107</a><a href='156.html#line-107'> unreadVariable 107</a><a href='156.html#line-107'> unreadVariable 107</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -222,233 +222,115 @@
 106
 107
 108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  spatial_sound_server.h                                               */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef SPATIAL_SOUND_SERVER_H</span>
-<a name="line-30"></a><span class="cp">#define SPATIAL_SOUND_SERVER_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;object.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;bsp_tree.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;servers/audio_server.h&quot;</span>
-<a name="line-35"></a>
-<a name="line-36"></a><span class="n">class</span> <span class="nl">SpatialSoundServer</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
-<a name="line-37"></a><span class="hll">	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">SpatialSoundServer</span><span class="p">,</span><span class="n">Object</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div><span class='error2'>&lt;--- Member variable 'SpatialSoundServer::_type_name' is not assigned a value in 'SpatialSoundServer::operator='.</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'SpatialSoundServer::*' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;SpatialSoundServer::*&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-38"></a>
-<a name="line-39"></a>	<span class="k">static</span> <span class="n">SpatialSoundServer</span> <span class="o">*</span><span class="n">singleton</span><span class="p">;</span>
-<a name="line-40"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-41"></a>
-<a name="line-42"></a>
-<a name="line-43"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-44"></a>		<span class="n">SOURCE_INVALID_VOICE</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-45"></a>		<span class="n">SOURCE_NEXT_VOICE</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
-<a name="line-46"></a>	<span class="p">};</span>
-<a name="line-47"></a>
-<a name="line-48"></a>	<span class="k">typedef</span> <span class="kt">int</span> <span class="n">SourceVoiceID</span><span class="p">;</span>
-<a name="line-49"></a>
-<a name="line-50"></a>	<span class="cm">/* SPACE */</span>
-<a name="line-51"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">space_create</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-52"></a>
-<a name="line-53"></a>	<span class="cm">/* ROOM */</span>
-<a name="line-54"></a>
-<a name="line-55"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">room_create</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-56"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_space</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span><span class="n">RID</span> <span class="n">p_space</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-57"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">room_get_space</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+109</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/bf/bf_ofb64.c */</span>
+<a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+<a name="line-3"></a><span class="cm"> * All rights reserved.</span>
+<a name="line-4"></a><span class="cm"> *</span>
+<a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
+<a name="line-6"></a><span class="cm"> * by Eric Young (eay@cryptsoft.com).</span>
+<a name="line-7"></a><span class="cm"> * The implementation was written so as to conform with Netscapes SSL.</span>
+<a name="line-8"></a><span class="cm"> * </span>
+<a name="line-9"></a><span class="cm"> * This library is free for commercial and non-commercial use as long as</span>
+<a name="line-10"></a><span class="cm"> * the following conditions are aheared to.  The following conditions</span>
+<a name="line-11"></a><span class="cm"> * apply to all code found in this distribution, be it the RC4, RSA,</span>
+<a name="line-12"></a><span class="cm"> * lhash, DES, etc., code; not just the SSL code.  The SSL documentation</span>
+<a name="line-13"></a><span class="cm"> * included with this distribution is covered by the same copyright terms</span>
+<a name="line-14"></a><span class="cm"> * except that the holder is Tim Hudson (tjh@cryptsoft.com).</span>
+<a name="line-15"></a><span class="cm"> * </span>
+<a name="line-16"></a><span class="cm"> * Copyright remains Eric Young&#39;s, and as such any Copyright notices in</span>
+<a name="line-17"></a><span class="cm"> * the code are not to be removed.</span>
+<a name="line-18"></a><span class="cm"> * If this package is used in a product, Eric Young should be given attribution</span>
+<a name="line-19"></a><span class="cm"> * as the author of the parts of the library used.</span>
+<a name="line-20"></a><span class="cm"> * This can be in the form of a textual message at program startup or</span>
+<a name="line-21"></a><span class="cm"> * in documentation (online or textual) provided with the package.</span>
+<a name="line-22"></a><span class="cm"> * </span>
+<a name="line-23"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-24"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-25"></a><span class="cm"> * are met:</span>
+<a name="line-26"></a><span class="cm"> * 1. Redistributions of source code must retain the copyright</span>
+<a name="line-27"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer.</span>
+<a name="line-28"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-29"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in the</span>
+<a name="line-30"></a><span class="cm"> *    documentation and/or other materials provided with the distribution.</span>
+<a name="line-31"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this software</span>
+<a name="line-32"></a><span class="cm"> *    must display the following acknowledgement:</span>
+<a name="line-33"></a><span class="cm"> *    &quot;This product includes cryptographic software written by</span>
+<a name="line-34"></a><span class="cm"> *     Eric Young (eay@cryptsoft.com)&quot;</span>
+<a name="line-35"></a><span class="cm"> *    The word &#39;cryptographic&#39; can be left out if the rouines from the library</span>
+<a name="line-36"></a><span class="cm"> *    being used are not cryptographic related :-).</span>
+<a name="line-37"></a><span class="cm"> * 4. If you include any Windows specific code (or a derivative thereof) from </span>
+<a name="line-38"></a><span class="cm"> *    the apps directory (application code) you must include an acknowledgement:</span>
+<a name="line-39"></a><span class="cm"> *    &quot;This product includes software written by Tim Hudson (tjh@cryptsoft.com)&quot;</span>
+<a name="line-40"></a><span class="cm"> * </span>
+<a name="line-41"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS&#39;&#39; AND</span>
+<a name="line-42"></a><span class="cm"> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-43"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<a name="line-44"></a><span class="cm"> * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE</span>
+<a name="line-45"></a><span class="cm"> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<a name="line-46"></a><span class="cm"> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</span>
+<a name="line-47"></a><span class="cm"> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-48"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</span>
+<a name="line-49"></a><span class="cm"> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</span>
+<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
+<a name="line-51"></a><span class="cm"> * SUCH DAMAGE.</span>
+<a name="line-52"></a><span class="cm"> * </span>
+<a name="line-53"></a><span class="cm"> * The licence and distribution terms for any publically available version or</span>
+<a name="line-54"></a><span class="cm"> * derivative of this code cannot be changed.  i.e. this code cannot simply be</span>
+<a name="line-55"></a><span class="cm"> * copied and put under another distribution licence</span>
+<a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
+<a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a>
-<a name="line-60"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_bounds</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="k">const</span> <span class="n">BSP_Tree</span><span class="o">&amp;</span> <span class="n">p_bounds</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-61"></a>	<span class="n">virtual</span> <span class="n">BSP_Tree</span> <span class="n">room_get_bounds</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-62"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="k">const</span> <span class="n">Transform</span><span class="o">&amp;</span> <span class="n">p_transform</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-63"></a>	<span class="n">virtual</span> <span class="n">Transform</span> <span class="n">room_get_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-64"></a>
-<a name="line-65"></a>	<span class="k">enum</span> <span class="n">RoomParam</span> <span class="p">{</span>
-<a name="line-66"></a>		<span class="n">ROOM_PARAM_SPEED_OF_SOUND_SCALE</span><span class="p">,</span>
-<a name="line-67"></a>		<span class="n">ROOM_PARAM_DOPPLER_FACTOR</span><span class="p">,</span>
-<a name="line-68"></a>		<span class="n">ROOM_PARAM_PITCH_SCALE</span><span class="p">,</span>
-<a name="line-69"></a>		<span class="n">ROOM_PARAM_VOLUME_SCALE_DB</span><span class="p">,</span>
-<a name="line-70"></a>		<span class="n">ROOM_PARAM_REVERB_SEND</span><span class="p">,</span>
-<a name="line-71"></a>		<span class="n">ROOM_PARAM_CHORUS_SEND</span><span class="p">,</span>
-<a name="line-72"></a>		<span class="n">ROOM_PARAM_ATTENUATION_SCALE</span><span class="p">,</span>
-<a name="line-73"></a>		<span class="n">ROOM_PARAM_ATTENUATION_HF_CUTOFF</span><span class="p">,</span>
-<a name="line-74"></a>		<span class="n">ROOM_PARAM_ATTENUATION_HF_FLOOR_DB</span><span class="p">,</span>
-<a name="line-75"></a>		<span class="n">ROOM_PARAM_ATTENUATION_HF_RATIO_EXP</span><span class="p">,</span>
-<a name="line-76"></a>		<span class="n">ROOM_PARAM_ATTENUATION_REVERB_SCALE</span><span class="p">,</span>
-<a name="line-77"></a>		<span class="n">ROOM_PARAM_MAX</span>
-<a name="line-78"></a>	<span class="p">};</span>
-<a name="line-79"></a>
-<a name="line-80"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="n">RoomParam</span> <span class="n">p_param</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_value</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-81"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">room_get_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="n">RoomParam</span> <span class="n">p_param</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-82"></a>
-<a name="line-83"></a>	<span class="k">enum</span> <span class="n">RoomReverb</span> <span class="p">{</span>
-<a name="line-84"></a>		<span class="n">ROOM_REVERB_SMALL</span><span class="p">,</span>
-<a name="line-85"></a>		<span class="n">ROOM_REVERB_MEDIUM</span><span class="p">,</span>
-<a name="line-86"></a>		<span class="n">ROOM_REVERB_LARGE</span><span class="p">,</span>
-<a name="line-87"></a>		<span class="n">ROOM_REVERB_HALL</span>
-<a name="line-88"></a>	<span class="p">};</span>
-<a name="line-89"></a>
-<a name="line-90"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="n">RoomReverb</span> <span class="n">p_reverb</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-91"></a>	<span class="n">virtual</span> <span class="n">RoomReverb</span> <span class="n">room_get_reverb</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-92"></a>
-<a name="line-93"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_level</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_level</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-94"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">room_get_level</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-95"></a>
-<a name="line-96"></a>	<span class="c1">//useful for underwater or rooms with very strange conditions</span>
-<a name="line-97"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">room_set_force_params_to_all_sources</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_force</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-98"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">room_is_forcing_params_to_all_sources</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_room</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-99"></a>
-<a name="line-100"></a>	<span class="cm">/* SOURCE */</span>
-<a name="line-101"></a>
-<a name="line-102"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">source_create</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_space</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-103"></a>
-<a name="line-104"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_set_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="k">const</span> <span class="n">Transform</span><span class="o">&amp;</span> <span class="n">p_transform</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-105"></a>	<span class="n">virtual</span> <span class="n">Transform</span> <span class="n">source_get_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-106"></a>
-<a name="line-107"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_set_polyphony</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_voice_count</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">source_get_polyphony</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-109"></a>
-<a name="line-110"></a>	<span class="k">enum</span> <span class="n">SourceParam</span> <span class="p">{</span>
-<a name="line-111"></a>
-<a name="line-112"></a>		<span class="n">SOURCE_PARAM_VOLUME_DB</span><span class="p">,</span>
-<a name="line-113"></a>		<span class="n">SOURCE_PARAM_PITCH_SCALE</span><span class="p">,</span>
-<a name="line-114"></a>		<span class="n">SOURCE_PARAM_ATTENUATION_MIN_DISTANCE</span><span class="p">,</span>
-<a name="line-115"></a>		<span class="n">SOURCE_PARAM_ATTENUATION_MAX_DISTANCE</span><span class="p">,</span>
-<a name="line-116"></a>		<span class="n">SOURCE_PARAM_ATTENUATION_DISTANCE_EXP</span><span class="p">,</span>
-<a name="line-117"></a>		<span class="n">SOURCE_PARAM_EMISSION_CONE_DEGREES</span><span class="p">,</span>
-<a name="line-118"></a>		<span class="n">SOURCE_PARAM_EMISSION_CONE_ATTENUATION_DB</span><span class="p">,</span>
-<a name="line-119"></a>		<span class="n">SOURCE_PARAM_MAX</span>
-<a name="line-120"></a>	<span class="p">};</span>
-<a name="line-121"></a>
-<a name="line-122"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_set_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceParam</span> <span class="n">p_param</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_value</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-123"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">source_get_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">SourceParam</span> <span class="n">p_param</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_set_audio_stream</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">AudioServer</span><span class="o">::</span><span class="n">AudioStream</span> <span class="o">*</span><span class="n">p_stream</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">//null to unset</span>
-<a name="line-126"></a>	<span class="n">virtual</span> <span class="n">SourceVoiceID</span> <span class="n">source_play_sample</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span> <span class="n">RID</span> <span class="n">p_sample</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_mix_rate</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_voice</span><span class="o">=</span><span class="n">SOURCE_NEXT_VOICE</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-127"></a>	<span class="c1">//voices</span>
-<a name="line-128"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_voice_set_pitch_scale</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span><span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_pitch_scale</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-129"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_voice_set_volume_scale_db</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span><span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_volume_db</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-130"></a>
-<a name="line-131"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">source_is_voice_active</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span><span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-132"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">source_stop_voice</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_source</span><span class="p">,</span><span class="n">SourceVoiceID</span> <span class="n">p_voice</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-133"></a>
-<a name="line-134"></a>	<span class="cm">/* LISTENER */</span>
-<a name="line-135"></a>
-<a name="line-136"></a>	<span class="k">enum</span> <span class="n">ListenerParam</span> <span class="p">{</span>
-<a name="line-137"></a>
-<a name="line-138"></a>		<span class="n">LISTENER_PARAM_VOLUME_SCALE_DB</span><span class="p">,</span>
-<a name="line-139"></a>		<span class="n">LISTENER_PARAM_PITCH_SCALE</span><span class="p">,</span>
-<a name="line-140"></a>		<span class="n">LISTENER_PARAM_ATTENUATION_SCALE</span><span class="p">,</span>
-<a name="line-141"></a>		<span class="n">LISTENER_PARAM_RECEPTION_CONE_DEGREES</span><span class="p">,</span>
-<a name="line-142"></a>		<span class="n">LISTENER_PARAM_RECEPTION_CONE_ATTENUATION_DB</span><span class="p">,</span>
-<a name="line-143"></a>		<span class="n">LISTENER_PARAM_MAX</span>
-<a name="line-144"></a>	<span class="p">};</span>
-<a name="line-145"></a>
-<a name="line-146"></a>	<span class="n">virtual</span> <span class="n">RID</span> <span class="n">listener_create</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-147"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">listener_set_space</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="n">RID</span> <span class="n">p_space</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-148"></a>
-<a name="line-149"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">listener_set_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="k">const</span> <span class="n">Transform</span><span class="o">&amp;</span> <span class="n">p_transform</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-150"></a>	<span class="n">virtual</span> <span class="n">Transform</span> <span class="n">listener_get_transform</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-151"></a>
-<a name="line-152"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">listener_set_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="n">ListenerParam</span> <span class="n">p_param</span><span class="p">,</span> <span class="kt">float</span> <span class="n">p_value</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-153"></a>	<span class="n">virtual</span> <span class="kt">float</span> <span class="n">listener_get_param</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_listener</span><span class="p">,</span> <span class="n">ListenerParam</span> <span class="n">p_param</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-154"></a>
-<a name="line-155"></a>	<span class="cm">/* MISC */</span>
-<a name="line-156"></a>
-<a name="line-157"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">free</span><span class="p">(</span><span class="n">RID</span> <span class="n">p_id</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-158"></a>
-<a name="line-159"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">init</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-160"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_delta</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-161"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">finish</span><span class="p">()</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-162"></a>
-<a name="line-163"></a>	<span class="k">static</span> <span class="n">SpatialSoundServer</span> <span class="o">*</span><span class="nf">get_singleton</span><span class="p">();</span>
-<a name="line-164"></a>
-<a name="line-165"></a>	<span class="n">SpatialSoundServer</span><span class="p">();</span>
-<a name="line-166"></a><span class="p">};</span>
-<a name="line-167"></a>
-<a name="line-168"></a><span class="cp">#endif </span><span class="c1">// SPATIAL_SOUND_SERVER_H</span>
+<a name="line-59"></a><span class="cp">#include &lt;openssl/blowfish.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &quot;bf_locl.h&quot;</span>
+<a name="line-61"></a>
+<a name="line-62"></a><span class="cm">/* The input and output encrypted as though 64bit ofb mode is being</span>
+<a name="line-63"></a><span class="cm"> * used.  The extra state information to record how much of the</span>
+<a name="line-64"></a><span class="cm"> * 64bit block we have used is contained in *num;</span>
+<a name="line-65"></a><span class="cm"> */</span>
+<a name="line-66"></a><span class="kt">void</span> <span class="nf">BF_ofb64_encrypt</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">long</span> <span class="n">length</span><span class="p">,</span>
+<a name="line-67"></a>	     <span class="k">const</span> <span class="n">BF_KEY</span> <span class="o">*</span><span class="n">schedule</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ivec</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">num</span><span class="p">)</span>
+<a name="line-68"></a>	<span class="p">{</span>
+<a name="line-69"></a>	<span class="k">register</span> <span class="n">BF_LONG</span> <span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">t</span><span class="p">;</span>
+<a name="line-70"></a>	<span class="k">register</span> <span class="kt">int</span> <span class="n">n</span><span class="o">=</span> <span class="o">*</span><span class="n">num</span><span class="p">;</span>
+<a name="line-71"></a>	<span class="k">register</span> <span class="kt">long</span> <span class="n">l</span><span class="o">=</span><span class="n">length</span><span class="p">;</span>
+<a name="line-72"></a><span class="hll">	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">d</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class='error2'>&lt;--- Variable 'd' is not assigned a value.</span>
+</span><a name="line-73"></a>	<span class="k">register</span> <span class="kt">char</span> <span class="o">*</span><span class="n">dp</span><span class="p">;</span>
+<a name="line-74"></a>	<span class="n">BF_LONG</span> <span class="n">ti</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-75"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">;</span>
+<a name="line-76"></a>	<span class="kt">int</span> <span class="n">save</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-77"></a>
+<a name="line-78"></a>	<span class="n">iv</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">ivec</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="n">n2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">v0</span><span class="p">);</span>
+<a name="line-80"></a>	<span class="n">n2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">v1</span><span class="p">);</span>
+<a name="line-81"></a>	<span class="n">ti</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">v0</span><span class="p">;</span>
+<a name="line-82"></a>	<span class="n">ti</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">v1</span><span class="p">;</span>
+<a name="line-83"></a>	<span class="n">dp</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">d</span><span class="p">;</span>
+<a name="line-84"></a>	<span class="n">l2n</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span><span class="n">dp</span><span class="p">);</span>
+<a name="line-85"></a>	<span class="n">l2n</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span><span class="n">dp</span><span class="p">);</span>
+<a name="line-86"></a>	<span class="k">while</span> <span class="p">(</span><span class="n">l</span><span class="o">--</span><span class="p">)</span>
+<a name="line-87"></a>		<span class="p">{</span>
+<a name="line-88"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-89"></a>			<span class="p">{</span>
+<a name="line-90"></a>			<span class="n">BF_encrypt</span><span class="p">((</span><span class="n">BF_LONG</span> <span class="o">*</span><span class="p">)</span><span class="n">ti</span><span class="p">,</span><span class="n">schedule</span><span class="p">);</span>
+<a name="line-91"></a>			<span class="n">dp</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">d</span><span class="p">;</span>
+<a name="line-92"></a>			<span class="n">t</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">dp</span><span class="p">);</span>
+<a name="line-93"></a>			<span class="n">t</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">dp</span><span class="p">);</span>
+<a name="line-94"></a>			<span class="n">save</span><span class="o">++</span><span class="p">;</span>
+<a name="line-95"></a>			<span class="p">}</span>
+<a name="line-96"></a>		<span class="o">*</span><span class="p">(</span><span class="n">out</span><span class="o">++</span><span class="p">)</span><span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">in</span><span class="o">++</span><span class="p">)</span><span class="o">^</span><span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+<a name="line-97"></a>		<span class="n">n</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0x07</span><span class="p">;</span>
+<a name="line-98"></a>		<span class="p">}</span>
+<a name="line-99"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">save</span><span class="p">)</span>
+<a name="line-100"></a>		<span class="p">{</span>
+<a name="line-101"></a>		<span class="n">v0</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-102"></a>		<span class="n">v1</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-103"></a>		<span class="n">iv</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">ivec</span><span class="p">;</span>
+<a name="line-104"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
+<a name="line-105"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
+<a name="line-106"></a>		<span class="p">}</span>
+<a name="line-107"></a><span class="hll">	<span class="n">t</span><span class="o">=</span><span class="n">v0</span><span class="o">=</span><span class="n">v1</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'v0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'v1' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 't' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'ti' is assigned a value that is never used.</span>
+</span><a name="line-108"></a>	<span class="o">*</span><span class="n">num</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
+<a name="line-109"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

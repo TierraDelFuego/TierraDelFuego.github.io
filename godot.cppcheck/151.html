@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: core/undo_redo.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/asn1/x_pkey.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> undo_redo.h</p>
-<a href='151.html#line-40'> cstyleCast 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> operatorEqVarError 40</a><a href='151.html#line-40'> functionStatic 40</a><a href='151.html#line-40'> operatorEqVarError 40</a>
+       <p id="filename"><a href="index.html">Defects:</a> x_pkey.c</p>
+<a href='151.html#line-1'> ConfigurationNotChecked 1</a><a href='151.html#line-110'> unusedVariable 110</a><a href='151.html#line-124'> unreachableCode 124</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -244,137 +244,177 @@
 128
 129
 130
-131</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  undo_redo.h                                                          */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef UNDO_REDO_H</span>
-<a name="line-30"></a><span class="cp">#define UNDO_REDO_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;object.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;resource.h&quot;</span>
-<a name="line-34"></a>
-<a name="line-35"></a>
-<a name="line-36"></a>
-<a name="line-37"></a>
-<a name="line-38"></a><span class="n">class</span> <span class="nl">UndoRedo</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
-<a name="line-39"></a>
-<a name="line-40"></a><span class="hll">	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">UndoRedo</span><span class="p">,</span><span class="n">Object</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div><span class='error2'>&lt;--- Member variable 'UndoRedo::_type_name' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::actions' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::current_action' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::action_level' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::max_steps' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::merging' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::callback' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::callback_ud' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::method_callbck_ud' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::prop_callback_ud' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::method_callback' is not assigned a value in 'UndoRedo::operator='.</span><span class='error2'>&lt;--- Member variable 'UndoRedo::property_callback' is not assigned a value in 'UndoRedo::operator='.</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'UndoRedo::*' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;UndoRedo::*&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div><span class='error2'>&lt;--- Member variable 'UndoRedo::version' is not assigned a value in 'UndoRedo::operator='.</span>
-</span><a name="line-41"></a>	<span class="n">OBJ_SAVE_TYPE</span><span class="p">(</span> <span class="n">UndoRedo</span> <span class="p">);</span>
-<a name="line-42"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-43"></a>
-<a name="line-44"></a>	<span class="k">typedef</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">CommitNotifyCallback</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_ud</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">);</span>
-<a name="line-45"></a>	<span class="n">Variant</span> <span class="nf">_add_do_method</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span> <span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span><span class="o">&amp;</span> <span class="n">r_error</span><span class="p">);</span>
-<a name="line-46"></a>	<span class="n">Variant</span> <span class="nf">_add_undo_method</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span> <span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span><span class="o">&amp;</span> <span class="n">r_error</span><span class="p">);</span>
-<a name="line-47"></a>
-<a name="line-48"></a>	<span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">MethodNotifyCallback</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_ud</span><span class="p">,</span><span class="n">Object</span><span class="o">*</span><span class="n">p_base</span><span class="p">,</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="n">VARIANT_ARG_DECLARE</span><span class="p">);</span>
-<a name="line-49"></a>	<span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">PropertyNotifyCallback</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_ud</span><span class="p">,</span><span class="n">Object</span><span class="o">*</span><span class="n">p_base</span><span class="p">,</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_property</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-50"></a>
-<a name="line-51"></a><span class="nl">private</span><span class="p">:</span>
-<a name="line-52"></a>	<span class="k">struct</span> <span class="n">Operation</span> <span class="p">{</span>
-<a name="line-53"></a>
-<a name="line-54"></a>		<span class="k">enum</span> <span class="n">Type</span> <span class="p">{</span>
-<a name="line-55"></a>			<span class="n">TYPE_METHOD</span><span class="p">,</span>
-<a name="line-56"></a>			<span class="n">TYPE_PROPERTY</span><span class="p">,</span>
-<a name="line-57"></a>			<span class="n">TYPE_REFERENCE</span>
-<a name="line-58"></a>		<span class="p">};</span>
-<a name="line-59"></a>
-<a name="line-60"></a>		<span class="n">Type</span> <span class="n">type</span><span class="p">;</span>
-<a name="line-61"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">resref</span><span class="p">;</span>
-<a name="line-62"></a>		<span class="n">ObjectID</span> <span class="n">object</span><span class="p">;</span>
-<a name="line-63"></a>		<span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-64"></a>		<span class="n">Variant</span> <span class="n">args</span><span class="p">[</span><span class="n">VARIANT_ARG_MAX</span><span class="p">];</span>
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/asn1/x_pkey.c */</span><span class='error2'>&lt;--- Skipping configuration 'REF_PRINT' since the value of 'REF_PRINT' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+</span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+<a name="line-3"></a><span class="cm"> * All rights reserved.</span>
+<a name="line-4"></a><span class="cm"> *</span>
+<a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
+<a name="line-6"></a><span class="cm"> * by Eric Young (eay@cryptsoft.com).</span>
+<a name="line-7"></a><span class="cm"> * The implementation was written so as to conform with Netscapes SSL.</span>
+<a name="line-8"></a><span class="cm"> * </span>
+<a name="line-9"></a><span class="cm"> * This library is free for commercial and non-commercial use as long as</span>
+<a name="line-10"></a><span class="cm"> * the following conditions are aheared to.  The following conditions</span>
+<a name="line-11"></a><span class="cm"> * apply to all code found in this distribution, be it the RC4, RSA,</span>
+<a name="line-12"></a><span class="cm"> * lhash, DES, etc., code; not just the SSL code.  The SSL documentation</span>
+<a name="line-13"></a><span class="cm"> * included with this distribution is covered by the same copyright terms</span>
+<a name="line-14"></a><span class="cm"> * except that the holder is Tim Hudson (tjh@cryptsoft.com).</span>
+<a name="line-15"></a><span class="cm"> * </span>
+<a name="line-16"></a><span class="cm"> * Copyright remains Eric Young&#39;s, and as such any Copyright notices in</span>
+<a name="line-17"></a><span class="cm"> * the code are not to be removed.</span>
+<a name="line-18"></a><span class="cm"> * If this package is used in a product, Eric Young should be given attribution</span>
+<a name="line-19"></a><span class="cm"> * as the author of the parts of the library used.</span>
+<a name="line-20"></a><span class="cm"> * This can be in the form of a textual message at program startup or</span>
+<a name="line-21"></a><span class="cm"> * in documentation (online or textual) provided with the package.</span>
+<a name="line-22"></a><span class="cm"> * </span>
+<a name="line-23"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-24"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-25"></a><span class="cm"> * are met:</span>
+<a name="line-26"></a><span class="cm"> * 1. Redistributions of source code must retain the copyright</span>
+<a name="line-27"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer.</span>
+<a name="line-28"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-29"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in the</span>
+<a name="line-30"></a><span class="cm"> *    documentation and/or other materials provided with the distribution.</span>
+<a name="line-31"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this software</span>
+<a name="line-32"></a><span class="cm"> *    must display the following acknowledgement:</span>
+<a name="line-33"></a><span class="cm"> *    &quot;This product includes cryptographic software written by</span>
+<a name="line-34"></a><span class="cm"> *     Eric Young (eay@cryptsoft.com)&quot;</span>
+<a name="line-35"></a><span class="cm"> *    The word &#39;cryptographic&#39; can be left out if the rouines from the library</span>
+<a name="line-36"></a><span class="cm"> *    being used are not cryptographic related :-).</span>
+<a name="line-37"></a><span class="cm"> * 4. If you include any Windows specific code (or a derivative thereof) from </span>
+<a name="line-38"></a><span class="cm"> *    the apps directory (application code) you must include an acknowledgement:</span>
+<a name="line-39"></a><span class="cm"> *    &quot;This product includes software written by Tim Hudson (tjh@cryptsoft.com)&quot;</span>
+<a name="line-40"></a><span class="cm"> * </span>
+<a name="line-41"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS&#39;&#39; AND</span>
+<a name="line-42"></a><span class="cm"> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-43"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<a name="line-44"></a><span class="cm"> * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE</span>
+<a name="line-45"></a><span class="cm"> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<a name="line-46"></a><span class="cm"> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</span>
+<a name="line-47"></a><span class="cm"> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-48"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</span>
+<a name="line-49"></a><span class="cm"> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</span>
+<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
+<a name="line-51"></a><span class="cm"> * SUCH DAMAGE.</span>
+<a name="line-52"></a><span class="cm"> * </span>
+<a name="line-53"></a><span class="cm"> * The licence and distribution terms for any publically available version or</span>
+<a name="line-54"></a><span class="cm"> * derivative of this code cannot be changed.  i.e. this code cannot simply be</span>
+<a name="line-55"></a><span class="cm"> * copied and put under another distribution licence</span>
+<a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
+<a name="line-57"></a><span class="cm"> */</span>
+<a name="line-58"></a>
+<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-61"></a><span class="cp">#include &lt;openssl/evp.h&gt;</span>
+<a name="line-62"></a><span class="cp">#include &lt;openssl/objects.h&gt;</span>
+<a name="line-63"></a><span class="cp">#include &lt;openssl/asn1_mac.h&gt;</span>
+<a name="line-64"></a><span class="cp">#include &lt;openssl/x509.h&gt;</span>
 <a name="line-65"></a>
-<a name="line-66"></a>	<span class="p">};</span>
-<a name="line-67"></a>
-<a name="line-68"></a>
-<a name="line-69"></a>	<span class="k">struct</span> <span class="n">Action</span> <span class="p">{</span>
-<a name="line-70"></a>		<span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-71"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Operation</span><span class="o">&gt;</span> <span class="n">do_ops</span><span class="p">;</span>
-<a name="line-72"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Operation</span><span class="o">&gt;</span> <span class="n">undo_ops</span><span class="p">;</span>
-<a name="line-73"></a>	<span class="p">};</span>
-<a name="line-74"></a>
-<a name="line-75"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Action</span><span class="o">&gt;</span> <span class="n">actions</span><span class="p">;</span>
-<a name="line-76"></a>	<span class="kt">int</span> <span class="n">current_action</span><span class="p">;</span>
-<a name="line-77"></a>	<span class="kt">int</span> <span class="n">action_level</span><span class="p">;</span>
-<a name="line-78"></a>	<span class="kt">int</span> <span class="n">max_steps</span><span class="p">;</span>
-<a name="line-79"></a>	<span class="kt">bool</span> <span class="n">merging</span><span class="p">;</span>
-<a name="line-80"></a>	<span class="kt">uint64_t</span> <span class="n">version</span><span class="p">;</span>
+<a name="line-66"></a><span class="cm">/* need to implement */</span>
+<a name="line-67"></a><span class="kt">int</span> <span class="nf">i2d_X509_PKEY</span><span class="p">(</span><span class="n">X509_PKEY</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="n">pp</span><span class="p">)</span>
+<a name="line-68"></a>	<span class="p">{</span>
+<a name="line-69"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-70"></a>	<span class="p">}</span>
+<a name="line-71"></a>
+<a name="line-72"></a><span class="n">X509_PKEY</span> <span class="o">*</span><span class="nf">d2i_X509_PKEY</span><span class="p">(</span><span class="n">X509_PKEY</span> <span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="n">pp</span><span class="p">,</span> <span class="kt">long</span> <span class="n">length</span><span class="p">)</span>
+<a name="line-73"></a>	<span class="p">{</span>
+<a name="line-74"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-75"></a>	<span class="n">M_ASN1_D2I_vars</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">X509_PKEY</span> <span class="o">*</span><span class="p">,</span><span class="n">X509_PKEY_new</span><span class="p">);</span>
+<a name="line-76"></a>
+<a name="line-77"></a>	<span class="n">M_ASN1_D2I_Init</span><span class="p">();</span>
+<a name="line-78"></a>	<span class="n">M_ASN1_D2I_start_sequence</span><span class="p">();</span>
+<a name="line-79"></a>	<span class="n">M_ASN1_D2I_get_x</span><span class="p">(</span><span class="n">X509_ALGOR</span><span class="p">,</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="p">,</span><span class="n">d2i_X509_ALGOR</span><span class="p">);</span>
+<a name="line-80"></a>	<span class="n">M_ASN1_D2I_get_x</span><span class="p">(</span><span class="n">ASN1_OCTET_STRING</span><span class="p">,</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_pkey</span><span class="p">,</span><span class="n">d2i_ASN1_OCTET_STRING</span><span class="p">);</span>
 <a name="line-81"></a>
-<a name="line-82"></a>	<span class="kt">void</span> <span class="nf">_pop_history_tail</span><span class="p">();</span>
-<a name="line-83"></a>	<span class="kt">void</span> <span class="nf">_process_operation_list</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Operation</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="p">);</span>
-<a name="line-84"></a>	<span class="kt">void</span> <span class="nf">_discard_redo</span><span class="p">();</span>
-<a name="line-85"></a>
-<a name="line-86"></a>
-<a name="line-87"></a>	<span class="n">CommitNotifyCallback</span> <span class="n">callback</span><span class="p">;</span>
-<a name="line-88"></a>	<span class="kt">void</span><span class="o">*</span> <span class="n">callback_ud</span><span class="p">;</span>
-<a name="line-89"></a>	<span class="kt">void</span><span class="o">*</span> <span class="n">method_callbck_ud</span><span class="p">;</span>
-<a name="line-90"></a>	<span class="kt">void</span><span class="o">*</span> <span class="n">prop_callback_ud</span><span class="p">;</span>
-<a name="line-91"></a>
-<a name="line-92"></a>	<span class="n">MethodNotifyCallback</span> <span class="n">method_callback</span><span class="p">;</span>
-<a name="line-93"></a>	<span class="n">PropertyNotifyCallback</span> <span class="n">property_callback</span><span class="p">;</span>
-<a name="line-94"></a>
-<a name="line-95"></a>
-<a name="line-96"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-97"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
-<a name="line-98"></a>
-<a name="line-99"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-100"></a>
-<a name="line-101"></a>	<span class="kt">void</span> <span class="n">create_action</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_mergeable</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-102"></a>
-<a name="line-103"></a>	<span class="kt">void</span> <span class="nf">add_do_method</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="n">VARIANT_ARG_LIST</span><span class="p">);</span>
-<a name="line-104"></a>	<span class="kt">void</span> <span class="nf">add_undo_method</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="n">VARIANT_ARG_LIST</span><span class="p">);</span>
-<a name="line-105"></a>	<span class="kt">void</span> <span class="nf">add_do_property</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_property</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-106"></a>	<span class="kt">void</span> <span class="nf">add_undo_property</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_property</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-107"></a>	<span class="kt">void</span> <span class="nf">add_do_reference</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">);</span>
-<a name="line-108"></a>	<span class="kt">void</span> <span class="nf">add_undo_reference</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">);</span>
-<a name="line-109"></a>
-<a name="line-110"></a>	<span class="kt">void</span> <span class="nf">commit_action</span><span class="p">();</span>
-<a name="line-111"></a>
-<a name="line-112"></a>	<span class="kt">void</span> <span class="nf">redo</span><span class="p">();</span>
-<a name="line-113"></a>	<span class="kt">void</span> <span class="nf">undo</span><span class="p">();</span>
-<a name="line-114"></a>	<span class="n">String</span> <span class="n">get_current_action_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-115"></a>	<span class="kt">void</span> <span class="nf">clear_history</span><span class="p">();</span>
-<a name="line-116"></a>
-<a name="line-117"></a>	<span class="kt">void</span> <span class="nf">set_max_steps</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_max_steps</span><span class="p">);</span>
-<a name="line-118"></a>	<span class="kt">int</span> <span class="n">get_max_steps</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="kt">uint64_t</span> <span class="n">get_version</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-121"></a>
-<a name="line-122"></a>	<span class="kt">void</span> <span class="nf">set_commit_notify_callback</span><span class="p">(</span><span class="n">CommitNotifyCallback</span> <span class="n">p_callback</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_ud</span><span class="p">);</span>
-<a name="line-123"></a>
-<a name="line-124"></a>	<span class="kt">void</span> <span class="nf">set_method_notify_callback</span><span class="p">(</span><span class="n">MethodNotifyCallback</span> <span class="n">p_method_callback</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_ud</span><span class="p">);</span>
-<a name="line-125"></a>	<span class="kt">void</span> <span class="nf">set_property_notify_callback</span><span class="p">(</span><span class="n">PropertyNotifyCallback</span> <span class="n">p_property_callback</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_ud</span><span class="p">);</span>
+<a name="line-82"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">.</span><span class="n">cipher</span><span class="o">=</span><span class="n">EVP_get_cipherbyname</span><span class="p">(</span>
+<a name="line-83"></a>		<span class="n">OBJ_nid2ln</span><span class="p">(</span><span class="n">OBJ_obj2nid</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="o">-&gt;</span><span class="n">algorithm</span><span class="p">)));</span>
+<a name="line-84"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">.</span><span class="n">cipher</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-85"></a>		<span class="p">{</span>
+<a name="line-86"></a>		<span class="n">c</span><span class="p">.</span><span class="n">error</span><span class="o">=</span><span class="n">ASN1_R_UNSUPPORTED_CIPHER</span><span class="p">;</span>
+<a name="line-87"></a>		<span class="n">c</span><span class="p">.</span><span class="n">line</span><span class="o">=</span><span class="n">__LINE__</span><span class="p">;</span>
+<a name="line-88"></a>		<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-89"></a>		<span class="p">}</span>
+<a name="line-90"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="o">-&gt;</span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">==</span> <span class="n">V_ASN1_OCTET_STRING</span><span class="p">)</span> 
+<a name="line-91"></a>		<span class="p">{</span>
+<a name="line-92"></a>		<span class="n">i</span><span class="o">=</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="o">-&gt;</span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">octet_string</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<a name="line-93"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">EVP_MAX_IV_LENGTH</span><span class="p">)</span>
+<a name="line-94"></a>			<span class="p">{</span>
+<a name="line-95"></a>			<span class="n">c</span><span class="p">.</span><span class="n">error</span><span class="o">=</span><span class="n">ASN1_R_IV_TOO_LARGE</span><span class="p">;</span>
+<a name="line-96"></a>			<span class="n">c</span><span class="p">.</span><span class="n">line</span><span class="o">=</span><span class="n">__LINE__</span><span class="p">;</span>
+<a name="line-97"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-98"></a>			<span class="p">}</span>
+<a name="line-99"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">.</span><span class="n">iv</span><span class="p">,</span>
+<a name="line-100"></a>			<span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="o">-&gt;</span><span class="n">parameter</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">octet_string</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+<a name="line-101"></a>		<span class="p">}</span>
+<a name="line-102"></a>	<span class="k">else</span>
+<a name="line-103"></a>		<span class="n">memset</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">.</span><span class="n">iv</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">EVP_MAX_IV_LENGTH</span><span class="p">);</span>
+<a name="line-104"></a>	<span class="n">M_ASN1_D2I_Finish</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">X509_PKEY_free</span><span class="p">,</span><span class="n">ASN1_F_D2I_X509_PKEY</span><span class="p">);</span>
+<a name="line-105"></a>	<span class="p">}</span>
+<a name="line-106"></a>
+<a name="line-107"></a><span class="n">X509_PKEY</span> <span class="o">*</span><span class="nf">X509_PKEY_new</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-108"></a>	<span class="p">{</span>
+<a name="line-109"></a>	<span class="n">X509_PKEY</span> <span class="o">*</span><span class="n">ret</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-110"></a><span class="hll">	<span class="n">ASN1_CTX</span> <span class="n">c</span><span class="p">;</span><span class='error2'>&lt;--- Unused variable: c</span>
+</span><a name="line-111"></a>
+<a name="line-112"></a>	<span class="n">M_ASN1_New_Malloc</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="n">X509_PKEY</span><span class="p">);</span>
+<a name="line-113"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">version</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-114"></a>	<span class="n">M_ASN1_New</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="p">,</span><span class="n">X509_ALGOR_new</span><span class="p">);</span>
+<a name="line-115"></a>	<span class="n">M_ASN1_New</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_pkey</span><span class="p">,</span><span class="n">M_ASN1_OCTET_STRING_new</span><span class="p">);</span>
+<a name="line-116"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">dec_pkey</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-117"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">key_length</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-118"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">key_data</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-119"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">key_free</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-120"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">.</span><span class="n">cipher</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-121"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">.</span><span class="n">iv</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">EVP_MAX_IV_LENGTH</span><span class="p">);</span>
+<a name="line-122"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">references</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-123"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-124"></a><span class="hll">	<span class="n">M_ASN1_New_Error</span><span class="p">(</span><span class="n">ASN1_F_X509_PKEY_NEW</span><span class="p">);</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
+</span><a name="line-125"></a>	<span class="p">}</span>
 <a name="line-126"></a>
-<a name="line-127"></a>	<span class="n">UndoRedo</span><span class="p">();</span>
-<a name="line-128"></a>	<span class="o">~</span><span class="n">UndoRedo</span><span class="p">();</span>
-<a name="line-129"></a><span class="p">};</span>
+<a name="line-127"></a><span class="kt">void</span> <span class="nf">X509_PKEY_free</span><span class="p">(</span><span class="n">X509_PKEY</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<a name="line-128"></a>	<span class="p">{</span>
+<a name="line-129"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 <a name="line-130"></a>
-<a name="line-131"></a><span class="cp">#endif </span><span class="c1">// UNDO_REDO_H</span>
+<a name="line-131"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+<a name="line-132"></a>
+<a name="line-133"></a>	<span class="n">i</span><span class="o">=</span><span class="n">CRYPTO_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">references</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">CRYPTO_LOCK_X509_PKEY</span><span class="p">);</span>
+<a name="line-134"></a><span class="cp">#ifdef REF_PRINT</span>
+<a name="line-135"></a>	<span class="n">REF_PRINT</span><span class="p">(</span><span class="s">&quot;X509_PKEY&quot;</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<a name="line-136"></a><span class="cp">#endif</span>
+<a name="line-137"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+<a name="line-138"></a><span class="cp">#ifdef REF_CHECK</span>
+<a name="line-139"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-140"></a>		<span class="p">{</span>
+<a name="line-141"></a>		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;X509_PKEY_free, bad reference count</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-142"></a>		<span class="n">abort</span><span class="p">();</span>
+<a name="line-143"></a>		<span class="p">}</span>
+<a name="line-144"></a><span class="cp">#endif</span>
+<a name="line-145"></a>
+<a name="line-146"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">enc_algor</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">X509_ALGOR_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">enc_algor</span><span class="p">);</span>
+<a name="line-147"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">enc_pkey</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">M_ASN1_OCTET_STRING_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">enc_pkey</span><span class="p">);</span>
+<a name="line-148"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">dec_pkey</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span><span class="n">EVP_PKEY_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">dec_pkey</span><span class="p">);</span>
+<a name="line-149"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">key_data</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">key_free</span><span class="p">))</span> <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">key_data</span><span class="p">);</span>
+<a name="line-150"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<a name="line-151"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

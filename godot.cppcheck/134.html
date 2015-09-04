@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: core/reference.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/asn1/ameth_lib.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> reference.cpp</p>
-<a href='134.html#line-104'> functionStatic 104</a><a href='134.html#line-108'> functionStatic 108</a>
+       <p id="filename"><a href="index.html">Defects:</a> ameth_lib.c</p>
+<a href='134.html#line-206'> variableScope 206</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -274,167 +274,777 @@
 158
 159
 160
-161</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  reference.cpp                                                        */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;reference.h&quot;</span>
-<a name="line-30"></a>
-<a name="line-31"></a>
-<a name="line-32"></a>
-<a name="line-33"></a><span class="kt">bool</span> <span class="n">Reference</span><span class="o">::</span><span class="n">init_ref</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-34"></a>
-<a name="line-35"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">refcount</span><span class="p">.</span><span class="n">ref</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-36"></a>
-<a name="line-37"></a>		<span class="c1">// this may fail in the scenario of two threads assigning the pointer for the FIRST TIME</span>
-<a name="line-38"></a>		<span class="c1">// at the same time, which is never likely to happen (would be crazy to do)</span>
-<a name="line-39"></a>		<span class="c1">// so don&#39;t do it.</span>
-<a name="line-40"></a>
-<a name="line-41"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">refcount_init</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-42"></a>			<span class="n">refcount_init</span><span class="p">.</span><span class="n">unref</span><span class="p">();</span>
-<a name="line-43"></a>			<span class="n">refcount</span><span class="p">.</span><span class="n">unref</span><span class="p">();</span> <span class="c1">// first referencing is already 1, so compensate for the ref above</span>
-<a name="line-44"></a>		<span class="p">}</span>
-<a name="line-45"></a>
-<a name="line-46"></a>		<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-47"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-48"></a>
-<a name="line-49"></a>		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-50"></a>	<span class="p">}</span>
-<a name="line-51"></a>
-<a name="line-52"></a><span class="p">}</span>
-<a name="line-53"></a>
-<a name="line-54"></a>
-<a name="line-55"></a><span class="kt">void</span> <span class="n">Reference</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-56"></a>
-<a name="line-57"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;init_ref&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">Reference</span><span class="o">::</span><span class="n">init_ref</span><span class="p">);</span>
-<a name="line-58"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;reference&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">Reference</span><span class="o">::</span><span class="n">reference</span><span class="p">);</span>
-<a name="line-59"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;unreference&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">Reference</span><span class="o">::</span><span class="n">unreference</span><span class="p">);</span>
-<a name="line-60"></a><span class="p">}</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class="kt">int</span> <span class="n">Reference</span><span class="o">::</span><span class="n">reference_get_count</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-63"></a>	<span class="k">return</span> <span class="n">refcount</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
-<a name="line-64"></a><span class="p">}</span>
-<a name="line-65"></a>
-<a name="line-66"></a><span class="kt">void</span> <span class="n">Reference</span><span class="o">::</span><span class="n">reference</span><span class="p">(){</span>
-<a name="line-67"></a>
-<a name="line-68"></a>	<span class="n">refcount</span><span class="p">.</span><span class="n">ref</span><span class="p">();</span>
-<a name="line-69"></a>
-<a name="line-70"></a><span class="p">}</span>
-<a name="line-71"></a><span class="kt">bool</span> <span class="n">Reference</span><span class="o">::</span><span class="n">unreference</span><span class="p">(){</span>
-<a name="line-72"></a>
-<a name="line-73"></a>	<span class="k">return</span> <span class="n">refcount</span><span class="p">.</span><span class="n">unref</span><span class="p">();</span>
-<a name="line-74"></a><span class="p">}</span>
-<a name="line-75"></a>
-<a name="line-76"></a><span class="n">Reference</span><span class="o">::</span><span class="n">Reference</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-77"></a>
-<a name="line-78"></a>	<span class="n">refcount</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
-<a name="line-79"></a>	<span class="n">refcount_init</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
-<a name="line-80"></a><span class="p">}</span>
-<a name="line-81"></a>
-<a name="line-82"></a>
-<a name="line-83"></a><span class="n">Reference</span><span class="o">::~</span><span class="n">Reference</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-84"></a>
-<a name="line-85"></a><span class="p">}</span>
-<a name="line-86"></a>
-<a name="line-87"></a><span class="n">Variant</span> <span class="n">WeakRef</span><span class="o">::</span><span class="n">get_ref</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-88"></a>
-<a name="line-89"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ref</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-90"></a>		<span class="k">return</span> <span class="n">Variant</span><span class="p">();</span>
-<a name="line-91"></a>
-<a name="line-92"></a>	<span class="n">Object</span> <span class="o">*</span><span class="n">obj</span> <span class="o">=</span> <span class="n">ObjectDB</span><span class="o">::</span><span class="n">get_instance</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
-<a name="line-93"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">obj</span><span class="p">)</span>
-<a name="line-94"></a>		<span class="k">return</span> <span class="n">Variant</span><span class="p">();</span>
-<a name="line-95"></a>	<span class="n">Reference</span> <span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="n">obj</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">Reference</span><span class="o">&gt;</span><span class="p">();</span>
-<a name="line-96"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* Written by Dr Stephen N Henson (steve@openssl.org) for the OpenSSL</span>
+<a name="line-2"></a><span class="cm"> * project 2006.</span>
+<a name="line-3"></a><span class="cm"> */</span>
+<a name="line-4"></a><span class="cm">/* ====================================================================</span>
+<a name="line-5"></a><span class="cm"> * Copyright (c) 2006 The OpenSSL Project.  All rights reserved.</span>
+<a name="line-6"></a><span class="cm"> *</span>
+<a name="line-7"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-8"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-9"></a><span class="cm"> * are met:</span>
+<a name="line-10"></a><span class="cm"> *</span>
+<a name="line-11"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
+<a name="line-12"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
+<a name="line-13"></a><span class="cm"> *</span>
+<a name="line-14"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-15"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
+<a name="line-16"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
+<a name="line-17"></a><span class="cm"> *    distribution.</span>
+<a name="line-18"></a><span class="cm"> *</span>
+<a name="line-19"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
+<a name="line-20"></a><span class="cm"> *    software must display the following acknowledgment:</span>
+<a name="line-21"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-22"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-23"></a><span class="cm"> *</span>
+<a name="line-24"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
+<a name="line-25"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
+<a name="line-26"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
+<a name="line-27"></a><span class="cm"> *    licensing@OpenSSL.org.</span>
+<a name="line-28"></a><span class="cm"> *</span>
+<a name="line-29"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
+<a name="line-30"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
+<a name="line-31"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
+<a name="line-32"></a><span class="cm"> *</span>
+<a name="line-33"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
+<a name="line-34"></a><span class="cm"> *    acknowledgment:</span>
+<a name="line-35"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-36"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.OpenSSL.org/)&quot;</span>
+<a name="line-37"></a><span class="cm"> *</span>
+<a name="line-38"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
+<a name="line-39"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-40"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
+<a name="line-41"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
+<a name="line-42"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<a name="line-43"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
+<a name="line-44"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<a name="line-45"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-46"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
+<a name="line-47"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
+<a name="line-48"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
+<a name="line-49"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<a name="line-50"></a><span class="cm"> * ====================================================================</span>
+<a name="line-51"></a><span class="cm"> *</span>
+<a name="line-52"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
+<a name="line-53"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
+<a name="line-54"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
+<a name="line-55"></a><span class="cm"> *</span>
+<a name="line-56"></a><span class="cm"> */</span>
+<a name="line-57"></a>
+<a name="line-58"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-59"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-60"></a><span class="cp">#include &lt;openssl/asn1t.h&gt;</span>
+<a name="line-61"></a><span class="cp">#include &lt;openssl/x509.h&gt;</span>
+<a name="line-62"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
+<a name="line-63"></a><span class="cp">#include &lt;openssl/engine.h&gt;</span>
+<a name="line-64"></a><span class="cp">#endif</span>
+<a name="line-65"></a><span class="cp">#include &quot;asn1_locl.h&quot;</span>
+<a name="line-66"></a>
+<a name="line-67"></a><span class="k">extern</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">rsa_asn1_meths</span><span class="p">[];</span>
+<a name="line-68"></a><span class="k">extern</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">dsa_asn1_meths</span><span class="p">[];</span>
+<a name="line-69"></a><span class="k">extern</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">dh_asn1_meth</span><span class="p">;</span>
+<a name="line-70"></a><span class="k">extern</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">eckey_asn1_meth</span><span class="p">;</span>
+<a name="line-71"></a><span class="k">extern</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">hmac_asn1_meth</span><span class="p">;</span>
+<a name="line-72"></a><span class="k">extern</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">cmac_asn1_meth</span><span class="p">;</span>
+<a name="line-73"></a>
+<a name="line-74"></a><span class="cm">/* Keep this sorted in type order !! */</span>
+<a name="line-75"></a><span class="k">static</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">standard_methods</span><span class="p">[]</span> <span class="o">=</span> 
+<a name="line-76"></a>	<span class="p">{</span>
+<a name="line-77"></a><span class="cp">#ifndef OPENSSL_NO_RSA</span>
+<a name="line-78"></a>	<span class="o">&amp;</span><span class="n">rsa_asn1_meths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<a name="line-79"></a>	<span class="o">&amp;</span><span class="n">rsa_asn1_meths</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<a name="line-80"></a><span class="cp">#endif</span>
+<a name="line-81"></a><span class="cp">#ifndef OPENSSL_NO_DH</span>
+<a name="line-82"></a>	<span class="o">&amp;</span><span class="n">dh_asn1_meth</span><span class="p">,</span>
+<a name="line-83"></a><span class="cp">#endif</span>
+<a name="line-84"></a><span class="cp">#ifndef OPENSSL_NO_DSA</span>
+<a name="line-85"></a>	<span class="o">&amp;</span><span class="n">dsa_asn1_meths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<a name="line-86"></a>	<span class="o">&amp;</span><span class="n">dsa_asn1_meths</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<a name="line-87"></a>	<span class="o">&amp;</span><span class="n">dsa_asn1_meths</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+<a name="line-88"></a>	<span class="o">&amp;</span><span class="n">dsa_asn1_meths</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+<a name="line-89"></a>	<span class="o">&amp;</span><span class="n">dsa_asn1_meths</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+<a name="line-90"></a><span class="cp">#endif</span>
+<a name="line-91"></a><span class="cp">#ifndef OPENSSL_NO_EC</span>
+<a name="line-92"></a>	<span class="o">&amp;</span><span class="n">eckey_asn1_meth</span><span class="p">,</span>
+<a name="line-93"></a><span class="cp">#endif</span>
+<a name="line-94"></a>	<span class="o">&amp;</span><span class="n">hmac_asn1_meth</span><span class="p">,</span>
+<a name="line-95"></a>	<span class="o">&amp;</span><span class="n">cmac_asn1_meth</span>
+<a name="line-96"></a>	<span class="p">};</span>
 <a name="line-97"></a>
-<a name="line-98"></a>		<span class="k">return</span> <span class="n">REF</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
-<a name="line-99"></a>	<span class="p">}</span>
-<a name="line-100"></a>
-<a name="line-101"></a>	<span class="k">return</span> <span class="n">obj</span><span class="p">;</span>
-<a name="line-102"></a><span class="p">}</span>
+<a name="line-98"></a><span class="k">typedef</span> <span class="kt">int</span> <span class="nf">sk_cmp_fn_type</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">b</span><span class="p">);</span>
+<a name="line-99"></a><span class="n">DECLARE_STACK_OF</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span><span class="p">)</span>
+<a name="line-100"></a><span class="k">static</span> <span class="n">STACK_OF</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span><span class="p">)</span> <span class="o">*</span><span class="n">app_methods</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-101"></a>
+<a name="line-102"></a>
 <a name="line-103"></a>
-<a name="line-104"></a><span class="hll"><span class="kt">void</span> <span class="n">WeakRef</span><span class="o">::</span><span class="n">set_obj</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_object</span><span class="p">)</span> <span class="p">{</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'WeakRef::set_obj' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;WeakRef::set_obj&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-105"></a>	<span class="n">ref</span><span class="o">=</span><span class="n">p_object</span> <span class="o">?</span> <span class="n">p_object</span><span class="o">-&gt;</span><span class="n">get_instance_ID</span><span class="p">()</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-106"></a><span class="p">}</span>
-<a name="line-107"></a>
-<a name="line-108"></a><span class="hll"><span class="kt">void</span> <span class="n">WeakRef</span><span class="o">::</span><span class="n">set_ref</span><span class="p">(</span><span class="k">const</span> <span class="n">REF</span><span class="o">&amp;</span> <span class="n">p_ref</span><span class="p">)</span> <span class="p">{</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'WeakRef::set_ref' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;WeakRef::set_ref&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-109"></a>
-<a name="line-110"></a>	<span class="n">ref</span><span class="o">=</span><span class="n">p_ref</span><span class="p">.</span><span class="n">is_valid</span><span class="p">()</span> <span class="o">?</span> <span class="n">p_ref</span><span class="o">-&gt;</span><span class="n">get_instance_ID</span><span class="p">()</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-111"></a><span class="p">}</span>
-<a name="line-112"></a>
-<a name="line-113"></a><span class="n">WeakRef</span><span class="o">::</span><span class="n">WeakRef</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-114"></a>	<span class="n">ref</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-115"></a><span class="p">}</span>
+<a name="line-104"></a><span class="cp">#ifdef TEST</span>
+<a name="line-105"></a><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<a name="line-106"></a>	<span class="p">{</span>
+<a name="line-107"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-108"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-109"></a>		<span class="n">i</span> <span class="o">&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">standard_methods</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">);</span>
+<a name="line-110"></a>		<span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-111"></a>		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Number %d id=%d (%s)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
+<a name="line-112"></a>			<span class="n">standard_methods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">pkey_id</span><span class="p">,</span>
+<a name="line-113"></a>			<span class="n">OBJ_nid2sn</span><span class="p">(</span><span class="n">standard_methods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">pkey_id</span><span class="p">));</span>
+<a name="line-114"></a>	<span class="p">}</span>
+<a name="line-115"></a><span class="cp">#endif</span>
 <a name="line-116"></a>
-<a name="line-117"></a><span class="kt">void</span> <span class="n">WeakRef</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-118"></a>
-<a name="line-119"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;get_ref:Object&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">WeakRef</span><span class="o">::</span><span class="n">get_ref</span><span class="p">);</span>
-<a name="line-120"></a><span class="p">}</span>
-<a name="line-121"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-122"></a>
-<a name="line-123"></a><span class="c">Reference * RefBase::get_reference_from_ref(const RefBase &amp;p_base) {</span>
-<a name="line-124"></a>
-<a name="line-125"></a><span class="c">	return p_base.get_reference();</span>
-<a name="line-126"></a><span class="c">}</span>
-<a name="line-127"></a><span class="c">void RefBase::ref_inc(Reference *p_reference) {</span>
+<a name="line-117"></a><span class="n">DECLARE_OBJ_BSEARCH_CMP_FN</span><span class="p">(</span><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">,</span>
+<a name="line-118"></a>			   <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">,</span> <span class="n">ameth</span><span class="p">);</span>
+<a name="line-119"></a>
+<a name="line-120"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">ameth_cmp</span><span class="p">(</span><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span>
+<a name="line-121"></a>		     <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+<a name="line-122"></a>	<span class="p">{</span>
+<a name="line-123"></a>        <span class="k">return</span> <span class="p">((</span><span class="o">*</span><span class="n">a</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">pkey_id</span> <span class="o">-</span> <span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">pkey_id</span><span class="p">);</span>
+<a name="line-124"></a>	<span class="p">}</span>
+<a name="line-125"></a>
+<a name="line-126"></a><span class="n">IMPLEMENT_OBJ_BSEARCH_CMP_FN</span><span class="p">(</span><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">,</span>
+<a name="line-127"></a>			     <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">,</span> <span class="n">ameth</span><span class="p">);</span>
 <a name="line-128"></a>
-<a name="line-129"></a><span class="c">	p_reference-&gt;refcount.ref();</span>
-<a name="line-130"></a><span class="c">}</span>
-<a name="line-131"></a><span class="c">bool RefBase::ref_dec(Reference *p_reference) {</span>
-<a name="line-132"></a>
-<a name="line-133"></a><span class="c">	bool ref = p_reference-&gt;refcount.unref();</span>
-<a name="line-134"></a><span class="c">	return ref;</span>
-<a name="line-135"></a><span class="c">}</span>
+<a name="line-129"></a><span class="kt">int</span> <span class="nf">EVP_PKEY_asn1_get_count</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-130"></a>	<span class="p">{</span>
+<a name="line-131"></a>	<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">standard_methods</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">);</span>
+<a name="line-132"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">app_methods</span><span class="p">)</span>
+<a name="line-133"></a>		<span class="n">num</span> <span class="o">+=</span> <span class="n">sk_EVP_PKEY_ASN1_METHOD_num</span><span class="p">(</span><span class="n">app_methods</span><span class="p">);</span>
+<a name="line-134"></a>	<span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+<a name="line-135"></a>	<span class="p">}</span>
 <a name="line-136"></a>
-<a name="line-137"></a><span class="c">Reference *RefBase::first_ref(Reference *p_reference) {</span>
-<a name="line-138"></a>
-<a name="line-139"></a><span class="c">	if (p_reference-&gt;refcount.ref()) {</span>
-<a name="line-140"></a>
-<a name="line-141"></a><span class="c">		// this may fail in the scenario of two threads assigning the pointer for the FIRST TIME</span>
-<a name="line-142"></a><span class="c">		// at the same time, which is never likely to happen (would be crazy to do)</span>
-<a name="line-143"></a><span class="c">		// so don&#39;t do it.</span>
-<a name="line-144"></a>
-<a name="line-145"></a><span class="c">		if (p_reference-&gt;refcount_init.get()&gt;0) {</span>
-<a name="line-146"></a><span class="c">			p_reference-&gt;refcount_init.unref();</span>
-<a name="line-147"></a><span class="c">			p_reference-&gt;refcount.unref(); // first referencing is already 1, so compensate for the ref above</span>
-<a name="line-148"></a><span class="c">		}</span>
-<a name="line-149"></a>
-<a name="line-150"></a><span class="c">		return p_reference;</span>
-<a name="line-151"></a><span class="c">	} else {</span>
-<a name="line-152"></a>
-<a name="line-153"></a><span class="c">		return 0;</span>
-<a name="line-154"></a><span class="c">	}</span>
-<a name="line-155"></a>
-<a name="line-156"></a><span class="c">}</span>
-<a name="line-157"></a><span class="c">char * RefBase::get_refptr_data(const RefPtr &amp;p_refptr) const {</span>
-<a name="line-158"></a>
-<a name="line-159"></a><span class="c">	return p_refptr.data;</span>
-<a name="line-160"></a><span class="c">}</span>
-<a name="line-161"></a><span class="cp">#endif</span>
+<a name="line-137"></a><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="nf">EVP_PKEY_asn1_get0</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">)</span>
+<a name="line-138"></a>	<span class="p">{</span>
+<a name="line-139"></a>	<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">standard_methods</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">);</span>
+<a name="line-140"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-141"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> 
+<a name="line-142"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">)</span>
+<a name="line-143"></a>		<span class="k">return</span> <span class="n">standard_methods</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+<a name="line-144"></a>	<span class="n">idx</span> <span class="o">-=</span> <span class="n">num</span><span class="p">;</span>
+<a name="line-145"></a>	<span class="k">return</span> <span class="n">sk_EVP_PKEY_ASN1_METHOD_value</span><span class="p">(</span><span class="n">app_methods</span><span class="p">,</span> <span class="n">idx</span><span class="p">);</span>
+<a name="line-146"></a>	<span class="p">}</span>
+<a name="line-147"></a>
+<a name="line-148"></a><span class="k">static</span> <span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="nf">pkey_asn1_find</span><span class="p">(</span><span class="kt">int</span> <span class="n">type</span><span class="p">)</span>
+<a name="line-149"></a>	<span class="p">{</span>
+<a name="line-150"></a>	<span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="n">tmp</span><span class="p">;</span>
+<a name="line-151"></a>	<span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">t</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">tmp</span><span class="p">,</span> <span class="o">**</span><span class="n">ret</span><span class="p">;</span>
+<a name="line-152"></a>	<span class="n">tmp</span><span class="p">.</span><span class="n">pkey_id</span> <span class="o">=</span> <span class="n">type</span><span class="p">;</span>
+<a name="line-153"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">app_methods</span><span class="p">)</span>
+<a name="line-154"></a>		<span class="p">{</span>
+<a name="line-155"></a>		<span class="kt">int</span> <span class="n">idx</span><span class="p">;</span>
+<a name="line-156"></a>		<span class="n">idx</span> <span class="o">=</span> <span class="n">sk_EVP_PKEY_ASN1_METHOD_find</span><span class="p">(</span><span class="n">app_methods</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tmp</span><span class="p">);</span>
+<a name="line-157"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-158"></a>			<span class="k">return</span> <span class="n">sk_EVP_PKEY_ASN1_METHOD_value</span><span class="p">(</span><span class="n">app_methods</span><span class="p">,</span> <span class="n">idx</span><span class="p">);</span>
+<a name="line-159"></a>		<span class="p">}</span>
+<a name="line-160"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">OBJ_bsearch_ameth</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="n">standard_methods</span><span class="p">,</span>
+<a name="line-161"></a>			  <span class="k">sizeof</span><span class="p">(</span><span class="n">standard_methods</span><span class="p">)</span>
+<a name="line-162"></a>			  <span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="p">));</span>
+<a name="line-163"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ret</span> <span class="o">||</span> <span class="o">!*</span><span class="n">ret</span><span class="p">)</span>
+<a name="line-164"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-165"></a>	<span class="k">return</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
+<a name="line-166"></a>	<span class="p">}</span>
+<a name="line-167"></a>
+<a name="line-168"></a><span class="cm">/* Find an implementation of an ASN1 algorithm. If &#39;pe&#39; is not NULL</span>
+<a name="line-169"></a><span class="cm"> * also search through engines and set *pe to a functional reference</span>
+<a name="line-170"></a><span class="cm"> * to the engine implementing &#39;type&#39; or NULL if no engine implements </span>
+<a name="line-171"></a><span class="cm"> * it.</span>
+<a name="line-172"></a><span class="cm"> */</span>
+<a name="line-173"></a>
+<a name="line-174"></a><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="nf">EVP_PKEY_asn1_find</span><span class="p">(</span><span class="n">ENGINE</span> <span class="o">**</span><span class="n">pe</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">)</span>
+<a name="line-175"></a>	<span class="p">{</span>
+<a name="line-176"></a>	<span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">t</span><span class="p">;</span>
+<a name="line-177"></a>
+<a name="line-178"></a>	<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-179"></a>		<span class="p">{</span>
+<a name="line-180"></a>		<span class="n">t</span> <span class="o">=</span> <span class="n">pkey_asn1_find</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
+<a name="line-181"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span> <span class="o">||</span> <span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">pkey_flags</span> <span class="o">&amp;</span> <span class="n">ASN1_PKEY_ALIAS</span><span class="p">))</span>
+<a name="line-182"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-183"></a>		<span class="n">type</span> <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">pkey_base_id</span><span class="p">;</span>
+<a name="line-184"></a>		<span class="p">}</span>
+<a name="line-185"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pe</span><span class="p">)</span>
+<a name="line-186"></a>		<span class="p">{</span>
+<a name="line-187"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
+<a name="line-188"></a>		<span class="n">ENGINE</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+<a name="line-189"></a>		<span class="cm">/* type will contain the final unaliased type */</span>
+<a name="line-190"></a>		<span class="n">e</span> <span class="o">=</span> <span class="n">ENGINE_get_pkey_asn1_meth_engine</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
+<a name="line-191"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<a name="line-192"></a>			<span class="p">{</span>
+<a name="line-193"></a>			<span class="o">*</span><span class="n">pe</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+<a name="line-194"></a>			<span class="k">return</span> <span class="n">ENGINE_get_pkey_asn1_meth</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">type</span><span class="p">);</span>
+<a name="line-195"></a>			<span class="p">}</span>
+<a name="line-196"></a><span class="cp">#endif</span>
+<a name="line-197"></a>		<span class="o">*</span><span class="n">pe</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-198"></a>		<span class="p">}</span>
+<a name="line-199"></a>	<span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<a name="line-200"></a>	<span class="p">}</span>
+<a name="line-201"></a>
+<a name="line-202"></a><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="nf">EVP_PKEY_asn1_find_str</span><span class="p">(</span><span class="n">ENGINE</span> <span class="o">**</span><span class="n">pe</span><span class="p">,</span>
+<a name="line-203"></a>					<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
+<a name="line-204"></a>	<span class="p">{</span>
+<a name="line-205"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-206"></a><span class="hll">	<span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ameth' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ameth&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-207"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-208"></a>		<span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+<a name="line-209"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pe</span><span class="p">)</span>
+<a name="line-210"></a>		<span class="p">{</span>
+<a name="line-211"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
+<a name="line-212"></a>		<span class="n">ENGINE</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+<a name="line-213"></a>		<span class="n">ameth</span> <span class="o">=</span> <span class="n">ENGINE_pkey_asn1_find_str</span><span class="p">(</span><span class="o">&amp;</span><span class="n">e</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+<a name="line-214"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-215"></a>			<span class="p">{</span>
+<a name="line-216"></a>			<span class="cm">/* Convert structural into</span>
+<a name="line-217"></a><span class="cm">			 * functional reference</span>
+<a name="line-218"></a><span class="cm">			 */</span>
+<a name="line-219"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ENGINE_init</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+<a name="line-220"></a>				<span class="n">ameth</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-221"></a>			<span class="n">ENGINE_free</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<a name="line-222"></a>			<span class="o">*</span><span class="n">pe</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+<a name="line-223"></a>			<span class="k">return</span> <span class="n">ameth</span><span class="p">;</span>
+<a name="line-224"></a>			<span class="p">}</span>
+<a name="line-225"></a><span class="cp">#endif</span>
+<a name="line-226"></a>		<span class="o">*</span><span class="n">pe</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-227"></a>		<span class="p">}</span>
+<a name="line-228"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">EVP_PKEY_asn1_get_count</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-229"></a>		<span class="p">{</span>
+<a name="line-230"></a>		<span class="n">ameth</span> <span class="o">=</span> <span class="n">EVP_PKEY_asn1_get0</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<a name="line-231"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_flags</span> <span class="o">&amp;</span> <span class="n">ASN1_PKEY_ALIAS</span><span class="p">)</span>
+<a name="line-232"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-233"></a>		<span class="k">if</span> <span class="p">(((</span><span class="kt">int</span><span class="p">)</span><span class="n">strlen</span><span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span><span class="p">)</span> <span class="o">==</span> <span class="n">len</span><span class="p">)</span> <span class="o">&amp;&amp;</span> 
+<a name="line-234"></a>			<span class="o">!</span><span class="n">strncasecmp</span><span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">len</span><span class="p">))</span>
+<a name="line-235"></a>			<span class="k">return</span> <span class="n">ameth</span><span class="p">;</span>
+<a name="line-236"></a>		<span class="p">}</span>
+<a name="line-237"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-238"></a>	<span class="p">}</span>
+<a name="line-239"></a>
+<a name="line-240"></a><span class="kt">int</span> <span class="nf">EVP_PKEY_asn1_add0</span><span class="p">(</span><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-241"></a>	<span class="p">{</span>
+<a name="line-242"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">app_methods</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-243"></a>		<span class="p">{</span>
+<a name="line-244"></a>		<span class="n">app_methods</span> <span class="o">=</span> <span class="n">sk_EVP_PKEY_ASN1_METHOD_new</span><span class="p">(</span><span class="n">ameth_cmp</span><span class="p">);</span>
+<a name="line-245"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">app_methods</span><span class="p">)</span>
+<a name="line-246"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-247"></a>		<span class="p">}</span>
+<a name="line-248"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sk_EVP_PKEY_ASN1_METHOD_push</span><span class="p">(</span><span class="n">app_methods</span><span class="p">,</span> <span class="n">ameth</span><span class="p">))</span>
+<a name="line-249"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-250"></a>	<span class="n">sk_EVP_PKEY_ASN1_METHOD_sort</span><span class="p">(</span><span class="n">app_methods</span><span class="p">);</span>
+<a name="line-251"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-252"></a>	<span class="p">}</span>
+<a name="line-253"></a>
+<a name="line-254"></a><span class="kt">int</span> <span class="nf">EVP_PKEY_asn1_add_alias</span><span class="p">(</span><span class="kt">int</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">from</span><span class="p">)</span>
+<a name="line-255"></a>	<span class="p">{</span>
+<a name="line-256"></a>	<span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">;</span>
+<a name="line-257"></a>	<span class="n">ameth</span> <span class="o">=</span> <span class="n">EVP_PKEY_asn1_new</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">ASN1_PKEY_ALIAS</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-258"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-259"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-260"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_base_id</span> <span class="o">=</span> <span class="n">to</span><span class="p">;</span>
+<a name="line-261"></a>	<span class="k">return</span> <span class="n">EVP_PKEY_asn1_add0</span><span class="p">(</span><span class="n">ameth</span><span class="p">);</span>
+<a name="line-262"></a>	<span class="p">}</span>
+<a name="line-263"></a>
+<a name="line-264"></a><span class="kt">int</span> <span class="nf">EVP_PKEY_asn1_get0_info</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">ppkey_id</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">ppkey_base_id</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">ppkey_flags</span><span class="p">,</span>
+<a name="line-265"></a>				<span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">pinfo</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">ppem_str</span><span class="p">,</span>
+<a name="line-266"></a>					<span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-267"></a>	<span class="p">{</span>
+<a name="line-268"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-269"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-270"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ppkey_id</span><span class="p">)</span>
+<a name="line-271"></a>		<span class="o">*</span><span class="n">ppkey_id</span> <span class="o">=</span> <span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_id</span><span class="p">;</span>
+<a name="line-272"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ppkey_base_id</span><span class="p">)</span>
+<a name="line-273"></a>		<span class="o">*</span><span class="n">ppkey_base_id</span> <span class="o">=</span> <span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_base_id</span><span class="p">;</span>
+<a name="line-274"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ppkey_flags</span><span class="p">)</span>
+<a name="line-275"></a>		<span class="o">*</span><span class="n">ppkey_flags</span> <span class="o">=</span> <span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_flags</span><span class="p">;</span>
+<a name="line-276"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pinfo</span><span class="p">)</span>
+<a name="line-277"></a>		<span class="o">*</span><span class="n">pinfo</span> <span class="o">=</span> <span class="n">ameth</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">;</span>
+<a name="line-278"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ppem_str</span><span class="p">)</span>
+<a name="line-279"></a>		<span class="o">*</span><span class="n">ppem_str</span> <span class="o">=</span> <span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span><span class="p">;</span>
+<a name="line-280"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-281"></a>	<span class="p">}</span>
+<a name="line-282"></a>
+<a name="line-283"></a><span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span><span class="o">*</span> <span class="nf">EVP_PKEY_get0_asn1</span><span class="p">(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">)</span>
+<a name="line-284"></a>	<span class="p">{</span>
+<a name="line-285"></a>	<span class="k">return</span> <span class="n">pkey</span><span class="o">-&gt;</span><span class="n">ameth</span><span class="p">;</span>
+<a name="line-286"></a>	<span class="p">}</span>
+<a name="line-287"></a>
+<a name="line-288"></a><span class="n">EVP_PKEY_ASN1_METHOD</span><span class="o">*</span> <span class="nf">EVP_PKEY_asn1_new</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span>
+<a name="line-289"></a>					<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pem_str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">info</span><span class="p">)</span>
+<a name="line-290"></a>	<span class="p">{</span>
+<a name="line-291"></a>	<span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">;</span>
+<a name="line-292"></a>	<span class="n">ameth</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span><span class="p">));</span>
+<a name="line-293"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-294"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-295"></a>
+<a name="line-296"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">ameth</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span><span class="p">));</span>
+<a name="line-297"></a>
+<a name="line-298"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+<a name="line-299"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_base_id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+<a name="line-300"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_flags</span> <span class="o">=</span> <span class="n">flags</span> <span class="o">|</span> <span class="n">ASN1_PKEY_DYNAMIC</span><span class="p">;</span>
+<a name="line-301"></a>
+<a name="line-302"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">info</span><span class="p">)</span>
+<a name="line-303"></a>		<span class="p">{</span>
+<a name="line-304"></a>		<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="n">BUF_strdup</span><span class="p">(</span><span class="n">info</span><span class="p">);</span>
+<a name="line-305"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">)</span>
+<a name="line-306"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-307"></a>		<span class="p">}</span>
+<a name="line-308"></a>	<span class="k">else</span>
+<a name="line-309"></a>		<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">info</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-310"></a>
+<a name="line-311"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pem_str</span><span class="p">)</span>
+<a name="line-312"></a>		<span class="p">{</span>
+<a name="line-313"></a>		<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span> <span class="o">=</span> <span class="n">BUF_strdup</span><span class="p">(</span><span class="n">pem_str</span><span class="p">);</span>
+<a name="line-314"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span><span class="p">)</span>
+<a name="line-315"></a>			<span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+<a name="line-316"></a>		<span class="p">}</span>
+<a name="line-317"></a>	<span class="k">else</span>
+<a name="line-318"></a>		<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-319"></a>
+<a name="line-320"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_decode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-321"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_encode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-322"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_cmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-323"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_print</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-324"></a>
+<a name="line-325"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">priv_decode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-326"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">priv_encode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-327"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">priv_print</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-328"></a>
+<a name="line-329"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">old_priv_encode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-330"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">old_priv_decode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-331"></a>
+<a name="line-332"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">item_verify</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-333"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">item_sign</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-334"></a>
+<a name="line-335"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-336"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_bits</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-337"></a>
+<a name="line-338"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_decode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-339"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_encode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-340"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_missing</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-341"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_copy</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-342"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_cmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-343"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_print</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-344"></a>
+<a name="line-345"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_free</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-346"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_ctrl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-347"></a>
+<a name="line-348"></a>	<span class="k">return</span> <span class="n">ameth</span><span class="p">;</span>
+<a name="line-349"></a>
+<a name="line-350"></a>	<span class="nl">err</span><span class="p">:</span>
+<a name="line-351"></a>
+<a name="line-352"></a>	<span class="n">EVP_PKEY_asn1_free</span><span class="p">(</span><span class="n">ameth</span><span class="p">);</span>
+<a name="line-353"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-354"></a>
+<a name="line-355"></a>	<span class="p">}</span>
+<a name="line-356"></a>
+<a name="line-357"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_copy</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> 
+<a name="line-358"></a>			<span class="k">const</span> <span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">src</span><span class="p">)</span>
+<a name="line-359"></a>	<span class="p">{</span>
+<a name="line-360"></a>
+<a name="line-361"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pub_decode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pub_decode</span><span class="p">;</span>
+<a name="line-362"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pub_encode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pub_encode</span><span class="p">;</span>
+<a name="line-363"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pub_cmp</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pub_cmp</span><span class="p">;</span>
+<a name="line-364"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pub_print</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pub_print</span><span class="p">;</span>
+<a name="line-365"></a>
+<a name="line-366"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">priv_decode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">priv_decode</span><span class="p">;</span>
+<a name="line-367"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">priv_encode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">priv_encode</span><span class="p">;</span>
+<a name="line-368"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">priv_print</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">priv_print</span><span class="p">;</span>
+<a name="line-369"></a>
+<a name="line-370"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">old_priv_encode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">old_priv_encode</span><span class="p">;</span>
+<a name="line-371"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">old_priv_decode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">old_priv_decode</span><span class="p">;</span>
+<a name="line-372"></a>
+<a name="line-373"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pkey_size</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pkey_size</span><span class="p">;</span>
+<a name="line-374"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pkey_bits</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pkey_bits</span><span class="p">;</span>
+<a name="line-375"></a>
+<a name="line-376"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">param_decode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">param_decode</span><span class="p">;</span>
+<a name="line-377"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">param_encode</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">param_encode</span><span class="p">;</span>
+<a name="line-378"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">param_missing</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">param_missing</span><span class="p">;</span>
+<a name="line-379"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">param_copy</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">param_copy</span><span class="p">;</span>
+<a name="line-380"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">param_cmp</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">param_cmp</span><span class="p">;</span>
+<a name="line-381"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">param_print</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">param_print</span><span class="p">;</span>
+<a name="line-382"></a>
+<a name="line-383"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pkey_free</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pkey_free</span><span class="p">;</span>
+<a name="line-384"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">pkey_ctrl</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">pkey_ctrl</span><span class="p">;</span>
+<a name="line-385"></a>
+<a name="line-386"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">item_sign</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">item_sign</span><span class="p">;</span>
+<a name="line-387"></a>	<span class="n">dst</span><span class="o">-&gt;</span><span class="n">item_verify</span> <span class="o">=</span> <span class="n">src</span><span class="o">-&gt;</span><span class="n">item_verify</span><span class="p">;</span>
+<a name="line-388"></a>
+<a name="line-389"></a>	<span class="p">}</span>
+<a name="line-390"></a>
+<a name="line-391"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_free</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">)</span>
+<a name="line-392"></a>	<span class="p">{</span>
+<a name="line-393"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ameth</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_flags</span> <span class="o">&amp;</span> <span class="n">ASN1_PKEY_DYNAMIC</span><span class="p">))</span>
+<a name="line-394"></a>		<span class="p">{</span>
+<a name="line-395"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span><span class="p">)</span>
+<a name="line-396"></a>			<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pem_str</span><span class="p">);</span>
+<a name="line-397"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">)</span>
+<a name="line-398"></a>			<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">ameth</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">);</span>
+<a name="line-399"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">ameth</span><span class="p">);</span>
+<a name="line-400"></a>		<span class="p">}</span>
+<a name="line-401"></a>	<span class="p">}</span>
+<a name="line-402"></a>
+<a name="line-403"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_set_public</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">,</span>
+<a name="line-404"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pub_decode</span><span class="p">)(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">,</span> <span class="n">X509_PUBKEY</span> <span class="o">*</span><span class="n">pub</span><span class="p">),</span>
+<a name="line-405"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pub_encode</span><span class="p">)(</span><span class="n">X509_PUBKEY</span> <span class="o">*</span><span class="n">pub</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">),</span>
+<a name="line-406"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pub_cmp</span><span class="p">)(</span><span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">b</span><span class="p">),</span>
+<a name="line-407"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pub_print</span><span class="p">)(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">indent</span><span class="p">,</span>
+<a name="line-408"></a>							<span class="n">ASN1_PCTX</span> <span class="o">*</span><span class="n">pctx</span><span class="p">),</span>
+<a name="line-409"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pkey_size</span><span class="p">)(</span><span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">),</span>
+<a name="line-410"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pkey_bits</span><span class="p">)(</span><span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">))</span>
+<a name="line-411"></a>	<span class="p">{</span>
+<a name="line-412"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_decode</span> <span class="o">=</span> <span class="n">pub_decode</span><span class="p">;</span>
+<a name="line-413"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_encode</span> <span class="o">=</span> <span class="n">pub_encode</span><span class="p">;</span>
+<a name="line-414"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_cmp</span> <span class="o">=</span> <span class="n">pub_cmp</span><span class="p">;</span>
+<a name="line-415"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pub_print</span> <span class="o">=</span> <span class="n">pub_print</span><span class="p">;</span>
+<a name="line-416"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_size</span> <span class="o">=</span> <span class="n">pkey_size</span><span class="p">;</span>
+<a name="line-417"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_bits</span> <span class="o">=</span> <span class="n">pkey_bits</span><span class="p">;</span>
+<a name="line-418"></a>	<span class="p">}</span>
+<a name="line-419"></a>
+<a name="line-420"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_set_private</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">,</span>
+<a name="line-421"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">priv_decode</span><span class="p">)(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">,</span> <span class="n">PKCS8_PRIV_KEY_INFO</span> <span class="o">*</span><span class="n">p8inf</span><span class="p">),</span>
+<a name="line-422"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">priv_encode</span><span class="p">)(</span><span class="n">PKCS8_PRIV_KEY_INFO</span> <span class="o">*</span><span class="n">p8</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">),</span>
+<a name="line-423"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">priv_print</span><span class="p">)(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">indent</span><span class="p">,</span>
+<a name="line-424"></a>							<span class="n">ASN1_PCTX</span> <span class="o">*</span><span class="n">pctx</span><span class="p">))</span>
+<a name="line-425"></a>	<span class="p">{</span>
+<a name="line-426"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">priv_decode</span> <span class="o">=</span> <span class="n">priv_decode</span><span class="p">;</span>
+<a name="line-427"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">priv_encode</span> <span class="o">=</span> <span class="n">priv_encode</span><span class="p">;</span>
+<a name="line-428"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">priv_print</span> <span class="o">=</span> <span class="n">priv_print</span><span class="p">;</span>
+<a name="line-429"></a>	<span class="p">}</span>
+<a name="line-430"></a>
+<a name="line-431"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_set_param</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">,</span>
+<a name="line-432"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">param_decode</span><span class="p">)(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">,</span>
+<a name="line-433"></a>				<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="n">pder</span><span class="p">,</span> <span class="kt">int</span> <span class="n">derlen</span><span class="p">),</span>
+<a name="line-434"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">param_encode</span><span class="p">)(</span><span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="n">pder</span><span class="p">),</span>
+<a name="line-435"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">param_missing</span><span class="p">)(</span><span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pk</span><span class="p">),</span>
+<a name="line-436"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">param_copy</span><span class="p">)(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">to</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">from</span><span class="p">),</span>
+<a name="line-437"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">param_cmp</span><span class="p">)(</span><span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">b</span><span class="p">),</span>
+<a name="line-438"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">param_print</span><span class="p">)(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">indent</span><span class="p">,</span>
+<a name="line-439"></a>							<span class="n">ASN1_PCTX</span> <span class="o">*</span><span class="n">pctx</span><span class="p">))</span>
+<a name="line-440"></a>	<span class="p">{</span>
+<a name="line-441"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_decode</span> <span class="o">=</span> <span class="n">param_decode</span><span class="p">;</span>
+<a name="line-442"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_encode</span> <span class="o">=</span> <span class="n">param_encode</span><span class="p">;</span>
+<a name="line-443"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_missing</span> <span class="o">=</span> <span class="n">param_missing</span><span class="p">;</span>
+<a name="line-444"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_copy</span> <span class="o">=</span> <span class="n">param_copy</span><span class="p">;</span>
+<a name="line-445"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_cmp</span> <span class="o">=</span> <span class="n">param_cmp</span><span class="p">;</span>
+<a name="line-446"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">param_print</span> <span class="o">=</span> <span class="n">param_print</span><span class="p">;</span>
+<a name="line-447"></a>	<span class="p">}</span>
+<a name="line-448"></a>
+<a name="line-449"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_set_free</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">,</span>
+<a name="line-450"></a>		<span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pkey_free</span><span class="p">)(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">))</span>
+<a name="line-451"></a>	<span class="p">{</span>
+<a name="line-452"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_free</span> <span class="o">=</span> <span class="n">pkey_free</span><span class="p">;</span>
+<a name="line-453"></a>	<span class="p">}</span>
+<a name="line-454"></a>
+<a name="line-455"></a><span class="kt">void</span> <span class="nf">EVP_PKEY_asn1_set_ctrl</span><span class="p">(</span><span class="n">EVP_PKEY_ASN1_METHOD</span> <span class="o">*</span><span class="n">ameth</span><span class="p">,</span>
+<a name="line-456"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pkey_ctrl</span><span class="p">)(</span><span class="n">EVP_PKEY</span> <span class="o">*</span><span class="n">pkey</span><span class="p">,</span> <span class="kt">int</span> <span class="n">op</span><span class="p">,</span>
+<a name="line-457"></a>							<span class="kt">long</span> <span class="n">arg1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg2</span><span class="p">))</span>
+<a name="line-458"></a>	<span class="p">{</span>
+<a name="line-459"></a>	<span class="n">ameth</span><span class="o">-&gt;</span><span class="n">pkey_ctrl</span> <span class="o">=</span> <span class="n">pkey_ctrl</span><span class="p">;</span>
+<a name="line-460"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

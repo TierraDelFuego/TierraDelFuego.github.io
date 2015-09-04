@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/asn1/x_info.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/des/ecb_enc.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> x_info.c</p>
-<a href='201.html#line-1'> ConfigurationNotChecked 1</a>
+       <p id="filename"><a href="index.html">Defects:</a> ecb_enc.c</p>
+<a href='201.html#line-121'> unreadVariable 121</a><a href='201.html#line-121'> unreadVariable 121</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -226,8 +226,17 @@
 110
 111
 112
-113</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/asn1/x_info.c */</span><span class='error2'>&lt;--- Skipping configuration 'REF_PRINT' since the value of 'REF_PRINT' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
-</span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/des/ecb_enc.c */</span>
+<a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
 <a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
@@ -284,61 +293,70 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-61"></a><span class="cp">#include &lt;openssl/evp.h&gt;</span>
-<a name="line-62"></a><span class="cp">#include &lt;openssl/asn1.h&gt;</span>
-<a name="line-63"></a><span class="cp">#include &lt;openssl/x509.h&gt;</span>
-<a name="line-64"></a>
-<a name="line-65"></a><span class="n">X509_INFO</span> <span class="o">*</span><span class="nf">X509_INFO_new</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-66"></a>	<span class="p">{</span>
-<a name="line-67"></a>	<span class="n">X509_INFO</span> <span class="o">*</span><span class="n">ret</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-68"></a>
-<a name="line-69"></a>	<span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="n">X509_INFO</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">X509_INFO</span><span class="p">));</span>
-<a name="line-70"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-71"></a>		<span class="p">{</span>
-<a name="line-72"></a>		<span class="n">ASN1err</span><span class="p">(</span><span class="n">ASN1_F_X509_INFO_NEW</span><span class="p">,</span><span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-73"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-74"></a>		<span class="p">}</span>
-<a name="line-75"></a> 
-<a name="line-76"></a>        <span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_cipher</span><span class="p">.</span><span class="n">cipher</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-77"></a>        <span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-78"></a>        <span class="n">ret</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-79"></a> 
-<a name="line-80"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">references</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-81"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">x509</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-82"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">crl</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-83"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">x_pkey</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-84"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-85"></a>	<span class="p">}</span>
-<a name="line-86"></a>
-<a name="line-87"></a><span class="kt">void</span> <span class="nf">X509_INFO_free</span><span class="p">(</span><span class="n">X509_INFO</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<a name="line-88"></a>	<span class="p">{</span>
-<a name="line-89"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-90"></a>
-<a name="line-91"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-<a name="line-92"></a>
-<a name="line-93"></a>	<span class="n">i</span><span class="o">=</span><span class="n">CRYPTO_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">references</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">CRYPTO_LOCK_X509_INFO</span><span class="p">);</span>
-<a name="line-94"></a><span class="cp">#ifdef REF_PRINT</span>
-<a name="line-95"></a>	<span class="n">REF_PRINT</span><span class="p">(</span><span class="s">&quot;X509_INFO&quot;</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
-<a name="line-96"></a><span class="cp">#endif</span>
-<a name="line-97"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-<a name="line-98"></a><span class="cp">#ifdef REF_CHECK</span>
-<a name="line-99"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-100"></a>		<span class="p">{</span>
-<a name="line-101"></a>		<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;X509_INFO_free, bad reference count</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-102"></a>		<span class="n">abort</span><span class="p">();</span>
+<a name="line-59"></a><span class="cp">#include &quot;des_locl.h&quot;</span>
+<a name="line-60"></a><span class="cp">#include &quot;des_ver.h&quot;</span>
+<a name="line-61"></a><span class="cp">#include &lt;openssl/opensslv.h&gt;</span>
+<a name="line-62"></a><span class="cp">#include &lt;openssl/bio.h&gt;</span>
+<a name="line-63"></a>
+<a name="line-64"></a><span class="n">OPENSSL_GLOBAL</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">libdes_version</span><span class="p">[]</span><span class="o">=</span><span class="s">&quot;libdes&quot;</span> <span class="n">OPENSSL_VERSION_PTEXT</span><span class="p">;</span>
+<a name="line-65"></a><span class="n">OPENSSL_GLOBAL</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">DES_version</span><span class="p">[]</span><span class="o">=</span><span class="s">&quot;DES&quot;</span> <span class="n">OPENSSL_VERSION_PTEXT</span><span class="p">;</span>
+<a name="line-66"></a>
+<a name="line-67"></a><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">DES_options</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-68"></a>	<span class="p">{</span>
+<a name="line-69"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">init</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-70"></a>	<span class="k">static</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<a name="line-71"></a>
+<a name="line-72"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">init</span><span class="p">)</span>
+<a name="line-73"></a>		<span class="p">{</span>
+<a name="line-74"></a>		<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span><span class="o">*</span><span class="n">unroll</span><span class="p">,</span><span class="o">*</span><span class="n">risc</span><span class="p">,</span><span class="o">*</span><span class="n">size</span><span class="p">;</span>
+<a name="line-75"></a>
+<a name="line-76"></a><span class="cp">#ifdef DES_PTR</span>
+<a name="line-77"></a>		<span class="n">ptr</span><span class="o">=</span><span class="s">&quot;ptr&quot;</span><span class="p">;</span>
+<a name="line-78"></a><span class="cp">#else</span>
+<a name="line-79"></a>		<span class="n">ptr</span><span class="o">=</span><span class="s">&quot;idx&quot;</span><span class="p">;</span>
+<a name="line-80"></a><span class="cp">#endif</span>
+<a name="line-81"></a><span class="cp">#if defined(DES_RISC1) || defined(DES_RISC2)</span>
+<a name="line-82"></a><span class="cp">#ifdef DES_RISC1</span>
+<a name="line-83"></a>		<span class="n">risc</span><span class="o">=</span><span class="s">&quot;risc1&quot;</span><span class="p">;</span>
+<a name="line-84"></a><span class="cp">#endif</span>
+<a name="line-85"></a><span class="cp">#ifdef DES_RISC2</span>
+<a name="line-86"></a>		<span class="n">risc</span><span class="o">=</span><span class="s">&quot;risc2&quot;</span><span class="p">;</span>
+<a name="line-87"></a><span class="cp">#endif</span>
+<a name="line-88"></a><span class="cp">#else</span>
+<a name="line-89"></a>		<span class="n">risc</span><span class="o">=</span><span class="s">&quot;cisc&quot;</span><span class="p">;</span>
+<a name="line-90"></a><span class="cp">#endif</span>
+<a name="line-91"></a><span class="cp">#ifdef DES_UNROLL</span>
+<a name="line-92"></a>		<span class="n">unroll</span><span class="o">=</span><span class="s">&quot;16&quot;</span><span class="p">;</span>
+<a name="line-93"></a><span class="cp">#else</span>
+<a name="line-94"></a>		<span class="n">unroll</span><span class="o">=</span><span class="s">&quot;2&quot;</span><span class="p">;</span>
+<a name="line-95"></a><span class="cp">#endif</span>
+<a name="line-96"></a>		<span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">DES_LONG</span><span class="p">)</span> <span class="o">!=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">))</span>
+<a name="line-97"></a>			<span class="n">size</span><span class="o">=</span><span class="s">&quot;int&quot;</span><span class="p">;</span>
+<a name="line-98"></a>		<span class="k">else</span>
+<a name="line-99"></a>			<span class="n">size</span><span class="o">=</span><span class="s">&quot;long&quot;</span><span class="p">;</span>
+<a name="line-100"></a>		<span class="n">BIO_snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="k">sizeof</span> <span class="n">buf</span><span class="p">,</span><span class="s">&quot;des(%s,%s,%s,%s)&quot;</span><span class="p">,</span><span class="n">ptr</span><span class="p">,</span><span class="n">risc</span><span class="p">,</span><span class="n">unroll</span><span class="p">,</span>
+<a name="line-101"></a>			     <span class="n">size</span><span class="p">);</span>
+<a name="line-102"></a>		<span class="n">init</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <a name="line-103"></a>		<span class="p">}</span>
-<a name="line-104"></a><span class="cp">#endif</span>
-<a name="line-105"></a>
-<a name="line-106"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">x509</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">X509_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">x509</span><span class="p">);</span>
-<a name="line-107"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">crl</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">X509_CRL_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">crl</span><span class="p">);</span>
-<a name="line-108"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">x_pkey</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">X509_PKEY_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">x_pkey</span><span class="p">);</span>
-<a name="line-109"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">enc_data</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">enc_data</span><span class="p">);</span>
-<a name="line-110"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-<a name="line-111"></a>	<span class="p">}</span>
-<a name="line-112"></a>
-<a name="line-113"></a><span class="n">IMPLEMENT_STACK_OF</span><span class="p">(</span><span class="n">X509_INFO</span><span class="p">)</span>
+<a name="line-104"></a>	<span class="k">return</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+<a name="line-105"></a>	<span class="p">}</span>
+<a name="line-106"></a>		
+<a name="line-107"></a>
+<a name="line-108"></a><span class="kt">void</span> <span class="nf">DES_ecb_encrypt</span><span class="p">(</span><span class="n">const_DES_cblock</span> <span class="o">*</span><span class="n">input</span><span class="p">,</span> <span class="n">DES_cblock</span> <span class="o">*</span><span class="n">output</span><span class="p">,</span>
+<a name="line-109"></a>		     <span class="n">DES_key_schedule</span> <span class="o">*</span><span class="n">ks</span><span class="p">,</span> <span class="kt">int</span> <span class="n">enc</span><span class="p">)</span>
+<a name="line-110"></a>	<span class="p">{</span>
+<a name="line-111"></a>	<span class="k">register</span> <span class="n">DES_LONG</span> <span class="n">l</span><span class="p">;</span>
+<a name="line-112"></a>	<span class="n">DES_LONG</span> <span class="n">ll</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-113"></a>	<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">input</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-114"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="n">output</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-115"></a>
+<a name="line-116"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">l</span><span class="p">);</span> <span class="n">ll</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="p">;</span>
+<a name="line-117"></a>	<span class="n">c2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">l</span><span class="p">);</span> <span class="n">ll</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">l</span><span class="p">;</span>
+<a name="line-118"></a>	<span class="n">DES_encrypt1</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span><span class="n">ks</span><span class="p">,</span><span class="n">enc</span><span class="p">);</span>
+<a name="line-119"></a>	<span class="n">l</span><span class="o">=</span><span class="n">ll</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l2c</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-120"></a>	<span class="n">l</span><span class="o">=</span><span class="n">ll</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">l2c</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
+<a name="line-121"></a><span class="hll">	<span class="n">l</span><span class="o">=</span><span class="n">ll</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">ll</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'l' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'll' is assigned a value that is never used.</span>
+</span><a name="line-122"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

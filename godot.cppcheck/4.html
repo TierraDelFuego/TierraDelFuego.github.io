@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: modules/gdscript/gd_script.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/bin/tests/test_math.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> gd_script.h</p>
-<a href='4.html#line-176'> functionStatic 176</a><a href='4.html#line-181'> duplicateBreak 181</a><a href='4.html#line-228'> noExplicitConstructor 228</a>
+       <p id="filename"><a href="index.html">Defects:</a> test_math.cpp</p>
+<a href='4.html#line-121'> unreachableCode 121</a><a href='4.html#line-152'> unreachableCode 152</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -414,283 +414,8 @@
 298
 299
 300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  gd_script.h                                                          */</span>
+301</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  test_math.cpp                                                        */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -717,554 +442,279 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef GD_SCRIPT_H</span>
-<a name="line-30"></a><span class="cp">#define GD_SCRIPT_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;script_language.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;io/resource_loader.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;io/resource_saver.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;os/thread.h&quot;</span>
-<a name="line-36"></a><span class="cp">#include &quot;pair.h&quot;</span>
-<a name="line-37"></a><span class="n">class</span> <span class="n">GDInstance</span><span class="p">;</span>
-<a name="line-38"></a><span class="n">class</span> <span class="n">GDScript</span><span class="p">;</span>
-<a name="line-39"></a>
-<a name="line-40"></a>
-<a name="line-41"></a>
-<a name="line-42"></a><span class="n">class</span> <span class="n">GDFunction</span> <span class="p">{</span>
-<a name="line-43"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-29"></a><span class="cp">#include &quot;test_math.h&quot;</span>
+<a name="line-30"></a><span class="cp">#include &quot;ustring.h&quot;</span>
+<a name="line-31"></a><span class="cp">#include &quot;print_string.h&quot;</span>
+<a name="line-32"></a><span class="cp">#include &quot;transform.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;matrix3.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;math_funcs.h&quot;</span>
+<a name="line-35"></a><span class="cp">#include &quot;camera_matrix.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;scene/main/node.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;variant.h&quot;</span>
+<a name="line-38"></a><span class="cp">#include &quot;servers/visual/shader_language.h&quot;</span>
+<a name="line-39"></a><span class="cp">#include &quot;os/keyboard.h&quot;</span>
+<a name="line-40"></a><span class="cp">#include &quot;scene/resources/texture.h&quot;</span>
+<a name="line-41"></a><span class="cp">#include &quot;vmap.h&quot;</span>
+<a name="line-42"></a><span class="cp">#include &quot;os/os.h&quot;</span>
+<a name="line-43"></a><span class="k">namespace</span> <span class="n">TestMath</span> <span class="p">{</span>
 <a name="line-44"></a>
-<a name="line-45"></a>	<span class="k">enum</span> <span class="n">Opcode</span> <span class="p">{</span>
-<a name="line-46"></a>		<span class="n">OPCODE_OPERATOR</span><span class="p">,</span>
-<a name="line-47"></a>		<span class="n">OPCODE_EXTENDS_TEST</span><span class="p">,</span>
-<a name="line-48"></a>		<span class="n">OPCODE_SET</span><span class="p">,</span>
-<a name="line-49"></a>		<span class="n">OPCODE_GET</span><span class="p">,</span>
-<a name="line-50"></a>		<span class="n">OPCODE_SET_NAMED</span><span class="p">,</span>
-<a name="line-51"></a>		<span class="n">OPCODE_GET_NAMED</span><span class="p">,</span>
-<a name="line-52"></a>		<span class="n">OPCODE_ASSIGN</span><span class="p">,</span>
-<a name="line-53"></a>		<span class="n">OPCODE_ASSIGN_TRUE</span><span class="p">,</span>
-<a name="line-54"></a>		<span class="n">OPCODE_ASSIGN_FALSE</span><span class="p">,</span>
-<a name="line-55"></a>		<span class="n">OPCODE_CONSTRUCT</span><span class="p">,</span> <span class="c1">//only for basic types!!</span>
-<a name="line-56"></a>		<span class="n">OPCODE_CONSTRUCT_ARRAY</span><span class="p">,</span>
-<a name="line-57"></a>		<span class="n">OPCODE_CONSTRUCT_DICTIONARY</span><span class="p">,</span>
-<a name="line-58"></a>		<span class="n">OPCODE_CALL</span><span class="p">,</span>
-<a name="line-59"></a>		<span class="n">OPCODE_CALL_RETURN</span><span class="p">,</span>
-<a name="line-60"></a>		<span class="n">OPCODE_CALL_BUILT_IN</span><span class="p">,</span>
-<a name="line-61"></a>		<span class="n">OPCODE_CALL_SELF</span><span class="p">,</span>
-<a name="line-62"></a>		<span class="n">OPCODE_CALL_SELF_BASE</span><span class="p">,</span>
-<a name="line-63"></a>		<span class="n">OPCODE_YIELD</span><span class="p">,</span>
-<a name="line-64"></a>		<span class="n">OPCODE_YIELD_SIGNAL</span><span class="p">,</span>
-<a name="line-65"></a>		<span class="n">OPCODE_YIELD_RESUME</span><span class="p">,</span>
-<a name="line-66"></a>		<span class="n">OPCODE_JUMP</span><span class="p">,</span>
-<a name="line-67"></a>		<span class="n">OPCODE_JUMP_IF</span><span class="p">,</span>
-<a name="line-68"></a>		<span class="n">OPCODE_JUMP_IF_NOT</span><span class="p">,</span>
-<a name="line-69"></a>		<span class="n">OPCODE_JUMP_TO_DEF_ARGUMENT</span><span class="p">,</span>
-<a name="line-70"></a>		<span class="n">OPCODE_RETURN</span><span class="p">,</span>
-<a name="line-71"></a>		<span class="n">OPCODE_ITERATE_BEGIN</span><span class="p">,</span>
-<a name="line-72"></a>		<span class="n">OPCODE_ITERATE</span><span class="p">,</span>
-<a name="line-73"></a>		<span class="n">OPCODE_ASSERT</span><span class="p">,</span>
-<a name="line-74"></a>		<span class="n">OPCODE_LINE</span><span class="p">,</span>
-<a name="line-75"></a>		<span class="n">OPCODE_END</span>
-<a name="line-76"></a>	<span class="p">};</span>
+<a name="line-45"></a>
+<a name="line-46"></a><span class="kt">void</span> <span class="n">test_vec</span><span class="p">(</span><span class="n">Plane</span> <span class="n">p_vec</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-47"></a>
+<a name="line-48"></a>
+<a name="line-49"></a>	<span class="n">CameraMatrix</span> <span class="n">cm</span><span class="p">;</span>
+<a name="line-50"></a>	<span class="n">cm</span><span class="p">.</span><span class="n">set_perspective</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+<a name="line-51"></a>	<span class="n">Plane</span> <span class="n">v0</span><span class="o">=</span><span class="n">cm</span><span class="p">.</span><span class="n">xform4</span><span class="p">(</span><span class="n">p_vec</span><span class="p">);</span>
+<a name="line-52"></a>
+<a name="line-53"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;out: &quot;</span><span class="o">+</span><span class="n">v0</span><span class="p">);</span>
+<a name="line-54"></a>	<span class="n">v0</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">v0</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="mf">100.0</span> <span class="o">*</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">v0</span><span class="p">.</span><span class="n">d</span><span class="p">;</span>
+<a name="line-55"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;out_F: &quot;</span><span class="o">+</span><span class="n">v0</span><span class="p">);</span>
+<a name="line-56"></a>
+<a name="line-57"></a>
+<a name="line-58"></a><span class="cm">/*v0: 0, 0, -0.1, 0.1</span>
+<a name="line-59"></a><span class="cm">v1: 0, 0, 0, 0.1</span>
+<a name="line-60"></a><span class="cm">fix: 0, 0, 0, 0.1</span>
+<a name="line-61"></a><span class="cm">v0: 0, 0, 1.302803, 1.5</span>
+<a name="line-62"></a><span class="cm">v1: 0, 0, 1.401401, 1.5</span>
+<a name="line-63"></a><span class="cm">fix: 0, 0, 1.401401, 1.5</span>
+<a name="line-64"></a><span class="cm">v0: 0, 0, 25.851850, 26</span>
+<a name="line-65"></a><span class="cm">v1: 0, 0, 25.925926, 26</span>
+<a name="line-66"></a><span class="cm">fix: 0, 0, 25.925924, 26</span>
+<a name="line-67"></a><span class="cm">v0: 0, 0, 49.899902, 50</span>
+<a name="line-68"></a><span class="cm">v1: 0, 0, 49.949947, 50</span>
+<a name="line-69"></a><span class="cm">fix: 0, 0, 49.949951, 50</span>
+<a name="line-70"></a><span class="cm">v0: 0, 0, 100, 100</span>
+<a name="line-71"></a><span class="cm">v1: 0, 0, 100, 100</span>
+<a name="line-72"></a><span class="cm">fix: 0, 0, 100, 100</span>
+<a name="line-73"></a><span class="cm">*/</span>     
+<a name="line-74"></a>
+<a name="line-75"></a>
+<a name="line-76"></a><span class="p">}</span>
 <a name="line-77"></a>
-<a name="line-78"></a>	<span class="k">enum</span> <span class="n">Address</span> <span class="p">{</span>
-<a name="line-79"></a>		<span class="n">ADDR_BITS</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
-<a name="line-80"></a>		<span class="n">ADDR_MASK</span><span class="o">=</span><span class="p">((</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">ADDR_BITS</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
-<a name="line-81"></a>		<span class="n">ADDR_TYPE_MASK</span><span class="o">=~</span><span class="n">ADDR_MASK</span><span class="p">,</span>
-<a name="line-82"></a>		<span class="n">ADDR_TYPE_SELF</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<a name="line-83"></a>		<span class="n">ADDR_TYPE_CLASS</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-84"></a>		<span class="n">ADDR_TYPE_MEMBER</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<a name="line-85"></a>		<span class="n">ADDR_TYPE_CLASS_CONSTANT</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<a name="line-86"></a>		<span class="n">ADDR_TYPE_LOCAL_CONSTANT</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-<a name="line-87"></a>		<span class="n">ADDR_TYPE_STACK</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-<a name="line-88"></a>		<span class="n">ADDR_TYPE_STACK_VARIABLE</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
-<a name="line-89"></a>		<span class="n">ADDR_TYPE_GLOBAL</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
-<a name="line-90"></a>		<span class="n">ADDR_TYPE_NIL</span><span class="o">=</span><span class="mi">8</span>
-<a name="line-91"></a>	<span class="p">};</span>
-<a name="line-92"></a>
-<a name="line-93"></a>    <span class="k">struct</span> <span class="n">StackDebug</span> <span class="p">{</span>
-<a name="line-94"></a>
-<a name="line-95"></a>        <span class="kt">int</span> <span class="n">line</span><span class="p">;</span>
-<a name="line-96"></a>        <span class="kt">int</span> <span class="n">pos</span><span class="p">;</span>
-<a name="line-97"></a>        <span class="kt">bool</span> <span class="n">added</span><span class="p">;</span>
-<a name="line-98"></a>        <span class="n">StringName</span> <span class="n">identifier</span><span class="p">;</span>
-<a name="line-99"></a>    <span class="p">};</span>
-<a name="line-100"></a>
-<a name="line-101"></a><span class="nl">private</span><span class="p">:</span>
-<a name="line-102"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDCompiler</span><span class="p">;</span>
-<a name="line-103"></a>
-<a name="line-104"></a>	<span class="n">StringName</span> <span class="n">source</span><span class="p">;</span>
+<a name="line-78"></a>
+<a name="line-79"></a><span class="n">MainLoop</span><span class="o">*</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-80"></a>
+<a name="line-81"></a>	<span class="p">{</span>
+<a name="line-82"></a>
+<a name="line-83"></a>
+<a name="line-84"></a>	<span class="c1">//	print_line(&quot;NUM: &quot;+itos(237641278346127));</span>
+<a name="line-85"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;NUM: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">));</span>
+<a name="line-86"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-87"></a>
+<a name="line-88"></a>	<span class="p">}</span>
+<a name="line-89"></a>
+<a name="line-90"></a>
+<a name="line-91"></a>	<span class="p">{</span>
+<a name="line-92"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-93"></a>		<span class="n">v</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+<a name="line-94"></a>		<span class="kt">float</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.3</span><span class="p">;</span>
+<a name="line-95"></a>
+<a name="line-96"></a>		<span class="c1">//Quat q(v,a);</span>
+<a name="line-97"></a>		<span class="n">Matrix3</span> <span class="nf">m</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
+<a name="line-98"></a>
+<a name="line-99"></a>		<span class="n">Vector3</span> <span class="nf">v2</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-100"></a>		<span class="n">v2</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+<a name="line-101"></a>		<span class="kt">float</span> <span class="n">a2</span><span class="o">=</span><span class="mf">0.8</span><span class="p">;</span>
+<a name="line-102"></a>
+<a name="line-103"></a>		<span class="c1">//Quat q(v,a);</span>
+<a name="line-104"></a>		<span class="n">Matrix3</span> <span class="nf">m2</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span><span class="n">a2</span><span class="p">);</span>
 <a name="line-105"></a>
-<a name="line-106"></a>	<span class="n">mutable</span> <span class="n">Variant</span> <span class="n">nil</span><span class="p">;</span>
-<a name="line-107"></a>	<span class="n">mutable</span> <span class="n">Variant</span> <span class="o">*</span><span class="n">_constants_ptr</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="kt">int</span> <span class="n">_constant_count</span><span class="p">;</span>
-<a name="line-109"></a>	<span class="k">const</span> <span class="n">StringName</span> <span class="o">*</span><span class="n">_global_names_ptr</span><span class="p">;</span>
-<a name="line-110"></a>	<span class="kt">int</span> <span class="n">_global_names_count</span><span class="p">;</span>
-<a name="line-111"></a>	<span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">_default_arg_ptr</span><span class="p">;</span>
-<a name="line-112"></a>	<span class="kt">int</span> <span class="n">_default_arg_count</span><span class="p">;</span>
-<a name="line-113"></a>	<span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">_code_ptr</span><span class="p">;</span>
-<a name="line-114"></a>	<span class="kt">int</span> <span class="n">_code_size</span><span class="p">;</span>
-<a name="line-115"></a>	<span class="kt">int</span> <span class="n">_argument_count</span><span class="p">;</span>
-<a name="line-116"></a>	<span class="kt">int</span> <span class="n">_stack_size</span><span class="p">;</span>
-<a name="line-117"></a>	<span class="kt">int</span> <span class="n">_call_size</span><span class="p">;</span>
-<a name="line-118"></a>	<span class="kt">int</span> <span class="n">_initial_line</span><span class="p">;</span>
-<a name="line-119"></a>	<span class="kt">bool</span> <span class="n">_static</span><span class="p">;</span>
-<a name="line-120"></a>	<span class="n">GDScript</span> <span class="o">*</span><span class="n">_script</span><span class="p">;</span>
-<a name="line-121"></a>
-<a name="line-122"></a>	<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-123"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">constants</span><span class="p">;</span>
-<a name="line-124"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">global_names</span><span class="p">;</span>
-<a name="line-125"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">default_arguments</span><span class="p">;</span>
-<a name="line-126"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">code</span><span class="p">;</span>
-<a name="line-127"></a><span class="cp">#ifdef DEBUG_ENABLED</span>
-<a name="line-128"></a>	<span class="n">CharString</span> <span class="n">func_cname</span><span class="p">;</span>
-<a name="line-129"></a>	<span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">_func_cname</span><span class="p">;</span>
-<a name="line-130"></a><span class="cp">#endif</span>
-<a name="line-131"></a>
-<a name="line-132"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
-<a name="line-133"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">arg_names</span><span class="p">;</span>
-<a name="line-134"></a><span class="cp">#endif</span>
-<a name="line-135"></a>
-<a name="line-136"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">StackDebug</span><span class="o">&gt;</span> <span class="n">stack_debug</span><span class="p">;</span>
+<a name="line-106"></a>		<span class="n">Quat</span> <span class="n">q</span><span class="o">=</span><span class="n">m</span><span class="p">;</span>
+<a name="line-107"></a>		<span class="n">Quat</span> <span class="n">q2</span><span class="o">=</span><span class="n">m2</span><span class="p">;</span>
+<a name="line-108"></a>
+<a name="line-109"></a>		<span class="n">Matrix3</span> <span class="n">m3</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">m2</span><span class="p">;</span>
+<a name="line-110"></a>		<span class="n">Quat</span> <span class="n">q3</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">q2</span><span class="p">);</span><span class="c1">//.normalized();</span>
+<a name="line-111"></a>
+<a name="line-112"></a>		<span class="n">print_line</span><span class="p">(</span><span class="n">Quat</span><span class="p">(</span><span class="n">m3</span><span class="p">));</span>
+<a name="line-113"></a>		<span class="n">print_line</span><span class="p">(</span><span class="n">q3</span><span class="p">);</span>
+<a name="line-114"></a>
+<a name="line-115"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;before v: &quot;</span><span class="o">+</span><span class="n">v</span><span class="o">+</span><span class="s">&quot; a: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">a</span><span class="p">));</span>
+<a name="line-116"></a>		<span class="n">q</span><span class="p">.</span><span class="n">get_axis_and_angle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
+<a name="line-117"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;after v: &quot;</span><span class="o">+</span><span class="n">v</span><span class="o">+</span><span class="s">&quot; a: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">a</span><span class="p">));</span>
+<a name="line-118"></a>	<span class="p">}</span>
+<a name="line-119"></a>
+<a name="line-120"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-121"></a><span class="hll">	<span class="n">String</span> <span class="n">ret</span><span class="p">;</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
+</span><a name="line-122"></a>
+<a name="line-123"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">;</span>
+<a name="line-124"></a>	<span class="n">args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;-l&quot;</span><span class="p">);</span>
+<a name="line-125"></a>	<span class="n">Error</span> <span class="n">err</span> <span class="o">=</span> <span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;/bin/ls&quot;</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="o">&amp;</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-126"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;error: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">err</span><span class="p">));</span>
+<a name="line-127"></a>	<span class="n">print_line</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-128"></a>
+<a name="line-129"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-130"></a>	<span class="n">Matrix3</span> <span class="n">m3</span><span class="p">;</span>
+<a name="line-131"></a>	<span class="n">m3</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">0.2</span><span class="p">);</span>
+<a name="line-132"></a>	<span class="n">m3</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">1.77</span><span class="p">);</span>
+<a name="line-133"></a>	<span class="n">m3</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">212</span><span class="p">);</span>
+<a name="line-134"></a>	<span class="n">Matrix3</span> <span class="n">m32</span><span class="p">;</span>
+<a name="line-135"></a>	<span class="n">m32</span><span class="p">.</span><span class="n">set_euler</span><span class="p">(</span><span class="n">m3</span><span class="p">.</span><span class="n">get_euler</span><span class="p">());</span>
+<a name="line-136"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;ELEULEEEEEEEEEEEEEEEEEER: &quot;</span><span class="o">+</span><span class="n">m3</span><span class="p">.</span><span class="n">get_euler</span><span class="p">()</span><span class="o">+</span><span class="s">&quot; vs &quot;</span><span class="o">+</span><span class="n">m32</span><span class="p">.</span><span class="n">get_euler</span><span class="p">());</span>
 <a name="line-137"></a>
-<a name="line-138"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">Variant</span> <span class="o">*</span><span class="n">_get_variant</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_address</span><span class="p">,</span><span class="n">GDInstance</span> <span class="o">*</span><span class="n">p_instance</span><span class="p">,</span><span class="n">GDScript</span> <span class="o">*</span><span class="n">p_script</span><span class="p">,</span><span class="n">Variant</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span><span class="n">Variant</span> <span class="o">*</span><span class="n">p_stack</span><span class="p">,</span><span class="n">String</span><span class="o">&amp;</span> <span class="n">r_error</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-139"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">String</span> <span class="n">_get_call_error</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span><span class="o">&amp;</span> <span class="n">p_err</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_where</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span><span class="n">argptrs</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-138"></a>
+<a name="line-139"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 <a name="line-140"></a>
-<a name="line-141"></a>
-<a name="line-142"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-143"></a>
-<a name="line-144"></a>	<span class="k">struct</span> <span class="n">CallState</span> <span class="p">{</span>
-<a name="line-145"></a>
-<a name="line-146"></a>		<span class="n">GDInstance</span> <span class="o">*</span><span class="n">instance</span><span class="p">;</span>
-<a name="line-147"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">stack</span><span class="p">;</span>
-<a name="line-148"></a>		<span class="kt">int</span> <span class="n">stack_size</span><span class="p">;</span>
-<a name="line-149"></a>		<span class="n">Variant</span> <span class="n">self</span><span class="p">;</span>
-<a name="line-150"></a>		<span class="kt">uint32_t</span> <span class="n">alloca_size</span><span class="p">;</span>
-<a name="line-151"></a>		<span class="n">GDScript</span> <span class="o">*</span><span class="n">_class</span><span class="p">;</span>
-<a name="line-152"></a>		<span class="kt">int</span> <span class="n">ip</span><span class="p">;</span>
-<a name="line-153"></a>		<span class="kt">int</span> <span class="n">line</span><span class="p">;</span>
-<a name="line-154"></a>		<span class="kt">int</span> <span class="n">defarg</span><span class="p">;</span>
-<a name="line-155"></a>		<span class="n">Variant</span> <span class="n">result</span><span class="p">;</span>
-<a name="line-156"></a>
-<a name="line-157"></a>	<span class="p">};</span>
-<a name="line-158"></a>
-<a name="line-159"></a>	<span class="n">_FORCE_INLINE_</span> <span class="kt">bool</span> <span class="n">is_static</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_static</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-160"></a>
-<a name="line-161"></a>	<span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">get_code</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//used for debug</span>
-<a name="line-162"></a>	<span class="kt">int</span> <span class="n">get_code_size</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-163"></a>	<span class="n">Variant</span> <span class="n">get_constant</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-164"></a>	<span class="n">StringName</span> <span class="n">get_global_name</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-165"></a>	<span class="n">StringName</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-166"></a>	<span class="kt">int</span> <span class="n">get_max_stack_size</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-167"></a>	<span class="kt">int</span> <span class="n">get_default_argument_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-168"></a>	<span class="kt">int</span> <span class="n">get_default_argument_addr</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-169"></a>	<span class="n">GDScript</span> <span class="o">*</span><span class="n">get_script</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_script</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-170"></a>
-<a name="line-171"></a>	<span class="kt">void</span> <span class="n">debug_get_stack_member_state</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Pair</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">*</span><span class="n">r_stackvars</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-141"></a>	<span class="p">{</span>
+<a name="line-142"></a>
+<a name="line-143"></a>		<span class="n">Dictionary</span> <span class="n">d</span><span class="p">;</span>
+<a name="line-144"></a>		<span class="n">d</span><span class="p">[</span><span class="s">&quot;momo&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-145"></a>		<span class="n">Dictionary</span> <span class="n">b</span><span class="o">=</span><span class="n">d</span><span class="p">;</span>
+<a name="line-146"></a>		<span class="n">b</span><span class="p">[</span><span class="s">&quot;44&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
+<a name="line-147"></a>	<span class="p">}</span>
+<a name="line-148"></a>
+<a name="line-149"></a>
+<a name="line-150"></a>
+<a name="line-151"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-152"></a><span class="hll">	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;inters: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Geometry</span><span class="o">::</span><span class="n">segment_intersects_circle</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">Vector2</span><span class="p">(),</span><span class="mf">1.0</span><span class="p">)));</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
+</span><a name="line-153"></a>
+<a name="line-154"></a>
+<a name="line-155"></a>
+<a name="line-156"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;cross: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">cross</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)));</span>
+<a name="line-157"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;dot: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-158"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;abs: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">).</span><span class="n">abs</span><span class="p">());</span>
+<a name="line-159"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;distance_to: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">distance_to</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-160"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;distance_squared_to: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">distance_squared_to</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-161"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;plus: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-162"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;minus: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-163"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;mul: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-164"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;div: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
+<a name="line-165"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;mul scalar: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">));</span>
+<a name="line-166"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;premul scalar: &quot;</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)));</span>
+<a name="line-167"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;div scalar: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0</span><span class="p">));</span>
+<a name="line-168"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;length: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">length</span><span class="p">()));</span>
+<a name="line-169"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;length squared: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">length_squared</span><span class="p">()));</span>
+<a name="line-170"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;normalized: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">normalized</span><span class="p">());</span>
+<a name="line-171"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;inverse: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">inverse</span><span class="p">());</span>
 <a name="line-172"></a>
-<a name="line-173"></a>	<span class="n">_FORCE_INLINE_</span> <span class="kt">bool</span> <span class="n">is_empty</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_code_size</span><span class="o">==</span><span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-174"></a>
-<a name="line-175"></a>	<span class="kt">int</span> <span class="n">get_argument_count</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_argument_count</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-176"></a><span class="hll">	<span class="n">StringName</span> <span class="n">get_argument_name</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'GDFunction::get_argument_name' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;GDFunction::get_argument_name&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-177"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
-<a name="line-178"></a>		<span class="n">ERR_FAIL_INDEX_V</span><span class="p">(</span><span class="n">p_idx</span><span class="p">,</span><span class="n">arg_names</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="n">StringName</span><span class="p">());</span>
-<a name="line-179"></a>		<span class="k">return</span> <span class="n">arg_names</span><span class="p">[</span><span class="n">p_idx</span><span class="p">];</span>
-<a name="line-180"></a><span class="cp">#endif</span>
-<a name="line-181"></a><span class="hll">		<span class="k">return</span> <span class="nf">StringName</span><span class="p">();</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Consecutive return, break, continue, goto or throw statements are unnecessary. <span class='marker'>[+]</span></span><div class='content'>Consecutive return, break, continue, goto or throw statements are unnecessary. The second statement can never be executed, and so should be removed.</div></div>
-</span><a name="line-182"></a>
+<a name="line-173"></a>	<span class="p">{</span>
+<a name="line-174"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-175"></a>		<span class="n">v</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
+<a name="line-176"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;normalize: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
+<a name="line-177"></a>	<span class="p">}</span>
+<a name="line-178"></a>
+<a name="line-179"></a>	<span class="p">{</span>
+<a name="line-180"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-181"></a>		<span class="n">v</span><span class="o">+=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-182"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;+=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
 <a name="line-183"></a>	<span class="p">}</span>
-<a name="line-184"></a>	<span class="n">Variant</span> <span class="n">get_default_argument</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
-<a name="line-185"></a>		<span class="n">ERR_FAIL_INDEX_V</span><span class="p">(</span><span class="n">p_idx</span><span class="p">,</span><span class="n">default_arguments</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="n">Variant</span><span class="p">());</span>
-<a name="line-186"></a>		<span class="k">return</span> <span class="n">default_arguments</span><span class="p">[</span><span class="n">p_idx</span><span class="p">];</span>
-<a name="line-187"></a>	<span class="p">}</span>
-<a name="line-188"></a>
-<a name="line-189"></a>	<span class="n">Variant</span> <span class="n">call</span><span class="p">(</span><span class="n">GDInstance</span> <span class="o">*</span><span class="n">p_instance</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span> <span class="o">**</span><span class="n">p_args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span><span class="o">&amp;</span> <span class="n">r_err</span><span class="p">,</span><span class="n">CallState</span> <span class="o">*</span><span class="n">p_state</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-184"></a>
+<a name="line-185"></a>	<span class="p">{</span>
+<a name="line-186"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-187"></a>		<span class="n">v</span><span class="o">-=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-188"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;-=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
+<a name="line-189"></a>	<span class="p">}</span>
 <a name="line-190"></a>
-<a name="line-191"></a>	<span class="n">GDFunction</span><span class="p">();</span>
-<a name="line-192"></a><span class="p">};</span>
-<a name="line-193"></a>
-<a name="line-194"></a>
-<a name="line-195"></a><span class="n">class</span> <span class="nl">GDFunctionState</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Reference</span> <span class="p">{</span>
+<a name="line-191"></a>	<span class="p">{</span>
+<a name="line-192"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-193"></a>		<span class="n">v</span><span class="o">*=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-194"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;*=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
+<a name="line-195"></a>	<span class="p">}</span>
 <a name="line-196"></a>
-<a name="line-197"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">GDFunctionState</span><span class="p">,</span><span class="n">Reference</span><span class="p">);</span>
-<a name="line-198"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDFunction</span><span class="p">;</span>
-<a name="line-199"></a>	<span class="n">GDFunction</span> <span class="o">*</span><span class="n">function</span><span class="p">;</span>
-<a name="line-200"></a>	<span class="n">GDFunction</span><span class="o">::</span><span class="n">CallState</span> <span class="n">state</span><span class="p">;</span>
-<a name="line-201"></a>	<span class="n">Variant</span> <span class="nf">_signal_callback</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span> <span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span><span class="o">&amp;</span> <span class="n">r_error</span><span class="p">);</span>
-<a name="line-202"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-203"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
-<a name="line-204"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-205"></a>
-<a name="line-206"></a>	<span class="kt">bool</span> <span class="n">is_valid</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-207"></a>	<span class="n">Variant</span> <span class="nf">resume</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_arg</span><span class="o">=</span><span class="n">Variant</span><span class="p">());</span>
-<a name="line-208"></a>	<span class="n">GDFunctionState</span><span class="p">();</span>
-<a name="line-209"></a>	<span class="o">~</span><span class="n">GDFunctionState</span><span class="p">();</span>
-<a name="line-210"></a><span class="p">};</span>
-<a name="line-211"></a>
-<a name="line-212"></a>
-<a name="line-213"></a><span class="n">class</span> <span class="nl">GDNativeClass</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Reference</span> <span class="p">{</span>
+<a name="line-197"></a>	<span class="p">{</span>
+<a name="line-198"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-199"></a>		<span class="n">v</span><span class="o">/=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-200"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;/=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
+<a name="line-201"></a>	<span class="p">}</span>
+<a name="line-202"></a>
+<a name="line-203"></a>	<span class="p">{</span>
+<a name="line-204"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-205"></a>		<span class="n">v</span><span class="o">*=</span><span class="mf">2.0</span><span class="p">;</span>
+<a name="line-206"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;scalar *=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
+<a name="line-207"></a>	<span class="p">}</span>
+<a name="line-208"></a>
+<a name="line-209"></a>	<span class="p">{</span>
+<a name="line-210"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-211"></a>		<span class="n">v</span><span class="o">/=</span><span class="mf">2.0</span><span class="p">;</span>
+<a name="line-212"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;scalar /=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
+<a name="line-213"></a>	<span class="p">}</span>
 <a name="line-214"></a>
-<a name="line-215"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">GDNativeClass</span><span class="p">,</span><span class="n">Reference</span><span class="p">);</span>
+<a name="line-215"></a>
 <a name="line-216"></a>
-<a name="line-217"></a>	<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-218"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-219"></a>
-<a name="line-220"></a>	<span class="kt">bool</span> <span class="n">_get</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="n">Variant</span> <span class="o">&amp;</span><span class="n">r_ret</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-221"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
+<a name="line-217"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-218"></a><span class="c">	print_line(String(&quot;C:\\momo\\.\\popo\\..\\gongo&quot;).simplify_path());</span>
+<a name="line-219"></a><span class="c">	print_line(String(&quot;res://../popo/..//gongo&quot;).simplify_path());</span>
+<a name="line-220"></a><span class="c">	print_line(String(&quot;res://..&quot;).simplify_path());</span>
+<a name="line-221"></a>
 <a name="line-222"></a>
-<a name="line-223"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-224"></a>
-<a name="line-225"></a>	<span class="n">_FORCE_INLINE_</span> <span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-226"></a>	<span class="n">Variant</span> <span class="n">_new</span><span class="p">();</span>
-<a name="line-227"></a>	<span class="n">Object</span> <span class="o">*</span><span class="nf">instance</span><span class="p">();</span>
-<a name="line-228"></a><span class="hll">	<span class="n">GDNativeClass</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'GDNativeClass' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;GDNativeClass&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
-</span><a name="line-229"></a><span class="p">};</span>
-<a name="line-230"></a>
+<a name="line-223"></a><span class="c">	DVector&lt;uint8_t&gt; a;</span>
+<a name="line-224"></a><span class="c">	DVector&lt;uint8_t&gt; b;</span>
+<a name="line-225"></a>
+<a name="line-226"></a><span class="c">	a.resize(20);</span>
+<a name="line-227"></a><span class="c">	b=a;</span>
+<a name="line-228"></a><span class="c">	b.resize(30);</span>
+<a name="line-229"></a><span class="c">	a=b;</span>
+<a name="line-230"></a><span class="cp">#endif</span>
 <a name="line-231"></a>
-<a name="line-232"></a><span class="n">class</span> <span class="nl">GDScript</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Script</span> <span class="p">{</span>
-<a name="line-233"></a>
-<a name="line-234"></a>
-<a name="line-235"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">GDScript</span><span class="p">,</span><span class="n">Script</span><span class="p">);</span>
-<a name="line-236"></a>	<span class="kt">bool</span> <span class="n">tool</span><span class="p">;</span>
-<a name="line-237"></a>	<span class="kt">bool</span> <span class="n">valid</span><span class="p">;</span>
-<a name="line-238"></a>
-<a name="line-239"></a>
-<a name="line-240"></a>	<span class="k">struct</span> <span class="n">MemberInfo</span> <span class="p">{</span>
-<a name="line-241"></a>		<span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
-<a name="line-242"></a>		<span class="n">StringName</span> <span class="n">setter</span><span class="p">;</span>
-<a name="line-243"></a>		<span class="n">StringName</span> <span class="n">getter</span><span class="p">;</span>
-<a name="line-244"></a>	<span class="p">};</span>
-<a name="line-245"></a>
-<a name="line-246"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDInstance</span><span class="p">;</span>
-<a name="line-247"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDFunction</span><span class="p">;</span>
-<a name="line-248"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDCompiler</span><span class="p">;</span>
-<a name="line-249"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDFunctions</span><span class="p">;</span>
-<a name="line-250"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDScriptLanguage</span><span class="p">;</span>
-<a name="line-251"></a>
-<a name="line-252"></a>	<span class="n">Variant</span> <span class="n">_static_ref</span><span class="p">;</span> <span class="c1">//used for static call</span>
-<a name="line-253"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDNativeClass</span><span class="o">&gt;</span> <span class="n">native</span><span class="p">;</span>
-<a name="line-254"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span> <span class="n">base</span><span class="p">;</span>
-<a name="line-255"></a>	<span class="n">GDScript</span> <span class="o">*</span><span class="n">_base</span><span class="p">;</span> <span class="c1">//fast pointer access</span>
-<a name="line-256"></a>	<span class="n">GDScript</span> <span class="o">*</span><span class="n">_owner</span><span class="p">;</span> <span class="c1">//for subclasses</span>
-<a name="line-257"></a>
-<a name="line-258"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">members</span><span class="p">;</span> <span class="c1">//members are just indices to the instanced script.</span>
-<a name="line-259"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">constants</span><span class="p">;</span>
-<a name="line-260"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">GDFunction</span><span class="o">&gt;</span> <span class="n">member_functions</span><span class="p">;</span>
-<a name="line-261"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">MemberInfo</span><span class="o">&gt;</span> <span class="n">member_indices</span><span class="p">;</span> <span class="c1">//members are just indices to the instanced script.</span>
-<a name="line-262"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">subclasses</span><span class="p">;</span>	
-<a name="line-263"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">_signals</span><span class="p">;</span>
+<a name="line-232"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-233"></a><span class="c">	String za = String::utf8(&quot;á&quot;);</span>
+<a name="line-234"></a><span class="c">	printf(&quot;unicode: %x\n&quot;,za[0]);</span>
+<a name="line-235"></a><span class="c">	CharString cs=za.utf8();</span>
+<a name="line-236"></a><span class="c">	for(int i=0;i&lt;cs.size();i++) {</span>
+<a name="line-237"></a><span class="c">		uint32_t v = uint8_t(cs[i]);</span>
+<a name="line-238"></a><span class="c">		printf(&quot;%i - %x\n&quot;,i,v);</span>
+<a name="line-239"></a><span class="c">	}</span>
+<a name="line-240"></a><span class="c">	return NULL;</span>
+<a name="line-241"></a>
+<a name="line-242"></a><span class="c">	print_line(String(&quot;C:\\window\\system\\momo&quot;).path_to(&quot;C:\\window\\momonga&quot;));</span>
+<a name="line-243"></a><span class="c">	print_line(String(&quot;res://momo/sampler&quot;).path_to(&quot;res://pindonga&quot;));</span>
+<a name="line-244"></a><span class="c">	print_line(String(&quot;/margarito/terere&quot;).path_to(&quot;/margarito/pilates&quot;));</span>
+<a name="line-245"></a><span class="c">	print_line(String(&quot;/algo&quot;).path_to(&quot;/algo&quot;));</span>
+<a name="line-246"></a><span class="c">	print_line(String(&quot;c:&quot;).path_to(&quot;c:\\&quot;));</span>
+<a name="line-247"></a><span class="c">	print_line(String(&quot;/&quot;).path_to(&quot;/&quot;));</span>
+<a name="line-248"></a>
+<a name="line-249"></a>
+<a name="line-250"></a><span class="c">	print_line(itos(sizeof(Variant)));</span>
+<a name="line-251"></a><span class="c">	return NULL;</span>
+<a name="line-252"></a>
+<a name="line-253"></a><span class="c">	Vector&lt;StringName&gt; path;</span>
+<a name="line-254"></a><span class="c">	path.push_back(&quot;three&quot;);</span>
+<a name="line-255"></a><span class="c">	path.push_back(&quot;two&quot;);</span>
+<a name="line-256"></a><span class="c">	path.push_back(&quot;one&quot;);</span>
+<a name="line-257"></a><span class="c">	path.push_back(&quot;comeon&quot;);</span>
+<a name="line-258"></a><span class="c">	path.revert();</span>
+<a name="line-259"></a>
+<a name="line-260"></a><span class="c">	NodePath np(path,true);</span>
+<a name="line-261"></a>
+<a name="line-262"></a><span class="c">	print_line(np);</span>
+<a name="line-263"></a>
 <a name="line-264"></a>
-<a name="line-265"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
+<a name="line-265"></a><span class="c">	return NULL;</span>
 <a name="line-266"></a>
-<a name="line-267"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">member_default_values</span><span class="p">;</span>
+<a name="line-267"></a><span class="c">	bool a=2;</span>
 <a name="line-268"></a>
-<a name="line-269"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="n">members_cache</span><span class="p">;</span>
-<a name="line-270"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">member_default_values_cache</span><span class="p">;</span>
-<a name="line-271"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span> <span class="n">base_cache</span><span class="p">;</span>
-<a name="line-272"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">ObjectID</span><span class="o">&gt;</span> <span class="n">inheriters_cache</span><span class="p">;</span>
-<a name="line-273"></a>	<span class="kt">bool</span> <span class="n">source_changed_cache</span><span class="p">;</span>
-<a name="line-274"></a>	<span class="kt">void</span> <span class="nf">_update_exports_values</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Variant</span><span class="o">&gt;&amp;</span> <span class="n">values</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">propnames</span><span class="p">);</span>
-<a name="line-275"></a>
-<a name="line-276"></a><span class="cp">#endif</span>
-<a name="line-277"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="n">member_info</span><span class="p">;</span>
+<a name="line-269"></a><span class="c">	print_line(Variant(a));</span>
+<a name="line-270"></a>
+<a name="line-271"></a>
+<a name="line-272"></a><span class="c">	Matrix32 mat2_1;</span>
+<a name="line-273"></a><span class="c">	mat2_1.rotate(0.5);</span>
+<a name="line-274"></a><span class="c">	Matrix32 mat2_2;</span>
+<a name="line-275"></a><span class="c">	mat2_2.translate(Vector2(1,2));</span>
+<a name="line-276"></a><span class="c">	Matrix32 mat2_3 = mat2_1 * mat2_2;</span>
+<a name="line-277"></a><span class="c">	mat2_3.affine_invert();</span>
 <a name="line-278"></a>
-<a name="line-279"></a>	<span class="n">GDFunction</span> <span class="o">*</span><span class="n">initializer</span><span class="p">;</span> <span class="c1">//direct pointer to _init , faster to locate</span>
-<a name="line-280"></a>
-<a name="line-281"></a>	<span class="kt">int</span> <span class="n">subclass_count</span><span class="p">;</span>
-<a name="line-282"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">*&gt;</span> <span class="n">instances</span><span class="p">;</span>
-<a name="line-283"></a>	<span class="c1">//exported members</span>
-<a name="line-284"></a>	<span class="n">String</span> <span class="n">source</span><span class="p">;</span>
-<a name="line-285"></a>	<span class="n">String</span> <span class="n">path</span><span class="p">;</span>
-<a name="line-286"></a>	<span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-287"></a>
-<a name="line-288"></a>
-<a name="line-289"></a>	<span class="n">GDInstance</span><span class="o">*</span> <span class="nf">_create_instance</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_owner</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_isref</span><span class="p">);</span>
-<a name="line-290"></a>
-<a name="line-291"></a>	<span class="kt">void</span> <span class="nf">_set_subclass_path</span><span class="p">(</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;&amp;</span> <span class="n">p_sc</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">);</span>
-<a name="line-292"></a>
-<a name="line-293"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
-<a name="line-294"></a>	<span class="n">Set</span><span class="o">&lt;</span><span class="n">PlaceHolderScriptInstance</span><span class="o">*&gt;</span> <span class="n">placeholders</span><span class="p">;</span>
-<a name="line-295"></a>	<span class="c1">//void _update_placeholder(PlaceHolderScriptInstance *p_placeholder);</span>
-<a name="line-296"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">_placeholder_erased</span><span class="p">(</span><span class="n">PlaceHolderScriptInstance</span> <span class="o">*</span><span class="n">p_placeholder</span><span class="p">);</span>
-<a name="line-297"></a><span class="cp">#endif</span>
+<a name="line-279"></a><span class="c">	print_line(mat2_3.elements[0]);</span>
+<a name="line-280"></a><span class="c">	print_line(mat2_3.elements[1]);</span>
+<a name="line-281"></a><span class="c">	print_line(mat2_3.elements[2]);</span>
+<a name="line-282"></a>
+<a name="line-283"></a>
+<a name="line-284"></a>
+<a name="line-285"></a><span class="c">	Transform mat3_1;</span>
+<a name="line-286"></a><span class="c">	mat3_1.basis.rotate(Vector3(0,0,1),0.5);</span>
+<a name="line-287"></a><span class="c">	Transform mat3_2;</span>
+<a name="line-288"></a><span class="c">	mat3_2.translate(Vector3(1,2,0));</span>
+<a name="line-289"></a><span class="c">	Transform mat3_3 = mat3_1 * mat3_2;</span>
+<a name="line-290"></a><span class="c">	mat3_3.affine_invert();</span>
+<a name="line-291"></a>
+<a name="line-292"></a><span class="c">	print_line(mat3_3.basis.get_axis(0));</span>
+<a name="line-293"></a><span class="c">	print_line(mat3_3.basis.get_axis(1));</span>
+<a name="line-294"></a><span class="c">	print_line(mat3_3.origin);</span>
+<a name="line-295"></a>
+<a name="line-296"></a><span class="cp">#endif</span>
+<a name="line-297"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 <a name="line-298"></a>
-<a name="line-299"></a>
+<a name="line-299"></a><span class="p">}</span>
 <a name="line-300"></a>
-<a name="line-301"></a>	<span class="kt">bool</span> <span class="nf">_update_exports</span><span class="p">();</span>
-<a name="line-302"></a>
-<a name="line-303"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-304"></a>	<span class="kt">bool</span> <span class="n">_get</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="n">Variant</span> <span class="o">&amp;</span><span class="n">r_ret</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-305"></a>	<span class="kt">bool</span> <span class="nf">_set</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-306"></a>	<span class="kt">void</span> <span class="n">_get_property_list</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_properties</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-307"></a>
-<a name="line-308"></a>	<span class="n">Variant</span> <span class="nf">call</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span> <span class="o">&amp;</span><span class="n">r_error</span><span class="p">);</span>
-<a name="line-309"></a><span class="c1">//	void call_multilevel(const StringName&amp; p_method,const Variant** p_args,int p_argcount);</span>
-<a name="line-310"></a>
-<a name="line-311"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
-<a name="line-312"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-313"></a>
-<a name="line-314"></a>	<span class="kt">bool</span> <span class="n">is_valid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">valid</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-315"></a>
-<a name="line-316"></a>	<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span> <span class="o">&gt;&amp;</span> <span class="n">get_subclasses</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">subclasses</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-317"></a>	<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Variant</span> <span class="o">&gt;&amp;</span> <span class="n">get_constants</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">constants</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-318"></a>	<span class="k">const</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;&amp;</span> <span class="n">get_members</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">members</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-319"></a>	<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">GDFunction</span><span class="o">&gt;&amp;</span> <span class="n">get_member_functions</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">member_functions</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-320"></a>	<span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDNativeClass</span><span class="o">&gt;&amp;</span> <span class="n">get_native</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">native</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-321"></a>
-<a name="line-322"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">has_script_signal</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_signal</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-323"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_script_signal_list</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">MethodInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">r_signals</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-324"></a>
-<a name="line-325"></a>
-<a name="line-326"></a>	<span class="kt">bool</span> <span class="n">is_tool</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">tool</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-327"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span> <span class="n">get_base</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-328"></a>
-<a name="line-329"></a>	<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">MemberInfo</span><span class="o">&gt;&amp;</span> <span class="n">debug_get_member_indices</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">member_indices</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-330"></a>	<span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">GDFunction</span><span class="o">&gt;&amp;</span> <span class="n">debug_get_member_functions</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">//this is debug only</span>
-<a name="line-331"></a>	<span class="n">StringName</span> <span class="n">debug_get_member_by_index</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-332"></a>
-<a name="line-333"></a>	<span class="n">Variant</span> <span class="nf">_new</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span><span class="o">&amp;</span> <span class="n">r_error</span><span class="p">);</span>
-<a name="line-334"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">can_instance</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-335"></a>
-<a name="line-336"></a>	<span class="n">virtual</span> <span class="n">StringName</span> <span class="n">get_instance_base_type</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">// this may not work in all scripts, will return empty if so</span>
-<a name="line-337"></a>	<span class="n">virtual</span> <span class="n">ScriptInstance</span><span class="o">*</span> <span class="nf">instance_create</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_this</span><span class="p">);</span>
-<a name="line-338"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">instance_has</span><span class="p">(</span><span class="k">const</span> <span class="n">Object</span> <span class="o">*</span><span class="n">p_this</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-339"></a>
-<a name="line-340"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">has_source_code</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-341"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_source_code</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-342"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">set_source_code</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">);</span>
-<a name="line-343"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">update_exports</span><span class="p">();</span>
-<a name="line-344"></a>
-<a name="line-345"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">reload</span><span class="p">();</span>
-<a name="line-346"></a>
-<a name="line-347"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_node_type</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-348"></a>	<span class="kt">void</span> <span class="nf">set_script_path</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span> <span class="n">path</span><span class="o">=</span><span class="n">p_path</span><span class="p">;</span> <span class="p">}</span> <span class="c1">//because subclasses need a path too...</span>
-<a name="line-349"></a>	<span class="n">Error</span> <span class="nf">load_source_code</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">);</span>
-<a name="line-350"></a>	<span class="n">Error</span> <span class="nf">load_byte_code</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">);</span>
-<a name="line-351"></a>
-<a name="line-352"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">get_as_byte_code</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-353"></a>
-<a name="line-354"></a>	<span class="n">virtual</span> <span class="n">ScriptLanguage</span> <span class="o">*</span><span class="n">get_language</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-355"></a>
-<a name="line-356"></a>	<span class="n">GDScript</span><span class="p">();</span>
-<a name="line-357"></a><span class="p">};</span>
-<a name="line-358"></a>
-<a name="line-359"></a><span class="n">class</span> <span class="nl">GDInstance</span> <span class="p">:</span> <span class="n">public</span> <span class="n">ScriptInstance</span> <span class="p">{</span>
-<a name="line-360"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDScript</span><span class="p">;</span>
-<a name="line-361"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDFunction</span><span class="p">;</span>
-<a name="line-362"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">GDFunctions</span><span class="p">;</span>
-<a name="line-363"></a>
-<a name="line-364"></a>	<span class="n">Object</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
-<a name="line-365"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span> <span class="n">script</span><span class="p">;</span>
-<a name="line-366"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">members</span><span class="p">;</span>
-<a name="line-367"></a>	<span class="kt">bool</span> <span class="n">base_ref</span><span class="p">;</span>
-<a name="line-368"></a>
-<a name="line-369"></a>	<span class="kt">void</span> <span class="nf">_ml_call_reversed</span><span class="p">(</span><span class="n">GDScript</span> <span class="o">*</span><span class="n">sptr</span><span class="p">,</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">);</span>
-<a name="line-370"></a>
-<a name="line-371"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-372"></a>
-<a name="line-373"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">set</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-374"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">get</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span> <span class="n">Variant</span> <span class="o">&amp;</span><span class="n">r_ret</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-375"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_property_list</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_properties</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-376"></a>
-<a name="line-377"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_method_list</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">MethodInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_list</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-378"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">has_method</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-379"></a>	<span class="n">virtual</span> <span class="n">Variant</span> <span class="nf">call</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span> <span class="o">&amp;</span><span class="n">r_error</span><span class="p">);</span>
-<a name="line-380"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">call_multilevel</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">);</span>
-<a name="line-381"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">call_multilevel_reversed</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">);</span>
-<a name="line-382"></a>
-<a name="line-383"></a>    <span class="n">Variant</span> <span class="n">debug_get_member_by_index</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">members</span><span class="p">[</span><span class="n">p_idx</span><span class="p">];</span> <span class="p">}</span>
-<a name="line-384"></a>
-<a name="line-385"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_notification</span><span class="p">);</span>
-<a name="line-386"></a>
-<a name="line-387"></a>	<span class="n">virtual</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Script</span><span class="o">&gt;</span> <span class="n">get_script</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-388"></a>
-<a name="line-389"></a>	<span class="n">virtual</span> <span class="n">ScriptLanguage</span> <span class="o">*</span><span class="nf">get_language</span><span class="p">();</span>
-<a name="line-390"></a>
-<a name="line-391"></a>	<span class="kt">void</span> <span class="nf">set_path</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">);</span>
-<a name="line-392"></a>
-<a name="line-393"></a>
-<a name="line-394"></a>	<span class="n">GDInstance</span><span class="p">();</span>
-<a name="line-395"></a>	<span class="o">~</span><span class="n">GDInstance</span><span class="p">();</span>
-<a name="line-396"></a>
-<a name="line-397"></a><span class="p">};</span>
-<a name="line-398"></a>
-<a name="line-399"></a><span class="n">class</span> <span class="nl">GDScriptLanguage</span> <span class="p">:</span> <span class="n">public</span> <span class="n">ScriptLanguage</span> <span class="p">{</span>
-<a name="line-400"></a>
-<a name="line-401"></a>	<span class="k">static</span> <span class="n">GDScriptLanguage</span> <span class="o">*</span><span class="n">singleton</span><span class="p">;</span>
-<a name="line-402"></a>
-<a name="line-403"></a>	<span class="n">Variant</span><span class="o">*</span> <span class="n">_global_array</span><span class="p">;</span>
-<a name="line-404"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">global_array</span><span class="p">;</span>
-<a name="line-405"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">globals</span><span class="p">;</span>
-<a name="line-406"></a>
-<a name="line-407"></a>
-<a name="line-408"></a>    <span class="k">struct</span> <span class="n">CallLevel</span> <span class="p">{</span>
-<a name="line-409"></a>
-<a name="line-410"></a>        <span class="n">Variant</span> <span class="o">*</span><span class="n">stack</span><span class="p">;</span>
-<a name="line-411"></a>        <span class="n">GDFunction</span> <span class="o">*</span><span class="n">function</span><span class="p">;</span>
-<a name="line-412"></a>        <span class="n">GDInstance</span> <span class="o">*</span><span class="n">instance</span><span class="p">;</span>
-<a name="line-413"></a>        <span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
-<a name="line-414"></a>        <span class="kt">int</span> <span class="o">*</span><span class="n">line</span><span class="p">;</span>
-<a name="line-415"></a>
-<a name="line-416"></a>    <span class="p">};</span>
-<a name="line-417"></a>
-<a name="line-418"></a>
-<a name="line-419"></a>    <span class="kt">int</span> <span class="n">_debug_parse_err_line</span><span class="p">;</span>
-<a name="line-420"></a>    <span class="n">String</span> <span class="n">_debug_parse_err_file</span><span class="p">;</span>
-<a name="line-421"></a>    <span class="n">String</span> <span class="n">_debug_error</span><span class="p">;</span>
-<a name="line-422"></a>    <span class="kt">int</span> <span class="n">_debug_call_stack_pos</span><span class="p">;</span>
-<a name="line-423"></a>    <span class="kt">int</span> <span class="n">_debug_max_call_stack</span><span class="p">;</span>
-<a name="line-424"></a>    <span class="n">CallLevel</span> <span class="o">*</span><span class="n">_call_stack</span><span class="p">;</span>
-<a name="line-425"></a>
-<a name="line-426"></a>	<span class="kt">void</span> <span class="nf">_add_global</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_value</span><span class="p">);</span>
-<a name="line-427"></a>
-<a name="line-428"></a>
-<a name="line-429"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-430"></a>
-<a name="line-431"></a>	<span class="kt">int</span> <span class="n">calls</span><span class="p">;</span>
-<a name="line-432"></a>
-<a name="line-433"></a>    <span class="kt">bool</span> <span class="nf">debug_break</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_error</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_allow_continue</span><span class="o">=</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-434"></a>    <span class="kt">bool</span> <span class="nf">debug_break_parse</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_file</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_error</span><span class="p">);</span>
-<a name="line-435"></a>
-<a name="line-436"></a>    <span class="n">_FORCE_INLINE_</span> <span class="kt">void</span> <span class="nf">enter_function</span><span class="p">(</span><span class="n">GDInstance</span> <span class="o">*</span><span class="n">p_instance</span><span class="p">,</span><span class="n">GDFunction</span> <span class="o">*</span><span class="n">p_function</span><span class="p">,</span> <span class="n">Variant</span> <span class="o">*</span><span class="n">p_stack</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p_ip</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p_line</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-437"></a>
-<a name="line-438"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_main_ID</span><span class="p">()</span><span class="o">!=</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_caller_ID</span><span class="p">())</span>
-<a name="line-439"></a>            <span class="k">return</span><span class="p">;</span> <span class="c1">//no support for other threads than main for now</span>
-<a name="line-440"></a>
-<a name="line-441"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_lines_left</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_depth</span><span class="p">()</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-442"></a>            <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_depth</span><span class="p">(</span> <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_depth</span><span class="p">()</span> <span class="o">+</span><span class="mi">1</span> <span class="p">);</span>
-<a name="line-443"></a>
-<a name="line-444"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">_debug_call_stack_pos</span> <span class="o">&gt;=</span> <span class="n">_debug_max_call_stack</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-445"></a>            <span class="c1">//stack overflow</span>
-<a name="line-446"></a>            <span class="n">_debug_error</span><span class="o">=</span><span class="s">&quot;Stack Overflow (Stack Size: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">_debug_max_call_stack</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;)&quot;</span><span class="p">;</span>
-<a name="line-447"></a>            <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">debug</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-<a name="line-448"></a>            <span class="k">return</span><span class="p">;</span>
-<a name="line-449"></a>	<span class="p">}</span>
-<a name="line-450"></a>
-<a name="line-451"></a>        <span class="n">_call_stack</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="p">].</span><span class="n">stack</span><span class="o">=</span><span class="n">p_stack</span><span class="p">;</span>
-<a name="line-452"></a>        <span class="n">_call_stack</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="p">].</span><span class="n">instance</span><span class="o">=</span><span class="n">p_instance</span><span class="p">;</span>
-<a name="line-453"></a>        <span class="n">_call_stack</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="p">].</span><span class="n">function</span><span class="o">=</span><span class="n">p_function</span><span class="p">;</span>
-<a name="line-454"></a>        <span class="n">_call_stack</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="p">].</span><span class="n">ip</span><span class="o">=</span><span class="n">p_ip</span><span class="p">;</span>
-<a name="line-455"></a>        <span class="n">_call_stack</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="p">].</span><span class="n">line</span><span class="o">=</span><span class="n">p_line</span><span class="p">;</span>
-<a name="line-456"></a>        <span class="n">_debug_call_stack_pos</span><span class="o">++</span><span class="p">;</span>
-<a name="line-457"></a>    <span class="p">}</span>
-<a name="line-458"></a>
-<a name="line-459"></a>    <span class="n">_FORCE_INLINE_</span> <span class="kt">void</span> <span class="nf">exit_function</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-460"></a>
-<a name="line-461"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_main_ID</span><span class="p">()</span><span class="o">!=</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_caller_ID</span><span class="p">())</span>
-<a name="line-462"></a>            <span class="k">return</span><span class="p">;</span> <span class="c1">//no support for other threads than main for now</span>
-<a name="line-463"></a>
-<a name="line-464"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_lines_left</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_depth</span><span class="p">()</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-465"></a>	    <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_depth</span><span class="p">(</span> <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_depth</span><span class="p">()</span> <span class="o">-</span><span class="mi">1</span> <span class="p">);</span>
-<a name="line-466"></a>
-<a name="line-467"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">_debug_call_stack_pos</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-468"></a>
-<a name="line-469"></a>            <span class="n">_debug_error</span><span class="o">=</span><span class="s">&quot;Stack Underflow (Engine Bug)&quot;</span><span class="p">;</span>
-<a name="line-470"></a>            <span class="n">ScriptDebugger</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">debug</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-<a name="line-471"></a>            <span class="k">return</span><span class="p">;</span>
-<a name="line-472"></a>        <span class="p">}</span>
-<a name="line-473"></a>
-<a name="line-474"></a>        <span class="n">_debug_call_stack_pos</span><span class="o">--</span><span class="p">;</span>
-<a name="line-475"></a>    <span class="p">}</span>
-<a name="line-476"></a>
-<a name="line-477"></a>
-<a name="line-478"></a>	<span class="n">virtual</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">StackInfo</span><span class="o">&gt;</span> <span class="n">debug_get_current_stack_info</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-479"></a>	    <span class="k">if</span> <span class="p">(</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_main_ID</span><span class="p">()</span><span class="o">!=</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_caller_ID</span><span class="p">())</span>
-<a name="line-480"></a>		<span class="k">return</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">StackInfo</span><span class="o">&gt;</span><span class="p">();</span>
-<a name="line-481"></a>
-<a name="line-482"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StackInfo</span><span class="o">&gt;</span> <span class="n">csi</span><span class="p">;</span>
-<a name="line-483"></a>		<span class="n">csi</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">_debug_call_stack_pos</span><span class="p">);</span>
-<a name="line-484"></a>		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">_debug_call_stack_pos</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-485"></a>			<span class="n">csi</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">line</span><span class="o">=</span><span class="n">_call_stack</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">line</span><span class="o">?*</span><span class="n">_call_stack</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nl">line</span><span class="p">:</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-486"></a>			<span class="n">csi</span><span class="p">[</span><span class="n">_debug_call_stack_pos</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">script</span><span class="o">=</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">GDScript</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_call_stack</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">function</span><span class="o">-&gt;</span><span class="n">get_script</span><span class="p">());</span>
-<a name="line-487"></a>		<span class="p">}</span>
-<a name="line-488"></a>		<span class="k">return</span> <span class="n">csi</span><span class="p">;</span>
-<a name="line-489"></a>	<span class="p">}</span>
-<a name="line-490"></a>
-<a name="line-491"></a>	<span class="k">struct</span> <span class="p">{</span>
-<a name="line-492"></a>
-<a name="line-493"></a>		<span class="n">StringName</span> <span class="n">_init</span><span class="p">;</span>
-<a name="line-494"></a>		<span class="n">StringName</span> <span class="n">_notification</span><span class="p">;</span>
-<a name="line-495"></a>		<span class="n">StringName</span> <span class="n">_set</span><span class="p">;</span>
-<a name="line-496"></a>		<span class="n">StringName</span> <span class="n">_get</span><span class="p">;</span>
-<a name="line-497"></a>		<span class="n">StringName</span> <span class="n">_get_property_list</span><span class="p">;</span>
-<a name="line-498"></a>		<span class="n">StringName</span> <span class="n">_script_source</span><span class="p">;</span>
-<a name="line-499"></a>
-<a name="line-500"></a>	<span class="p">}</span> <span class="n">strings</span><span class="p">;</span>
-<a name="line-501"></a>
-<a name="line-502"></a>
-<a name="line-503"></a>	<span class="n">_FORCE_INLINE_</span> <span class="kt">int</span> <span class="nf">get_global_array_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">global_array</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="p">}</span>
-<a name="line-504"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">Variant</span><span class="o">*</span> <span class="n">get_global_array</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_global_array</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-505"></a>	<span class="n">_FORCE_INLINE_</span> <span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">get_global_map</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">globals</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-506"></a>
-<a name="line-507"></a>	<span class="n">_FORCE_INLINE_</span> <span class="k">static</span> <span class="n">GDScriptLanguage</span> <span class="o">*</span><span class="n">get_singleton</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">singleton</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-508"></a>
-<a name="line-509"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-510"></a>
-<a name="line-511"></a>	<span class="cm">/* LANGUAGE FUNCTIONS */</span>
-<a name="line-512"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">();</span>
-<a name="line-513"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_type</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-514"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_extension</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-515"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">execute_file</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">;</span>
-<a name="line-516"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">finish</span><span class="p">();</span>
-<a name="line-517"></a>
-<a name="line-518"></a>	<span class="cm">/* EDITOR FUNCTIONS */</span>
-<a name="line-519"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_reserved_words</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_words</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-520"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_comment_delimiters</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_delimiters</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-521"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_string_delimiters</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_delimiters</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-522"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_template</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_class_name</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_base_class_name</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-523"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">validate</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_script</span><span class="p">,</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_line_error</span><span class="p">,</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r_col_error</span><span class="p">,</span><span class="n">String</span><span class="o">&amp;</span> <span class="n">r_test_error</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">r_functions</span><span class="o">=</span><span class="nb">NULL</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-524"></a>	<span class="n">virtual</span> <span class="n">Script</span> <span class="o">*</span><span class="n">create_script</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-525"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">has_named_classes</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-526"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">find_function</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_function</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-527"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">make_function</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_class</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">,</span><span class="k">const</span> <span class="n">StringArray</span><span class="o">&amp;</span> <span class="n">p_args</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-528"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="nf">complete_code</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_base_path</span><span class="p">,</span> <span class="n">Object</span><span class="o">*</span><span class="n">p_owner</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;*</span> <span class="n">r_options</span><span class="p">,</span><span class="n">String</span><span class="o">&amp;</span> <span class="n">r_call_hint</span><span class="p">);</span>
-<a name="line-529"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">auto_indent_code</span><span class="p">(</span><span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_from_line</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_to_line</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-530"></a>
-<a name="line-531"></a>	<span class="cm">/* DEBUGGER FUNCTIONS */</span>
-<a name="line-532"></a>
-<a name="line-533"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">debug_get_error</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-534"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">debug_get_stack_level_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-535"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">debug_get_stack_level_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_level</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-536"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">debug_get_stack_level_function</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_level</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-537"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">debug_get_stack_level_source</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_level</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-538"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">debug_get_stack_level_locals</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_level</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_locals</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_values</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_max_subitems</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_max_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-539"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">debug_get_stack_level_members</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_level</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_members</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_values</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_max_subitems</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_max_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-540"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">debug_get_globals</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_locals</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_values</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_max_subitems</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_max_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-541"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="nf">debug_parse_stack_level_expression</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_level</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_expression</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_max_subitems</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_max_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-542"></a>
-<a name="line-543"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">frame</span><span class="p">();</span>
-<a name="line-544"></a>
-<a name="line-545"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_public_functions</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">MethodInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_functions</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-546"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_public_constants</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Pair</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">*</span><span class="n">p_constants</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-547"></a>
-<a name="line-548"></a>	<span class="cm">/* LOADER FUNCTIONS */</span>
-<a name="line-549"></a>
-<a name="line-550"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_recognized_extensions</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_extensions</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-551"></a>
-<a name="line-552"></a>	<span class="n">GDScriptLanguage</span><span class="p">();</span>
-<a name="line-553"></a>	<span class="o">~</span><span class="n">GDScriptLanguage</span><span class="p">();</span>
-<a name="line-554"></a><span class="p">};</span>
-<a name="line-555"></a>
-<a name="line-556"></a>
-<a name="line-557"></a><span class="n">class</span> <span class="nl">ResourceFormatLoaderGDScript</span> <span class="p">:</span> <span class="n">public</span> <span class="n">ResourceFormatLoader</span> <span class="p">{</span>
-<a name="line-558"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-559"></a>
-<a name="line-560"></a>	<span class="n">virtual</span> <span class="n">RES</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_original_path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">Error</span> <span class="o">*</span><span class="n">r_error</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-561"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_recognized_extensions</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_extensions</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-562"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">handles_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-563"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_resource_type</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-564"></a>
-<a name="line-565"></a><span class="p">};</span>
-<a name="line-566"></a>
-<a name="line-567"></a><span class="n">class</span> <span class="nl">ResourceFormatSaverGDScript</span> <span class="p">:</span> <span class="n">public</span> <span class="n">ResourceFormatSaver</span> <span class="p">{</span>
-<a name="line-568"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-569"></a>
-<a name="line-570"></a>	<span class="n">virtual</span> <span class="n">Error</span> <span class="n">save</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">RES</span><span class="o">&amp;</span> <span class="n">p_resource</span><span class="p">,</span><span class="kt">uint32_t</span> <span class="n">p_flags</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-571"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">get_recognized_extensions</span><span class="p">(</span><span class="k">const</span> <span class="n">RES</span><span class="o">&amp;</span> <span class="n">p_resource</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_extensions</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-572"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">recognize</span><span class="p">(</span><span class="k">const</span> <span class="n">RES</span><span class="o">&amp;</span> <span class="n">p_resource</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-573"></a>
-<a name="line-574"></a><span class="p">};</span>
-<a name="line-575"></a>
-<a name="line-576"></a><span class="cp">#endif </span><span class="c1">// GD_SCRIPT_H</span>
+<a name="line-301"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

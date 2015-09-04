@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/vorbis/sharedbook.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/scene/2d/light_occluder_2d.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> sharedbook.c</p>
-<a href='617.html#line-197'> variableScope 197</a><a href='617.html#line-197'> variableScope 197</a><a href='617.html#line-197'> variableScope 197</a><a href='617.html#line-341'> obsoleteFunctionsalloca 341</a><a href='617.html#line-352'> obsoleteFunctionsalloca 352</a><a href='617.html#line-538'> variableScope 538</a>
+       <p id="filename"><a href="index.html">Defects:</a> light_occluder_2d.cpp</p>
+<a href='617.html#line-192'> uninitMemberVar 192</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -314,1011 +314,207 @@
 198
 199
 200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/********************************************************************</span>
-<a name="line-2"></a><span class="cm"> *                                                                  *</span>
-<a name="line-3"></a><span class="cm"> * THIS FILE IS PART OF THE OggVorbis SOFTWARE CODEC SOURCE CODE.   *</span>
-<a name="line-4"></a><span class="cm"> * USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     *</span>
-<a name="line-5"></a><span class="cm"> * GOVERNED BY A BSD-STYLE SOURCE LICENSE INCLUDED WITH THIS SOURCE *</span>
-<a name="line-6"></a><span class="cm"> * IN &#39;COPYING&#39;. PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       *</span>
-<a name="line-7"></a><span class="cm"> *                                                                  *</span>
-<a name="line-8"></a><span class="cm"> * THE OggVorbis SOURCE CODE IS (C) COPYRIGHT 1994-2009             *</span>
-<a name="line-9"></a><span class="cm"> * by the Xiph.Org Foundation http://www.xiph.org/                  *</span>
-<a name="line-10"></a><span class="cm"> *                                                                  *</span>
-<a name="line-11"></a><span class="cm"> ********************************************************************</span>
+201</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cp">#include &quot;light_occluder_2d.h&quot;</span>
+<a name="line-2"></a>
+<a name="line-3"></a>
+<a name="line-4"></a><span class="kt">void</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">set_polygon</span><span class="p">(</span><span class="k">const</span> <span class="n">DVector</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;&amp;</span> <span class="n">p_polygon</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-5"></a>
+<a name="line-6"></a>	<span class="n">polygon</span><span class="o">=</span><span class="n">p_polygon</span><span class="p">;</span>
+<a name="line-7"></a>	<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_occluder_polygon_set_shape</span><span class="p">(</span><span class="n">occ_polygon</span><span class="p">,</span><span class="n">p_polygon</span><span class="p">,</span><span class="n">closed</span><span class="p">);</span>
+<a name="line-8"></a>	<span class="n">emit_changed</span><span class="p">();</span>
+<a name="line-9"></a><span class="p">}</span>
+<a name="line-10"></a>
+<a name="line-11"></a><span class="n">DVector</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">get_polygon</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
 <a name="line-12"></a>
-<a name="line-13"></a><span class="cm"> function: basic shared codebook operations</span>
-<a name="line-14"></a><span class="cm"> last mod: $Id: sharedbook.c 17030 2010-03-25 06:52:55Z xiphmont $</span>
+<a name="line-13"></a>	<span class="k">return</span> <span class="n">polygon</span><span class="p">;</span>
+<a name="line-14"></a><span class="p">}</span>
 <a name="line-15"></a>
-<a name="line-16"></a><span class="cm"> ********************************************************************/</span>
+<a name="line-16"></a><span class="kt">void</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">set_closed</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_closed</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-17"></a>
-<a name="line-18"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
-<a name="line-19"></a><span class="cp">#include &lt;math.h&gt;</span>
-<a name="line-20"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-21"></a><span class="cp">#include &lt;ogg/ogg.h&gt;</span>
-<a name="line-22"></a><span class="cp">#include &quot;os.h&quot;</span>
-<a name="line-23"></a><span class="cp">#include &quot;misc.h&quot;</span>
-<a name="line-24"></a><span class="cp">#include &quot;vorbis/codec.h&quot;</span>
-<a name="line-25"></a><span class="cp">#include &quot;codebook.h&quot;</span>
-<a name="line-26"></a><span class="cp">#include &quot;scales.h&quot;</span>
+<a name="line-18"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">closed</span><span class="o">==</span><span class="n">p_closed</span><span class="p">)</span>
+<a name="line-19"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-20"></a>	<span class="n">closed</span><span class="o">=</span><span class="n">p_closed</span><span class="p">;</span>
+<a name="line-21"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">polygon</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<a name="line-22"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_occluder_polygon_set_shape</span><span class="p">(</span><span class="n">occ_polygon</span><span class="p">,</span><span class="n">polygon</span><span class="p">,</span><span class="n">closed</span><span class="p">);</span>
+<a name="line-23"></a>	<span class="n">emit_changed</span><span class="p">();</span>
+<a name="line-24"></a><span class="p">}</span>
+<a name="line-25"></a>
+<a name="line-26"></a><span class="kt">bool</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">is_closed</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
 <a name="line-27"></a>
-<a name="line-28"></a><span class="cm">/**** pack/unpack helpers ******************************************/</span>
-<a name="line-29"></a><span class="kt">int</span> <span class="nf">_ilog</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v</span><span class="p">){</span>
-<a name="line-30"></a>  <span class="kt">int</span> <span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-31"></a>  <span class="k">while</span><span class="p">(</span><span class="n">v</span><span class="p">){</span>
-<a name="line-32"></a>    <span class="n">ret</span><span class="o">++</span><span class="p">;</span>
-<a name="line-33"></a>    <span class="n">v</span><span class="o">&gt;&gt;=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-34"></a>  <span class="p">}</span>
-<a name="line-35"></a>  <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-36"></a><span class="p">}</span>
-<a name="line-37"></a>
-<a name="line-38"></a><span class="cm">/* 32 bit float (not IEEE; nonnormalized mantissa +</span>
-<a name="line-39"></a><span class="cm">   biased exponent) : neeeeeee eeemmmmm mmmmmmmm mmmmmmmm</span>
-<a name="line-40"></a><span class="cm">   Why not IEEE?  It&#39;s just not that important here. */</span>
+<a name="line-28"></a>	<span class="k">return</span> <span class="n">closed</span><span class="p">;</span>
+<a name="line-29"></a><span class="p">}</span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class="kt">void</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">set_cull_mode</span><span class="p">(</span><span class="n">CullMode</span> <span class="n">p_mode</span><span class="p">){</span>
+<a name="line-32"></a>
+<a name="line-33"></a>	<span class="n">cull</span><span class="o">=</span><span class="n">p_mode</span><span class="p">;</span>
+<a name="line-34"></a>	<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_occluder_polygon_set_cull_mode</span><span class="p">(</span><span class="n">occ_polygon</span><span class="p">,</span><span class="n">VS</span><span class="o">::</span><span class="n">CanvasOccluderPolygonCullMode</span><span class="p">(</span><span class="n">p_mode</span><span class="p">));</span>
+<a name="line-35"></a><span class="p">}</span>
+<a name="line-36"></a>
+<a name="line-37"></a><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">CullMode</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">get_cull_mode</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
+<a name="line-38"></a>
+<a name="line-39"></a>	<span class="k">return</span> <span class="n">cull</span><span class="p">;</span>
+<a name="line-40"></a><span class="p">}</span>
 <a name="line-41"></a>
-<a name="line-42"></a><span class="cp">#define VQ_FEXP 10</span>
-<a name="line-43"></a><span class="cp">#define VQ_FMAN 21</span>
-<a name="line-44"></a><span class="cp">#define VQ_FEXP_BIAS 768 </span><span class="cm">/* bias toward values smaller than 1. */</span><span class="cp"></span>
-<a name="line-45"></a>
-<a name="line-46"></a><span class="cm">/* doesn&#39;t currently guard under/overflow */</span>
-<a name="line-47"></a><span class="kt">long</span> <span class="nf">_float32_pack</span><span class="p">(</span><span class="kt">float</span> <span class="n">val</span><span class="p">){</span>
-<a name="line-48"></a>  <span class="kt">int</span> <span class="n">sign</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-49"></a>  <span class="kt">long</span> <span class="n">exp</span><span class="p">;</span>
-<a name="line-50"></a>  <span class="kt">long</span> <span class="n">mant</span><span class="p">;</span>
-<a name="line-51"></a>  <span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">){</span>
-<a name="line-52"></a>    <span class="n">sign</span><span class="o">=</span><span class="mh">0x80000000</span><span class="p">;</span>
-<a name="line-53"></a>    <span class="n">val</span><span class="o">=</span> <span class="o">-</span><span class="n">val</span><span class="p">;</span>
-<a name="line-54"></a>  <span class="p">}</span>
-<a name="line-55"></a>  <span class="n">exp</span><span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="n">log</span><span class="p">(</span><span class="mf">2.f</span><span class="p">)</span><span class="o">+</span><span class="mf">.001</span><span class="p">);</span> <span class="c1">//+epsilon</span>
-<a name="line-56"></a>  <span class="n">mant</span><span class="o">=</span><span class="n">rint</span><span class="p">(</span><span class="n">ldexp</span><span class="p">(</span><span class="n">val</span><span class="p">,(</span><span class="n">VQ_FMAN</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">exp</span><span class="p">));</span>
-<a name="line-57"></a>  <span class="n">exp</span><span class="o">=</span><span class="p">(</span><span class="n">exp</span><span class="o">+</span><span class="n">VQ_FEXP_BIAS</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">VQ_FMAN</span><span class="p">;</span>
-<a name="line-58"></a>
-<a name="line-59"></a>  <span class="k">return</span><span class="p">(</span><span class="n">sign</span><span class="o">|</span><span class="n">exp</span><span class="o">|</span><span class="n">mant</span><span class="p">);</span>
-<a name="line-60"></a><span class="p">}</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class="kt">float</span> <span class="nf">_float32_unpack</span><span class="p">(</span><span class="kt">long</span> <span class="n">val</span><span class="p">){</span>
-<a name="line-63"></a>  <span class="kt">double</span> <span class="n">mant</span><span class="o">=</span><span class="n">val</span><span class="o">&amp;</span><span class="mh">0x1fffff</span><span class="p">;</span>
-<a name="line-64"></a>  <span class="kt">int</span>    <span class="n">sign</span><span class="o">=</span><span class="n">val</span><span class="o">&amp;</span><span class="mh">0x80000000</span><span class="p">;</span>
-<a name="line-65"></a>  <span class="kt">long</span>   <span class="n">exp</span> <span class="o">=</span><span class="p">(</span><span class="n">val</span><span class="o">&amp;</span><span class="mh">0x7fe00000L</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="n">VQ_FMAN</span><span class="p">;</span>
-<a name="line-66"></a>  <span class="k">if</span><span class="p">(</span><span class="n">sign</span><span class="p">)</span><span class="n">mant</span><span class="o">=</span> <span class="o">-</span><span class="n">mant</span><span class="p">;</span>
-<a name="line-67"></a>  <span class="k">return</span><span class="p">(</span><span class="n">ldexp</span><span class="p">(</span><span class="n">mant</span><span class="p">,</span><span class="n">exp</span><span class="o">-</span><span class="p">(</span><span class="n">VQ_FMAN</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">VQ_FEXP_BIAS</span><span class="p">));</span>
-<a name="line-68"></a><span class="p">}</span>
+<a name="line-42"></a>
+<a name="line-43"></a><span class="n">RID</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">get_rid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-44"></a>
+<a name="line-45"></a>	<span class="k">return</span> <span class="n">occ_polygon</span><span class="p">;</span>
+<a name="line-46"></a><span class="p">}</span>
+<a name="line-47"></a>
+<a name="line-48"></a><span class="kt">void</span> <span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-49"></a>
+<a name="line-50"></a>
+<a name="line-51"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;set_closed&quot;</span><span class="p">,</span><span class="s">&quot;closed&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">set_closed</span><span class="p">);</span>
+<a name="line-52"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;is_closed&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">is_closed</span><span class="p">);</span>
+<a name="line-53"></a>
+<a name="line-54"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;set_cull_mode&quot;</span><span class="p">,</span><span class="s">&quot;cull_mode&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">set_cull_mode</span><span class="p">);</span>
+<a name="line-55"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;get_cull_mode&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">get_cull_mode</span><span class="p">);</span>
+<a name="line-56"></a>
+<a name="line-57"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;set_polygon&quot;</span><span class="p">,</span><span class="s">&quot;polygon&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">set_polygon</span><span class="p">);</span>
+<a name="line-58"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;get_polygon&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">get_polygon</span><span class="p">);</span>
+<a name="line-59"></a>
+<a name="line-60"></a>	<span class="n">ADD_PROPERTY</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">BOOL</span><span class="p">,</span><span class="s">&quot;closed&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;set_closed&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;is_closed&quot;</span><span class="p">));</span>
+<a name="line-61"></a>	<span class="n">ADD_PROPERTY</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">,</span><span class="s">&quot;cull_mode&quot;</span><span class="p">,</span><span class="n">PROPERTY_HINT_ENUM</span><span class="p">,</span><span class="s">&quot;Disabled,ClockWise,CounterClockWise&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;set_cull_mode&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;get_cull_mode&quot;</span><span class="p">));</span>
+<a name="line-62"></a>	<span class="n">ADD_PROPERTY</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">VECTOR2_ARRAY</span><span class="p">,</span><span class="s">&quot;polygon&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;set_polygon&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;get_polygon&quot;</span><span class="p">));</span>
+<a name="line-63"></a>
+<a name="line-64"></a>	<span class="n">BIND_CONSTANT</span><span class="p">(</span><span class="n">CULL_DISABLED</span><span class="p">);</span>
+<a name="line-65"></a>	<span class="n">BIND_CONSTANT</span><span class="p">(</span><span class="n">CULL_CLOCKWISE</span><span class="p">);</span>
+<a name="line-66"></a>	<span class="n">BIND_CONSTANT</span><span class="p">(</span><span class="n">CULL_COUNTER_CLOCKWISE</span><span class="p">);</span>
+<a name="line-67"></a><span class="p">}</span>
+<a name="line-68"></a>
 <a name="line-69"></a>
-<a name="line-70"></a><span class="cm">/* given a list of word lengths, generate a list of codewords.  Works</span>
-<a name="line-71"></a><span class="cm">   for length ordered or unordered, always assigns the lowest valued</span>
-<a name="line-72"></a><span class="cm">   codewords first.  Extended to handle unused entries (length 0) */</span>
-<a name="line-73"></a><span class="kt">ogg_uint32_t</span> <span class="o">*</span><span class="nf">_make_words</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="n">l</span><span class="p">,</span><span class="kt">long</span> <span class="n">n</span><span class="p">,</span><span class="kt">long</span> <span class="n">sparsecount</span><span class="p">){</span>
-<a name="line-74"></a>  <span class="kt">long</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-75"></a>  <span class="kt">ogg_uint32_t</span> <span class="n">marker</span><span class="p">[</span><span class="mi">33</span><span class="p">];</span>
-<a name="line-76"></a>  <span class="kt">ogg_uint32_t</span> <span class="o">*</span><span class="n">r</span><span class="o">=</span><span class="n">_ogg_malloc</span><span class="p">((</span><span class="n">sparsecount</span><span class="o">?</span><span class="nl">sparsecount</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">r</span><span class="p">));</span>
-<a name="line-77"></a>  <span class="n">memset</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">marker</span><span class="p">));</span>
+<a name="line-70"></a><span class="n">OccluderPolygon2D</span><span class="o">::</span><span class="n">OccluderPolygon2D</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-71"></a>
+<a name="line-72"></a>	<span class="n">occ_polygon</span><span class="o">=</span><span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_occluder_polygon_create</span><span class="p">();</span>
+<a name="line-73"></a>	<span class="n">closed</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-74"></a>	<span class="n">cull</span><span class="o">=</span><span class="n">CULL_DISABLED</span><span class="p">;</span>
+<a name="line-75"></a><span class="p">}</span>
+<a name="line-76"></a>
+<a name="line-77"></a><span class="n">OccluderPolygon2D</span><span class="o">::~</span><span class="n">OccluderPolygon2D</span><span class="p">()</span> <span class="p">{</span>
 <a name="line-78"></a>
-<a name="line-79"></a>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-80"></a>    <span class="kt">long</span> <span class="n">length</span><span class="o">=</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-81"></a>    <span class="k">if</span><span class="p">(</span><span class="n">length</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
-<a name="line-82"></a>      <span class="kt">ogg_uint32_t</span> <span class="n">entry</span><span class="o">=</span><span class="n">marker</span><span class="p">[</span><span class="n">length</span><span class="p">];</span>
-<a name="line-83"></a>
-<a name="line-84"></a>      <span class="cm">/* when we claim a node for an entry, we also claim the nodes</span>
-<a name="line-85"></a><span class="cm">         below it (pruning off the imagined tree that may have dangled</span>
-<a name="line-86"></a><span class="cm">         from it) as well as blocking the use of any nodes directly</span>
-<a name="line-87"></a><span class="cm">         above for leaves */</span>
+<a name="line-79"></a>	<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">free</span><span class="p">(</span><span class="n">occ_polygon</span><span class="p">);</span>
+<a name="line-80"></a><span class="p">}</span>
+<a name="line-81"></a>
+<a name="line-82"></a><span class="cp">#ifdef DEBUG_ENABLED</span>
+<a name="line-83"></a><span class="kt">void</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">_poly_changed</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-84"></a>
+<a name="line-85"></a>	<span class="n">update</span><span class="p">();</span>
+<a name="line-86"></a><span class="p">}</span>
+<a name="line-87"></a><span class="cp">#endif</span>
 <a name="line-88"></a>
-<a name="line-89"></a>      <span class="cm">/* update ourself */</span>
-<a name="line-90"></a>      <span class="k">if</span><span class="p">(</span><span class="n">length</span><span class="o">&lt;</span><span class="mi">32</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">entry</span><span class="o">&gt;&gt;</span><span class="n">length</span><span class="p">)){</span>
-<a name="line-91"></a>        <span class="cm">/* error condition; the lengths must specify an overpopulated tree */</span>
-<a name="line-92"></a>        <span class="n">_ogg_free</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
-<a name="line-93"></a>        <span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-94"></a>      <span class="p">}</span>
-<a name="line-95"></a>      <span class="n">r</span><span class="p">[</span><span class="n">count</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="n">entry</span><span class="p">;</span>
+<a name="line-89"></a>
+<a name="line-90"></a><span class="kt">void</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-91"></a>
+<a name="line-92"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_ENTER_CANVAS</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-93"></a>
+<a name="line-94"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_attach_to_canvas</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">get_canvas</span><span class="p">());</span>
+<a name="line-95"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_set_transform</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">get_global_transform</span><span class="p">());</span>
 <a name="line-96"></a>
-<a name="line-97"></a>      <span class="cm">/* Look to see if the next shorter marker points to the node</span>
-<a name="line-98"></a><span class="cm">         above. if so, update it and repeat.  */</span>
-<a name="line-99"></a>      <span class="p">{</span>
-<a name="line-100"></a>        <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="n">length</span><span class="p">;</span><span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">--</span><span class="p">){</span>
-<a name="line-101"></a>
-<a name="line-102"></a>          <span class="k">if</span><span class="p">(</span><span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">){</span>
-<a name="line-103"></a>            <span class="cm">/* have to jump branches */</span>
-<a name="line-104"></a>            <span class="k">if</span><span class="p">(</span><span class="n">j</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
-<a name="line-105"></a>              <span class="n">marker</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-<a name="line-106"></a>            <span class="k">else</span>
-<a name="line-107"></a>              <span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-108"></a>            <span class="k">break</span><span class="p">;</span> <span class="cm">/* invariant says next upper marker would already</span>
-<a name="line-109"></a><span class="cm">                      have been moved if it was on the same path */</span>
-<a name="line-110"></a>          <span class="p">}</span>
-<a name="line-111"></a>          <span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-<a name="line-112"></a>        <span class="p">}</span>
-<a name="line-113"></a>      <span class="p">}</span>
-<a name="line-114"></a>
-<a name="line-115"></a>      <span class="cm">/* prune the tree; the implicit invariant says all the longer</span>
-<a name="line-116"></a><span class="cm">         markers were dangling from our just-taken node.  Dangle them</span>
-<a name="line-117"></a><span class="cm">         from our *new* node. */</span>
-<a name="line-118"></a>      <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="n">length</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">33</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
-<a name="line-119"></a>        <span class="k">if</span><span class="p">((</span><span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">entry</span><span class="p">){</span>
-<a name="line-120"></a>          <span class="n">entry</span><span class="o">=</span><span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<a name="line-121"></a>          <span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">marker</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-122"></a>        <span class="p">}</span><span class="k">else</span>
-<a name="line-123"></a>          <span class="k">break</span><span class="p">;</span>
-<a name="line-124"></a>    <span class="p">}</span><span class="k">else</span>
-<a name="line-125"></a>      <span class="k">if</span><span class="p">(</span><span class="n">sparsecount</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
-<a name="line-126"></a>  <span class="p">}</span>
-<a name="line-127"></a>
-<a name="line-128"></a>  <span class="cm">/* sanity check the huffman tree; an underpopulated tree must be</span>
-<a name="line-129"></a><span class="cm">     rejected. The only exception is the one-node pseudo-nil tree,</span>
-<a name="line-130"></a><span class="cm">     which appears to be underpopulated because the tree doesn&#39;t</span>
-<a name="line-131"></a><span class="cm">     really exist; there&#39;s only one possible &#39;codeword&#39; or zero bits,</span>
-<a name="line-132"></a><span class="cm">     but the above tree-gen code doesn&#39;t mark that. */</span>
-<a name="line-133"></a>  <span class="k">if</span><span class="p">(</span><span class="n">sparsecount</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">){</span>
-<a name="line-134"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">33</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-135"></a>      <span class="k">if</span><span class="p">(</span><span class="n">marker</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0xffffffffUL</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="mi">32</span><span class="o">-</span><span class="n">i</span><span class="p">))){</span>
-<a name="line-136"></a>	<span class="n">_ogg_free</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
-<a name="line-137"></a>	<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-138"></a>      <span class="p">}</span>
-<a name="line-139"></a>  <span class="p">}</span>
+<a name="line-97"></a>	<span class="p">}</span>
+<a name="line-98"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_TRANSFORM_CHANGED</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-99"></a>
+<a name="line-100"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_set_transform</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">get_global_transform</span><span class="p">());</span>
+<a name="line-101"></a>	<span class="p">}</span>
+<a name="line-102"></a>
+<a name="line-103"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_DRAW</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-104"></a>
+<a name="line-105"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">get_tree</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">is_editor_hint</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-106"></a>
+<a name="line-107"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">occluder_polygon</span><span class="p">.</span><span class="n">is_valid</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-108"></a>
+<a name="line-109"></a>				<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span> <span class="n">poly</span> <span class="o">=</span> <span class="n">occluder_polygon</span><span class="o">-&gt;</span><span class="n">get_polygon</span><span class="p">();</span>
+<a name="line-110"></a>
+<a name="line-111"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">poly</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-112"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">occluder_polygon</span><span class="o">-&gt;</span><span class="n">is_closed</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-113"></a>						<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span> <span class="n">color</span><span class="p">;</span>
+<a name="line-114"></a>						<span class="n">color</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.6</span><span class="p">));</span>
+<a name="line-115"></a>						<span class="n">draw_polygon</span><span class="p">(</span><span class="n">Variant</span><span class="p">(</span><span class="n">poly</span><span class="p">),</span><span class="n">color</span><span class="p">);</span>
+<a name="line-116"></a>					<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a name="line-117"></a>
+<a name="line-118"></a>						<span class="kt">int</span> <span class="n">ps</span><span class="o">=</span><span class="n">poly</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<a name="line-119"></a>						<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;::</span><span class="n">Read</span> <span class="n">r</span> <span class="o">=</span> <span class="n">poly</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+<a name="line-120"></a>						<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">ps</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-121"></a>
+<a name="line-122"></a>							<span class="n">draw_line</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.6</span><span class="p">),</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-123"></a>						<span class="p">}</span>
+<a name="line-124"></a>					<span class="p">}</span>
+<a name="line-125"></a>				<span class="p">}</span>
+<a name="line-126"></a>			<span class="p">}</span>
+<a name="line-127"></a>		<span class="p">}</span>
+<a name="line-128"></a>	<span class="p">}</span>
+<a name="line-129"></a>
+<a name="line-130"></a>
+<a name="line-131"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_EXIT_CANVAS</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-132"></a>
+<a name="line-133"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_attach_to_canvas</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">RID</span><span class="p">());</span>
+<a name="line-134"></a>	<span class="p">}</span>
+<a name="line-135"></a>
+<a name="line-136"></a>
+<a name="line-137"></a><span class="p">}</span>
+<a name="line-138"></a>
+<a name="line-139"></a><span class="kt">void</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">set_occluder_polygon</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">OccluderPolygon2D</span><span class="o">&gt;&amp;</span> <span class="n">p_polygon</span><span class="p">)</span> <span class="p">{</span>
 <a name="line-140"></a>
-<a name="line-141"></a>  <span class="cm">/* bitreverse the words because our bitwise packer/unpacker is LSb</span>
-<a name="line-142"></a><span class="cm">     endian */</span>
-<a name="line-143"></a>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-144"></a>    <span class="kt">ogg_uint32_t</span> <span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-145"></a>    <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
-<a name="line-146"></a>      <span class="n">temp</span><span class="o">&lt;&lt;=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-147"></a>      <span class="n">temp</span><span class="o">|=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">&gt;&gt;</span><span class="n">j</span><span class="p">)</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-148"></a>    <span class="p">}</span>
-<a name="line-149"></a>
-<a name="line-150"></a>    <span class="k">if</span><span class="p">(</span><span class="n">sparsecount</span><span class="p">){</span>
-<a name="line-151"></a>      <span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-<a name="line-152"></a>        <span class="n">r</span><span class="p">[</span><span class="n">count</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="n">temp</span><span class="p">;</span>
-<a name="line-153"></a>    <span class="p">}</span><span class="k">else</span>
-<a name="line-154"></a>      <span class="n">r</span><span class="p">[</span><span class="n">count</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="n">temp</span><span class="p">;</span>
-<a name="line-155"></a>  <span class="p">}</span>
-<a name="line-156"></a>
-<a name="line-157"></a>  <span class="k">return</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<a name="line-141"></a><span class="cp">#ifdef DEBUG_ENABLED</span>
+<a name="line-142"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">occluder_polygon</span><span class="p">.</span><span class="n">is_valid</span><span class="p">())</span>
+<a name="line-143"></a>		<span class="n">occluder_polygon</span><span class="o">-&gt;</span><span class="n">disconnect</span><span class="p">(</span><span class="s">&quot;changed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_poly_changed&quot;</span><span class="p">);</span>
+<a name="line-144"></a><span class="cp">#endif</span>
+<a name="line-145"></a>	<span class="n">occluder_polygon</span><span class="o">=</span><span class="n">p_polygon</span><span class="p">;</span>
+<a name="line-146"></a>
+<a name="line-147"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">occluder_polygon</span><span class="p">.</span><span class="n">is_valid</span><span class="p">())</span>
+<a name="line-148"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_set_polygon</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">occluder_polygon</span><span class="o">-&gt;</span><span class="n">get_rid</span><span class="p">());</span>
+<a name="line-149"></a>	<span class="k">else</span>
+<a name="line-150"></a>		<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_set_polygon</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">RID</span><span class="p">());</span>
+<a name="line-151"></a>
+<a name="line-152"></a><span class="cp">#ifdef DEBUG_ENABLED</span>
+<a name="line-153"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">occluder_polygon</span><span class="p">.</span><span class="n">is_valid</span><span class="p">())</span>
+<a name="line-154"></a>		<span class="n">occluder_polygon</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;changed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_poly_changed&quot;</span><span class="p">);</span>
+<a name="line-155"></a>	<span class="n">update</span><span class="p">();</span>
+<a name="line-156"></a><span class="cp">#endif</span>
+<a name="line-157"></a>
 <a name="line-158"></a><span class="p">}</span>
 <a name="line-159"></a>
-<a name="line-160"></a><span class="cm">/* there might be a straightforward one-line way to do the below</span>
-<a name="line-161"></a><span class="cm">   that&#39;s portable and totally safe against roundoff, but I haven&#39;t</span>
-<a name="line-162"></a><span class="cm">   thought of it.  Therefore, we opt on the side of caution */</span>
-<a name="line-163"></a><span class="kt">long</span> <span class="nf">_book_maptype1_quantvals</span><span class="p">(</span><span class="k">const</span> <span class="n">static_codebook</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
-<a name="line-164"></a>  <span class="kt">long</span> <span class="n">vals</span><span class="o">=</span><span class="n">floor</span><span class="p">(</span><span class="n">pow</span><span class="p">((</span><span class="kt">float</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">,</span><span class="mf">1.f</span><span class="o">/</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">));</span>
-<a name="line-165"></a>
-<a name="line-166"></a>  <span class="cm">/* the above *should* be reliable, but we&#39;ll not assume that FP is</span>
-<a name="line-167"></a><span class="cm">     ever reliable when bitstream sync is at stake; verify via integer</span>
-<a name="line-168"></a><span class="cm">     means that vals really is the greatest value of dim for which</span>
-<a name="line-169"></a><span class="cm">     vals^b-&gt;bim &lt;= b-&gt;entries */</span>
-<a name="line-170"></a>  <span class="cm">/* treat the above as an initial guess */</span>
-<a name="line-171"></a>  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-<a name="line-172"></a>    <span class="kt">long</span> <span class="n">acc</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-173"></a>    <span class="kt">long</span> <span class="n">acc1</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-174"></a>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-175"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-176"></a>      <span class="n">acc</span><span class="o">*=</span><span class="n">vals</span><span class="p">;</span>
-<a name="line-177"></a>      <span class="n">acc1</span><span class="o">*=</span><span class="n">vals</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-178"></a>    <span class="p">}</span>
-<a name="line-179"></a>    <span class="k">if</span><span class="p">(</span><span class="n">acc</span><span class="o">&lt;=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span> <span class="o">&amp;&amp;</span> <span class="n">acc1</span><span class="o">&gt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">){</span>
-<a name="line-180"></a>      <span class="k">return</span><span class="p">(</span><span class="n">vals</span><span class="p">);</span>
-<a name="line-181"></a>    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-<a name="line-182"></a>      <span class="k">if</span><span class="p">(</span><span class="n">acc</span><span class="o">&gt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">){</span>
-<a name="line-183"></a>        <span class="n">vals</span><span class="o">--</span><span class="p">;</span>
-<a name="line-184"></a>      <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-<a name="line-185"></a>        <span class="n">vals</span><span class="o">++</span><span class="p">;</span>
-<a name="line-186"></a>      <span class="p">}</span>
-<a name="line-187"></a>    <span class="p">}</span>
-<a name="line-188"></a>  <span class="p">}</span>
-<a name="line-189"></a><span class="p">}</span>
-<a name="line-190"></a>
-<a name="line-191"></a><span class="cm">/* unpack the quantized list of values for encode/decode ***********/</span>
-<a name="line-192"></a><span class="cm">/* we need to deal with two map types: in map type 1, the values are</span>
-<a name="line-193"></a><span class="cm">   generated algorithmically (each column of the vector counts through</span>
-<a name="line-194"></a><span class="cm">   the values in the quant vector). in map type 2, all the values came</span>
-<a name="line-195"></a><span class="cm">   in in an explicit list.  Both value lists must be unpacked */</span>
-<a name="line-196"></a><span class="kt">float</span> <span class="o">*</span><span class="nf">_book_unquantize</span><span class="p">(</span><span class="k">const</span> <span class="n">static_codebook</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span><span class="kt">int</span> <span class="o">*</span><span class="n">sparsemap</span><span class="p">){</span>
-<a name="line-197"></a><span class="hll">  <span class="kt">long</span> <span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'j' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;j&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'k' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;k&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'count' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;count&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-198"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">maptype</span><span class="o">==</span><span class="mi">1</span> <span class="o">||</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">maptype</span><span class="o">==</span><span class="mi">2</span><span class="p">){</span>
-<a name="line-199"></a>    <span class="kt">int</span> <span class="n">quantvals</span><span class="p">;</span>
-<a name="line-200"></a>    <span class="kt">float</span> <span class="n">mindel</span><span class="o">=</span><span class="n">_float32_unpack</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">q_min</span><span class="p">);</span>
-<a name="line-201"></a>    <span class="kt">float</span> <span class="n">delta</span><span class="o">=</span><span class="n">_float32_unpack</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">q_delta</span><span class="p">);</span>
-<a name="line-202"></a>    <span class="kt">float</span> <span class="o">*</span><span class="n">r</span><span class="o">=</span><span class="n">_ogg_calloc</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">r</span><span class="p">));</span>
-<a name="line-203"></a>
-<a name="line-204"></a>    <span class="cm">/* maptype 1 and 2 both use a quantized value vector, but</span>
-<a name="line-205"></a><span class="cm">       different sizes */</span>
-<a name="line-206"></a>    <span class="k">switch</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">maptype</span><span class="p">){</span>
-<a name="line-207"></a>    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-<a name="line-208"></a>      <span class="cm">/* most of the time, entries%dimensions == 0, but we need to be</span>
-<a name="line-209"></a><span class="cm">         well defined.  We define that the possible vales at each</span>
-<a name="line-210"></a><span class="cm">         scalar is values == entries/dim.  If entries%dim != 0, we&#39;ll</span>
-<a name="line-211"></a><span class="cm">         have &#39;too few&#39; values (values*dim&lt;entries), which means that</span>
-<a name="line-212"></a><span class="cm">         we&#39;ll have &#39;left over&#39; entries; left over entries use zeroed</span>
-<a name="line-213"></a><span class="cm">         values (and are wasted).  So don&#39;t generate codebooks like</span>
-<a name="line-214"></a><span class="cm">         that */</span>
-<a name="line-215"></a>      <span class="n">quantvals</span><span class="o">=</span><span class="n">_book_maptype1_quantvals</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-216"></a>      <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
-<a name="line-217"></a>        <span class="k">if</span><span class="p">((</span><span class="n">sparsemap</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">||</span> <span class="o">!</span><span class="n">sparsemap</span><span class="p">){</span>
-<a name="line-218"></a>          <span class="kt">float</span> <span class="n">last</span><span class="o">=</span><span class="mf">0.f</span><span class="p">;</span>
-<a name="line-219"></a>          <span class="kt">int</span> <span class="n">indexdiv</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-220"></a>          <span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">){</span>
-<a name="line-221"></a>            <span class="kt">int</span> <span class="n">index</span><span class="o">=</span> <span class="p">(</span><span class="n">j</span><span class="o">/</span><span class="n">indexdiv</span><span class="p">)</span><span class="o">%</span><span class="n">quantvals</span><span class="p">;</span>
-<a name="line-222"></a>            <span class="kt">float</span> <span class="n">val</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">quantlist</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-<a name="line-223"></a>            <span class="n">val</span><span class="o">=</span><span class="n">fabs</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="n">delta</span><span class="o">+</span><span class="n">mindel</span><span class="o">+</span><span class="n">last</span><span class="p">;</span>
-<a name="line-224"></a>            <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">q_sequencep</span><span class="p">)</span><span class="n">last</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
-<a name="line-225"></a>            <span class="k">if</span><span class="p">(</span><span class="n">sparsemap</span><span class="p">)</span>
-<a name="line-226"></a>              <span class="n">r</span><span class="p">[</span><span class="n">sparsemap</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">+</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
-<a name="line-227"></a>            <span class="k">else</span>
-<a name="line-228"></a>              <span class="n">r</span><span class="p">[</span><span class="n">count</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">+</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
-<a name="line-229"></a>            <span class="n">indexdiv</span><span class="o">*=</span><span class="n">quantvals</span><span class="p">;</span>
-<a name="line-230"></a>          <span class="p">}</span>
-<a name="line-231"></a>          <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-<a name="line-232"></a>        <span class="p">}</span>
-<a name="line-233"></a>
-<a name="line-234"></a>      <span class="p">}</span>
-<a name="line-235"></a>      <span class="k">break</span><span class="p">;</span>
-<a name="line-236"></a>    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
-<a name="line-237"></a>      <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
-<a name="line-238"></a>        <span class="k">if</span><span class="p">((</span><span class="n">sparsemap</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">||</span> <span class="o">!</span><span class="n">sparsemap</span><span class="p">){</span>
-<a name="line-239"></a>          <span class="kt">float</span> <span class="n">last</span><span class="o">=</span><span class="mf">0.f</span><span class="p">;</span>
-<a name="line-240"></a>
-<a name="line-241"></a>          <span class="k">for</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">){</span>
-<a name="line-242"></a>            <span class="kt">float</span> <span class="n">val</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">quantlist</span><span class="p">[</span><span class="n">j</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">+</span><span class="n">k</span><span class="p">];</span>
-<a name="line-243"></a>            <span class="n">val</span><span class="o">=</span><span class="n">fabs</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="n">delta</span><span class="o">+</span><span class="n">mindel</span><span class="o">+</span><span class="n">last</span><span class="p">;</span>
-<a name="line-244"></a>            <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">q_sequencep</span><span class="p">)</span><span class="n">last</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
-<a name="line-245"></a>            <span class="k">if</span><span class="p">(</span><span class="n">sparsemap</span><span class="p">)</span>
-<a name="line-246"></a>              <span class="n">r</span><span class="p">[</span><span class="n">sparsemap</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">+</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
-<a name="line-247"></a>            <span class="k">else</span>
-<a name="line-248"></a>              <span class="n">r</span><span class="p">[</span><span class="n">count</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">+</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">val</span><span class="p">;</span>
-<a name="line-249"></a>          <span class="p">}</span>
-<a name="line-250"></a>          <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-<a name="line-251"></a>        <span class="p">}</span>
-<a name="line-252"></a>      <span class="p">}</span>
-<a name="line-253"></a>      <span class="k">break</span><span class="p">;</span>
-<a name="line-254"></a>    <span class="p">}</span>
-<a name="line-255"></a>
-<a name="line-256"></a>    <span class="k">return</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
-<a name="line-257"></a>  <span class="p">}</span>
-<a name="line-258"></a>  <span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-259"></a><span class="p">}</span>
-<a name="line-260"></a>
-<a name="line-261"></a><span class="kt">void</span> <span class="nf">vorbis_staticbook_destroy</span><span class="p">(</span><span class="n">static_codebook</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
-<a name="line-262"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">allocedp</span><span class="p">){</span>
-<a name="line-263"></a>    <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">quantlist</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">quantlist</span><span class="p">);</span>
-<a name="line-264"></a>    <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">);</span>
-<a name="line-265"></a>    <span class="n">memset</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">));</span>
-<a name="line-266"></a>    <span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
-<a name="line-267"></a>  <span class="p">}</span> <span class="cm">/* otherwise, it is in static memory */</span>
-<a name="line-268"></a><span class="p">}</span>
-<a name="line-269"></a>
-<a name="line-270"></a><span class="kt">void</span> <span class="nf">vorbis_book_clear</span><span class="p">(</span><span class="n">codebook</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
-<a name="line-271"></a>  <span class="cm">/* static book is not cleared; we&#39;re likely called on the lookup and</span>
-<a name="line-272"></a><span class="cm">     the static codebook belongs to the info struct */</span>
-<a name="line-273"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">valuelist</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">valuelist</span><span class="p">);</span>
-<a name="line-274"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">);</span>
-<a name="line-275"></a>
-<a name="line-276"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dec_index</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dec_index</span><span class="p">);</span>
-<a name="line-277"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">);</span>
-<a name="line-278"></a>  <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="p">)</span><span class="n">_ogg_free</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="p">);</span>
-<a name="line-279"></a>
-<a name="line-280"></a>  <span class="n">memset</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">));</span>
-<a name="line-281"></a><span class="p">}</span>
-<a name="line-282"></a>
-<a name="line-283"></a><span class="kt">int</span> <span class="nf">vorbis_book_init_encode</span><span class="p">(</span><span class="n">codebook</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="k">const</span> <span class="n">static_codebook</span> <span class="o">*</span><span class="n">s</span><span class="p">){</span>
-<a name="line-284"></a>
-<a name="line-285"></a>  <span class="n">memset</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="p">));</span>
-<a name="line-286"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">c</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
-<a name="line-287"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">entries</span><span class="o">=</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span>
-<a name="line-288"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">used_entries</span><span class="o">=</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span>
-<a name="line-289"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">=</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">;</span>
-<a name="line-290"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="o">=</span><span class="n">_make_words</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">,</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-291"></a>  <span class="c1">//c-&gt;valuelist=_book_unquantize(s,s-&gt;entries,NULL);</span>
-<a name="line-292"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">quantvals</span><span class="o">=</span><span class="n">_book_maptype1_quantvals</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-<a name="line-293"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">minval</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">rint</span><span class="p">(</span><span class="n">_float32_unpack</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">q_min</span><span class="p">));</span>
-<a name="line-294"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">delta</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">rint</span><span class="p">(</span><span class="n">_float32_unpack</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">q_delta</span><span class="p">));</span>
-<a name="line-295"></a>
-<a name="line-296"></a>  <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-297"></a><span class="p">}</span>
-<a name="line-298"></a>
-<a name="line-299"></a><span class="k">static</span> <span class="kt">ogg_uint32_t</span> <span class="nf">bitreverse</span><span class="p">(</span><span class="kt">ogg_uint32_t</span> <span class="n">x</span><span class="p">){</span>
-<a name="line-300"></a>  <span class="n">x</span><span class="o">=</span>    <span class="p">((</span><span class="n">x</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0x0000ffffUL</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xffff0000UL</span><span class="p">);</span>
-<a name="line-301"></a>  <span class="n">x</span><span class="o">=</span>    <span class="p">((</span><span class="n">x</span><span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0x00ff00ffUL</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span><span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff00ff00UL</span><span class="p">);</span>
-<a name="line-302"></a>  <span class="n">x</span><span class="o">=</span>    <span class="p">((</span><span class="n">x</span><span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0x0f0f0f0fUL</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span><span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xf0f0f0f0UL</span><span class="p">);</span>
-<a name="line-303"></a>  <span class="n">x</span><span class="o">=</span>    <span class="p">((</span><span class="n">x</span><span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0x33333333UL</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span><span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xccccccccUL</span><span class="p">);</span>
-<a name="line-304"></a>  <span class="k">return</span><span class="p">((</span><span class="n">x</span><span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0x55555555UL</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span><span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xaaaaaaaaUL</span><span class="p">);</span>
-<a name="line-305"></a><span class="p">}</span>
-<a name="line-306"></a>
-<a name="line-307"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">sort32a</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
-<a name="line-308"></a>  <span class="k">return</span> <span class="p">(</span> <span class="o">**</span><span class="p">(</span><span class="kt">ogg_uint32_t</span> <span class="o">**</span><span class="p">)</span><span class="n">a</span><span class="o">&gt;**</span><span class="p">(</span><span class="kt">ogg_uint32_t</span> <span class="o">**</span><span class="p">)</span><span class="n">b</span><span class="p">)</span><span class="o">-</span>
-<a name="line-309"></a>    <span class="p">(</span> <span class="o">**</span><span class="p">(</span><span class="kt">ogg_uint32_t</span> <span class="o">**</span><span class="p">)</span><span class="n">a</span><span class="o">&lt;**</span><span class="p">(</span><span class="kt">ogg_uint32_t</span> <span class="o">**</span><span class="p">)</span><span class="n">b</span><span class="p">);</span>
-<a name="line-310"></a><span class="p">}</span>
-<a name="line-311"></a>
-<a name="line-312"></a><span class="cm">/* decode codebook arrangement is more heavily optimized than encode */</span>
-<a name="line-313"></a><span class="kt">int</span> <span class="nf">vorbis_book_init_decode</span><span class="p">(</span><span class="n">codebook</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="k">const</span> <span class="n">static_codebook</span> <span class="o">*</span><span class="n">s</span><span class="p">){</span>
-<a name="line-314"></a>  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">tabn</span><span class="p">;</span>
-<a name="line-315"></a>  <span class="kt">int</span> <span class="o">*</span><span class="n">sortindex</span><span class="p">;</span>
-<a name="line-316"></a>  <span class="n">memset</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="p">));</span>
-<a name="line-317"></a>
-<a name="line-318"></a>  <span class="cm">/* count actually used entries */</span>
-<a name="line-319"></a>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-320"></a>    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-321"></a>      <span class="n">n</span><span class="o">++</span><span class="p">;</span>
-<a name="line-322"></a>
-<a name="line-323"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">entries</span><span class="o">=</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span>
-<a name="line-324"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">used_entries</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
-<a name="line-325"></a>  <span class="n">c</span><span class="o">-&gt;</span><span class="n">dim</span><span class="o">=</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">;</span>
-<a name="line-326"></a>
-<a name="line-327"></a>  <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">){</span>
-<a name="line-328"></a>
-<a name="line-329"></a>    <span class="cm">/* two different remappings go on here.</span>
-<a name="line-330"></a>
-<a name="line-331"></a><span class="cm">    First, we collapse the likely sparse codebook down only to</span>
-<a name="line-332"></a><span class="cm">    actually represented values/words.  This collapsing needs to be</span>
-<a name="line-333"></a><span class="cm">    indexed as map-valueless books are used to encode original entry</span>
-<a name="line-334"></a><span class="cm">    positions as integers.</span>
-<a name="line-335"></a>
-<a name="line-336"></a><span class="cm">    Second, we reorder all vectors, including the entry index above,</span>
-<a name="line-337"></a><span class="cm">    by sorted bitreversed codeword to allow treeless decode. */</span>
-<a name="line-338"></a>
-<a name="line-339"></a>    <span class="cm">/* perform sort */</span>
-<a name="line-340"></a>    <span class="kt">ogg_uint32_t</span> <span class="o">*</span><span class="n">codes</span><span class="o">=</span><span class="n">_make_words</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">,</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">used_entries</span><span class="p">);</span>
-<a name="line-341"></a><span class="hll">    <span class="kt">ogg_uint32_t</span> <span class="o">**</span><span class="n">codep</span><span class="o">=</span><span class="n">alloca</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">codep</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Obsolete function 'alloca' called. In C99 and later it is recommended to use a variable length array instead. <span class='marker'>[+]</span></span><div class='content'>The obsolete function &apos;alloca&apos; is called. In C99 and later it is recommended to use a variable length array or a dynamically allocated array instead. The function &apos;alloca&apos; is dangerous for many reasons (http://stackoverflow.com/questions/1018853/why-is-alloca-not-considered-good-practice and http://linux.die.net/man/3/alloca).</div></div>
-</span><a name="line-342"></a>
-<a name="line-343"></a>    <span class="k">if</span><span class="p">(</span><span class="n">codes</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span><span class="k">goto</span> <span class="n">err_out</span><span class="p">;</span>
-<a name="line-344"></a>
-<a name="line-345"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-346"></a>      <span class="n">codes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">bitreverse</span><span class="p">(</span><span class="n">codes</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-347"></a>      <span class="n">codep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">codes</span><span class="o">+</span><span class="n">i</span><span class="p">;</span>
-<a name="line-348"></a>    <span class="p">}</span>
-<a name="line-349"></a>
-<a name="line-350"></a>    <span class="n">qsort</span><span class="p">(</span><span class="n">codep</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">codep</span><span class="p">),</span><span class="n">sort32a</span><span class="p">);</span>
-<a name="line-351"></a>
-<a name="line-352"></a><span class="hll">    <span class="n">sortindex</span><span class="o">=</span><span class="n">alloca</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">sortindex</span><span class="p">));</span><div class='verbose expandable'><span class='error2'>&lt;--- Obsolete function 'alloca' called. In C99 and later it is recommended to use a variable length array instead. <span class='marker'>[+]</span></span><div class='content'>The obsolete function &apos;alloca&apos; is called. In C99 and later it is recommended to use a variable length array or a dynamically allocated array instead. The function &apos;alloca&apos; is dangerous for many reasons (http://stackoverflow.com/questions/1018853/why-is-alloca-not-considered-good-practice and http://linux.die.net/man/3/alloca).</div></div>
-</span><a name="line-353"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="o">=</span><span class="n">_ogg_malloc</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">));</span>
-<a name="line-354"></a>    <span class="cm">/* the index is a reverse index */</span>
-<a name="line-355"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-356"></a>      <span class="kt">int</span> <span class="n">position</span><span class="o">=</span><span class="n">codep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">codes</span><span class="p">;</span>
-<a name="line-357"></a>      <span class="n">sortindex</span><span class="p">[</span><span class="n">position</span><span class="p">]</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-358"></a>    <span class="p">}</span>
-<a name="line-359"></a>
-<a name="line-360"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-361"></a>      <span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">[</span><span class="n">sortindex</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">codes</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-362"></a>    <span class="n">_ogg_free</span><span class="p">(</span><span class="n">codes</span><span class="p">);</span>
-<a name="line-363"></a>
-<a name="line-364"></a>
-<a name="line-365"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">valuelist</span><span class="o">=</span><span class="n">_book_unquantize</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">sortindex</span><span class="p">);</span>
-<a name="line-366"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_index</span><span class="o">=</span><span class="n">_ogg_malloc</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_index</span><span class="p">));</span>
-<a name="line-367"></a>
-<a name="line-368"></a>    <span class="k">for</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-369"></a>      <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-370"></a>        <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_index</span><span class="p">[</span><span class="n">sortindex</span><span class="p">[</span><span class="n">n</span><span class="o">++</span><span class="p">]]</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-371"></a>
-<a name="line-372"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="o">=</span><span class="n">_ogg_malloc</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">));</span>
-<a name="line-373"></a>    <span class="k">for</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-374"></a>      <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
-<a name="line-375"></a>        <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">[</span><span class="n">sortindex</span><span class="p">[</span><span class="n">n</span><span class="o">++</span><span class="p">]]</span><span class="o">=</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-376"></a>
-<a name="line-377"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="o">=</span><span class="n">_ilog</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">used_entries</span><span class="p">)</span><span class="o">-</span><span class="mi">4</span><span class="p">;</span> <span class="cm">/* this is magic */</span>
-<a name="line-378"></a>    <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span>
-<a name="line-379"></a>    <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="o">&gt;</span><span class="mi">8</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="o">=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-380"></a>
-<a name="line-381"></a>    <span class="n">tabn</span><span class="o">=</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="p">;</span>
-<a name="line-382"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="o">=</span><span class="n">_ogg_calloc</span><span class="p">(</span><span class="n">tabn</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="p">));</span>
-<a name="line-383"></a>    <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_maxlength</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-384"></a>
-<a name="line-385"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-386"></a>      <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_maxlength</span><span class="o">&lt;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-<a name="line-387"></a>        <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_maxlength</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-388"></a>      <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="p">){</span>
-<a name="line-389"></a>        <span class="kt">ogg_uint32_t</span> <span class="n">orig</span><span class="o">=</span><span class="n">bitreverse</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-390"></a>        <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="o">-</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
-<a name="line-391"></a>          <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="p">[</span><span class="n">orig</span><span class="o">|</span><span class="p">(</span><span class="n">j</span><span class="o">&lt;&lt;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_codelengths</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-392"></a>      <span class="p">}</span>
-<a name="line-393"></a>    <span class="p">}</span>
-<a name="line-394"></a>
-<a name="line-395"></a>    <span class="cm">/* now fill in &#39;unused&#39; entries in the firsttable with hi/lo search</span>
-<a name="line-396"></a><span class="cm">       hints for the non-direct-hits */</span>
-<a name="line-397"></a>    <span class="p">{</span>
-<a name="line-398"></a>      <span class="kt">ogg_uint32_t</span> <span class="n">mask</span><span class="o">=</span><span class="mh">0xfffffffeUL</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="mi">31</span><span class="o">-</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="p">);</span>
-<a name="line-399"></a>      <span class="kt">long</span> <span class="n">lo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">hi</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-400"></a>
-<a name="line-401"></a>      <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">tabn</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-<a name="line-402"></a>        <span class="kt">ogg_uint32_t</span> <span class="n">word</span><span class="o">=</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="mi">32</span><span class="o">-</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttablen</span><span class="p">);</span>
-<a name="line-403"></a>        <span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="p">[</span><span class="n">bitreverse</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
-<a name="line-404"></a>          <span class="k">while</span><span class="p">((</span><span class="n">lo</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;</span><span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">[</span><span class="n">lo</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">word</span><span class="p">)</span><span class="n">lo</span><span class="o">++</span><span class="p">;</span>
-<a name="line-405"></a>          <span class="k">while</span><span class="p">(</span>    <span class="n">hi</span><span class="o">&lt;</span><span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">word</span><span class="o">&gt;=</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">[</span><span class="n">hi</span><span class="p">]</span><span class="o">&amp;</span><span class="n">mask</span><span class="p">))</span><span class="n">hi</span><span class="o">++</span><span class="p">;</span>
-<a name="line-406"></a>
-<a name="line-407"></a>          <span class="cm">/* we only actually have 15 bits per hint to play with here.</span>
-<a name="line-408"></a><span class="cm">             In order to overflow gracefully (nothing breaks, efficiency</span>
-<a name="line-409"></a><span class="cm">             just drops), encode as the difference from the extremes. */</span>
-<a name="line-410"></a>          <span class="p">{</span>
-<a name="line-411"></a>            <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">loval</span><span class="o">=</span><span class="n">lo</span><span class="p">;</span>
-<a name="line-412"></a>            <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">hival</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="n">hi</span><span class="p">;</span>
-<a name="line-413"></a>
-<a name="line-414"></a>            <span class="k">if</span><span class="p">(</span><span class="n">loval</span><span class="o">&gt;</span><span class="mh">0x7fff</span><span class="p">)</span><span class="n">loval</span><span class="o">=</span><span class="mh">0x7fff</span><span class="p">;</span>
-<a name="line-415"></a>            <span class="k">if</span><span class="p">(</span><span class="n">hival</span><span class="o">&gt;</span><span class="mh">0x7fff</span><span class="p">)</span><span class="n">hival</span><span class="o">=</span><span class="mh">0x7fff</span><span class="p">;</span>
-<a name="line-416"></a>            <span class="n">c</span><span class="o">-&gt;</span><span class="n">dec_firsttable</span><span class="p">[</span><span class="n">bitreverse</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span><span class="o">=</span>
-<a name="line-417"></a>              <span class="mh">0x80000000UL</span> <span class="o">|</span> <span class="p">(</span><span class="n">loval</span><span class="o">&lt;&lt;</span><span class="mi">15</span><span class="p">)</span> <span class="o">|</span> <span class="n">hival</span><span class="p">;</span>
-<a name="line-418"></a>          <span class="p">}</span>
-<a name="line-419"></a>        <span class="p">}</span>
-<a name="line-420"></a>      <span class="p">}</span>
-<a name="line-421"></a>    <span class="p">}</span>
-<a name="line-422"></a>  <span class="p">}</span>
-<a name="line-423"></a>
-<a name="line-424"></a>  <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-425"></a> <span class="nl">err_out</span><span class="p">:</span>
-<a name="line-426"></a>  <span class="n">vorbis_book_clear</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
-<a name="line-427"></a>  <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-428"></a><span class="p">}</span>
-<a name="line-429"></a>
-<a name="line-430"></a><span class="kt">long</span> <span class="nf">vorbis_book_codeword</span><span class="p">(</span><span class="n">codebook</span> <span class="o">*</span><span class="n">book</span><span class="p">,</span><span class="kt">int</span> <span class="n">entry</span><span class="p">){</span>
-<a name="line-431"></a>  <span class="k">if</span><span class="p">(</span><span class="n">book</span><span class="o">-&gt;</span><span class="n">c</span><span class="p">)</span> <span class="cm">/* only use with encode; decode optimizations are</span>
-<a name="line-432"></a><span class="cm">                 allowed to break this */</span>
-<a name="line-433"></a>    <span class="k">return</span> <span class="n">book</span><span class="o">-&gt;</span><span class="n">codelist</span><span class="p">[</span><span class="n">entry</span><span class="p">];</span>
-<a name="line-434"></a>  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-435"></a><span class="p">}</span>
-<a name="line-436"></a>
-<a name="line-437"></a><span class="kt">long</span> <span class="nf">vorbis_book_codelen</span><span class="p">(</span><span class="n">codebook</span> <span class="o">*</span><span class="n">book</span><span class="p">,</span><span class="kt">int</span> <span class="n">entry</span><span class="p">){</span>
-<a name="line-438"></a>  <span class="k">if</span><span class="p">(</span><span class="n">book</span><span class="o">-&gt;</span><span class="n">c</span><span class="p">)</span> <span class="cm">/* only use with encode; decode optimizations are</span>
-<a name="line-439"></a><span class="cm">                 allowed to break this */</span>
-<a name="line-440"></a>    <span class="k">return</span> <span class="n">book</span><span class="o">-&gt;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">lengthlist</span><span class="p">[</span><span class="n">entry</span><span class="p">];</span>
-<a name="line-441"></a>  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-442"></a><span class="p">}</span>
-<a name="line-443"></a>
-<a name="line-444"></a><span class="cp">#ifdef _V_SELFTEST</span>
-<a name="line-445"></a>
-<a name="line-446"></a><span class="cm">/* Unit tests of the dequantizer; this stuff will be OK</span>
-<a name="line-447"></a><span class="cm">   cross-platform, I simply want to be sure that special mapping cases</span>
-<a name="line-448"></a><span class="cm">   actually work properly; a bug could go unnoticed for a while */</span>
-<a name="line-449"></a>
-<a name="line-450"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-451"></a>
-<a name="line-452"></a><span class="cm">/* cases:</span>
-<a name="line-453"></a>
-<a name="line-454"></a><span class="cm">   no mapping</span>
-<a name="line-455"></a><span class="cm">   full, explicit mapping</span>
-<a name="line-456"></a><span class="cm">   algorithmic mapping</span>
-<a name="line-457"></a>
-<a name="line-458"></a><span class="cm">   nonsequential</span>
-<a name="line-459"></a><span class="cm">   sequential</span>
-<a name="line-460"></a><span class="cm">*/</span>
-<a name="line-461"></a>
-<a name="line-462"></a><span class="k">static</span> <span class="kt">long</span> <span class="n">full_quantlist1</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span>    <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
-<a name="line-463"></a><span class="k">static</span> <span class="kt">long</span> <span class="n">partial_quantlist1</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span>
-<a name="line-464"></a>
-<a name="line-465"></a><span class="cm">/* no mapping */</span>
-<a name="line-466"></a><span class="n">static_codebook</span> <span class="n">test1</span><span class="o">=</span><span class="p">{</span>
-<a name="line-467"></a>  <span class="mi">4</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span>
-<a name="line-468"></a>  <span class="nb">NULL</span><span class="p">,</span>
-<a name="line-469"></a>  <span class="mi">0</span><span class="p">,</span>
-<a name="line-470"></a>  <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
-<a name="line-471"></a>  <span class="nb">NULL</span><span class="p">,</span>
-<a name="line-472"></a>  <span class="mi">0</span>
-<a name="line-473"></a><span class="p">};</span>
-<a name="line-474"></a><span class="k">static</span> <span class="kt">float</span> <span class="o">*</span><span class="n">test1_result</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
-<a name="line-475"></a>
-<a name="line-476"></a><span class="cm">/* linear, full mapping, nonsequential */</span>
-<a name="line-477"></a><span class="n">static_codebook</span> <span class="n">test2</span><span class="o">=</span><span class="p">{</span>
-<a name="line-478"></a>  <span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span>
-<a name="line-479"></a>  <span class="nb">NULL</span><span class="p">,</span>
-<a name="line-480"></a>  <span class="mi">2</span><span class="p">,</span>
-<a name="line-481"></a>  <span class="o">-</span><span class="mi">533200896</span><span class="p">,</span><span class="mi">1611661312</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
-<a name="line-482"></a>  <span class="n">full_quantlist1</span><span class="p">,</span>
-<a name="line-483"></a>  <span class="mi">0</span>
-<a name="line-484"></a><span class="p">};</span>
-<a name="line-485"></a><span class="k">static</span> <span class="kt">float</span> <span class="n">test2_result</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">};</span>
-<a name="line-486"></a>
-<a name="line-487"></a><span class="cm">/* linear, full mapping, sequential */</span>
-<a name="line-488"></a><span class="n">static_codebook</span> <span class="n">test3</span><span class="o">=</span><span class="p">{</span>
-<a name="line-489"></a>  <span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span>
-<a name="line-490"></a>  <span class="nb">NULL</span><span class="p">,</span>
-<a name="line-491"></a>  <span class="mi">2</span><span class="p">,</span>
-<a name="line-492"></a>  <span class="o">-</span><span class="mi">533200896</span><span class="p">,</span><span class="mi">1611661312</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-493"></a>  <span class="n">full_quantlist1</span><span class="p">,</span>
-<a name="line-494"></a>  <span class="mi">0</span>
-<a name="line-495"></a><span class="p">};</span>
-<a name="line-496"></a><span class="k">static</span> <span class="kt">float</span> <span class="n">test3_result</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
-<a name="line-497"></a>
-<a name="line-498"></a><span class="cm">/* linear, algorithmic mapping, nonsequential */</span>
-<a name="line-499"></a><span class="n">static_codebook</span> <span class="n">test4</span><span class="o">=</span><span class="p">{</span>
-<a name="line-500"></a>  <span class="mi">3</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span>
-<a name="line-501"></a>  <span class="nb">NULL</span><span class="p">,</span>
-<a name="line-502"></a>  <span class="mi">1</span><span class="p">,</span>
-<a name="line-503"></a>  <span class="o">-</span><span class="mi">533200896</span><span class="p">,</span><span class="mi">1611661312</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
-<a name="line-504"></a>  <span class="n">partial_quantlist1</span><span class="p">,</span>
-<a name="line-505"></a>  <span class="mi">0</span>
-<a name="line-506"></a><span class="p">};</span>
-<a name="line-507"></a><span class="k">static</span> <span class="kt">float</span> <span class="n">test4_result</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span>
-<a name="line-508"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span>
-<a name="line-509"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span>
-<a name="line-510"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
-<a name="line-511"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
-<a name="line-512"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
-<a name="line-513"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-514"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-515"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
-<a name="line-516"></a>
-<a name="line-517"></a><span class="cm">/* linear, algorithmic mapping, sequential */</span>
-<a name="line-518"></a><span class="n">static_codebook</span> <span class="n">test5</span><span class="o">=</span><span class="p">{</span>
-<a name="line-519"></a>  <span class="mi">3</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span>
-<a name="line-520"></a>  <span class="nb">NULL</span><span class="p">,</span>
-<a name="line-521"></a>  <span class="mi">1</span><span class="p">,</span>
-<a name="line-522"></a>  <span class="o">-</span><span class="mi">533200896</span><span class="p">,</span><span class="mi">1611661312</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-523"></a>  <span class="n">partial_quantlist1</span><span class="p">,</span>
-<a name="line-524"></a>  <span class="mi">0</span>
-<a name="line-525"></a><span class="p">};</span>
-<a name="line-526"></a><span class="k">static</span> <span class="kt">float</span> <span class="n">test5_result</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span>
-<a name="line-527"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-<a name="line-528"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span>
-<a name="line-529"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-<a name="line-530"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span>
-<a name="line-531"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
-<a name="line-532"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span>
-<a name="line-533"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
-<a name="line-534"></a>                              <span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">};</span>
-<a name="line-535"></a>
-<a name="line-536"></a><span class="kt">void</span> <span class="nf">run_test</span><span class="p">(</span><span class="n">static_codebook</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="kt">float</span> <span class="o">*</span><span class="n">comp</span><span class="p">){</span>
-<a name="line-537"></a>  <span class="kt">float</span> <span class="o">*</span><span class="n">out</span><span class="o">=</span><span class="n">_book_unquantize</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
-<a name="line-538"></a><span class="hll">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-539"></a>
-<a name="line-540"></a>  <span class="k">if</span><span class="p">(</span><span class="n">comp</span><span class="p">){</span>
-<a name="line-541"></a>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">out</span><span class="p">){</span>
-<a name="line-542"></a>      <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;_book_unquantize incorrectly returned NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-543"></a>      <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-544"></a>    <span class="p">}</span>
-<a name="line-545"></a>
-<a name="line-546"></a>    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">entries</span><span class="o">*</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">dim</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-547"></a>      <span class="k">if</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">&gt;</span><span class="mf">.0001</span><span class="p">){</span>
-<a name="line-548"></a>        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;disagreement in unquantized and reference data:</span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-549"></a>                <span class="s">&quot;position %d, %g != %g</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">comp</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-550"></a>        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-551"></a>      <span class="p">}</span>
-<a name="line-552"></a>
-<a name="line-553"></a>  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-<a name="line-554"></a>    <span class="k">if</span><span class="p">(</span><span class="n">out</span><span class="p">){</span>
-<a name="line-555"></a>      <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;_book_unquantize returned a value array: </span><span class="se">\n</span><span class="s">&quot;</span>
-<a name="line-556"></a>              <span class="s">&quot; correct result should have been NULL</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-557"></a>      <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-558"></a>    <span class="p">}</span>
-<a name="line-559"></a>  <span class="p">}</span>
-<a name="line-560"></a><span class="p">}</span>
-<a name="line-561"></a>
-<a name="line-562"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-<a name="line-563"></a>  <span class="cm">/* run the nine dequant tests, and compare to the hand-rolled results */</span>
-<a name="line-564"></a>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;Dequant test 1... &quot;</span><span class="p">);</span>
-<a name="line-565"></a>  <span class="n">run_test</span><span class="p">(</span><span class="o">&amp;</span><span class="n">test1</span><span class="p">,</span><span class="n">test1_result</span><span class="p">);</span>
-<a name="line-566"></a>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;OK</span><span class="se">\n</span><span class="s">Dequant test 2... &quot;</span><span class="p">);</span>
-<a name="line-567"></a>  <span class="n">run_test</span><span class="p">(</span><span class="o">&amp;</span><span class="n">test2</span><span class="p">,</span><span class="n">test2_result</span><span class="p">);</span>
-<a name="line-568"></a>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;OK</span><span class="se">\n</span><span class="s">Dequant test 3... &quot;</span><span class="p">);</span>
-<a name="line-569"></a>  <span class="n">run_test</span><span class="p">(</span><span class="o">&amp;</span><span class="n">test3</span><span class="p">,</span><span class="n">test3_result</span><span class="p">);</span>
-<a name="line-570"></a>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;OK</span><span class="se">\n</span><span class="s">Dequant test 4... &quot;</span><span class="p">);</span>
-<a name="line-571"></a>  <span class="n">run_test</span><span class="p">(</span><span class="o">&amp;</span><span class="n">test4</span><span class="p">,</span><span class="n">test4_result</span><span class="p">);</span>
-<a name="line-572"></a>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;OK</span><span class="se">\n</span><span class="s">Dequant test 5... &quot;</span><span class="p">);</span>
-<a name="line-573"></a>  <span class="n">run_test</span><span class="p">(</span><span class="o">&amp;</span><span class="n">test5</span><span class="p">,</span><span class="n">test5_result</span><span class="p">);</span>
-<a name="line-574"></a>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;OK</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-575"></a>
-<a name="line-576"></a>  <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-577"></a><span class="p">}</span>
-<a name="line-578"></a>
-<a name="line-579"></a><span class="cp">#endif</span>
+<a name="line-160"></a><span class="n">Ref</span><span class="o">&lt;</span><span class="n">OccluderPolygon2D</span><span class="o">&gt;</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">get_occluder_polygon</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-161"></a>
+<a name="line-162"></a>	<span class="k">return</span> <span class="n">occluder_polygon</span><span class="p">;</span>
+<a name="line-163"></a><span class="p">}</span>
+<a name="line-164"></a>
+<a name="line-165"></a><span class="kt">void</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">set_occluder_light_mask</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_mask</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-166"></a>
+<a name="line-167"></a>	<span class="n">mask</span><span class="o">=</span><span class="n">p_mask</span><span class="p">;</span>
+<a name="line-168"></a>	<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_set_light_mask</span><span class="p">(</span><span class="n">occluder</span><span class="p">,</span><span class="n">mask</span><span class="p">);</span>
+<a name="line-169"></a><span class="p">}</span>
+<a name="line-170"></a>
+<a name="line-171"></a><span class="kt">int</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">get_occluder_light_mask</span><span class="p">()</span> <span class="k">const</span><span class="p">{</span>
+<a name="line-172"></a>
+<a name="line-173"></a>	<span class="k">return</span> <span class="n">mask</span><span class="p">;</span>
+<a name="line-174"></a><span class="p">}</span>
+<a name="line-175"></a>
+<a name="line-176"></a><span class="kt">void</span> <span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-177"></a>
+<a name="line-178"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;set_occluder_polygon&quot;</span><span class="p">,</span><span class="s">&quot;polygon:OccluderPolygon2D&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">set_occluder_polygon</span><span class="p">);</span>
+<a name="line-179"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;get_occluder_polygon:OccluderPolygon2D&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">get_occluder_polygon</span><span class="p">);</span>
+<a name="line-180"></a>
+<a name="line-181"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;set_occluder_light_mask&quot;</span><span class="p">,</span><span class="s">&quot;mask&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">set_occluder_light_mask</span><span class="p">);</span>
+<a name="line-182"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;get_occluder_light_mask&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">get_occluder_light_mask</span><span class="p">);</span>
+<a name="line-183"></a>
+<a name="line-184"></a><span class="cp">#ifdef DEBUG_ENABLED</span>
+<a name="line-185"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_poly_changed&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">_poly_changed</span><span class="p">);</span>
+<a name="line-186"></a><span class="cp">#endif</span>
+<a name="line-187"></a>
+<a name="line-188"></a>	<span class="n">ADD_PROPERTY</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">OBJECT</span><span class="p">,</span><span class="s">&quot;occluder&quot;</span><span class="p">,</span><span class="n">PROPERTY_HINT_RESOURCE_TYPE</span><span class="p">,</span><span class="s">&quot;OccluderPolygon2D&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;set_occluder_polygon&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;get_occluder_polygon&quot;</span><span class="p">));</span>
+<a name="line-189"></a>	<span class="n">ADD_PROPERTY</span><span class="p">(</span> <span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">,</span><span class="s">&quot;light_mask&quot;</span><span class="p">,</span><span class="n">PROPERTY_HINT_ALL_FLAGS</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;set_occluder_light_mask&quot;</span><span class="p">),</span><span class="n">_SCS</span><span class="p">(</span><span class="s">&quot;get_occluder_light_mask&quot;</span><span class="p">));</span>
+<a name="line-190"></a><span class="p">}</span>
+<a name="line-191"></a>
+<a name="line-192"></a><span class="hll"><span class="n">LightOccluder2D</span><span class="o">::</span><span class="n">LightOccluder2D</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'LightOccluder2D::enabled' is not initialized in the constructor.</span>
+</span><a name="line-193"></a>
+<a name="line-194"></a>	<span class="n">occluder</span><span class="o">=</span><span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">canvas_light_occluder_create</span><span class="p">();</span>
+<a name="line-195"></a>	<span class="n">mask</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-196"></a><span class="p">}</span>
+<a name="line-197"></a>
+<a name="line-198"></a><span class="n">LightOccluder2D</span><span class="o">::~</span><span class="n">LightOccluder2D</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-199"></a>
+<a name="line-200"></a>	<span class="n">VS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">free</span><span class="p">(</span><span class="n">occluder</span><span class="p">);</span>
+<a name="line-201"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

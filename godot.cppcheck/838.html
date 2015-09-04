@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: tools/editor/editor_log.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/editor/resources_dock.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> editor_log.cpp</p>
-<a href='838.html#line-36'> cstyleCast 36</a><a href='838.html#line-172'> cstyleCast 172</a>
+       <p id="filename"><a href="index.html">Defects:</a> resources_dock.h</p>
+<a href='838.html#line-106'> noExplicitConstructor 106</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -222,166 +222,8 @@
 106
 107
 108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  editor_log.cpp                                                       */</span>
+109</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  resources_dock.h                                                     */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -408,245 +250,87 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;version.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;editor_log.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;scene/gui/center_container.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;editor_node.h&quot;</span>
-<a name="line-33"></a>
-<a name="line-34"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_error_handler</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_self</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">p_func</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">p_file</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_line</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">p_error</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">p_errorexp</span><span class="p">,</span><span class="n">ErrorHandlerType</span> <span class="n">p_type</span> <span class="p">)</span> <span class="p">{</span>
-<a name="line-35"></a>
-<a name="line-36"></a><span class="hll">	<span class="n">EditorLog</span> <span class="o">*</span><span class="n">self</span><span class="o">=</span><span class="p">(</span><span class="n">EditorLog</span> <span class="o">*</span><span class="p">)</span><span class="n">p_self</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div>
-</span><a name="line-37"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">current</span><span class="o">!=</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_caller_ID</span><span class="p">())</span>
-<a name="line-38"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-39"></a>
-<a name="line-40"></a>	<span class="n">String</span> <span class="n">err_str</span><span class="p">;</span>
-<a name="line-41"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_errorexp</span> <span class="o">&amp;&amp;</span> <span class="n">p_errorexp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="p">{</span>
-<a name="line-42"></a>		<span class="n">err_str</span><span class="o">=</span><span class="n">p_errorexp</span><span class="p">;</span>
-<a name="line-43"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-44"></a>		<span class="n">err_str</span><span class="o">=</span><span class="n">String</span><span class="p">(</span><span class="n">p_file</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">p_line</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="o">+</span><span class="n">String</span><span class="p">(</span><span class="n">p_error</span><span class="p">);</span>
-<a name="line-45"></a>	<span class="p">}</span>
-<a name="line-46"></a>
-<a name="line-47"></a><span class="c1">//	if (!self-&gt;is_visible())</span>
-<a name="line-48"></a><span class="c1">//		self-&gt;emit_signal(&quot;show_request&quot;);</span>
+<a name="line-29"></a><span class="cp">#ifndef RESOURCES_DOCK_H</span>
+<a name="line-30"></a><span class="cp">#define RESOURCES_DOCK_H</span>
+<a name="line-31"></a>
+<a name="line-32"></a><span class="cp">#include &quot;scene/gui/control.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;scene/gui/tree.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;scene/gui/label.h&quot;</span>
+<a name="line-35"></a><span class="cp">#include &quot;scene/gui/button.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;scene/gui/tool_button.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;scene/gui/box_container.h&quot;</span>
+<a name="line-38"></a><span class="cp">#include &quot;scene/gui/menu_button.h&quot;</span>
+<a name="line-39"></a><span class="cp">#include &quot;scene/gui/file_dialog.h&quot;</span>
+<a name="line-40"></a><span class="cp">#include &quot;create_dialog.h&quot;</span>
+<a name="line-41"></a><span class="cp">#include &quot;editor_file_dialog.h&quot;</span>
+<a name="line-42"></a>
+<a name="line-43"></a>
+<a name="line-44"></a><span class="n">class</span> <span class="n">EditorNode</span><span class="p">;</span>
+<a name="line-45"></a>
+<a name="line-46"></a><span class="n">class</span> <span class="nl">ResourcesDock</span> <span class="p">:</span> <span class="n">public</span> <span class="n">VBoxContainer</span> <span class="p">{</span>
+<a name="line-47"></a>
+<a name="line-48"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">ResourcesDock</span><span class="p">,</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
 <a name="line-49"></a>
-<a name="line-50"></a>	<span class="n">err_str</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="o">+</span><span class="n">err_str</span><span class="p">;</span>
-<a name="line-51"></a>	<span class="n">self</span><span class="o">-&gt;</span><span class="n">log</span><span class="o">-&gt;</span><span class="n">add_newline</span><span class="p">();</span>
-<a name="line-52"></a>
-<a name="line-53"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">icon</span><span class="p">;</span>
-<a name="line-54"></a>
-<a name="line-55"></a>	<span class="k">switch</span><span class="p">(</span><span class="n">p_type</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-56"></a>		<span class="k">case</span> <span class="nl">ERR_HANDLER_ERROR</span><span class="p">:</span> <span class="p">{</span>
-<a name="line-57"></a>
-<a name="line-58"></a>			<span class="n">icon</span> <span class="o">=</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">);</span>
-<a name="line-59"></a>			<span class="k">return</span><span class="p">;</span> <span class="c1">// these are confusing</span>
-<a name="line-60"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-61"></a>		<span class="k">case</span> <span class="nl">ERR_HANDLER_WARNING</span><span class="p">:</span> <span class="p">{</span>
-<a name="line-62"></a>
-<a name="line-63"></a>			<span class="n">icon</span> <span class="o">=</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">);</span>
-<a name="line-64"></a>
-<a name="line-65"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-66"></a>		<span class="k">case</span> <span class="nl">ERR_HANDLER_SCRIPT</span><span class="p">:</span> <span class="p">{</span>
-<a name="line-67"></a>
-<a name="line-68"></a>			<span class="n">icon</span> <span class="o">=</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;ScriptError&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">);</span>
-<a name="line-69"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-50"></a>	<span class="k">enum</span> <span class="p">{</span>
+<a name="line-51"></a>		<span class="n">TOOL_NEW</span><span class="p">,</span>
+<a name="line-52"></a>		<span class="n">TOOL_OPEN</span><span class="p">,</span>
+<a name="line-53"></a>		<span class="n">TOOL_SAVE</span><span class="p">,</span>
+<a name="line-54"></a>		<span class="n">TOOL_SAVE_AS</span><span class="p">,</span>
+<a name="line-55"></a>		<span class="n">TOOL_MAKE_LOCAL</span><span class="p">,</span>
+<a name="line-56"></a>		<span class="n">TOOL_COPY</span><span class="p">,</span>
+<a name="line-57"></a>		<span class="n">TOOL_PASTE</span><span class="p">,</span>
+<a name="line-58"></a>		<span class="n">TOOL_MAX</span>
+<a name="line-59"></a>	<span class="p">};</span>
+<a name="line-60"></a>
+<a name="line-61"></a>
+<a name="line-62"></a>	<span class="n">EditorNode</span> <span class="o">*</span><span class="n">editor</span><span class="p">;</span>
+<a name="line-63"></a>
+<a name="line-64"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">button_new</span><span class="p">;</span>
+<a name="line-65"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">button_open</span><span class="p">;</span>
+<a name="line-66"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">button_save</span><span class="p">;</span>
+<a name="line-67"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">button_tools</span><span class="p">;</span>
+<a name="line-68"></a>
+<a name="line-69"></a>	<span class="n">CreateDialog</span> <span class="o">*</span><span class="n">create_dialog</span><span class="p">;</span>
 <a name="line-70"></a>
-<a name="line-71"></a>	<span class="p">}</span>
-<a name="line-72"></a>
-<a name="line-73"></a>	<span class="n">self</span><span class="o">-&gt;</span><span class="n">add_message</span><span class="p">(</span><span class="n">err_str</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-74"></a>
-<a name="line-75"></a><span class="p">}</span>
+<a name="line-71"></a>	<span class="n">AcceptDialog</span> <span class="o">*</span><span class="n">accept</span><span class="p">;</span>
+<a name="line-72"></a>	<span class="n">EditorFileDialog</span> <span class="o">*</span><span class="n">file</span><span class="p">;</span>
+<a name="line-73"></a>	<span class="n">Tree</span> <span class="o">*</span><span class="n">resources</span><span class="p">;</span>
+<a name="line-74"></a>	<span class="kt">bool</span> <span class="n">block_add</span><span class="p">;</span>
+<a name="line-75"></a>	<span class="kt">int</span> <span class="n">current_action</span><span class="p">;</span>
 <a name="line-76"></a>
-<a name="line-77"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-77"></a>
 <a name="line-78"></a>
-<a name="line-79"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_ENTER_TREE</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-79"></a>
 <a name="line-80"></a>
-<a name="line-81"></a>		<span class="n">log</span><span class="o">-&gt;</span><span class="n">add_color_override</span><span class="p">(</span><span class="s">&quot;default_color&quot;</span><span class="p">,</span><span class="n">get_color</span><span class="p">(</span><span class="s">&quot;font_color&quot;</span><span class="p">,</span><span class="s">&quot;Tree&quot;</span><span class="p">));</span>
-<a name="line-82"></a>		<span class="n">tb</span><span class="o">-&gt;</span><span class="n">set_normal_texture</span><span class="p">(</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Collapse&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">));</span>
-<a name="line-83"></a>		<span class="n">tb</span><span class="o">-&gt;</span><span class="n">set_hover_texture</span><span class="p">(</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;CollapseHl&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">));</span>
+<a name="line-81"></a>	<span class="kt">void</span> <span class="nf">_file_action</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">);</span>
+<a name="line-82"></a>
+<a name="line-83"></a>
 <a name="line-84"></a>
-<a name="line-85"></a>	<span class="p">}</span>
-<a name="line-86"></a>
-<a name="line-87"></a>	<span class="cm">/*if (p_what==NOTIFICATION_DRAW) {</span>
-<a name="line-88"></a>
-<a name="line-89"></a><span class="cm">		RID ci = get_canvas_item();</span>
-<a name="line-90"></a><span class="cm">		get_stylebox(&quot;panel&quot;,&quot;PopupMenu&quot;)-&gt;draw(ci,Rect2(Point2(),get_size()));</span>
-<a name="line-91"></a><span class="cm">		int top_ofs = 20;</span>
-<a name="line-92"></a><span class="cm">		int border_ofs=4;</span>
-<a name="line-93"></a><span class="cm">		Ref&lt;StyleBox&gt; style = get_stylebox(&quot;normal&quot;,&quot;TextEdit&quot;);</span>
-<a name="line-94"></a>
-<a name="line-95"></a><span class="cm">		style-&gt;draw(ci,Rect2( Point2(border_ofs,top_ofs),get_size()-Size2(border_ofs*2,top_ofs+border_ofs)));</span>
-<a name="line-96"></a><span class="cm">	}*/</span>
-<a name="line-97"></a><span class="p">}</span>
-<a name="line-98"></a>
-<a name="line-99"></a>
-<a name="line-100"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_close_request</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-101"></a>
-<a name="line-102"></a>	<span class="n">_flip_request</span><span class="p">();</span>
+<a name="line-85"></a>	<span class="kt">void</span> <span class="nf">_delete</span><span class="p">(</span><span class="n">Object</span><span class="o">*</span> <span class="n">p_item</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_column</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_id</span><span class="p">);</span>
+<a name="line-86"></a>	<span class="kt">void</span> <span class="nf">_resource_selected</span><span class="p">();</span>
+<a name="line-87"></a>	<span class="kt">void</span> <span class="nf">_update_name</span><span class="p">(</span><span class="n">TreeItem</span> <span class="o">*</span><span class="n">item</span><span class="p">);</span>
+<a name="line-88"></a>	<span class="kt">void</span> <span class="nf">_tool_selected</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_tool</span><span class="p">);</span>
+<a name="line-89"></a>	<span class="kt">void</span> <span class="nf">_create</span><span class="p">();</span>
+<a name="line-90"></a>
+<a name="line-91"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-92"></a>
+<a name="line-93"></a>	<span class="kt">void</span> <span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">);</span>
+<a name="line-94"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
+<a name="line-95"></a>
+<a name="line-96"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-97"></a>
+<a name="line-98"></a>	<span class="kt">void</span> <span class="n">add_resource</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;&amp;</span> <span class="n">p_resource</span><span class="p">);</span>
+<a name="line-99"></a>	<span class="kt">void</span> <span class="nf">remove_resource</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;&amp;</span> <span class="n">p_resource</span><span class="p">);</span>
+<a name="line-100"></a>	<span class="kt">void</span> <span class="nf">save_resource</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;&amp;</span> <span class="n">p_resource</span><span class="p">);</span>
+<a name="line-101"></a>	<span class="kt">void</span> <span class="nf">save_resource_as</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;&amp;</span> <span class="n">p_resource</span><span class="p">);</span>
+<a name="line-102"></a>
 <a name="line-103"></a>
-<a name="line-104"></a><span class="p">}</span>
+<a name="line-104"></a>	<span class="kt">void</span> <span class="nf">cleanup</span><span class="p">();</span>
 <a name="line-105"></a>
-<a name="line-106"></a>
-<a name="line-107"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_clear_request</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-106"></a><span class="hll">	<span class="n">ResourcesDock</span><span class="p">(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="n">p_editor</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'ResourcesDock' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;ResourcesDock&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
+</span><a name="line-107"></a><span class="p">};</span>
 <a name="line-108"></a>
-<a name="line-109"></a>	<span class="n">log</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-110"></a>
-<a name="line-111"></a><span class="p">}</span>
-<a name="line-112"></a>
-<a name="line-113"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">clear</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-114"></a>	<span class="n">_clear_request</span><span class="p">();</span>
-<a name="line-115"></a><span class="p">}</span>
-<a name="line-116"></a>
-<a name="line-117"></a>
-<a name="line-118"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">add_message</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_msg</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_error</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-119"></a>
-<a name="line-120"></a>
-<a name="line-121"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_error</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-122"></a>		<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">icon</span> <span class="o">=</span> <span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">);</span>
-<a name="line-123"></a>		<span class="n">log</span><span class="o">-&gt;</span><span class="n">add_image</span><span class="p">(</span> <span class="n">icon</span> <span class="p">);</span>
-<a name="line-124"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_icon</span><span class="p">(</span><span class="n">icon</span><span class="p">);</span>
-<a name="line-125"></a>		<span class="n">log</span><span class="o">-&gt;</span><span class="n">push_color</span><span class="p">(</span><span class="n">get_color</span><span class="p">(</span><span class="s">&quot;fg_error&quot;</span><span class="p">,</span><span class="s">&quot;Editor&quot;</span><span class="p">));</span>
-<a name="line-126"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-127"></a>		<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_icon</span><span class="p">(</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span><span class="p">());</span>
-<a name="line-128"></a>	<span class="p">}</span>
-<a name="line-129"></a>
-<a name="line-130"></a>
-<a name="line-131"></a>	<span class="n">log</span><span class="o">-&gt;</span><span class="n">add_newline</span><span class="p">();</span>
-<a name="line-132"></a>	<span class="n">log</span><span class="o">-&gt;</span><span class="n">add_text</span><span class="p">(</span><span class="n">p_msg</span><span class="p">);</span>
-<a name="line-133"></a>	<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="n">p_msg</span><span class="p">);</span>
-<a name="line-134"></a>
-<a name="line-135"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_error</span><span class="p">)</span>
-<a name="line-136"></a>		<span class="n">log</span><span class="o">-&gt;</span><span class="n">pop</span><span class="p">();</span>
-<a name="line-137"></a>
-<a name="line-138"></a>
-<a name="line-139"></a><span class="p">}</span>
-<a name="line-140"></a>
-<a name="line-141"></a><span class="cm">/*</span>
-<a name="line-142"></a><span class="cm">void EditorLog::_dragged(const Point2&amp; p_ofs) {</span>
-<a name="line-143"></a>
-<a name="line-144"></a><span class="cm">	int ofs = ec-&gt;get_minsize().height;</span>
-<a name="line-145"></a><span class="cm">	ofs = ofs-p_ofs.y;</span>
-<a name="line-146"></a><span class="cm">	if (ofs&lt;50)</span>
-<a name="line-147"></a><span class="cm">		ofs=50;</span>
-<a name="line-148"></a><span class="cm">	if (ofs&gt;300)</span>
-<a name="line-149"></a><span class="cm">		ofs=300;</span>
-<a name="line-150"></a><span class="cm">	ec-&gt;set_minsize(Size2(ec-&gt;get_minsize().width,ofs));</span>
-<a name="line-151"></a><span class="cm">	minimum_size_changed();</span>
-<a name="line-152"></a>
-<a name="line-153"></a><span class="cm">}</span>
-<a name="line-154"></a><span class="cm">*/</span>
-<a name="line-155"></a>
-<a name="line-156"></a>
-<a name="line-157"></a><span class="n">ToolButton</span> <span class="o">*</span><span class="n">EditorLog</span><span class="o">::</span><span class="n">get_button</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-158"></a>
-<a name="line-159"></a>	<span class="k">return</span> <span class="n">button</span><span class="p">;</span>
-<a name="line-160"></a><span class="p">}</span>
-<a name="line-161"></a>
-<a name="line-162"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_flip_request</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-163"></a>
-<a name="line-164"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">is_visible</span><span class="p">())</span>
-<a name="line-165"></a>		<span class="n">hide</span><span class="p">();</span>
-<a name="line-166"></a>	<span class="k">else</span>
-<a name="line-167"></a>		<span class="nf">show</span><span class="p">();</span>
-<a name="line-168"></a><span class="p">}</span>
-<a name="line-169"></a>
-<a name="line-170"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_undo_redo_cbk</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p_self</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-171"></a>
-<a name="line-172"></a><span class="hll">	<span class="n">EditorLog</span> <span class="o">*</span><span class="n">self</span><span class="o">=</span><span class="p">(</span><span class="n">EditorLog</span> <span class="o">*</span><span class="p">)</span><span class="n">p_self</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div>
-</span><a name="line-173"></a>	<span class="n">self</span><span class="o">-&gt;</span><span class="n">add_message</span><span class="p">(</span><span class="n">p_name</span><span class="p">);</span>
-<a name="line-174"></a>
-<a name="line-175"></a><span class="p">}</span>
-<a name="line-176"></a>
-<a name="line-177"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-178"></a>
-<a name="line-179"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_close_request&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">EditorLog</span><span class="o">::</span><span class="n">_close_request</span> <span class="p">);</span>
-<a name="line-180"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_flip_request&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">EditorLog</span><span class="o">::</span><span class="n">_flip_request</span> <span class="p">);</span>
-<a name="line-181"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_clear_request&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">EditorLog</span><span class="o">::</span><span class="n">_clear_request</span> <span class="p">);</span>
-<a name="line-182"></a>
-<a name="line-183"></a>	<span class="c1">//ObjectTypeDB::bind_method(_MD(&quot;_dragged&quot;),&amp;EditorLog::_dragged );</span>
-<a name="line-184"></a>	<span class="n">ADD_SIGNAL</span><span class="p">(</span> <span class="n">MethodInfo</span><span class="p">(</span><span class="s">&quot;close_request&quot;</span><span class="p">));</span>
-<a name="line-185"></a>	<span class="n">ADD_SIGNAL</span><span class="p">(</span> <span class="n">MethodInfo</span><span class="p">(</span><span class="s">&quot;show_request&quot;</span><span class="p">));</span>
-<a name="line-186"></a>	<span class="n">ADD_SIGNAL</span><span class="p">(</span> <span class="n">MethodInfo</span><span class="p">(</span><span class="s">&quot;clear_request&quot;</span><span class="p">));</span>
-<a name="line-187"></a><span class="p">}</span>
-<a name="line-188"></a>
-<a name="line-189"></a><span class="n">EditorLog</span><span class="o">::</span><span class="n">EditorLog</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-190"></a>
-<a name="line-191"></a>	<span class="n">VBoxContainer</span> <span class="o">*</span><span class="n">vb</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span><span class="p">);</span>
-<a name="line-192"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">vb</span><span class="p">);</span>
-<a name="line-193"></a>	<span class="n">vb</span><span class="o">-&gt;</span><span class="n">set_v_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
-<a name="line-194"></a>
-<a name="line-195"></a>	<span class="n">HBoxContainer</span> <span class="o">*</span><span class="n">hb</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">HBoxContainer</span> <span class="p">);</span>
-<a name="line-196"></a>	<span class="n">vb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">hb</span><span class="p">);</span>
-<a name="line-197"></a>	<span class="n">title</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Label</span> <span class="p">);</span>
-<a name="line-198"></a>	<span class="n">title</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot; Output:&quot;</span><span class="p">);</span>
-<a name="line-199"></a>	<span class="n">title</span><span class="o">-&gt;</span><span class="n">set_h_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
-<a name="line-200"></a>	<span class="n">hb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">title</span><span class="p">);</span>
-<a name="line-201"></a>
-<a name="line-202"></a>
-<a name="line-203"></a>	<span class="n">button</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ToolButton</span> <span class="p">);</span>
-<a name="line-204"></a>	<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_text_align</span><span class="p">(</span><span class="n">Button</span><span class="o">::</span><span class="n">ALIGN_LEFT</span><span class="p">);</span>
-<a name="line-205"></a>	<span class="n">button</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_flip_request&quot;</span><span class="p">);</span>
-<a name="line-206"></a>	<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_focus_mode</span><span class="p">(</span><span class="n">FOCUS_NONE</span><span class="p">);</span>
-<a name="line-207"></a>	<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_clip_text</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-208"></a>	<span class="n">button</span><span class="o">-&gt;</span><span class="n">set_tooltip</span><span class="p">(</span><span class="s">&quot;Open/Close output panel.&quot;</span><span class="p">);</span>
-<a name="line-209"></a>
-<a name="line-210"></a>	<span class="c1">//pd = memnew( PaneDrag );</span>
-<a name="line-211"></a>	<span class="c1">//hb-&gt;add_child(pd);</span>
-<a name="line-212"></a>	<span class="c1">//pd-&gt;connect(&quot;dragged&quot;,this,&quot;_dragged&quot;);</span>
-<a name="line-213"></a>	<span class="c1">//pd-&gt;set_default_cursor_shape(Control::CURSOR_MOVE);</span>
-<a name="line-214"></a>
-<a name="line-215"></a>	<span class="n">clearbutton</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Button</span> <span class="p">);</span>
-<a name="line-216"></a>	<span class="n">hb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">clearbutton</span><span class="p">);</span>
-<a name="line-217"></a>	<span class="n">clearbutton</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Clear&quot;</span><span class="p">);</span>
-<a name="line-218"></a>	<span class="n">clearbutton</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span><span class="s">&quot;_clear_request&quot;</span><span class="p">);</span>
-<a name="line-219"></a>
-<a name="line-220"></a>	<span class="n">tb</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">TextureButton</span> <span class="p">);</span>
-<a name="line-221"></a>	<span class="n">hb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">tb</span><span class="p">);</span>
-<a name="line-222"></a>	<span class="n">tb</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_close_request&quot;</span><span class="p">);</span>
-<a name="line-223"></a>
-<a name="line-224"></a>
-<a name="line-225"></a>	<span class="n">ec</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Control</span><span class="p">);</span>
-<a name="line-226"></a>	<span class="n">vb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
-<a name="line-227"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">set_custom_minimum_size</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">));</span>
-<a name="line-228"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">set_v_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
-<a name="line-229"></a>
-<a name="line-230"></a>
-<a name="line-231"></a>	<span class="n">PanelContainer</span> <span class="o">*</span><span class="n">pc</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">PanelContainer</span> <span class="p">);</span>
-<a name="line-232"></a>	<span class="n">pc</span><span class="o">-&gt;</span><span class="n">add_style_override</span><span class="p">(</span><span class="s">&quot;panel&quot;</span><span class="p">,</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;normal&quot;</span><span class="p">,</span><span class="s">&quot;TextEdit&quot;</span><span class="p">));</span>
-<a name="line-233"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span>
-<a name="line-234"></a>	<span class="n">pc</span><span class="o">-&gt;</span><span class="n">set_area_as_parent_rect</span><span class="p">();</span>
-<a name="line-235"></a>
-<a name="line-236"></a>	<span class="n">log</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">RichTextLabel</span> <span class="p">);</span>
-<a name="line-237"></a>	<span class="n">log</span><span class="o">-&gt;</span><span class="n">set_scroll_follow</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-238"></a>	<span class="n">log</span><span class="o">-&gt;</span><span class="n">set_selection_enabled</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-239"></a>	<span class="n">log</span><span class="o">-&gt;</span><span class="n">set_focus_mode</span><span class="p">(</span><span class="n">FOCUS_CLICK</span><span class="p">);</span>
-<a name="line-240"></a>	<span class="n">pc</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">log</span><span class="p">);</span>
-<a name="line-241"></a>	<span class="n">add_message</span><span class="p">(</span><span class="n">VERSION_FULL_NAME</span><span class="s">&quot; (c) 2008-2015 Juan Linietsky, Ariel Manzur.&quot;</span><span class="p">);</span>
-<a name="line-242"></a>	<span class="c1">//log-&gt;add_text(&quot;Initialization Complete.\n&quot;); //because it looks cool.</span>
-<a name="line-243"></a>	<span class="n">add_style_override</span><span class="p">(</span><span class="s">&quot;panel&quot;</span><span class="p">,</span><span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;panelf&quot;</span><span class="p">,</span><span class="s">&quot;Panel&quot;</span><span class="p">));</span>
-<a name="line-244"></a>
-<a name="line-245"></a>	<span class="n">eh</span><span class="p">.</span><span class="n">errfunc</span><span class="o">=</span><span class="n">_error_handler</span><span class="p">;</span>
-<a name="line-246"></a>	<span class="n">eh</span><span class="p">.</span><span class="n">userdata</span><span class="o">=</span><span class="k">this</span><span class="p">;</span>
-<a name="line-247"></a>	<span class="n">add_error_handler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eh</span><span class="p">);</span>
-<a name="line-248"></a>
-<a name="line-249"></a>	<span class="n">current</span><span class="o">=</span><span class="n">Thread</span><span class="o">::</span><span class="n">get_caller_ID</span><span class="p">();</span>
-<a name="line-250"></a>
-<a name="line-251"></a>	<span class="n">EditorNode</span><span class="o">::</span><span class="n">get_undo_redo</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_commit_notify_callback</span><span class="p">(</span><span class="n">_undo_redo_cbk</span><span class="p">,</span><span class="k">this</span><span class="p">);</span>
-<a name="line-252"></a>
-<a name="line-253"></a>	<span class="n">hide</span><span class="p">();</span>
-<a name="line-254"></a>
-<a name="line-255"></a><span class="p">}</span>
-<a name="line-256"></a>
-<a name="line-257"></a><span class="kt">void</span> <span class="n">EditorLog</span><span class="o">::</span><span class="n">deinit</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-258"></a>
-<a name="line-259"></a>	<span class="n">remove_error_handler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">eh</span><span class="p">);</span>
-<a name="line-260"></a>
-<a name="line-261"></a><span class="p">}</span>
-<a name="line-262"></a>
-<a name="line-263"></a>
-<a name="line-264"></a><span class="n">EditorLog</span><span class="o">::~</span><span class="n">EditorLog</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-265"></a>
-<a name="line-266"></a>
-<a name="line-267"></a><span class="p">}</span>
+<a name="line-109"></a><span class="cp">#endif </span><span class="c1">// RESOURCES_DOCK_H</span>
 </pre></div>
 </td></tr></table>
       </div>

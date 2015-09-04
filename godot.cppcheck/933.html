@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: tools/freetype/freetype/src/base/ftpic.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/freetype/freetype/src/sfnt/sfnt.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> ftpic.c</p>
-<a href='933.html#line-32'> redundantAssignment 32</a>
+       <p id="filename"><a href="index.html">Defects:</a> sfnt.c</p>
+<a href='933.html#line-1'> ConfigurationNotChecked 1</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -156,26 +156,14 @@
 40
 41
 42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/***************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*                                                                         */</span>
-<a name="line-3"></a><span class="cm">/*  ftpic.c                                                                */</span>
+43</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/***************************************************************************/</span><span class='error2'>&lt;--- Skipping configuration 'FT_MAX_CHARMAP_CACHEABLE' since the value of 'FT_MAX_CHARMAP_CACHEABLE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+</span><a name="line-2"></a><span class="cm">/*                                                                         */</span>
+<a name="line-3"></a><span class="cm">/*  sfnt.c                                                                 */</span>
 <a name="line-4"></a><span class="cm">/*                                                                         */</span>
-<a name="line-5"></a><span class="cm">/*    The FreeType position independent code services (body).              */</span>
+<a name="line-5"></a><span class="cm">/*    Single object library component.                                     */</span>
 <a name="line-6"></a><span class="cm">/*                                                                         */</span>
-<a name="line-7"></a><span class="cm">/*  Copyright 2009 by                                                      */</span>
-<a name="line-8"></a><span class="cm">/*  Oran Agra and Mickey Gabel.                                            */</span>
+<a name="line-7"></a><span class="cm">/*  Copyright 1996-2006, 2013 by                                           */</span>
+<a name="line-8"></a><span class="cm">/*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */</span>
 <a name="line-9"></a><span class="cm">/*                                                                         */</span>
 <a name="line-10"></a><span class="cm">/*  This file is part of the FreeType project, and may only be used,       */</span>
 <a name="line-11"></a><span class="cm">/*  modified, and distributed under the terms of the FreeType project      */</span>
@@ -186,43 +174,31 @@
 <a name="line-16"></a><span class="cm">/***************************************************************************/</span>
 <a name="line-17"></a>
 <a name="line-18"></a>
-<a name="line-19"></a><span class="cp">#include &lt;ft2build.h&gt;</span>
-<a name="line-20"></a><span class="cp">#include FT_FREETYPE_H</span>
-<a name="line-21"></a><span class="cp">#include FT_INTERNAL_OBJECTS_H</span>
-<a name="line-22"></a><span class="cp">#include &quot;basepic.h&quot;</span>
-<a name="line-23"></a>
-<a name="line-24"></a><span class="cp">#ifdef FT_CONFIG_OPTION_PIC</span>
-<a name="line-25"></a>
-<a name="line-26"></a>  <span class="cm">/* documentation is in ftpic.h */</span>
-<a name="line-27"></a>
-<a name="line-28"></a>  <span class="n">FT_BASE_DEF</span><span class="p">(</span> <span class="n">FT_Error</span> <span class="p">)</span>
-<a name="line-29"></a>  <span class="n">ft_pic_container_init</span><span class="p">(</span> <span class="n">FT_Library</span>  <span class="n">library</span> <span class="p">)</span>
-<a name="line-30"></a>  <span class="p">{</span>
-<a name="line-31"></a>    <span class="n">FT_PIC_Container</span><span class="o">*</span>  <span class="n">pic_container</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">library</span><span class="o">-&gt;</span><span class="n">pic_container</span><span class="p">;</span>
-<a name="line-32"></a><span class="hll">    <span class="n">FT_Error</span>           <span class="n">error</span>         <span class="o">=</span> <span class="n">FT_Err_Ok</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'error' is reassigned a value before the old one has been used.</span>
-</span><a name="line-33"></a>
+<a name="line-19"></a><span class="cp">#define FT_MAKE_OPTION_SINGLE_OBJECT</span>
+<a name="line-20"></a>
+<a name="line-21"></a><span class="cp">#include &lt;ft2build.h&gt;</span>
+<a name="line-22"></a><span class="cp">#include &quot;sfntpic.c&quot;</span>
+<a name="line-23"></a><span class="cp">#include &quot;ttload.c&quot;</span>
+<a name="line-24"></a><span class="cp">#include &quot;ttmtx.c&quot;</span>
+<a name="line-25"></a><span class="cp">#include &quot;ttcmap.c&quot;</span>
+<a name="line-26"></a><span class="cp">#include &quot;ttkern.c&quot;</span>
+<a name="line-27"></a><span class="cp">#include &quot;sfobjs.c&quot;</span>
+<a name="line-28"></a><span class="cp">#include &quot;sfdriver.c&quot;</span>
+<a name="line-29"></a>
+<a name="line-30"></a><span class="cp">#ifdef TT_CONFIG_OPTION_EMBEDDED_BITMAPS</span>
+<a name="line-31"></a><span class="cp">#include &quot;pngshim.c&quot;</span>
+<a name="line-32"></a><span class="cp">#include &quot;ttsbit.c&quot;</span>
+<a name="line-33"></a><span class="cp">#endif</span>
 <a name="line-34"></a>
-<a name="line-35"></a>    <span class="n">FT_MEM_SET</span><span class="p">(</span> <span class="n">pic_container</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span> <span class="p">(</span> <span class="o">*</span><span class="n">pic_container</span> <span class="p">)</span> <span class="p">);</span>
-<a name="line-36"></a>
-<a name="line-37"></a>    <span class="n">error</span> <span class="o">=</span> <span class="n">ft_base_pic_init</span><span class="p">(</span> <span class="n">library</span> <span class="p">);</span>
-<a name="line-38"></a>    <span class="k">if</span> <span class="p">(</span> <span class="n">error</span> <span class="p">)</span>
-<a name="line-39"></a>      <span class="k">return</span> <span class="n">error</span><span class="p">;</span>
-<a name="line-40"></a>
-<a name="line-41"></a>    <span class="k">return</span> <span class="n">FT_Err_Ok</span><span class="p">;</span>
-<a name="line-42"></a>  <span class="p">}</span>
-<a name="line-43"></a>
-<a name="line-44"></a>
-<a name="line-45"></a>  <span class="cm">/* Destroy the contents of the container. */</span>
-<a name="line-46"></a>  <span class="n">FT_BASE_DEF</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
-<a name="line-47"></a>  <span class="n">ft_pic_container_destroy</span><span class="p">(</span> <span class="n">FT_Library</span>  <span class="n">library</span> <span class="p">)</span>
-<a name="line-48"></a>  <span class="p">{</span>
-<a name="line-49"></a>    <span class="n">ft_base_pic_free</span><span class="p">(</span> <span class="n">library</span> <span class="p">);</span>
-<a name="line-50"></a>  <span class="p">}</span>
-<a name="line-51"></a>
-<a name="line-52"></a><span class="cp">#endif </span><span class="cm">/* FT_CONFIG_OPTION_PIC */</span><span class="cp"></span>
-<a name="line-53"></a>
-<a name="line-54"></a>
-<a name="line-55"></a><span class="cm">/* END */</span>
+<a name="line-35"></a><span class="cp">#ifdef TT_CONFIG_OPTION_POSTSCRIPT_NAMES</span>
+<a name="line-36"></a><span class="cp">#include &quot;ttpost.c&quot;</span>
+<a name="line-37"></a><span class="cp">#endif</span>
+<a name="line-38"></a>
+<a name="line-39"></a><span class="cp">#ifdef TT_CONFIG_OPTION_BDF</span>
+<a name="line-40"></a><span class="cp">#include &quot;ttbdf.c&quot;</span>
+<a name="line-41"></a><span class="cp">#endif</span>
+<a name="line-42"></a>
+<a name="line-43"></a><span class="cm">/* END */</span>
 </pre></div>
 </td></tr></table>
       </div>

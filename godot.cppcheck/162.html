@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: scene/main/node.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/bio/bss_conn.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> node.h</p>
-<a href='162.html#line-43'> cstyleCast 43</a><a href='162.html#line-43'> operatorEqVarError 43</a><a href='162.html#line-43'> operatorEqVarError 43</a><a href='162.html#line-43'> functionStatic 43</a>
+       <p id="filename"><a href="index.html">Defects:</a> bss_conn.c</p>
+<a href='162.html#line-1'> ConfigurationNotChecked 1</a><a href='162.html#line-454'> variableScope 454</a><a href='162.html#line-455'> variableScope 455</a><a href='162.html#line-456'> variableScope 456</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -425,318 +425,1032 @@
 309
 310
 311
-312</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  node.h                                                               */</span>
-<a name="line-3"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
-<a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
-<a name="line-6"></a><span class="cm">/*                    http://www.godotengine.org                         */</span>
-<a name="line-7"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-8"></a><span class="cm">/* Copyright (c) 2007-2015 Juan Linietsky, Ariel Manzur.                 */</span>
-<a name="line-9"></a><span class="cm">/*                                                                       */</span>
-<a name="line-10"></a><span class="cm">/* Permission is hereby granted, free of charge, to any person obtaining */</span>
-<a name="line-11"></a><span class="cm">/* a copy of this software and associated documentation files (the       */</span>
-<a name="line-12"></a><span class="cm">/* &quot;Software&quot;), to deal in the Software without restriction, including   */</span>
-<a name="line-13"></a><span class="cm">/* without limitation the rights to use, copy, modify, merge, publish,   */</span>
-<a name="line-14"></a><span class="cm">/* distribute, sublicense, and/or sell copies of the Software, and to    */</span>
-<a name="line-15"></a><span class="cm">/* permit persons to whom the Software is furnished to do so, subject to */</span>
-<a name="line-16"></a><span class="cm">/* the following conditions:                                             */</span>
-<a name="line-17"></a><span class="cm">/*                                                                       */</span>
-<a name="line-18"></a><span class="cm">/* The above copyright notice and this permission notice shall be        */</span>
-<a name="line-19"></a><span class="cm">/* included in all copies or substantial portions of the Software.       */</span>
-<a name="line-20"></a><span class="cm">/*                                                                       */</span>
-<a name="line-21"></a><span class="cm">/* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,       */</span>
-<a name="line-22"></a><span class="cm">/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */</span>
-<a name="line-23"></a><span class="cm">/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/</span>
-<a name="line-24"></a><span class="cm">/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */</span>
-<a name="line-25"></a><span class="cm">/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */</span>
-<a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
-<a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
-<a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef NODE_H</span>
-<a name="line-30"></a><span class="cp">#define NODE_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;object.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;path_db.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;map.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;object_type_db.h&quot;</span>
-<a name="line-36"></a><span class="cp">#include &quot;script_language.h&quot;</span>
-<a name="line-37"></a><span class="cp">#include &quot;scene/main/scene_main_loop.h&quot;</span>
-<a name="line-38"></a>
-<a name="line-39"></a>
-<a name="line-40"></a><span class="n">class</span> <span class="n">Viewport</span><span class="p">;</span>
-<a name="line-41"></a><span class="n">class</span> <span class="nl">Node</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
-<a name="line-42"></a>
-<a name="line-43"></a><span class="hll">	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Object</span> <span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div><span class='error2'>&lt;--- Member variable 'Node::_type_name' is not assigned a value in 'Node::operator='.</span><span class='inconclusive2'>&lt;--- Member variable 'Node::data' is not assigned a value in 'Node::operator='.</span><div class='verbose expandable'><span class='inconclusive2'>&lt;--- Technically the member function 'Node::*' can be static. <span class='marker'>[+]</span></span><div class='content'>The member function &apos;Node::*&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances?</div></div>
-</span><a name="line-44"></a>	<span class="n">OBJ_CATEGORY</span><span class="p">(</span><span class="s">&quot;Nodes&quot;</span><span class="p">);</span>
-<a name="line-45"></a>	
-<a name="line-46"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-47"></a>
-<a name="line-48"></a>	<span class="k">enum</span> <span class="n">PauseMode</span> <span class="p">{</span>
-<a name="line-49"></a>
-<a name="line-50"></a>		<span class="n">PAUSE_MODE_INHERIT</span><span class="p">,</span>
-<a name="line-51"></a>		<span class="n">PAUSE_MODE_STOP</span><span class="p">,</span>
-<a name="line-52"></a>		<span class="n">PAUSE_MODE_PROCESS</span>
-<a name="line-53"></a>	<span class="p">};</span>
-<a name="line-54"></a>
-<a name="line-55"></a>
-<a name="line-56"></a>	<span class="k">struct</span> <span class="n">Comparator</span> <span class="p">{</span>
-<a name="line-57"></a>
-<a name="line-58"></a>		<span class="kt">bool</span> <span class="n">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">Node</span><span class="o">*</span> <span class="n">p_a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Node</span><span class="o">*</span> <span class="n">p_b</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">p_b</span><span class="o">-&gt;</span><span class="n">is_greater_than</span><span class="p">(</span><span class="n">p_a</span><span class="p">);</span> <span class="p">}</span>
-<a name="line-59"></a>	<span class="p">};</span>
-<a name="line-60"></a>
-<a name="line-61"></a><span class="nl">private</span><span class="p">:</span>	
-<a name="line-62"></a>	
-<a name="line-63"></a>	<span class="k">struct</span> <span class="n">GroupData</span> <span class="p">{</span>
-<a name="line-64"></a>		
-<a name="line-65"></a>		<span class="kt">bool</span> <span class="n">persistent</span><span class="p">;</span>	
-<a name="line-66"></a>		<span class="n">GroupData</span><span class="p">()</span> <span class="p">{</span> <span class="n">persistent</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-67"></a>	<span class="p">};</span>
-<a name="line-68"></a>		
-<a name="line-69"></a>	<span class="k">struct</span> <span class="n">Data</span> <span class="p">{</span>
-<a name="line-70"></a>	
-<a name="line-71"></a>		<span class="n">String</span> <span class="n">filename</span><span class="p">;</span>
-<a name="line-72"></a>		<span class="n">Dictionary</span> <span class="n">instance_state</span><span class="p">;</span>
-<a name="line-73"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">instance_groups</span><span class="p">;</span>
-<a name="line-74"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">instance_connections</span><span class="p">;</span>
-<a name="line-75"></a>
-<a name="line-76"></a>		<span class="n">Node</span> <span class="o">*</span><span class="n">parent</span><span class="p">;</span>
-<a name="line-77"></a>		<span class="n">Node</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
-<a name="line-78"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">children</span><span class="p">;</span>	<span class="c1">// list of children</span>
-<a name="line-79"></a>		<span class="kt">int</span> <span class="n">pos</span><span class="p">;</span>
-<a name="line-80"></a>		<span class="kt">int</span> <span class="n">depth</span><span class="p">;</span>
-<a name="line-81"></a>		<span class="kt">int</span> <span class="n">blocked</span><span class="p">;</span> <span class="c1">// safeguard that throws an error when attempting to modify the tree in a harmful way while being traversed.</span>
-<a name="line-82"></a>		<span class="n">StringName</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-83"></a>		<span class="n">SceneTree</span> <span class="o">*</span><span class="n">tree</span><span class="p">;</span>
-<a name="line-84"></a>		<span class="kt">bool</span> <span class="n">inside_tree</span><span class="p">;</span>
-<a name="line-85"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
-<a name="line-86"></a>		<span class="n">NodePath</span> <span class="n">import_path</span><span class="p">;</span> <span class="c1">//path used when imported, used by scene editors to keep tracking</span>
-<a name="line-87"></a><span class="cp">#endif</span>
-<a name="line-88"></a>
-<a name="line-89"></a>		<span class="n">Viewport</span> <span class="o">*</span><span class="n">viewport</span><span class="p">;</span>
-<a name="line-90"></a>
-<a name="line-91"></a>				
-<a name="line-92"></a>		<span class="n">HashMap</span><span class="o">&lt;</span> <span class="n">StringName</span><span class="p">,</span> <span class="n">GroupData</span><span class="p">,</span><span class="n">StringNameHasher</span><span class="o">&gt;</span>  <span class="n">grouped</span><span class="p">;</span>
-<a name="line-93"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">OW</span><span class="p">;</span> <span class="c1">// owned element</span>
-<a name="line-94"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">owned</span><span class="p">;</span>
-<a name="line-95"></a>		
-<a name="line-96"></a>		<span class="n">PauseMode</span> <span class="n">pause_mode</span><span class="p">;</span>
-<a name="line-97"></a>		<span class="n">Node</span> <span class="o">*</span><span class="n">pause_owner</span><span class="p">;</span>
-<a name="line-98"></a>		<span class="c1">// variables used to properly sort the node when processing, ignored otherwise</span>
-<a name="line-99"></a>		<span class="kt">bool</span> <span class="n">fixed_process</span><span class="p">;</span>
-<a name="line-100"></a>		<span class="kt">bool</span> <span class="n">idle_process</span><span class="p">;</span>
-<a name="line-101"></a>
-<a name="line-102"></a>		<span class="kt">bool</span> <span class="n">input</span><span class="p">;</span>
-<a name="line-103"></a>		<span class="kt">bool</span> <span class="n">unhandled_input</span><span class="p">;</span>
-<a name="line-104"></a>		<span class="kt">bool</span> <span class="n">unhandled_key_input</span><span class="p">;</span>
-<a name="line-105"></a>
-<a name="line-106"></a>		<span class="kt">bool</span> <span class="n">parent_owned</span><span class="p">;</span>
-<a name="line-107"></a>		<span class="kt">bool</span> <span class="n">in_constructor</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="p">}</span> <span class="n">data</span><span class="p">;</span>
-<a name="line-109"></a>	
-<a name="line-110"></a>
-<a name="line-111"></a>	<span class="kt">void</span> <span class="nf">_print_tree</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">);</span>	
-<a name="line-112"></a>	
-<a name="line-113"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">_use_builtin_script</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-114"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">_get_node</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-115"></a>
-<a name="line-116"></a>
-<a name="line-117"></a>
-<a name="line-118"></a>	<span class="kt">void</span> <span class="nf">_validate_child_name</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_name</span><span class="p">);</span>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="kt">void</span> <span class="nf">_propagate_reverse_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_notification</span><span class="p">);</span>	
-<a name="line-121"></a>	<span class="kt">void</span> <span class="nf">_propagate_deferred_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_notification</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">p_reverse</span><span class="p">);</span>
-<a name="line-122"></a>	<span class="kt">void</span> <span class="nf">_propagate_enter_tree</span><span class="p">();</span>
-<a name="line-123"></a>	<span class="kt">void</span> <span class="nf">_propagate_ready</span><span class="p">();</span>
-<a name="line-124"></a>	<span class="kt">void</span> <span class="nf">_propagate_exit_tree</span><span class="p">();</span>
-<a name="line-125"></a>	<span class="kt">void</span> <span class="nf">_propagate_validate_owner</span><span class="p">();</span>
-<a name="line-126"></a>	<span class="kt">void</span> <span class="nf">_print_stray_nodes</span><span class="p">();</span>
-<a name="line-127"></a>	<span class="kt">void</span> <span class="nf">_propagate_pause_owner</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span><span class="n">p_owner</span><span class="p">);</span>
-<a name="line-128"></a>	<span class="n">Array</span> <span class="nf">_get_node_and_resource</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">);</span>
-<a name="line-129"></a>
-<a name="line-130"></a>	<span class="kt">void</span> <span class="n">_duplicate_signals</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span><span class="o">*</span> <span class="n">p_original</span><span class="p">,</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_copy</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-131"></a>	<span class="kt">void</span> <span class="n">_duplicate_and_reown</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_new_parent</span><span class="p">,</span> <span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*</span><span class="p">,</span><span class="n">Node</span><span class="o">*&gt;&amp;</span> <span class="n">p_reown_map</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-132"></a>	<span class="n">Array</span> <span class="n">_get_children</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-133"></a>	<span class="n">Array</span> <span class="n">_get_groups</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/bio/bss_conn.c */</span><span class='error2'>&lt;--- Skipping configuration 'SO_KEEPALIVE' since the value of 'SO_KEEPALIVE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+</span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+<a name="line-3"></a><span class="cm"> * All rights reserved.</span>
+<a name="line-4"></a><span class="cm"> *</span>
+<a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
+<a name="line-6"></a><span class="cm"> * by Eric Young (eay@cryptsoft.com).</span>
+<a name="line-7"></a><span class="cm"> * The implementation was written so as to conform with Netscapes SSL.</span>
+<a name="line-8"></a><span class="cm"> * </span>
+<a name="line-9"></a><span class="cm"> * This library is free for commercial and non-commercial use as long as</span>
+<a name="line-10"></a><span class="cm"> * the following conditions are aheared to.  The following conditions</span>
+<a name="line-11"></a><span class="cm"> * apply to all code found in this distribution, be it the RC4, RSA,</span>
+<a name="line-12"></a><span class="cm"> * lhash, DES, etc., code; not just the SSL code.  The SSL documentation</span>
+<a name="line-13"></a><span class="cm"> * included with this distribution is covered by the same copyright terms</span>
+<a name="line-14"></a><span class="cm"> * except that the holder is Tim Hudson (tjh@cryptsoft.com).</span>
+<a name="line-15"></a><span class="cm"> * </span>
+<a name="line-16"></a><span class="cm"> * Copyright remains Eric Young&#39;s, and as such any Copyright notices in</span>
+<a name="line-17"></a><span class="cm"> * the code are not to be removed.</span>
+<a name="line-18"></a><span class="cm"> * If this package is used in a product, Eric Young should be given attribution</span>
+<a name="line-19"></a><span class="cm"> * as the author of the parts of the library used.</span>
+<a name="line-20"></a><span class="cm"> * This can be in the form of a textual message at program startup or</span>
+<a name="line-21"></a><span class="cm"> * in documentation (online or textual) provided with the package.</span>
+<a name="line-22"></a><span class="cm"> * </span>
+<a name="line-23"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-24"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-25"></a><span class="cm"> * are met:</span>
+<a name="line-26"></a><span class="cm"> * 1. Redistributions of source code must retain the copyright</span>
+<a name="line-27"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer.</span>
+<a name="line-28"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-29"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in the</span>
+<a name="line-30"></a><span class="cm"> *    documentation and/or other materials provided with the distribution.</span>
+<a name="line-31"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this software</span>
+<a name="line-32"></a><span class="cm"> *    must display the following acknowledgement:</span>
+<a name="line-33"></a><span class="cm"> *    &quot;This product includes cryptographic software written by</span>
+<a name="line-34"></a><span class="cm"> *     Eric Young (eay@cryptsoft.com)&quot;</span>
+<a name="line-35"></a><span class="cm"> *    The word &#39;cryptographic&#39; can be left out if the rouines from the library</span>
+<a name="line-36"></a><span class="cm"> *    being used are not cryptographic related :-).</span>
+<a name="line-37"></a><span class="cm"> * 4. If you include any Windows specific code (or a derivative thereof) from </span>
+<a name="line-38"></a><span class="cm"> *    the apps directory (application code) you must include an acknowledgement:</span>
+<a name="line-39"></a><span class="cm"> *    &quot;This product includes software written by Tim Hudson (tjh@cryptsoft.com)&quot;</span>
+<a name="line-40"></a><span class="cm"> * </span>
+<a name="line-41"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS&#39;&#39; AND</span>
+<a name="line-42"></a><span class="cm"> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-43"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<a name="line-44"></a><span class="cm"> * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE</span>
+<a name="line-45"></a><span class="cm"> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<a name="line-46"></a><span class="cm"> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</span>
+<a name="line-47"></a><span class="cm"> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-48"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</span>
+<a name="line-49"></a><span class="cm"> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</span>
+<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
+<a name="line-51"></a><span class="cm"> * SUCH DAMAGE.</span>
+<a name="line-52"></a><span class="cm"> * </span>
+<a name="line-53"></a><span class="cm"> * The licence and distribution terms for any publically available version or</span>
+<a name="line-54"></a><span class="cm"> * derivative of this code cannot be changed.  i.e. this code cannot simply be</span>
+<a name="line-55"></a><span class="cm"> * copied and put under another distribution licence</span>
+<a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
+<a name="line-57"></a><span class="cm"> */</span>
+<a name="line-58"></a>
+<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &lt;errno.h&gt;</span>
+<a name="line-61"></a><span class="cp">#define USE_SOCKETS</span>
+<a name="line-62"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-63"></a><span class="cp">#include &lt;openssl/bio.h&gt;</span>
+<a name="line-64"></a>
+<a name="line-65"></a><span class="cp">#ifndef OPENSSL_NO_SOCK</span>
+<a name="line-66"></a>
+<a name="line-67"></a><span class="cp">#ifdef OPENSSL_SYS_WIN16</span>
+<a name="line-68"></a><span class="cp">#define SOCKET_PROTOCOL 0 </span><span class="cm">/* more microsoft stupidity */</span><span class="cp"></span>
+<a name="line-69"></a><span class="cp">#else</span>
+<a name="line-70"></a><span class="cp">#define SOCKET_PROTOCOL IPPROTO_TCP</span>
+<a name="line-71"></a><span class="cp">#endif</span>
+<a name="line-72"></a>
+<a name="line-73"></a><span class="cp">#if (defined(OPENSSL_SYS_VMS) &amp;&amp; __VMS_VER &lt; 70000000)</span>
+<a name="line-74"></a><span class="cm">/* FIONBIO used as a switch to enable ioctl, and that isn&#39;t in VMS &lt; 7.0 */</span>
+<a name="line-75"></a><span class="cp">#undef FIONBIO</span>
+<a name="line-76"></a><span class="cp">#endif</span>
+<a name="line-77"></a>
+<a name="line-78"></a>
+<a name="line-79"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="n">bio_connect_st</span>
+<a name="line-80"></a>	<span class="p">{</span>
+<a name="line-81"></a>	<span class="kt">int</span> <span class="n">state</span><span class="p">;</span>
+<a name="line-82"></a>
+<a name="line-83"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">param_hostname</span><span class="p">;</span>
+<a name="line-84"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">param_port</span><span class="p">;</span>
+<a name="line-85"></a>	<span class="kt">int</span> <span class="n">nbio</span><span class="p">;</span>
+<a name="line-86"></a>
+<a name="line-87"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">ip</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<a name="line-88"></a>	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">;</span>
+<a name="line-89"></a>
+<a name="line-90"></a>	<span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">them</span><span class="p">;</span>
+<a name="line-91"></a>
+<a name="line-92"></a>	<span class="cm">/* int socket; this will be kept in bio-&gt;num so that it is</span>
+<a name="line-93"></a><span class="cm">	 * compatible with the bss_sock bio */</span> 
+<a name="line-94"></a>
+<a name="line-95"></a>	<span class="cm">/* called when the connection is initially made</span>
+<a name="line-96"></a><span class="cm">	 *  callback(BIO,state,ret);  The callback should return</span>
+<a name="line-97"></a><span class="cm">	 * &#39;ret&#39;.  state is for compatibility with the ssl info_callback */</span>
+<a name="line-98"></a>	<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">info_callback</span><span class="p">)(</span><span class="k">const</span> <span class="n">BIO</span> <span class="o">*</span><span class="n">bio</span><span class="p">,</span><span class="kt">int</span> <span class="n">state</span><span class="p">,</span><span class="kt">int</span> <span class="n">ret</span><span class="p">);</span>
+<a name="line-99"></a>	<span class="p">}</span> <span class="n">BIO_CONNECT</span><span class="p">;</span>
+<a name="line-100"></a>
+<a name="line-101"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_write</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">);</span>
+<a name="line-102"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_read</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">);</span>
+<a name="line-103"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_puts</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">);</span>
+<a name="line-104"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">conn_ctrl</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="kt">long</span> <span class="n">arg1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg2</span><span class="p">);</span>
+<a name="line-105"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_new</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">);</span>
+<a name="line-106"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_free</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+<a name="line-107"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">conn_callback_ctrl</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">bio_info_cb</span> <span class="o">*</span><span class="p">);</span>
+<a name="line-108"></a>
+<a name="line-109"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_state</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">c</span><span class="p">);</span>
+<a name="line-110"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">conn_close_socket</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+<a name="line-111"></a><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="nf">BIO_CONNECT_new</span><span class="p">(</span><span class="kt">void</span> <span class="p">);</span>
+<a name="line-112"></a><span class="kt">void</span> <span class="nf">BIO_CONNECT_free</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
+<a name="line-113"></a>
+<a name="line-114"></a><span class="k">static</span> <span class="n">BIO_METHOD</span> <span class="n">methods_connectp</span><span class="o">=</span>
+<a name="line-115"></a>	<span class="p">{</span>
+<a name="line-116"></a>	<span class="n">BIO_TYPE_CONNECT</span><span class="p">,</span>
+<a name="line-117"></a>	<span class="s">&quot;socket connect&quot;</span><span class="p">,</span>
+<a name="line-118"></a>	<span class="n">conn_write</span><span class="p">,</span>
+<a name="line-119"></a>	<span class="n">conn_read</span><span class="p">,</span>
+<a name="line-120"></a>	<span class="n">conn_puts</span><span class="p">,</span>
+<a name="line-121"></a>	<span class="nb">NULL</span><span class="p">,</span> <span class="cm">/* connect_gets, */</span>
+<a name="line-122"></a>	<span class="n">conn_ctrl</span><span class="p">,</span>
+<a name="line-123"></a>	<span class="n">conn_new</span><span class="p">,</span>
+<a name="line-124"></a>	<span class="n">conn_free</span><span class="p">,</span>
+<a name="line-125"></a>	<span class="n">conn_callback_ctrl</span><span class="p">,</span>
+<a name="line-126"></a>	<span class="p">};</span>
+<a name="line-127"></a>
+<a name="line-128"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_state</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">c</span><span class="p">)</span>
+<a name="line-129"></a>	<span class="p">{</span>
+<a name="line-130"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">;</span>
+<a name="line-131"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">l</span><span class="p">;</span>
+<a name="line-132"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="o">*</span><span class="n">q</span><span class="p">;</span>
+<a name="line-133"></a>	<span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">cb</span><span class="p">)(</span><span class="k">const</span> <span class="n">BIO</span> <span class="o">*</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">)</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
 <a name="line-134"></a>
-<a name="line-135"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">SceneTree</span><span class="p">;</span>
-<a name="line-136"></a>
-<a name="line-137"></a>	<span class="kt">void</span> <span class="nf">_set_tree</span><span class="p">(</span><span class="n">SceneTree</span> <span class="o">*</span><span class="n">p_tree</span><span class="p">);</span>
-<a name="line-138"></a><span class="nl">protected</span><span class="p">:</span>
-<a name="line-139"></a>
-<a name="line-140"></a>	<span class="kt">void</span> <span class="n">_block</span><span class="p">()</span> <span class="p">{</span> <span class="n">data</span><span class="p">.</span><span class="n">blocked</span><span class="o">++</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-141"></a>	<span class="kt">void</span> <span class="n">_unblock</span><span class="p">()</span>  <span class="p">{</span> <span class="n">data</span><span class="p">.</span><span class="n">blocked</span><span class="o">--</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-142"></a>
-<a name="line-143"></a>	<span class="kt">void</span> <span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_notification</span><span class="p">);</span>	
-<a name="line-144"></a>	
-<a name="line-145"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">add_child_notify</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_child</span><span class="p">);</span>
-<a name="line-146"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">remove_child_notify</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_child</span><span class="p">);</span>
-<a name="line-147"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">move_child_notify</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_child</span><span class="p">);</span>
-<a name="line-148"></a>	<span class="c1">//void remove_and_delete_child(Node *p_child);</span>
-<a name="line-149"></a>	
-<a name="line-150"></a>	<span class="kt">void</span> <span class="nf">_propagate_replace_owner</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_owner</span><span class="p">,</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_by_owner</span><span class="p">);</span> 
-<a name="line-151"></a>	
-<a name="line-152"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
+<a name="line-135"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">info_callback</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-136"></a>		<span class="n">cb</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">info_callback</span><span class="p">;</span>
+<a name="line-137"></a>
+<a name="line-138"></a>	<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-139"></a>		<span class="p">{</span>
+<a name="line-140"></a>		<span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">)</span>
+<a name="line-141"></a>			<span class="p">{</span>
+<a name="line-142"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_BEFORE</span><span class="p">:</span>
+<a name="line-143"></a>			<span class="n">p</span><span class="o">=</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">;</span>
+<a name="line-144"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-145"></a>				<span class="p">{</span>
+<a name="line-146"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_NO_HOSTNAME_SPECIFIED</span><span class="p">);</span>
+<a name="line-147"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-148"></a>				<span class="p">}</span>
+<a name="line-149"></a>			<span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span>
+<a name="line-150"></a>				<span class="p">{</span>
+<a name="line-151"></a>				<span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">&#39;:&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span><span class="p">))</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-152"></a>				<span class="p">}</span>
 <a name="line-153"></a>
-<a name="line-154"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">PackedScene</span><span class="p">;</span>
-<a name="line-155"></a>
-<a name="line-156"></a>	<span class="kt">void</span> <span class="nf">_add_child_nocheck</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_child</span><span class="p">,</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">);</span>
-<a name="line-157"></a>	<span class="kt">void</span> <span class="nf">_set_owner_nocheck</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_owner</span><span class="p">);</span>
-<a name="line-158"></a>	<span class="kt">void</span> <span class="nf">_set_name_nocheck</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">);</span>
-<a name="line-159"></a>
-<a name="line-160"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-161"></a>
-<a name="line-162"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-163"></a>		<span class="c1">// you can make your own, but don&#39;t use the same numbers as other notifications in other nodes</span>
-<a name="line-164"></a>		<span class="n">NOTIFICATION_ENTER_TREE</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-<a name="line-165"></a>		<span class="n">NOTIFICATION_EXIT_TREE</span> <span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-<a name="line-166"></a>		<span class="n">NOTIFICATION_MOVED_IN_PARENT</span> <span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-<a name="line-167"></a>		<span class="n">NOTIFICATION_READY</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span>
-<a name="line-168"></a>		<span class="c1">//NOTIFICATION_PARENT_DECONFIGURED =15, - it&#39;s confusing, it&#39;s going away</span>
-<a name="line-169"></a>		<span class="n">NOTIFICATION_PAUSED</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
-<a name="line-170"></a>		<span class="n">NOTIFICATION_UNPAUSED</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-<a name="line-171"></a>		<span class="n">NOTIFICATION_FIXED_PROCESS</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-<a name="line-172"></a>		<span class="n">NOTIFICATION_PROCESS</span> <span class="o">=</span> <span class="mi">17</span><span class="p">,</span>
-<a name="line-173"></a>		<span class="n">NOTIFICATION_PARENTED</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
-<a name="line-174"></a>		<span class="n">NOTIFICATION_UNPARENTED</span><span class="o">=</span><span class="mi">19</span><span class="p">,</span>
-<a name="line-175"></a>		<span class="n">NOTIFICATION_INSTANCED</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-<a name="line-176"></a>	<span class="p">};</span>
-<a name="line-177"></a>			
-<a name="line-178"></a>	<span class="cm">/* NODE/TREE */</span>			
-<a name="line-179"></a>			
-<a name="line-180"></a>	<span class="n">StringName</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-181"></a>	<span class="kt">void</span> <span class="nf">set_name</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">);</span>
-<a name="line-182"></a>	
-<a name="line-183"></a>	<span class="kt">void</span> <span class="nf">add_child</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_child</span><span class="p">);</span>
-<a name="line-184"></a>	<span class="kt">void</span> <span class="nf">remove_child</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_child</span><span class="p">);</span>
-<a name="line-185"></a>	
-<a name="line-186"></a>	<span class="kt">int</span> <span class="n">get_child_count</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-187"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">get_child</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_index</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-188"></a>	<span class="kt">bool</span> <span class="n">has_node</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-189"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">get_node</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-190"></a>	<span class="n">Node</span><span class="o">*</span> <span class="n">find_node</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_mask</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_recursive</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_owned</span><span class="o">=</span><span class="nb">true</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-191"></a>	<span class="kt">bool</span> <span class="n">has_node_and_resource</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-192"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">get_node_and_resource</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">,</span><span class="n">RES</span><span class="o">&amp;</span> <span class="n">r_res</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-193"></a>	
-<a name="line-194"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">get_parent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-195"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">SceneTree</span> <span class="o">*</span><span class="nf">get_tree</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="n">ERR_FAIL_COND_V</span><span class="p">(</span> <span class="o">!</span><span class="n">data</span><span class="p">.</span><span class="n">tree</span><span class="p">,</span> <span class="nb">NULL</span> <span class="p">);</span> <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">tree</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-196"></a>
-<a name="line-197"></a>	<span class="n">_FORCE_INLINE_</span> <span class="kt">bool</span> <span class="n">is_inside_tree</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">inside_tree</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-198"></a>	
-<a name="line-199"></a>	<span class="kt">bool</span> <span class="n">is_a_parent_of</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-200"></a>	<span class="kt">bool</span> <span class="n">is_greater_than</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-201"></a>	
-<a name="line-202"></a>	<span class="n">NodePath</span> <span class="n">get_path</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-203"></a>	<span class="n">NodePath</span> <span class="n">get_path_to</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-204"></a>	
-<a name="line-205"></a>	<span class="kt">void</span> <span class="nf">add_to_group</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_identifier</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_persistent</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-206"></a>	<span class="kt">void</span> <span class="nf">remove_from_group</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_identifier</span><span class="p">);</span>
-<a name="line-207"></a>	<span class="kt">bool</span> <span class="n">is_in_group</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_identifier</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-208"></a>	
-<a name="line-209"></a>	<span class="k">struct</span> <span class="n">GroupInfo</span> <span class="p">{</span>
-<a name="line-210"></a>	
-<a name="line-211"></a>		<span class="n">String</span> <span class="n">name</span><span class="p">;</span>
-<a name="line-212"></a>		<span class="kt">bool</span> <span class="n">persistent</span><span class="p">;</span>
-<a name="line-213"></a>	<span class="p">};</span>
-<a name="line-214"></a>	
-<a name="line-215"></a>	<span class="kt">void</span> <span class="n">get_groups</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">GroupInfo</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">p_groups</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-216"></a>	
-<a name="line-217"></a>	<span class="kt">void</span> <span class="nf">move_child</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_child</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_pos</span><span class="p">);</span>
-<a name="line-218"></a>	<span class="kt">void</span> <span class="nf">raise</span><span class="p">();</span>
-<a name="line-219"></a>	
-<a name="line-220"></a>	<span class="kt">void</span> <span class="nf">set_owner</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_owner</span><span class="p">);</span>
-<a name="line-221"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">get_owner</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-222"></a>	<span class="kt">void</span> <span class="nf">get_owned_by</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_by</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="o">*</span><span class="n">p_owned</span><span class="p">);</span>
-<a name="line-223"></a>
-<a name="line-224"></a>	
-<a name="line-225"></a>	<span class="kt">void</span> <span class="nf">remove_and_skip</span><span class="p">();</span>
-<a name="line-226"></a>	<span class="kt">int</span> <span class="n">get_index</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-227"></a>	
-<a name="line-228"></a>	<span class="kt">void</span> <span class="nf">print_tree</span><span class="p">();</span>
-<a name="line-229"></a>	
-<a name="line-230"></a>	<span class="kt">void</span> <span class="nf">set_filename</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_filename</span><span class="p">);</span>
-<a name="line-231"></a>	<span class="n">String</span> <span class="n">get_filename</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-232"></a>	
-<a name="line-233"></a>	<span class="cm">/* NOTIFICATIONS */</span>
-<a name="line-234"></a>	
-<a name="line-235"></a>	<span class="kt">void</span> <span class="nf">propagate_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_notification</span><span class="p">);</span>
-<a name="line-236"></a>	
-<a name="line-237"></a>	<span class="cm">/* PROCESSING */</span>
-<a name="line-238"></a>	<span class="kt">void</span> <span class="nf">set_fixed_process</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_process</span><span class="p">);</span>
-<a name="line-239"></a>	<span class="kt">float</span> <span class="n">get_fixed_process_delta_time</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-240"></a>	<span class="kt">bool</span> <span class="n">is_fixed_processing</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-241"></a>
-<a name="line-242"></a>	<span class="kt">void</span> <span class="nf">set_process</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_process</span><span class="p">);</span>
-<a name="line-243"></a>	<span class="kt">float</span> <span class="n">get_process_delta_time</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-244"></a>	<span class="kt">bool</span> <span class="n">is_processing</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-245"></a>
-<a name="line-246"></a>
-<a name="line-247"></a>	<span class="kt">void</span> <span class="nf">set_process_input</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enable</span><span class="p">);</span>
-<a name="line-248"></a>	<span class="kt">bool</span> <span class="n">is_processing_input</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-249"></a>
-<a name="line-250"></a>	<span class="kt">void</span> <span class="nf">set_process_unhandled_input</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enable</span><span class="p">);</span>
-<a name="line-251"></a>	<span class="kt">bool</span> <span class="n">is_processing_unhandled_input</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-154"></a>			<span class="n">i</span><span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<a name="line-155"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">==</span> <span class="sc">&#39;:&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span><span class="p">))</span>
+<a name="line-156"></a>				<span class="p">{</span>
+<a name="line-157"></a>
+<a name="line-158"></a>				<span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-159"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="sc">&#39;:&#39;</span><span class="p">)</span>
+<a name="line-160"></a>					<span class="p">{</span>
+<a name="line-161"></a>					<span class="k">for</span> <span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="p">;</span> <span class="o">*</span><span class="n">q</span><span class="p">;</span> <span class="n">q</span><span class="o">++</span><span class="p">)</span>
+<a name="line-162"></a>						<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">q</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span><span class="p">)</span>
+<a name="line-163"></a>							<span class="p">{</span>
+<a name="line-164"></a>							<span class="o">*</span><span class="n">q</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-165"></a>							<span class="k">break</span><span class="p">;</span>
+<a name="line-166"></a>							<span class="p">}</span>
+<a name="line-167"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-168"></a>						<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-169"></a>					<span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="o">=</span><span class="n">BUF_strdup</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+<a name="line-170"></a>					<span class="p">}</span>
+<a name="line-171"></a>				<span class="p">}</span>
+<a name="line-172"></a>
+<a name="line-173"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-174"></a>				<span class="p">{</span>
+<a name="line-175"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_NO_PORT_SPECIFIED</span><span class="p">);</span>
+<a name="line-176"></a>				<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">&quot;host=&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">);</span>
+<a name="line-177"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-178"></a>				<span class="p">}</span>
+<a name="line-179"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_GET_IP</span><span class="p">;</span>
+<a name="line-180"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-181"></a>
+<a name="line-182"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_GET_IP</span><span class="p">:</span>
+<a name="line-183"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">BIO_get_host_ip</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">,</span><span class="o">&amp;</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-184"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-185"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_GET_PORT</span><span class="p">;</span>
+<a name="line-186"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-187"></a>
+<a name="line-188"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_GET_PORT</span><span class="p">:</span>
+<a name="line-189"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-190"></a>				<span class="p">{</span>
+<a name="line-191"></a>				<span class="cm">/* abort(); */</span>
+<a name="line-192"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-193"></a>				<span class="p">}</span>
+<a name="line-194"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">BIO_get_port</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">,</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-195"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-196"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_CREATE_SOCKET</span><span class="p">;</span>
+<a name="line-197"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-198"></a>
+<a name="line-199"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_CREATE_SOCKET</span><span class="p">:</span>
+<a name="line-200"></a>			<span class="cm">/* now setup address */</span>
+<a name="line-201"></a>			<span class="n">memset</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">));</span>
+<a name="line-202"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">.</span><span class="n">sin_family</span><span class="o">=</span><span class="n">AF_INET</span><span class="p">;</span>
+<a name="line-203"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">.</span><span class="n">sin_port</span><span class="o">=</span><span class="n">htons</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">);</span>
+<a name="line-204"></a>			<span class="n">l</span><span class="o">=</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span>
+<a name="line-205"></a>				<span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">24L</span><span class="p">)</span><span class="o">|</span>
+<a name="line-206"></a>				<span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">16L</span><span class="p">)</span><span class="o">|</span>
+<a name="line-207"></a>				<span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&lt;&lt;</span> <span class="mi">8L</span><span class="p">)</span><span class="o">|</span>
+<a name="line-208"></a>				<span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<a name="line-209"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="o">=</span><span class="n">htonl</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+<a name="line-210"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_CREATE_SOCKET</span><span class="p">;</span>
+<a name="line-211"></a>
+<a name="line-212"></a>			<span class="n">ret</span><span class="o">=</span><span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">SOCK_STREAM</span><span class="p">,</span><span class="n">SOCKET_PROTOCOL</span><span class="p">);</span>
+<a name="line-213"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="n">INVALID_SOCKET</span><span class="p">)</span>
+<a name="line-214"></a>				<span class="p">{</span>
+<a name="line-215"></a>				<span class="n">SYSerr</span><span class="p">(</span><span class="n">SYS_F_SOCKET</span><span class="p">,</span><span class="n">get_last_socket_error</span><span class="p">());</span>
+<a name="line-216"></a>				<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s">&quot;host=&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">,</span>
+<a name="line-217"></a>					<span class="s">&quot;:&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-218"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_UNABLE_TO_CREATE_SOCKET</span><span class="p">);</span>
+<a name="line-219"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-220"></a>				<span class="p">}</span>
+<a name="line-221"></a>			<span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">ret</span><span class="p">;</span>
+<a name="line-222"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_NBIO</span><span class="p">;</span>
+<a name="line-223"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-224"></a>
+<a name="line-225"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_NBIO</span><span class="p">:</span>
+<a name="line-226"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">nbio</span><span class="p">)</span>
+<a name="line-227"></a>				<span class="p">{</span>
+<a name="line-228"></a>				<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">BIO_socket_nbio</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<a name="line-229"></a>					<span class="p">{</span>
+<a name="line-230"></a>					<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_ERROR_SETTING_NBIO</span><span class="p">);</span>
+<a name="line-231"></a>					<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s">&quot;host=&quot;</span><span class="p">,</span>
+<a name="line-232"></a>						<span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">,</span>
+<a name="line-233"></a>						<span class="s">&quot;:&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-234"></a>					<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-235"></a>					<span class="p">}</span>
+<a name="line-236"></a>				<span class="p">}</span>
+<a name="line-237"></a>			<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_CONNECT</span><span class="p">;</span>
+<a name="line-238"></a>
+<a name="line-239"></a><span class="cp">#if defined(SO_KEEPALIVE) &amp;&amp; !defined(OPENSSL_SYS_MPE)</span>
+<a name="line-240"></a>			<span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-241"></a>			<span class="n">i</span><span class="o">=</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">,</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">SO_KEEPALIVE</span><span class="p">,(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<a name="line-242"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-243"></a>				<span class="p">{</span>
+<a name="line-244"></a>				<span class="n">SYSerr</span><span class="p">(</span><span class="n">SYS_F_SOCKET</span><span class="p">,</span><span class="n">get_last_socket_error</span><span class="p">());</span>
+<a name="line-245"></a>				<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s">&quot;host=&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">,</span>
+<a name="line-246"></a>					<span class="s">&quot;:&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-247"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_KEEPALIVE</span><span class="p">);</span>
+<a name="line-248"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-249"></a>				<span class="p">}</span>
+<a name="line-250"></a><span class="cp">#endif</span>
+<a name="line-251"></a>			<span class="k">break</span><span class="p">;</span>
 <a name="line-252"></a>
-<a name="line-253"></a>	<span class="kt">void</span> <span class="nf">set_process_unhandled_key_input</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enable</span><span class="p">);</span>
-<a name="line-254"></a>	<span class="kt">bool</span> <span class="n">is_processing_unhandled_key_input</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-255"></a>
-<a name="line-256"></a>	<span class="kt">int</span> <span class="n">get_position_in_parent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-257"></a>
-<a name="line-258"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">duplicate</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_use_instancing</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-259"></a>	<span class="n">Node</span> <span class="o">*</span><span class="n">duplicate_and_reown</span><span class="p">(</span><span class="k">const</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*</span><span class="p">,</span><span class="n">Node</span><span class="o">*&gt;&amp;</span> <span class="n">p_reown_map</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-260"></a>
-<a name="line-261"></a>	<span class="c1">//Node *clone_tree() const;</span>
-<a name="line-262"></a>
-<a name="line-263"></a>	<span class="c1">// used by editors, to save what has changed only</span>
-<a name="line-264"></a>	<span class="kt">void</span> <span class="nf">generate_instance_state</span><span class="p">();</span>
-<a name="line-265"></a>	<span class="n">Dictionary</span> <span class="n">get_instance_state</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-266"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">get_instance_groups</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-267"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">get_instance_connections</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-268"></a>
-<a name="line-269"></a>	<span class="k">static</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">make_binds</span><span class="p">(</span><span class="n">VARIANT_ARG_LIST</span><span class="p">);</span>
-<a name="line-270"></a>
-<a name="line-271"></a>	<span class="kt">void</span> <span class="nf">replace_by</span><span class="p">(</span><span class="n">Node</span><span class="o">*</span> <span class="n">p_node</span><span class="p">,</span><span class="kt">bool</span> <span class="n">p_keep_data</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-272"></a>
-<a name="line-273"></a>	<span class="kt">void</span> <span class="nf">set_pause_mode</span><span class="p">(</span><span class="n">PauseMode</span> <span class="n">p_mode</span><span class="p">);</span>
-<a name="line-274"></a>	<span class="n">PauseMode</span> <span class="n">get_pause_mode</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-275"></a>	<span class="kt">bool</span> <span class="n">can_process</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-276"></a>
-<a name="line-277"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">print_stray_nodes</span><span class="p">();</span>
-<a name="line-278"></a>
-<a name="line-279"></a>	<span class="n">String</span> <span class="n">validate_child_name</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_name</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-253"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_CONNECT</span><span class="p">:</span>
+<a name="line-254"></a>			<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-255"></a>			<span class="n">ret</span><span class="o">=</span><span class="n">connect</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">,</span>
+<a name="line-256"></a>				<span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">,</span>
+<a name="line-257"></a>				<span class="k">sizeof</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">));</span>
+<a name="line-258"></a>			<span class="n">b</span><span class="o">-&gt;</span><span class="n">retry_reason</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-259"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-260"></a>				<span class="p">{</span>
+<a name="line-261"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">BIO_sock_should_retry</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+<a name="line-262"></a>					<span class="p">{</span>
+<a name="line-263"></a>					<span class="n">BIO_set_retry_special</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-264"></a>					<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_BLOCKED_CONNECT</span><span class="p">;</span>
+<a name="line-265"></a>					<span class="n">b</span><span class="o">-&gt;</span><span class="n">retry_reason</span><span class="o">=</span><span class="n">BIO_RR_CONNECT</span><span class="p">;</span>
+<a name="line-266"></a>					<span class="p">}</span>
+<a name="line-267"></a>				<span class="k">else</span>
+<a name="line-268"></a>					<span class="p">{</span>
+<a name="line-269"></a>					<span class="n">SYSerr</span><span class="p">(</span><span class="n">SYS_F_CONNECT</span><span class="p">,</span><span class="n">get_last_socket_error</span><span class="p">());</span>
+<a name="line-270"></a>					<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s">&quot;host=&quot;</span><span class="p">,</span>
+<a name="line-271"></a>						<span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">,</span>
+<a name="line-272"></a>						<span class="s">&quot;:&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-273"></a>					<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_CONNECT_ERROR</span><span class="p">);</span>
+<a name="line-274"></a>					<span class="p">}</span>
+<a name="line-275"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-276"></a>				<span class="p">}</span>
+<a name="line-277"></a>			<span class="k">else</span>
+<a name="line-278"></a>				<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_OK</span><span class="p">;</span>
+<a name="line-279"></a>			<span class="k">break</span><span class="p">;</span>
 <a name="line-280"></a>
-<a name="line-281"></a>	<span class="kt">void</span> <span class="nf">queue_delete</span><span class="p">();</span>
-<a name="line-282"></a>
-<a name="line-283"></a><span class="c1">//shitty hacks for speed</span>
-<a name="line-284"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">set_human_readable_collision_renaming</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_enabled</span><span class="p">);</span>
-<a name="line-285"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">init_node_hrcr</span><span class="p">();</span>
-<a name="line-286"></a>
-<a name="line-287"></a>	<span class="kt">void</span> <span class="nf">force_parent_owned</span><span class="p">()</span> <span class="p">{</span> <span class="n">data</span><span class="p">.</span><span class="n">parent_owned</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span> <span class="p">}</span> <span class="c1">//hack to avoid duplicate nodes</span>
-<a name="line-288"></a>
-<a name="line-289"></a><span class="cp">#ifdef TOOLS_ENABLED</span>
-<a name="line-290"></a>	<span class="kt">void</span> <span class="nf">set_import_path</span><span class="p">(</span><span class="k">const</span> <span class="n">NodePath</span><span class="o">&amp;</span> <span class="n">p_import_path</span><span class="p">);</span> <span class="c1">//path used when imported, used by scene editors to keep tracking</span>
-<a name="line-291"></a>	<span class="n">NodePath</span> <span class="n">get_import_path</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-292"></a><span class="cp">#endif</span>
-<a name="line-293"></a>
-<a name="line-294"></a>	<span class="kt">void</span> <span class="n">get_argument_options</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_function</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_idx</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;*</span><span class="n">r_options</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-295"></a>
-<a name="line-296"></a>	<span class="kt">void</span> <span class="nf">clear_internal_tree_resource_paths</span><span class="p">();</span>
+<a name="line-281"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_BLOCKED_CONNECT</span><span class="p">:</span>
+<a name="line-282"></a>			<span class="n">i</span><span class="o">=</span><span class="n">BIO_sock_error</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">);</span>
+<a name="line-283"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a name="line-284"></a>				<span class="p">{</span>
+<a name="line-285"></a>				<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-286"></a>				<span class="n">SYSerr</span><span class="p">(</span><span class="n">SYS_F_CONNECT</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+<a name="line-287"></a>				<span class="n">ERR_add_error_data</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s">&quot;host=&quot;</span><span class="p">,</span>
+<a name="line-288"></a>					<span class="n">c</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">,</span>
+<a name="line-289"></a>					<span class="s">&quot;:&quot;</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-290"></a>				<span class="n">BIOerr</span><span class="p">(</span><span class="n">BIO_F_CONN_STATE</span><span class="p">,</span><span class="n">BIO_R_NBIO_CONNECT_ERROR</span><span class="p">);</span>
+<a name="line-291"></a>				<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-292"></a>				<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-293"></a>				<span class="p">}</span>
+<a name="line-294"></a>			<span class="k">else</span>
+<a name="line-295"></a>				<span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_OK</span><span class="p">;</span>
+<a name="line-296"></a>			<span class="k">break</span><span class="p">;</span>
 <a name="line-297"></a>
-<a name="line-298"></a>	<span class="n">_FORCE_INLINE_</span> <span class="n">Viewport</span> <span class="o">*</span><span class="n">get_viewport</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">viewport</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-299"></a>
-<a name="line-300"></a>	<span class="cm">/* CANVAS */</span>
-<a name="line-301"></a>
-<a name="line-302"></a>	<span class="n">Node</span><span class="p">();</span>
-<a name="line-303"></a>	<span class="o">~</span><span class="n">Node</span><span class="p">();</span>
-<a name="line-304"></a><span class="p">};</span>
+<a name="line-298"></a>		<span class="k">case</span> <span class="nl">BIO_CONN_S_OK</span><span class="p">:</span>
+<a name="line-299"></a>			<span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-300"></a>			<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-301"></a>		<span class="k">default</span><span class="o">:</span>
+<a name="line-302"></a>			<span class="cm">/* abort(); */</span>
+<a name="line-303"></a>			<span class="k">goto</span> <span class="n">exit_loop</span><span class="p">;</span>
+<a name="line-304"></a>			<span class="p">}</span>
 <a name="line-305"></a>
-<a name="line-306"></a>
-<a name="line-307"></a><span class="k">typedef</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*</span><span class="p">,</span><span class="n">Node</span><span class="o">::</span><span class="n">Comparator</span><span class="o">&gt;</span> <span class="n">NodeSet</span><span class="p">;</span>
-<a name="line-308"></a>
-<a name="line-309"></a>
-<a name="line-310"></a>
-<a name="line-311"></a>
-<a name="line-312"></a><span class="cp">#endif</span>
+<a name="line-306"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">cb</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-307"></a>			<span class="p">{</span>
+<a name="line-308"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">ret</span><span class="o">=</span><span class="n">cb</span><span class="p">((</span><span class="n">BIO</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">,</span><span class="n">ret</span><span class="p">)))</span>
+<a name="line-309"></a>				<span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+<a name="line-310"></a>			<span class="p">}</span>
+<a name="line-311"></a>		<span class="p">}</span>
+<a name="line-312"></a>
+<a name="line-313"></a>	<span class="cm">/* Loop does not exit */</span>
+<a name="line-314"></a><span class="nl">exit_loop</span><span class="p">:</span>
+<a name="line-315"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">cb</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-316"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">cb</span><span class="p">((</span><span class="n">BIO</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">,</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-317"></a><span class="nl">end</span><span class="p">:</span>
+<a name="line-318"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-319"></a>	<span class="p">}</span>
+<a name="line-320"></a>
+<a name="line-321"></a><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="nf">BIO_CONNECT_new</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-322"></a>	<span class="p">{</span>
+<a name="line-323"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
+<a name="line-324"></a>
+<a name="line-325"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">BIO_CONNECT</span><span class="p">)))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-326"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-327"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_BEFORE</span><span class="p">;</span>
+<a name="line-328"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-329"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-330"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">info_callback</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-331"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">nbio</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-332"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-333"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-334"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-335"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-336"></a>	<span class="n">ret</span><span class="o">-&gt;</span><span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-337"></a>	<span class="n">memset</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ret</span><span class="o">-&gt;</span><span class="n">them</span><span class="p">));</span>
+<a name="line-338"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-339"></a>	<span class="p">}</span>
+<a name="line-340"></a>
+<a name="line-341"></a><span class="kt">void</span> <span class="nf">BIO_CONNECT_free</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span>
+<a name="line-342"></a>	<span class="p">{</span>
+<a name="line-343"></a>	<span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-344"></a>	    <span class="k">return</span><span class="p">;</span>
+<a name="line-345"></a>
+<a name="line-346"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">param_hostname</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-347"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">);</span>
+<a name="line-348"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">param_port</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-349"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-350"></a>	<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<a name="line-351"></a>	<span class="p">}</span>
+<a name="line-352"></a>
+<a name="line-353"></a><span class="n">BIO_METHOD</span> <span class="o">*</span><span class="nf">BIO_s_connect</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-354"></a>	<span class="p">{</span>
+<a name="line-355"></a>	<span class="k">return</span><span class="p">(</span><span class="o">&amp;</span><span class="n">methods_connectp</span><span class="p">);</span>
+<a name="line-356"></a>	<span class="p">}</span>
+<a name="line-357"></a>
+<a name="line-358"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_new</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bi</span><span class="p">)</span>
+<a name="line-359"></a>	<span class="p">{</span>
+<a name="line-360"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-361"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">INVALID_SOCKET</span><span class="p">;</span>
+<a name="line-362"></a>	<span class="n">bi</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-363"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">bi</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">BIO_CONNECT_new</span><span class="p">())</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-364"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-365"></a>	<span class="k">else</span>
+<a name="line-366"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-367"></a>	<span class="p">}</span>
+<a name="line-368"></a>
+<a name="line-369"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">conn_close_socket</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bio</span><span class="p">)</span>
+<a name="line-370"></a>	<span class="p">{</span>
+<a name="line-371"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">c</span><span class="p">;</span>
+<a name="line-372"></a>
+<a name="line-373"></a>	<span class="n">c</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">bio</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-374"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">bio</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">!=</span> <span class="n">INVALID_SOCKET</span><span class="p">)</span>
+<a name="line-375"></a>		<span class="p">{</span>
+<a name="line-376"></a>		<span class="cm">/* Only do a shutdown if things were established */</span>
+<a name="line-377"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">==</span> <span class="n">BIO_CONN_S_OK</span><span class="p">)</span>
+<a name="line-378"></a>			<span class="n">shutdown</span><span class="p">(</span><span class="n">bio</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a name="line-379"></a>		<span class="n">closesocket</span><span class="p">(</span><span class="n">bio</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">);</span>
+<a name="line-380"></a>		<span class="n">bio</span><span class="o">-&gt;</span><span class="n">num</span><span class="o">=</span><span class="n">INVALID_SOCKET</span><span class="p">;</span>
+<a name="line-381"></a>		<span class="p">}</span>
+<a name="line-382"></a>	<span class="p">}</span>
+<a name="line-383"></a>
+<a name="line-384"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_free</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span>
+<a name="line-385"></a>	<span class="p">{</span>
+<a name="line-386"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+<a name="line-387"></a>
+<a name="line-388"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-389"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-390"></a>	 
+<a name="line-391"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">)</span>
+<a name="line-392"></a>		<span class="p">{</span>
+<a name="line-393"></a>		<span class="n">conn_close_socket</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<a name="line-394"></a>		<span class="n">BIO_CONNECT_free</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<a name="line-395"></a>		<span class="n">a</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-396"></a>		<span class="n">a</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-397"></a>		<span class="n">a</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-398"></a>		<span class="p">}</span>
+<a name="line-399"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-400"></a>	<span class="p">}</span>
+<a name="line-401"></a>	
+<a name="line-402"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_read</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="n">outl</span><span class="p">)</span>
+<a name="line-403"></a>	<span class="p">{</span>
+<a name="line-404"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-405"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+<a name="line-406"></a>
+<a name="line-407"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-408"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">!=</span> <span class="n">BIO_CONN_S_OK</span><span class="p">)</span>
+<a name="line-409"></a>		<span class="p">{</span>
+<a name="line-410"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">conn_state</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">data</span><span class="p">);</span>
+<a name="line-411"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-412"></a>				<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-413"></a>		<span class="p">}</span>
+<a name="line-414"></a>
+<a name="line-415"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">out</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-416"></a>		<span class="p">{</span>
+<a name="line-417"></a>		<span class="n">clear_socket_error</span><span class="p">();</span>
+<a name="line-418"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">readsocket</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">);</span>
+<a name="line-419"></a>		<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-420"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-421"></a>			<span class="p">{</span>
+<a name="line-422"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">BIO_sock_should_retry</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+<a name="line-423"></a>				<span class="n">BIO_set_retry_read</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-424"></a>			<span class="p">}</span>
+<a name="line-425"></a>		<span class="p">}</span>
+<a name="line-426"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-427"></a>	<span class="p">}</span>
+<a name="line-428"></a>
+<a name="line-429"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_write</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
+<a name="line-430"></a>	<span class="p">{</span>
+<a name="line-431"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+<a name="line-432"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+<a name="line-433"></a>
+<a name="line-434"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-435"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">!=</span> <span class="n">BIO_CONN_S_OK</span><span class="p">)</span>
+<a name="line-436"></a>		<span class="p">{</span>
+<a name="line-437"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">conn_state</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">data</span><span class="p">);</span>
+<a name="line-438"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-439"></a>		<span class="p">}</span>
+<a name="line-440"></a>
+<a name="line-441"></a>	<span class="n">clear_socket_error</span><span class="p">();</span>
+<a name="line-442"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">writesocket</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
+<a name="line-443"></a>	<span class="n">BIO_clear_retry_flags</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-444"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-445"></a>		<span class="p">{</span>
+<a name="line-446"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">BIO_sock_should_retry</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+<a name="line-447"></a>			<span class="n">BIO_set_retry_write</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-448"></a>		<span class="p">}</span>
+<a name="line-449"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-450"></a>	<span class="p">}</span>
+<a name="line-451"></a>
+<a name="line-452"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">conn_ctrl</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="kt">long</span> <span class="n">num</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span>
+<a name="line-453"></a>	<span class="p">{</span>
+<a name="line-454"></a><span class="hll">	<span class="n">BIO</span> <span class="o">*</span><span class="n">dbio</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'dbio' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;dbio&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-455"></a><span class="hll">	<span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ip' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ip&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-456"></a><span class="hll">	<span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">pptr</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'pptr' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;pptr&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-457"></a>	<span class="kt">long</span> <span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-458"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+<a name="line-459"></a>
+<a name="line-460"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-461"></a>
+<a name="line-462"></a>	<span class="k">switch</span> <span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<a name="line-463"></a>		<span class="p">{</span>
+<a name="line-464"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_RESET</span><span class="p">:</span>
+<a name="line-465"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-466"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">state</span><span class="o">=</span><span class="n">BIO_CONN_S_BEFORE</span><span class="p">;</span>
+<a name="line-467"></a>		<span class="n">conn_close_socket</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a name="line-468"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-469"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-470"></a>	<span class="k">case</span> <span class="nl">BIO_C_DO_STATE_MACHINE</span><span class="p">:</span>
+<a name="line-471"></a>		<span class="cm">/* use this one to start the connection */</span>
+<a name="line-472"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">state</span> <span class="o">!=</span> <span class="n">BIO_CONN_S_OK</span><span class="p">)</span>
+<a name="line-473"></a>			<span class="n">ret</span><span class="o">=</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">conn_state</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">data</span><span class="p">);</span>
+<a name="line-474"></a>		<span class="k">else</span>
+<a name="line-475"></a>			<span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-476"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-477"></a>	<span class="k">case</span> <span class="nl">BIO_C_GET_CONNECT</span><span class="p">:</span>
+<a name="line-478"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-479"></a>			<span class="p">{</span>
+<a name="line-480"></a>			<span class="n">pptr</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-481"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-482"></a>				<span class="p">{</span>
+<a name="line-483"></a>				<span class="o">*</span><span class="n">pptr</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">;</span>
+<a name="line-484"></a>
+<a name="line-485"></a>				<span class="p">}</span>
+<a name="line-486"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-487"></a>				<span class="p">{</span>
+<a name="line-488"></a>				<span class="o">*</span><span class="n">pptr</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">;</span>
+<a name="line-489"></a>				<span class="p">}</span>
+<a name="line-490"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<a name="line-491"></a>				<span class="p">{</span>
+<a name="line-492"></a>				<span class="o">*</span><span class="n">pptr</span><span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-493"></a>				<span class="p">}</span>
+<a name="line-494"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+<a name="line-495"></a>				<span class="p">{</span>
+<a name="line-496"></a>				<span class="o">*</span><span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">)</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">;</span>
+<a name="line-497"></a>				<span class="p">}</span>
+<a name="line-498"></a>			<span class="k">if</span> <span class="p">((</span><span class="o">!</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span>
+<a name="line-499"></a>				<span class="o">*</span><span class="n">pptr</span><span class="o">=</span><span class="s">&quot;not initialized&quot;</span><span class="p">;</span>
+<a name="line-500"></a>			<span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-501"></a>			<span class="p">}</span>
+<a name="line-502"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-503"></a>	<span class="k">case</span> <span class="nl">BIO_C_SET_CONNECT</span><span class="p">:</span>
+<a name="line-504"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-505"></a>			<span class="p">{</span>
+<a name="line-506"></a>			<span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-507"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-508"></a>				<span class="p">{</span>
+<a name="line-509"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-510"></a>					<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">);</span>
+<a name="line-511"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="o">=</span><span class="n">BUF_strdup</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
+<a name="line-512"></a>				<span class="p">}</span>
+<a name="line-513"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-514"></a>				<span class="p">{</span>
+<a name="line-515"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-516"></a>					<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-517"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="o">=</span><span class="n">BUF_strdup</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
+<a name="line-518"></a>				<span class="p">}</span>
+<a name="line-519"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<a name="line-520"></a>				<span class="p">{</span>
+<a name="line-521"></a>				<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a name="line-522"></a>				<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">ptr</span><span class="p">;</span>
+<a name="line-523"></a>
+<a name="line-524"></a>				<span class="n">BIO_snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="k">sizeof</span> <span class="n">buf</span><span class="p">,</span><span class="s">&quot;%d.%d.%d.%d&quot;</span><span class="p">,</span>
+<a name="line-525"></a>					     <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+<a name="line-526"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-527"></a>					<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">);</span>
+<a name="line-528"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="o">=</span><span class="n">BUF_strdup</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+<a name="line-529"></a>				<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">ptr</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+<a name="line-530"></a>				<span class="p">}</span>
+<a name="line-531"></a>			<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+<a name="line-532"></a>				<span class="p">{</span>
+<a name="line-533"></a>				<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">DECIMAL_SIZE</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-534"></a>
+<a name="line-535"></a>				<span class="n">BIO_snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="k">sizeof</span> <span class="n">buf</span><span class="p">,</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">);</span>
+<a name="line-536"></a>				<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-537"></a>					<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-538"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="o">=</span><span class="n">BUF_strdup</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+<a name="line-539"></a>				<span class="n">data</span><span class="o">-&gt;</span><span class="n">port</span><span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-540"></a>				<span class="p">}</span>
+<a name="line-541"></a>			<span class="p">}</span>
+<a name="line-542"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-543"></a>	<span class="k">case</span> <span class="nl">BIO_C_SET_NBIO</span><span class="p">:</span>
+<a name="line-544"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">nbio</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">num</span><span class="p">;</span>
+<a name="line-545"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-546"></a>	<span class="k">case</span> <span class="nl">BIO_C_GET_FD</span><span class="p">:</span>
+<a name="line-547"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">)</span>
+<a name="line-548"></a>			<span class="p">{</span>
+<a name="line-549"></a>			<span class="n">ip</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-550"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ip</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-551"></a>				<span class="o">*</span><span class="n">ip</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
+<a name="line-552"></a>			<span class="n">ret</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">num</span><span class="p">;</span>
+<a name="line-553"></a>			<span class="p">}</span>
+<a name="line-554"></a>		<span class="k">else</span>
+<a name="line-555"></a>			<span class="n">ret</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-556"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-557"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_GET_CLOSE</span><span class="p">:</span>
+<a name="line-558"></a>		<span class="n">ret</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">;</span>
+<a name="line-559"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-560"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_SET_CLOSE</span><span class="p">:</span>
+<a name="line-561"></a>		<span class="n">b</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">num</span><span class="p">;</span>
+<a name="line-562"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-563"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_PENDING</span><span class="p">:</span>
+<a name="line-564"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_WPENDING</span><span class="p">:</span>
+<a name="line-565"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-566"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-567"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_FLUSH</span><span class="p">:</span>
+<a name="line-568"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-569"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_DUP</span><span class="p">:</span>
+<a name="line-570"></a>		<span class="p">{</span>
+<a name="line-571"></a>		<span class="n">dbio</span><span class="o">=</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="p">)</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-572"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">)</span>
+<a name="line-573"></a>			<span class="n">BIO_set_conn_port</span><span class="p">(</span><span class="n">dbio</span><span class="p">,</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_port</span><span class="p">);</span>
+<a name="line-574"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">)</span>
+<a name="line-575"></a>			<span class="n">BIO_set_conn_hostname</span><span class="p">(</span><span class="n">dbio</span><span class="p">,</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">param_hostname</span><span class="p">);</span>
+<a name="line-576"></a>		<span class="n">BIO_set_nbio</span><span class="p">(</span><span class="n">dbio</span><span class="p">,</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">nbio</span><span class="p">);</span>
+<a name="line-577"></a>		<span class="cm">/* FIXME: the cast of the function seems unlikely to be a good idea */</span>
+<a name="line-578"></a>                <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">BIO_set_info_callback</span><span class="p">(</span><span class="n">dbio</span><span class="p">,(</span><span class="n">bio_info_cb</span> <span class="o">*</span><span class="p">)</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">info_callback</span><span class="p">);</span>
+<a name="line-579"></a>		<span class="p">}</span>
+<a name="line-580"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-581"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_SET_CALLBACK</span><span class="p">:</span>
+<a name="line-582"></a>		<span class="p">{</span>
+<a name="line-583"></a><span class="cp">#if 0</span><span class="c"> /* FIXME: Should this be used?  -- Richard Levitte */</span>
+<a name="line-584"></a><span class="c">		BIOerr(BIO_F_CONN_CTRL, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);</span>
+<a name="line-585"></a><span class="c">		ret = -1;</span>
+<a name="line-586"></a><span class="cp">#else</span>
+<a name="line-587"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-588"></a><span class="cp">#endif</span>
+<a name="line-589"></a>		<span class="p">}</span>
+<a name="line-590"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-591"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_GET_CALLBACK</span><span class="p">:</span>
+<a name="line-592"></a>		<span class="p">{</span>
+<a name="line-593"></a>		<span class="kt">int</span> <span class="p">(</span><span class="o">**</span><span class="n">fptr</span><span class="p">)(</span><span class="k">const</span> <span class="n">BIO</span> <span class="o">*</span><span class="n">bio</span><span class="p">,</span><span class="kt">int</span> <span class="n">state</span><span class="p">,</span><span class="kt">int</span> <span class="n">xret</span><span class="p">);</span>
+<a name="line-594"></a>
+<a name="line-595"></a>		<span class="n">fptr</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span> <span class="p">(</span><span class="o">**</span><span class="p">)(</span><span class="k">const</span> <span class="n">BIO</span> <span class="o">*</span><span class="n">bio</span><span class="p">,</span><span class="kt">int</span> <span class="n">state</span><span class="p">,</span><span class="kt">int</span> <span class="n">xret</span><span class="p">))</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-596"></a>		<span class="o">*</span><span class="n">fptr</span><span class="o">=</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">info_callback</span><span class="p">;</span>
+<a name="line-597"></a>		<span class="p">}</span>
+<a name="line-598"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-599"></a>	<span class="k">default</span><span class="o">:</span>
+<a name="line-600"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-601"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-602"></a>		<span class="p">}</span>
+<a name="line-603"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-604"></a>	<span class="p">}</span>
+<a name="line-605"></a>
+<a name="line-606"></a><span class="k">static</span> <span class="kt">long</span> <span class="nf">conn_callback_ctrl</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">bio_info_cb</span> <span class="o">*</span><span class="n">fp</span><span class="p">)</span>
+<a name="line-607"></a>	<span class="p">{</span>
+<a name="line-608"></a>	<span class="kt">long</span> <span class="n">ret</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-609"></a>	<span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+<a name="line-610"></a>
+<a name="line-611"></a>	<span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">BIO_CONNECT</span> <span class="o">*</span><span class="p">)</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">ptr</span><span class="p">;</span>
+<a name="line-612"></a>
+<a name="line-613"></a>	<span class="k">switch</span> <span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<a name="line-614"></a>		<span class="p">{</span>
+<a name="line-615"></a>	<span class="k">case</span> <span class="nl">BIO_CTRL_SET_CALLBACK</span><span class="p">:</span>
+<a name="line-616"></a>		<span class="p">{</span>
+<a name="line-617"></a>		<span class="n">data</span><span class="o">-&gt;</span><span class="n">info_callback</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">bio_st</span> <span class="o">*</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">))</span><span class="n">fp</span><span class="p">;</span>
+<a name="line-618"></a>		<span class="p">}</span>
+<a name="line-619"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-620"></a>	<span class="k">default</span><span class="o">:</span>
+<a name="line-621"></a>		<span class="n">ret</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-622"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-623"></a>		<span class="p">}</span>
+<a name="line-624"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-625"></a>	<span class="p">}</span>
+<a name="line-626"></a>
+<a name="line-627"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">conn_puts</span><span class="p">(</span><span class="n">BIO</span> <span class="o">*</span><span class="n">bp</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<a name="line-628"></a>	<span class="p">{</span>
+<a name="line-629"></a>	<span class="kt">int</span> <span class="n">n</span><span class="p">,</span><span class="n">ret</span><span class="p">;</span>
+<a name="line-630"></a>
+<a name="line-631"></a>	<span class="n">n</span><span class="o">=</span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+<a name="line-632"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">conn_write</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span><span class="n">str</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+<a name="line-633"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-634"></a>	<span class="p">}</span>
+<a name="line-635"></a>
+<a name="line-636"></a><span class="n">BIO</span> <span class="o">*</span><span class="nf">BIO_new_connect</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<a name="line-637"></a>	<span class="p">{</span>
+<a name="line-638"></a>	<span class="n">BIO</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
+<a name="line-639"></a>
+<a name="line-640"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_connect</span><span class="p">());</span>
+<a name="line-641"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-642"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">BIO_set_conn_hostname</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span><span class="n">str</span><span class="p">))</span>
+<a name="line-643"></a>		<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-644"></a>	<span class="k">else</span>
+<a name="line-645"></a>		<span class="p">{</span>
+<a name="line-646"></a>		<span class="n">BIO_free</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-647"></a>		<span class="k">return</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-648"></a>		<span class="p">}</span>
+<a name="line-649"></a>	<span class="p">}</span>
+<a name="line-650"></a>
+<a name="line-651"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

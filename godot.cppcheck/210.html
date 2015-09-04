@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/bf/bf_opts.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/des/read_pwd.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> bf_opts.c</p>
-<a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-167'> variableScope 167</a><a href='210.html#line-184'> variableScope 184</a><a href='210.html#line-229'> unreadVariable 229</a><a href='210.html#line-244'> unreadVariable 244</a><a href='210.html#line-267'> unreadVariable 267</a><a href='210.html#line-269'> unreadVariable 269</a><a href='210.html#line-270'> unreadVariable 270</a><a href='210.html#line-272'> unreadVariable 272</a><a href='210.html#line-285'> unreadVariable 285</a>
+       <p id="filename"><a href="index.html">Defects:</a> read_pwd.c</p>
+<a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-1'> ConfigurationNotChecked 1</a><a href='210.html#line-184'> unusedStructMember 184</a><a href='210.html#line-185'> unusedStructMember 185</a><a href='210.html#line-474'> selfAssignment 474</a><a href='210.html#line-481'> variableScope 481</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -444,7 +444,197 @@
 328
 329
 330
-331</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/bf/bf_opts.c */</span><span class='error2'>&lt;--- Skipping configuration 'LINT;SIGALRM' since the value of 'SIGALRM' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'SIGALRM' since the value of 'SIGALRM' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/des/read_pwd.c */</span><span class='error2'>&lt;--- Skipping configuration 'SIGUSR1' since the value of 'SIGUSR1' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'SIGUSR2' since the value of 'SIGUSR2' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'SIGWINCH' since the value of 'SIGWINCH' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'TTY_get' since the value of 'TTY_get' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span><span class='error2'>&lt;--- Skipping configuration 'TTY_set' since the value of 'TTY_set' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
 </span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -502,303 +692,481 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cm">/* define PART1, PART2, PART3 or PART4 to build only with a few of the options.</span>
-<a name="line-60"></a><span class="cm"> * This is for machines with 64k code segment size restrictions. */</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class="cp">#if !defined(OPENSSL_SYS_MSDOS) &amp;&amp; (!defined(OPENSSL_SYS_VMS) || defined(__DECC)) &amp;&amp; !defined(OPENSSL_SYS_MACOSX)</span>
-<a name="line-63"></a><span class="cp">#define TIMES</span>
-<a name="line-64"></a><span class="cp">#endif</span>
-<a name="line-65"></a>
-<a name="line-66"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-67"></a>
-<a name="line-68"></a><span class="cp">#include &lt;openssl/e_os2.h&gt;</span>
-<a name="line-69"></a><span class="cp">#include OPENSSL_UNISTD_IO</span>
-<a name="line-70"></a><span class="n">OPENSSL_DECLARE_EXIT</span>
-<a name="line-71"></a>
-<a name="line-72"></a><span class="cp">#ifndef OPENSSL_SYS_NETWARE</span>
-<a name="line-73"></a><span class="cp">#include &lt;signal.h&gt;</span>
-<a name="line-74"></a><span class="cp">#endif</span>
-<a name="line-75"></a>
-<a name="line-76"></a><span class="cp">#ifndef _IRIX</span>
-<a name="line-77"></a><span class="cp">#include &lt;time.h&gt;</span>
-<a name="line-78"></a><span class="cp">#endif</span>
-<a name="line-79"></a><span class="cp">#ifdef TIMES</span>
-<a name="line-80"></a><span class="cp">#include &lt;sys/types.h&gt;</span>
-<a name="line-81"></a><span class="cp">#include &lt;sys/times.h&gt;</span>
-<a name="line-82"></a><span class="cp">#endif</span>
-<a name="line-83"></a>
-<a name="line-84"></a><span class="cm">/* Depending on the VMS version, the tms structure is perhaps defined.</span>
-<a name="line-85"></a><span class="cm">   The __TMS macro will show if it was.  If it wasn&#39;t defined, we should</span>
-<a name="line-86"></a><span class="cm">   undefine TIMES, since that tells the rest of the program how things</span>
-<a name="line-87"></a><span class="cm">   should be handled.				-- Richard Levitte */</span>
-<a name="line-88"></a><span class="cp">#if defined(OPENSSL_SYS_VMS_DECC) &amp;&amp; !defined(__TMS)</span>
-<a name="line-89"></a><span class="cp">#undef TIMES</span>
-<a name="line-90"></a><span class="cp">#endif</span>
-<a name="line-91"></a>
-<a name="line-92"></a><span class="cp">#ifndef TIMES</span>
-<a name="line-93"></a><span class="cp">#include &lt;sys/timeb.h&gt;</span>
-<a name="line-94"></a><span class="cp">#endif</span>
-<a name="line-95"></a>
-<a name="line-96"></a><span class="cp">#if defined(sun) || defined(__ultrix)</span>
-<a name="line-97"></a><span class="cp">#define _POSIX_SOURCE</span>
-<a name="line-98"></a><span class="cp">#include &lt;limits.h&gt;</span>
-<a name="line-99"></a><span class="cp">#include &lt;sys/param.h&gt;</span>
+<a name="line-59"></a><span class="cp">#include &lt;openssl/e_os2.h&gt;</span>
+<a name="line-60"></a><span class="cp">#if !defined(OPENSSL_SYS_MSDOS) &amp;&amp; !defined(OPENSSL_SYS_VMS) &amp;&amp; !defined(OPENSSL_SYS_WIN32)</span>
+<a name="line-61"></a><span class="cp">#ifdef OPENSSL_UNISTD</span>
+<a name="line-62"></a><span class="cp"># include OPENSSL_UNISTD</span>
+<a name="line-63"></a><span class="cp">#else</span>
+<a name="line-64"></a><span class="cp"># include &lt;unistd.h&gt;</span>
+<a name="line-65"></a><span class="cp">#endif</span>
+<a name="line-66"></a><span class="cm">/* If unistd.h defines _POSIX_VERSION, we conclude that we</span>
+<a name="line-67"></a><span class="cm"> * are on a POSIX system and have sigaction and termios. */</span>
+<a name="line-68"></a><span class="cp">#if defined(_POSIX_VERSION)</span>
+<a name="line-69"></a>
+<a name="line-70"></a><span class="cp"># define SIGACTION</span>
+<a name="line-71"></a><span class="cp"># if !defined(TERMIOS) &amp;&amp; !defined(TERMIO) &amp;&amp; !defined(SGTTY)</span>
+<a name="line-72"></a><span class="cp"># define TERMIOS</span>
+<a name="line-73"></a><span class="cp"># endif</span>
+<a name="line-74"></a>
+<a name="line-75"></a><span class="cp">#endif</span>
+<a name="line-76"></a><span class="cp">#endif</span>
+<a name="line-77"></a>
+<a name="line-78"></a><span class="cm">/* #define SIGACTION */</span> <span class="cm">/* Define this if you have sigaction() */</span>
+<a name="line-79"></a>
+<a name="line-80"></a><span class="cp">#ifdef WIN16TTY</span>
+<a name="line-81"></a><span class="cp">#undef OPENSSL_SYS_WIN16</span>
+<a name="line-82"></a><span class="cp">#undef _WINDOWS</span>
+<a name="line-83"></a><span class="cp">#include &lt;graph.h&gt;</span>
+<a name="line-84"></a><span class="cp">#endif</span>
+<a name="line-85"></a>
+<a name="line-86"></a><span class="cm">/* 06-Apr-92 Luke Brennan    Support for VMS */</span>
+<a name="line-87"></a><span class="cp">#include &quot;des_locl.h&quot;</span>
+<a name="line-88"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-89"></a><span class="cp">#include &lt;signal.h&gt;</span>
+<a name="line-90"></a><span class="cp">#include &lt;stdio.h&gt;</span>
+<a name="line-91"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-92"></a><span class="cp">#include &lt;setjmp.h&gt;</span>
+<a name="line-93"></a><span class="cp">#include &lt;errno.h&gt;</span>
+<a name="line-94"></a>
+<a name="line-95"></a><span class="cp">#ifdef OPENSSL_SYS_VMS			</span><span class="cm">/* prototypes for sys$whatever */</span><span class="cp"></span>
+<a name="line-96"></a><span class="cp">#include &lt;starlet.h&gt;</span>
+<a name="line-97"></a><span class="cp">#ifdef __DECC</span>
+<a name="line-98"></a><span class="cp">#pragma message disable DOLLARID</span>
+<a name="line-99"></a><span class="cp">#endif</span>
 <a name="line-100"></a><span class="cp">#endif</span>
 <a name="line-101"></a>
-<a name="line-102"></a><span class="cp">#include &lt;openssl/blowfish.h&gt;</span>
-<a name="line-103"></a>
-<a name="line-104"></a><span class="cp">#define BF_DEFAULT_OPTIONS</span>
-<a name="line-105"></a>
-<a name="line-106"></a><span class="cp">#undef BF_ENC</span>
-<a name="line-107"></a><span class="cp">#define BF_encrypt  BF_encrypt_normal</span>
-<a name="line-108"></a><span class="cp">#undef HEADER_BF_LOCL_H</span>
-<a name="line-109"></a><span class="cp">#include &quot;bf_enc.c&quot;</span>
-<a name="line-110"></a>
-<a name="line-111"></a><span class="cp">#define BF_PTR</span>
-<a name="line-112"></a><span class="cp">#undef BF_PTR2</span>
-<a name="line-113"></a><span class="cp">#undef BF_ENC</span>
-<a name="line-114"></a><span class="cp">#undef BF_encrypt</span>
-<a name="line-115"></a><span class="cp">#define BF_encrypt  BF_encrypt_ptr</span>
-<a name="line-116"></a><span class="cp">#undef HEADER_BF_LOCL_H</span>
-<a name="line-117"></a><span class="cp">#include &quot;bf_enc.c&quot;</span>
-<a name="line-118"></a>
-<a name="line-119"></a><span class="cp">#undef BF_PTR</span>
-<a name="line-120"></a><span class="cp">#define BF_PTR2</span>
-<a name="line-121"></a><span class="cp">#undef BF_ENC</span>
-<a name="line-122"></a><span class="cp">#undef BF_encrypt</span>
-<a name="line-123"></a><span class="cp">#define BF_encrypt  BF_encrypt_ptr2</span>
-<a name="line-124"></a><span class="cp">#undef HEADER_BF_LOCL_H</span>
-<a name="line-125"></a><span class="cp">#include &quot;bf_enc.c&quot;</span>
-<a name="line-126"></a>
-<a name="line-127"></a><span class="cm">/* The following if from times(3) man page.  It may need to be changed */</span>
-<a name="line-128"></a><span class="cp">#ifndef HZ</span>
-<a name="line-129"></a><span class="cp"># ifndef CLK_TCK</span>
-<a name="line-130"></a><span class="cp">#  ifndef _BSD_CLK_TCK_ </span><span class="cm">/* FreeBSD fix */</span><span class="cp"></span>
-<a name="line-131"></a><span class="cp">#   define HZ	100.0</span>
-<a name="line-132"></a><span class="cp">#  else </span><span class="cm">/* _BSD_CLK_TCK_ */</span><span class="cp"></span>
-<a name="line-133"></a><span class="cp">#   define HZ ((double)_BSD_CLK_TCK_)</span>
-<a name="line-134"></a><span class="cp">#  endif</span>
-<a name="line-135"></a><span class="cp"># else </span><span class="cm">/* CLK_TCK */</span><span class="cp"></span>
-<a name="line-136"></a><span class="cp">#  define HZ ((double)CLK_TCK)</span>
-<a name="line-137"></a><span class="cp"># endif</span>
-<a name="line-138"></a><span class="cp">#endif</span>
-<a name="line-139"></a>
-<a name="line-140"></a><span class="cp">#define BUFSIZE	((long)1024)</span>
-<a name="line-141"></a><span class="kt">long</span> <span class="n">run</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-142"></a>
-<a name="line-143"></a><span class="kt">double</span> <span class="nf">Time_F</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">);</span>
-<a name="line-144"></a><span class="cp">#ifdef SIGALRM</span>
-<a name="line-145"></a><span class="cp">#if defined(__STDC__) || defined(sgi)</span>
-<a name="line-146"></a><span class="cp">#define SIGRETTYPE void</span>
-<a name="line-147"></a><span class="cp">#else</span>
-<a name="line-148"></a><span class="cp">#define SIGRETTYPE int</span>
-<a name="line-149"></a><span class="cp">#endif</span>
-<a name="line-150"></a>
-<a name="line-151"></a><span class="n">SIGRETTYPE</span> <span class="nf">sig_done</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">);</span>
-<a name="line-152"></a><span class="n">SIGRETTYPE</span> <span class="nf">sig_done</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">)</span>
-<a name="line-153"></a>	<span class="p">{</span>
-<a name="line-154"></a>	<span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span><span class="n">sig_done</span><span class="p">);</span>
-<a name="line-155"></a>	<span class="n">run</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-156"></a><span class="cp">#ifdef LINT</span>
-<a name="line-157"></a>	<span class="n">sig</span><span class="o">=</span><span class="n">sig</span><span class="p">;</span>
+<a name="line-102"></a><span class="cp">#ifdef WIN_CONSOLE_BUG</span>
+<a name="line-103"></a><span class="cp">#include &lt;windows.h&gt;</span>
+<a name="line-104"></a><span class="cp">#ifndef OPENSSL_SYS_WINCE</span>
+<a name="line-105"></a><span class="cp">#include &lt;wincon.h&gt;</span>
+<a name="line-106"></a><span class="cp">#endif</span>
+<a name="line-107"></a><span class="cp">#endif</span>
+<a name="line-108"></a>
+<a name="line-109"></a>
+<a name="line-110"></a><span class="cm">/* There are 5 types of terminal interface supported,</span>
+<a name="line-111"></a><span class="cm"> * TERMIO, TERMIOS, VMS, MSDOS and SGTTY</span>
+<a name="line-112"></a><span class="cm"> */</span>
+<a name="line-113"></a>
+<a name="line-114"></a><span class="cp">#if defined(__sgi) &amp;&amp; !defined(TERMIOS)</span>
+<a name="line-115"></a><span class="cp">#define TERMIOS</span>
+<a name="line-116"></a><span class="cp">#undef  TERMIO</span>
+<a name="line-117"></a><span class="cp">#undef  SGTTY</span>
+<a name="line-118"></a><span class="cp">#endif</span>
+<a name="line-119"></a>
+<a name="line-120"></a><span class="cp">#if defined(linux) &amp;&amp; !defined(TERMIO)</span>
+<a name="line-121"></a><span class="cp">#undef  TERMIOS</span>
+<a name="line-122"></a><span class="cp">#define TERMIO</span>
+<a name="line-123"></a><span class="cp">#undef  SGTTY</span>
+<a name="line-124"></a><span class="cp">#endif</span>
+<a name="line-125"></a>
+<a name="line-126"></a><span class="cp">#ifdef _LIBC</span>
+<a name="line-127"></a><span class="cp">#undef  TERMIOS</span>
+<a name="line-128"></a><span class="cp">#define TERMIO</span>
+<a name="line-129"></a><span class="cp">#undef  SGTTY</span>
+<a name="line-130"></a><span class="cp">#endif</span>
+<a name="line-131"></a>
+<a name="line-132"></a><span class="cp">#if !defined(TERMIO) &amp;&amp; !defined(TERMIOS) &amp;&amp; !defined(OPENSSL_SYS_VMS) &amp;&amp; !defined(OPENSSL_SYS_MSDOS) &amp;&amp; !defined(MAC_OS_pre_X) &amp;&amp; !defined(MAC_OS_GUSI_SOURCE)</span>
+<a name="line-133"></a><span class="cp">#undef  TERMIOS</span>
+<a name="line-134"></a><span class="cp">#undef  TERMIO</span>
+<a name="line-135"></a><span class="cp">#define SGTTY</span>
+<a name="line-136"></a><span class="cp">#endif</span>
+<a name="line-137"></a>
+<a name="line-138"></a><span class="cp">#if defined(OPENSSL_SYS_VXWORKS)</span>
+<a name="line-139"></a><span class="cp">#undef TERMIOS</span>
+<a name="line-140"></a><span class="cp">#undef TERMIO</span>
+<a name="line-141"></a><span class="cp">#undef SGTTY</span>
+<a name="line-142"></a><span class="cp">#endif</span>
+<a name="line-143"></a>
+<a name="line-144"></a><span class="cp">#ifdef TERMIOS</span>
+<a name="line-145"></a><span class="cp">#include &lt;termios.h&gt;</span>
+<a name="line-146"></a><span class="cp">#define TTY_STRUCT		struct termios</span>
+<a name="line-147"></a><span class="cp">#define TTY_FLAGS		c_lflag</span>
+<a name="line-148"></a><span class="cp">#define	TTY_get(tty,data)	tcgetattr(tty,data)</span>
+<a name="line-149"></a><span class="cp">#define TTY_set(tty,data)	tcsetattr(tty,TCSANOW,data)</span>
+<a name="line-150"></a><span class="cp">#endif</span>
+<a name="line-151"></a>
+<a name="line-152"></a><span class="cp">#ifdef TERMIO</span>
+<a name="line-153"></a><span class="cp">#include &lt;termio.h&gt;</span>
+<a name="line-154"></a><span class="cp">#define TTY_STRUCT		struct termio</span>
+<a name="line-155"></a><span class="cp">#define TTY_FLAGS		c_lflag</span>
+<a name="line-156"></a><span class="cp">#define TTY_get(tty,data)	ioctl(tty,TCGETA,data)</span>
+<a name="line-157"></a><span class="cp">#define TTY_set(tty,data)	ioctl(tty,TCSETA,data)</span>
 <a name="line-158"></a><span class="cp">#endif</span>
-<a name="line-159"></a>	<span class="p">}</span>
-<a name="line-160"></a><span class="cp">#endif</span>
-<a name="line-161"></a>
-<a name="line-162"></a><span class="cp">#define START	0</span>
-<a name="line-163"></a><span class="cp">#define STOP	1</span>
-<a name="line-164"></a>
-<a name="line-165"></a><span class="kt">double</span> <span class="nf">Time_F</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">)</span>
-<a name="line-166"></a>	<span class="p">{</span>
-<a name="line-167"></a><span class="hll">	<span class="kt">double</span> <span class="n">ret</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ret' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ret&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-168"></a><span class="cp">#ifdef TIMES</span>
-<a name="line-169"></a>	<span class="k">static</span> <span class="k">struct</span> <span class="n">tms</span> <span class="n">tstart</span><span class="p">,</span><span class="n">tend</span><span class="p">;</span>
-<a name="line-170"></a>
-<a name="line-171"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">START</span><span class="p">)</span>
-<a name="line-172"></a>		<span class="p">{</span>
-<a name="line-173"></a>		<span class="n">times</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tstart</span><span class="p">);</span>
-<a name="line-174"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-175"></a>		<span class="p">}</span>
-<a name="line-176"></a>	<span class="k">else</span>
-<a name="line-177"></a>		<span class="p">{</span>
-<a name="line-178"></a>		<span class="n">times</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tend</span><span class="p">);</span>
-<a name="line-179"></a>		<span class="n">ret</span><span class="o">=</span><span class="p">((</span><span class="kt">double</span><span class="p">)(</span><span class="n">tend</span><span class="p">.</span><span class="n">tms_utime</span><span class="o">-</span><span class="n">tstart</span><span class="p">.</span><span class="n">tms_utime</span><span class="p">))</span><span class="o">/</span><span class="n">HZ</span><span class="p">;</span>
-<a name="line-180"></a>		<span class="k">return</span><span class="p">((</span><span class="n">ret</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="mf">1e-6</span><span class="o">:</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-181"></a>		<span class="p">}</span>
-<a name="line-182"></a><span class="cp">#else </span><span class="cm">/* !times() */</span><span class="cp"></span>
-<a name="line-183"></a>	<span class="k">static</span> <span class="k">struct</span> <span class="n">timeb</span> <span class="n">tstart</span><span class="p">,</span><span class="n">tend</span><span class="p">;</span>
-<a name="line-184"></a><span class="hll">	<span class="kt">long</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-185"></a>
-<a name="line-186"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">START</span><span class="p">)</span>
-<a name="line-187"></a>		<span class="p">{</span>
-<a name="line-188"></a>		<span class="n">ftime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tstart</span><span class="p">);</span>
-<a name="line-189"></a>		<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-190"></a>		<span class="p">}</span>
-<a name="line-191"></a>	<span class="k">else</span>
-<a name="line-192"></a>		<span class="p">{</span>
-<a name="line-193"></a>		<span class="n">ftime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tend</span><span class="p">);</span>
-<a name="line-194"></a>		<span class="n">i</span><span class="o">=</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">tend</span><span class="p">.</span><span class="n">millitm</span><span class="o">-</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">tstart</span><span class="p">.</span><span class="n">millitm</span><span class="p">;</span>
-<a name="line-195"></a>		<span class="n">ret</span><span class="o">=</span><span class="p">((</span><span class="kt">double</span><span class="p">)(</span><span class="n">tend</span><span class="p">.</span><span class="n">time</span><span class="o">-</span><span class="n">tstart</span><span class="p">.</span><span class="n">time</span><span class="p">))</span><span class="o">+</span><span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="mf">1000.0</span><span class="p">;</span>
-<a name="line-196"></a>		<span class="k">return</span><span class="p">((</span><span class="n">ret</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="mf">1e-6</span><span class="o">:</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-197"></a>		<span class="p">}</span>
-<a name="line-198"></a><span class="cp">#endif</span>
-<a name="line-199"></a>	<span class="p">}</span>
-<a name="line-200"></a>
-<a name="line-201"></a><span class="cp">#ifdef SIGALRM</span>
-<a name="line-202"></a><span class="cp">#define print_name(name) fprintf(stderr,&quot;Doing %s&#39;s for 10 seconds\n&quot;,name); alarm(10);</span>
-<a name="line-203"></a><span class="cp">#else</span>
-<a name="line-204"></a><span class="cp">#define print_name(name) fprintf(stderr,&quot;Doing %s %ld times\n&quot;,name,cb);</span>
-<a name="line-205"></a><span class="cp">#endif</span>
-<a name="line-206"></a>	
-<a name="line-207"></a><span class="cp">#define time_it(func,name,index) \</span>
-<a name="line-208"></a><span class="cp">	print_name(name); \</span>
-<a name="line-209"></a><span class="cp">	Time_F(START); \</span>
-<a name="line-210"></a><span class="cp">	for (count=0,run=1; COND(cb); count+=4) \</span>
-<a name="line-211"></a><span class="cp">		{ \</span>
-<a name="line-212"></a><span class="cp">		unsigned long d[2]; \</span>
-<a name="line-213"></a><span class="cp">		func(d,&amp;sch); \</span>
-<a name="line-214"></a><span class="cp">		func(d,&amp;sch); \</span>
-<a name="line-215"></a><span class="cp">		func(d,&amp;sch); \</span>
-<a name="line-216"></a><span class="cp">		func(d,&amp;sch); \</span>
-<a name="line-217"></a><span class="cp">		} \</span>
-<a name="line-218"></a><span class="cp">	tm[index]=Time_F(STOP); \</span>
-<a name="line-219"></a><span class="cp">	fprintf(stderr,&quot;%ld %s&#39;s in %.2f second\n&quot;,count,name,tm[index]); \</span>
-<a name="line-220"></a><span class="cp">	tm[index]=((double)COUNT(cb))/tm[index];</span>
+<a name="line-159"></a>
+<a name="line-160"></a><span class="cp">#ifdef SGTTY</span>
+<a name="line-161"></a><span class="cp">#include &lt;sgtty.h&gt;</span>
+<a name="line-162"></a><span class="cp">#define TTY_STRUCT		struct sgttyb</span>
+<a name="line-163"></a><span class="cp">#define TTY_FLAGS		sg_flags</span>
+<a name="line-164"></a><span class="cp">#define TTY_get(tty,data)	ioctl(tty,TIOCGETP,data)</span>
+<a name="line-165"></a><span class="cp">#define TTY_set(tty,data)	ioctl(tty,TIOCSETP,data)</span>
+<a name="line-166"></a><span class="cp">#endif</span>
+<a name="line-167"></a>
+<a name="line-168"></a><span class="cp">#if !defined(_LIBC) &amp;&amp; !defined(OPENSSL_SYS_MSDOS) &amp;&amp; !defined(OPENSSL_SYS_VMS) &amp;&amp; !defined(MAC_OS_pre_X)</span>
+<a name="line-169"></a><span class="cp">#include &lt;sys/ioctl.h&gt;</span>
+<a name="line-170"></a><span class="cp">#endif</span>
+<a name="line-171"></a>
+<a name="line-172"></a><span class="cp">#if defined(OPENSSL_SYS_MSDOS) &amp;&amp; !defined(__CYGWIN32__) &amp;&amp; !defined(OPENSSL_SYS_WINCE)</span>
+<a name="line-173"></a><span class="cp">#include &lt;conio.h&gt;</span>
+<a name="line-174"></a><span class="cp">#define fgets(a,b,c) noecho_fgets(a,b,c)</span>
+<a name="line-175"></a><span class="cp">#endif</span>
+<a name="line-176"></a>
+<a name="line-177"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-178"></a><span class="cp">#include &lt;ssdef.h&gt;</span>
+<a name="line-179"></a><span class="cp">#include &lt;iodef.h&gt;</span>
+<a name="line-180"></a><span class="cp">#include &lt;ttdef.h&gt;</span>
+<a name="line-181"></a><span class="cp">#include &lt;descrip.h&gt;</span>
+<a name="line-182"></a><span class="k">struct</span> <span class="n">IOSB</span> <span class="p">{</span>
+<a name="line-183"></a>	<span class="kt">short</span> <span class="n">iosb</span><span class="err">$</span><span class="n">w_value</span><span class="p">;</span>
+<a name="line-184"></a><span class="hll">	<span class="kt">short</span> <span class="n">iosb</span><span class="err">$</span><span class="n">w_count</span><span class="p">;</span><span class='error2'>&lt;--- struct or union member 'IOSB::iosb$w_count' is never used.</span>
+</span><a name="line-185"></a><span class="hll">	<span class="kt">long</span>  <span class="n">iosb</span><span class="err">$</span><span class="n">l_info</span><span class="p">;</span><span class='error2'>&lt;--- struct or union member 'IOSB::iosb$l_info' is never used.</span>
+</span><a name="line-186"></a>	<span class="p">};</span>
+<a name="line-187"></a><span class="cp">#endif</span>
+<a name="line-188"></a>
+<a name="line-189"></a><span class="cp">#if defined(MAC_OS_pre_X) || defined(MAC_OS_GUSI_SOURCE)</span>
+<a name="line-190"></a><span class="cm">/*</span>
+<a name="line-191"></a><span class="cm"> * This one needs work. As a matter of fact the code is unoperational</span>
+<a name="line-192"></a><span class="cm"> * and this is only a trick to get it compiled.</span>
+<a name="line-193"></a><span class="cm"> *					&lt;appro@fy.chalmers.se&gt;</span>
+<a name="line-194"></a><span class="cm"> */</span>
+<a name="line-195"></a><span class="cp">#define TTY_STRUCT int</span>
+<a name="line-196"></a><span class="cp">#endif</span>
+<a name="line-197"></a>
+<a name="line-198"></a><span class="cp">#ifndef NX509_SIG</span>
+<a name="line-199"></a><span class="cp">#define NX509_SIG 32</span>
+<a name="line-200"></a><span class="cp">#endif</span>
+<a name="line-201"></a>
+<a name="line-202"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">read_till_nl</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">);</span>
+<a name="line-203"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">recsig</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+<a name="line-204"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">pushsig</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="line-205"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">popsig</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="line-206"></a><span class="cp">#if defined(OPENSSL_SYS_MSDOS) &amp;&amp; !defined(OPENSSL_SYS_WIN16)</span>
+<a name="line-207"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">noecho_fgets</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">tty</span><span class="p">);</span>
+<a name="line-208"></a><span class="cp">#endif</span>
+<a name="line-209"></a><span class="cp">#ifdef SIGACTION</span>
+<a name="line-210"></a> <span class="k">static</span> <span class="k">struct</span> <span class="n">sigaction</span> <span class="n">savsig</span><span class="p">[</span><span class="n">NX509_SIG</span><span class="p">];</span>
+<a name="line-211"></a><span class="cp">#else</span>
+<a name="line-212"></a>  <span class="k">static</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">savsig</span><span class="p">[</span><span class="n">NX509_SIG</span><span class="p">])(</span><span class="kt">int</span> <span class="p">);</span>
+<a name="line-213"></a><span class="cp">#endif</span>
+<a name="line-214"></a><span class="k">static</span> <span class="kt">jmp_buf</span> <span class="n">save</span><span class="p">;</span>
+<a name="line-215"></a>
+<a name="line-216"></a><span class="kt">int</span> <span class="nf">des_read_pw_string</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prompt</span><span class="p">,</span>
+<a name="line-217"></a>	     <span class="kt">int</span> <span class="n">verify</span><span class="p">)</span>
+<a name="line-218"></a>	<span class="p">{</span>
+<a name="line-219"></a>	<span class="kt">char</span> <span class="n">buff</span><span class="p">[</span><span class="n">BUFSIZ</span><span class="p">];</span>
+<a name="line-220"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
 <a name="line-221"></a>
-<a name="line-222"></a><span class="cp">#define print_it(name,index) \</span>
-<a name="line-223"></a><span class="cp">	fprintf(stderr,&quot;%s bytes per sec = %12.2f (%5.1fuS)\n&quot;,name, \</span>
-<a name="line-224"></a><span class="cp">		tm[index]*8,1.0e6/tm[index]);</span>
-<a name="line-225"></a>
-<a name="line-226"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
-<a name="line-227"></a>	<span class="p">{</span>
-<a name="line-228"></a>	<span class="kt">long</span> <span class="n">count</span><span class="p">;</span>
-<a name="line-229"></a><span class="hll">	<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class='error2'>&lt;--- Variable 'buf' is assigned a value that is never used.</span>
-</span><a name="line-230"></a>	<span class="k">static</span> <span class="kt">char</span> <span class="n">key</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="o">=</span><span class="p">{</span>	<span class="mh">0x12</span><span class="p">,</span><span class="mh">0x34</span><span class="p">,</span><span class="mh">0x56</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0xbc</span><span class="p">,</span><span class="mh">0xde</span><span class="p">,</span><span class="mh">0xf0</span><span class="p">,</span>
-<a name="line-231"></a>				<span class="mh">0x12</span><span class="p">,</span><span class="mh">0x34</span><span class="p">,</span><span class="mh">0x56</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0xbc</span><span class="p">,</span><span class="mh">0xde</span><span class="p">,</span><span class="mh">0xf0</span><span class="p">};</span>
-<a name="line-232"></a>	<span class="n">BF_KEY</span> <span class="n">sch</span><span class="p">;</span>
-<a name="line-233"></a>	<span class="kt">double</span> <span class="n">d</span><span class="p">,</span><span class="n">tm</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="n">max</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-234"></a>	<span class="kt">int</span> <span class="n">rank</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
-<a name="line-235"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
-<a name="line-236"></a>	<span class="kt">int</span> <span class="n">max_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">j</span><span class="p">;</span>
-<a name="line-237"></a><span class="cp">#ifndef SIGALARM</span>
-<a name="line-238"></a>	<span class="kt">long</span> <span class="n">ca</span><span class="p">,</span><span class="n">cb</span><span class="p">,</span><span class="n">cc</span><span class="p">,</span><span class="n">cd</span><span class="p">,</span><span class="n">ce</span><span class="p">;</span>
-<a name="line-239"></a><span class="cp">#endif</span>
-<a name="line-240"></a>
-<a name="line-241"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-242"></a>		<span class="p">{</span>
-<a name="line-243"></a>		<span class="n">tm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0</span><span class="p">;</span>
-<a name="line-244"></a><span class="hll">		<span class="n">rank</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'rank' is assigned a value that is never used.</span>
-</span><a name="line-245"></a>		<span class="p">}</span>
+<a name="line-222"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">des_read_pw</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">buff</span><span class="p">,(</span><span class="n">length</span><span class="o">&gt;</span><span class="n">BUFSIZ</span><span class="p">)</span><span class="o">?</span><span class="nl">BUFSIZ</span><span class="p">:</span><span class="n">length</span><span class="p">,</span><span class="n">prompt</span><span class="p">,</span><span class="n">verify</span><span class="p">);</span>
+<a name="line-223"></a>	<span class="n">OPENSSL_cleanse</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span><span class="n">BUFSIZ</span><span class="p">);</span>
+<a name="line-224"></a>	<span class="k">return</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+<a name="line-225"></a>	<span class="p">}</span>
+<a name="line-226"></a>
+<a name="line-227"></a><span class="cp">#ifdef OPENSSL_SYS_WINCE</span>
+<a name="line-228"></a>
+<a name="line-229"></a><span class="kt">int</span> <span class="nf">des_read_pw</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buff</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prompt</span><span class="p">,</span> <span class="kt">int</span> <span class="n">verify</span><span class="p">)</span>
+<a name="line-230"></a>	<span class="p">{</span> 
+<a name="line-231"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-232"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-233"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-234"></a>	<span class="p">}</span>
+<a name="line-235"></a>
+<a name="line-236"></a><span class="cp">#elif defined(OPENSSL_SYS_WIN16)</span>
+<a name="line-237"></a>
+<a name="line-238"></a><span class="kt">int</span> <span class="nf">des_read_pw</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buff</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prompt</span><span class="p">,</span> <span class="kt">int</span> <span class="n">verify</span><span class="p">)</span>
+<a name="line-239"></a>	<span class="p">{</span> 
+<a name="line-240"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-241"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+<a name="line-242"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-243"></a>	<span class="p">}</span>
+<a name="line-244"></a>
+<a name="line-245"></a><span class="cp">#else </span><span class="cm">/* !OPENSSL_SYS_WINCE &amp;&amp; !OPENSSL_SYS_WIN16 */</span><span class="cp"></span>
 <a name="line-246"></a>
-<a name="line-247"></a><span class="cp">#ifndef TIMES</span>
-<a name="line-248"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;To get the most accurate results, try to run this</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-249"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;program when this computer is idle.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-250"></a><span class="cp">#endif</span>
+<a name="line-247"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">read_till_nl</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">in</span><span class="p">)</span>
+<a name="line-248"></a>	<span class="p">{</span>
+<a name="line-249"></a><span class="cp">#define SIZE 4</span>
+<a name="line-250"></a>	<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">SIZE</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
 <a name="line-251"></a>
-<a name="line-252"></a>	<span class="n">BF_set_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sch</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="n">key</span><span class="p">);</span>
-<a name="line-253"></a>
-<a name="line-254"></a><span class="cp">#ifndef SIGALRM</span>
-<a name="line-255"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;First we calculate the approximate speed ...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-256"></a>	<span class="n">count</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
-<a name="line-257"></a>	<span class="k">do</span>	<span class="p">{</span>
-<a name="line-258"></a>		<span class="kt">long</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-259"></a>		<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a name="line-260"></a>
-<a name="line-261"></a>		<span class="n">count</span><span class="o">*=</span><span class="mi">2</span><span class="p">;</span>
-<a name="line-262"></a>		<span class="n">Time_F</span><span class="p">(</span><span class="n">START</span><span class="p">);</span>
-<a name="line-263"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
-<a name="line-264"></a>			<span class="n">BF_encrypt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="o">&amp;</span><span class="n">sch</span><span class="p">);</span>
-<a name="line-265"></a>		<span class="n">d</span><span class="o">=</span><span class="n">Time_F</span><span class="p">(</span><span class="n">STOP</span><span class="p">);</span>
-<a name="line-266"></a>		<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mf">3.0</span><span class="p">);</span>
-<a name="line-267"></a><span class="hll">	<span class="n">ca</span><span class="o">=</span><span class="n">count</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'ca' is assigned a value that is never used.</span>
-</span><a name="line-268"></a>	<span class="n">cb</span><span class="o">=</span><span class="n">count</span><span class="o">*</span><span class="mi">3</span><span class="p">;</span>
-<a name="line-269"></a><span class="hll">	<span class="n">cc</span><span class="o">=</span><span class="n">count</span><span class="o">*</span><span class="mi">3</span><span class="o">*</span><span class="mi">8</span><span class="o">/</span><span class="n">BUFSIZE</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'cc' is assigned a value that is never used.</span>
-</span><a name="line-270"></a><span class="hll">	<span class="n">cd</span><span class="o">=</span><span class="n">count</span><span class="o">*</span><span class="mi">8</span><span class="o">/</span><span class="n">BUFSIZE</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'cd' is assigned a value that is never used.</span>
-</span><a name="line-271"></a>
-<a name="line-272"></a><span class="hll">	<span class="n">ce</span><span class="o">=</span><span class="n">count</span><span class="o">/</span><span class="mi">20</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'ce' is assigned a value that is never used.</span>
-</span><a name="line-273"></a><span class="cp">#define COND(d) (count != (d))</span>
-<a name="line-274"></a><span class="cp">#define COUNT(d) (d)</span>
-<a name="line-275"></a><span class="cp">#else</span>
-<a name="line-276"></a><span class="cp">#define COND(c) (run)</span>
-<a name="line-277"></a><span class="cp">#define COUNT(d) (count)</span>
-<a name="line-278"></a>        <span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span><span class="n">sig_done</span><span class="p">);</span>
-<a name="line-279"></a>        <span class="n">alarm</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<a name="line-280"></a><span class="cp">#endif</span>
+<a name="line-252"></a>	<span class="k">do</span>	<span class="p">{</span>
+<a name="line-253"></a>		<span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">SIZE</span><span class="p">,</span><span class="n">in</span><span class="p">);</span>
+<a name="line-254"></a>		<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">strchr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-255"></a>	<span class="p">}</span>
+<a name="line-256"></a>
+<a name="line-257"></a>
+<a name="line-258"></a><span class="cm">/* return 0 if ok, 1 (or -1) otherwise */</span>
+<a name="line-259"></a><span class="kt">int</span> <span class="nf">des_read_pw</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buff</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">prompt</span><span class="p">,</span>
+<a name="line-260"></a>	     <span class="kt">int</span> <span class="n">verify</span><span class="p">)</span>
+<a name="line-261"></a>	<span class="p">{</span>
+<a name="line-262"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-263"></a>	<span class="k">struct</span> <span class="n">IOSB</span> <span class="n">iosb</span><span class="p">;</span>
+<a name="line-264"></a>	<span class="err">$</span><span class="n">DESCRIPTOR</span><span class="p">(</span><span class="n">terminal</span><span class="p">,</span><span class="s">&quot;TT&quot;</span><span class="p">);</span>
+<a name="line-265"></a>	<span class="kt">long</span> <span class="n">tty_orig</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">tty_new</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<a name="line-266"></a>	<span class="kt">long</span> <span class="n">status</span><span class="p">;</span>
+<a name="line-267"></a>	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">channel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-268"></a><span class="cp">#else</span>
+<a name="line-269"></a><span class="cp">#if !defined(OPENSSL_SYS_MSDOS) || defined(__DJGPP__)</span>
+<a name="line-270"></a>	<span class="n">TTY_STRUCT</span> <span class="n">tty_orig</span><span class="p">,</span><span class="n">tty_new</span><span class="p">;</span>
+<a name="line-271"></a><span class="cp">#endif</span>
+<a name="line-272"></a><span class="cp">#endif</span>
+<a name="line-273"></a>	<span class="kt">int</span> <span class="n">number</span><span class="p">;</span>
+<a name="line-274"></a>	<span class="kt">int</span> <span class="n">ok</span><span class="p">;</span>
+<a name="line-275"></a>	<span class="cm">/* statics are simply to avoid warnings about longjmp clobbering</span>
+<a name="line-276"></a><span class="cm">	   things */</span>
+<a name="line-277"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">ps</span><span class="p">;</span>
+<a name="line-278"></a>	<span class="kt">int</span> <span class="n">is_a_tty</span><span class="p">;</span>
+<a name="line-279"></a>	<span class="k">static</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">tty</span><span class="p">;</span>
+<a name="line-280"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
 <a name="line-281"></a>
-<a name="line-282"></a>	<span class="n">time_it</span><span class="p">(</span><span class="n">BF_encrypt_normal</span><span class="p">,</span>	<span class="s">&quot;BF_encrypt_normal &quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-283"></a>	<span class="n">time_it</span><span class="p">(</span><span class="n">BF_encrypt_ptr</span><span class="p">,</span>		<span class="s">&quot;BF_encrypt_ptr    &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-284"></a>	<span class="n">time_it</span><span class="p">(</span><span class="n">BF_encrypt_ptr2</span><span class="p">,</span>	<span class="s">&quot;BF_encrypt_ptr2   &quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-<a name="line-285"></a><span class="hll">	<span class="n">num</span><span class="o">+=</span><span class="mi">3</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'num' is assigned a value that is never used.</span>
-</span><a name="line-286"></a>
-<a name="line-287"></a>	<span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;&lt;nothing&gt;&quot;</span><span class="p">;</span>
-<a name="line-288"></a>	<span class="n">print_it</span><span class="p">(</span><span class="s">&quot;BF_encrypt_normal &quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-289"></a>	<span class="n">max</span><span class="o">=</span><span class="n">tm</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-290"></a>	<span class="n">max_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-291"></a>	<span class="n">str</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;ptr      &quot;</span><span class="p">;</span>
-<a name="line-292"></a>	<span class="n">print_it</span><span class="p">(</span><span class="s">&quot;BF_encrypt_ptr &quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-293"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">max</span> <span class="o">&lt;</span> <span class="n">tm</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span> <span class="n">max</span><span class="o">=</span><span class="n">tm</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">max_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-294"></a>	<span class="n">str</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;ptr2     &quot;</span><span class="p">;</span>
-<a name="line-295"></a>	<span class="n">print_it</span><span class="p">(</span><span class="s">&quot;BF_encrypt_ptr2 &quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-296"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">max</span> <span class="o">&lt;</span> <span class="n">tm</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="p">{</span> <span class="n">max</span><span class="o">=</span><span class="n">tm</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span> <span class="n">max_idx</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-297"></a>
-<a name="line-298"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;options    BF ecb/s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-299"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s %12.2f 100.0%%</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">str</span><span class="p">[</span><span class="n">max_idx</span><span class="p">],</span><span class="n">tm</span><span class="p">[</span><span class="n">max_idx</span><span class="p">]);</span>
-<a name="line-300"></a>	<span class="n">d</span><span class="o">=</span><span class="n">tm</span><span class="p">[</span><span class="n">max_idx</span><span class="p">];</span>
-<a name="line-301"></a>	<span class="n">tm</span><span class="p">[</span><span class="n">max_idx</span><span class="p">]</span><span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">;</span>
-<a name="line-302"></a>	<span class="n">max</span><span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">;</span>
-<a name="line-303"></a>	<span class="k">for</span> <span class="p">(;;)</span>
-<a name="line-304"></a>		<span class="p">{</span>
-<a name="line-305"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-306"></a>			<span class="p">{</span>
-<a name="line-307"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">max</span> <span class="o">&lt;</span> <span class="n">tm</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span> <span class="n">max</span><span class="o">=</span><span class="n">tm</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-308"></a>			<span class="p">}</span>
-<a name="line-309"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">max</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-<a name="line-310"></a>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s %12.2f  %4.1f%%</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">str</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">tm</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">tm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="n">d</span><span class="o">*</span><span class="mf">100.0</span><span class="p">);</span>
-<a name="line-311"></a>		<span class="n">tm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">;</span>
-<a name="line-312"></a>		<span class="n">max</span><span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">;</span>
-<a name="line-313"></a>		<span class="p">}</span>
-<a name="line-314"></a>
-<a name="line-315"></a>	<span class="k">switch</span> <span class="p">(</span><span class="n">max_idx</span><span class="p">)</span>
-<a name="line-316"></a>		<span class="p">{</span>
-<a name="line-317"></a>	<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
-<a name="line-318"></a>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;-DBF_DEFAULT_OPTIONS</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-319"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-320"></a>	<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-<a name="line-321"></a>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;-DBF_PTR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-322"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-323"></a>	<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
-<a name="line-324"></a>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;-DBF_PTR2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-325"></a>		<span class="k">break</span><span class="p">;</span>
-<a name="line-326"></a>		<span class="p">}</span>
-<a name="line-327"></a>	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-328"></a><span class="cp">#if defined(LINT) || defined(OPENSSL_SYS_MSDOS)</span>
-<a name="line-329"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-330"></a><span class="cp">#endif</span>
-<a name="line-331"></a>	<span class="p">}</span>
+<a name="line-282"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">save</span><span class="p">))</span>
+<a name="line-283"></a>		<span class="p">{</span>
+<a name="line-284"></a>		<span class="n">ok</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-285"></a>		<span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
+<a name="line-286"></a>		<span class="p">}</span>
+<a name="line-287"></a>
+<a name="line-288"></a>	<span class="n">number</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span>
+<a name="line-289"></a>	<span class="n">ok</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-290"></a>	<span class="n">ps</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-291"></a>	<span class="n">is_a_tty</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-292"></a>	<span class="n">tty</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-293"></a>
+<a name="line-294"></a><span class="cp">#ifdef OPENSSL_SYS_MSDOS</span>
+<a name="line-295"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">tty</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;con&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-296"></a>		<span class="n">tty</span><span class="o">=</span><span class="n">stdin</span><span class="p">;</span>
+<a name="line-297"></a><span class="cp">#elif defined(MAC_OS_pre_X) || defined(OPENSSL_SYS_VXWORKS)</span>
+<a name="line-298"></a>	<span class="n">tty</span><span class="o">=</span><span class="n">stdin</span><span class="p">;</span>
+<a name="line-299"></a><span class="cp">#else</span>
+<a name="line-300"></a><span class="cp">#ifndef OPENSSL_SYS_MPE</span>
+<a name="line-301"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">tty</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;/dev/tty&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-302"></a><span class="cp">#endif</span>
+<a name="line-303"></a>		<span class="n">tty</span><span class="o">=</span><span class="n">stdin</span><span class="p">;</span>
+<a name="line-304"></a><span class="cp">#endif</span>
+<a name="line-305"></a>
+<a name="line-306"></a><span class="cp">#if defined(TTY_get) &amp;&amp; !defined(OPENSSL_SYS_VMS)</span>
+<a name="line-307"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">TTY_get</span><span class="p">(</span><span class="n">fileno</span><span class="p">(</span><span class="n">tty</span><span class="p">),</span><span class="o">&amp;</span><span class="n">tty_orig</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a name="line-308"></a>		<span class="p">{</span>
+<a name="line-309"></a><span class="cp">#ifdef ENOTTY</span>
+<a name="line-310"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">ENOTTY</span><span class="p">)</span>
+<a name="line-311"></a>			<span class="n">is_a_tty</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-312"></a>		<span class="k">else</span>
+<a name="line-313"></a><span class="cp">#endif</span>
+<a name="line-314"></a><span class="cp">#ifdef EINVAL</span>
+<a name="line-315"></a>		<span class="cm">/* Ariel Glenn ariel@columbia.edu reports that solaris</span>
+<a name="line-316"></a><span class="cm">		 * can return EINVAL instead.  This should be ok */</span>
+<a name="line-317"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">EINVAL</span><span class="p">)</span>
+<a name="line-318"></a>			<span class="n">is_a_tty</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-319"></a>		<span class="k">else</span>
+<a name="line-320"></a><span class="cp">#endif</span>
+<a name="line-321"></a>			<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-322"></a>		<span class="p">}</span>
+<a name="line-323"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">tty_new</span><span class="p">),</span><span class="o">&amp;</span><span class="p">(</span><span class="n">tty_orig</span><span class="p">),</span><span class="k">sizeof</span><span class="p">(</span><span class="n">tty_orig</span><span class="p">));</span>
+<a name="line-324"></a><span class="cp">#endif</span>
+<a name="line-325"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-326"></a>	<span class="n">status</span> <span class="o">=</span> <span class="n">sys</span><span class="err">$</span><span class="n">assign</span><span class="p">(</span><span class="o">&amp;</span><span class="n">terminal</span><span class="p">,</span><span class="o">&amp;</span><span class="n">channel</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-327"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="n">SS</span><span class="err">$</span><span class="n">_NORMAL</span><span class="p">)</span>
+<a name="line-328"></a>		<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-329"></a>	<span class="n">status</span><span class="o">=</span><span class="n">sys</span><span class="err">$</span><span class="n">qiow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">channel</span><span class="p">,</span><span class="n">IO</span><span class="err">$</span><span class="n">_SENSEMODE</span><span class="p">,</span><span class="o">&amp;</span><span class="n">iosb</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">tty_orig</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-330"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">status</span> <span class="o">!=</span> <span class="n">SS</span><span class="err">$</span><span class="n">_NORMAL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">iosb</span><span class="p">.</span><span class="n">iosb</span><span class="err">$</span><span class="n">w_value</span> <span class="o">!=</span> <span class="n">SS</span><span class="err">$</span><span class="n">_NORMAL</span><span class="p">))</span>
+<a name="line-331"></a>		<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-332"></a><span class="cp">#endif</span>
+<a name="line-333"></a>
+<a name="line-334"></a>	<span class="n">pushsig</span><span class="p">();</span>
+<a name="line-335"></a>	<span class="n">ps</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-336"></a>
+<a name="line-337"></a><span class="cp">#ifdef TTY_FLAGS</span>
+<a name="line-338"></a>	<span class="n">tty_new</span><span class="p">.</span><span class="n">TTY_FLAGS</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">ECHO</span><span class="p">;</span>
+<a name="line-339"></a><span class="cp">#endif</span>
+<a name="line-340"></a>
+<a name="line-341"></a><span class="cp">#if defined(TTY_set) &amp;&amp; !defined(OPENSSL_SYS_VMS)</span>
+<a name="line-342"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">is_a_tty</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">TTY_set</span><span class="p">(</span><span class="n">fileno</span><span class="p">(</span><span class="n">tty</span><span class="p">),</span><span class="o">&amp;</span><span class="n">tty_new</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<a name="line-343"></a><span class="cp">#ifdef OPENSSL_SYS_MPE </span>
+<a name="line-344"></a>		<span class="p">;</span> <span class="cm">/* MPE lies -- echo really has been disabled */</span>
+<a name="line-345"></a><span class="cp">#else</span>
+<a name="line-346"></a>		<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-347"></a><span class="cp">#endif</span>
+<a name="line-348"></a><span class="cp">#endif</span>
+<a name="line-349"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-350"></a>	<span class="n">tty_new</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">tty_orig</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<a name="line-351"></a>	<span class="n">tty_new</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tty_orig</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">|</span> <span class="n">TT</span><span class="err">$</span><span class="n">M_NOECHO</span><span class="p">;</span>
+<a name="line-352"></a>	<span class="n">tty_new</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">tty_orig</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-353"></a>	<span class="n">status</span> <span class="o">=</span> <span class="n">sys</span><span class="err">$</span><span class="n">qiow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">channel</span><span class="p">,</span><span class="n">IO</span><span class="err">$</span><span class="n">_SETMODE</span><span class="p">,</span><span class="o">&amp;</span><span class="n">iosb</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">tty_new</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-354"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">status</span> <span class="o">!=</span> <span class="n">SS</span><span class="err">$</span><span class="n">_NORMAL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">iosb</span><span class="p">.</span><span class="n">iosb</span><span class="err">$</span><span class="n">w_value</span> <span class="o">!=</span> <span class="n">SS</span><span class="err">$</span><span class="n">_NORMAL</span><span class="p">))</span>
+<a name="line-355"></a>		<span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-356"></a><span class="cp">#endif</span>
+<a name="line-357"></a>	<span class="n">ps</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+<a name="line-358"></a>
+<a name="line-359"></a>	<span class="k">while</span> <span class="p">((</span><span class="o">!</span><span class="n">ok</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">number</span><span class="o">--</span><span class="p">))</span>
+<a name="line-360"></a>		<span class="p">{</span>
+<a name="line-361"></a>		<span class="n">fputs</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span><span class="n">stderr</span><span class="p">);</span>
+<a name="line-362"></a>		<span class="n">fflush</span><span class="p">(</span><span class="n">stderr</span><span class="p">);</span>
+<a name="line-363"></a>
+<a name="line-364"></a>		<span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-365"></a>		<span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">size</span><span class="p">,</span><span class="n">tty</span><span class="p">);</span>
+<a name="line-366"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">feof</span><span class="p">(</span><span class="n">tty</span><span class="p">))</span> <span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
+<a name="line-367"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ferror</span><span class="p">(</span><span class="n">tty</span><span class="p">))</span> <span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
+<a name="line-368"></a>		<span class="k">if</span> <span class="p">((</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">strchr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="sc">&#39;\n&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-369"></a>			<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-370"></a>		<span class="k">else</span>	<span class="n">read_till_nl</span><span class="p">(</span><span class="n">tty</span><span class="p">);</span>
+<a name="line-371"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">verify</span><span class="p">)</span>
+<a name="line-372"></a>			<span class="p">{</span>
+<a name="line-373"></a>			<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Verifying password - %s&quot;</span><span class="p">,</span><span class="n">prompt</span><span class="p">);</span>
+<a name="line-374"></a>			<span class="n">fflush</span><span class="p">(</span><span class="n">stderr</span><span class="p">);</span>
+<a name="line-375"></a>			<span class="n">buff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-376"></a>			<span class="n">fgets</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span><span class="n">size</span><span class="p">,</span><span class="n">tty</span><span class="p">);</span>
+<a name="line-377"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">feof</span><span class="p">(</span><span class="n">tty</span><span class="p">))</span> <span class="k">goto</span> <span class="n">error</span><span class="p">;</span>
+<a name="line-378"></a>			<span class="k">if</span> <span class="p">((</span><span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">strchr</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span><span class="sc">&#39;\n&#39;</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-379"></a>				<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-380"></a>			<span class="k">else</span>	<span class="n">read_till_nl</span><span class="p">(</span><span class="n">tty</span><span class="p">);</span>
+<a name="line-381"></a>				
+<a name="line-382"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">buff</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-383"></a>				<span class="p">{</span>
+<a name="line-384"></a>				<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Verify failure&quot;</span><span class="p">);</span>
+<a name="line-385"></a>				<span class="n">fflush</span><span class="p">(</span><span class="n">stderr</span><span class="p">);</span>
+<a name="line-386"></a>				<span class="k">break</span><span class="p">;</span>
+<a name="line-387"></a>				<span class="cm">/* continue; */</span>
+<a name="line-388"></a>				<span class="p">}</span>
+<a name="line-389"></a>			<span class="p">}</span>
+<a name="line-390"></a>		<span class="n">ok</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-391"></a>		<span class="p">}</span>
+<a name="line-392"></a>
+<a name="line-393"></a><span class="nl">error</span><span class="p">:</span>
+<a name="line-394"></a>	<span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-395"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-396"></a><span class="c">	perror(&quot;fgets(tty)&quot;);</span>
+<a name="line-397"></a><span class="cp">#endif</span>
+<a name="line-398"></a>	<span class="cm">/* What can we do if there is an error? */</span>
+<a name="line-399"></a><span class="cp">#if defined(TTY_set) &amp;&amp; !defined(OPENSSL_SYS_VMS)</span>
+<a name="line-400"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ps</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="n">TTY_set</span><span class="p">(</span><span class="n">fileno</span><span class="p">(</span><span class="n">tty</span><span class="p">),</span><span class="o">&amp;</span><span class="n">tty_orig</span><span class="p">);</span>
+<a name="line-401"></a><span class="cp">#endif</span>
+<a name="line-402"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-403"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ps</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
+<a name="line-404"></a>		<span class="n">status</span> <span class="o">=</span> <span class="n">sys</span><span class="err">$</span><span class="n">qiow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">channel</span><span class="p">,</span><span class="n">IO</span><span class="err">$</span><span class="n">_SETMODE</span><span class="p">,</span><span class="o">&amp;</span><span class="n">iosb</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+<a name="line-405"></a>			<span class="p">,</span><span class="n">tty_orig</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-406"></a><span class="cp">#endif</span>
+<a name="line-407"></a>	
+<a name="line-408"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ps</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">popsig</span><span class="p">();</span>
+<a name="line-409"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">stdin</span> <span class="o">!=</span> <span class="n">tty</span><span class="p">)</span> <span class="n">fclose</span><span class="p">(</span><span class="n">tty</span><span class="p">);</span>
+<a name="line-410"></a><span class="cp">#ifdef OPENSSL_SYS_VMS</span>
+<a name="line-411"></a>	<span class="n">status</span> <span class="o">=</span> <span class="n">sys</span><span class="err">$</span><span class="n">dassgn</span><span class="p">(</span><span class="n">channel</span><span class="p">);</span>
+<a name="line-412"></a><span class="cp">#endif</span>
+<a name="line-413"></a>	<span class="k">return</span><span class="p">(</span><span class="o">!</span><span class="n">ok</span><span class="p">);</span>
+<a name="line-414"></a>	<span class="p">}</span>
+<a name="line-415"></a>
+<a name="line-416"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">pushsig</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-417"></a>	<span class="p">{</span>
+<a name="line-418"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-419"></a><span class="cp">#ifdef SIGACTION</span>
+<a name="line-420"></a>	<span class="k">struct</span> <span class="n">sigaction</span> <span class="n">sa</span><span class="p">;</span>
+<a name="line-421"></a>
+<a name="line-422"></a>	<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sa</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span> <span class="n">sa</span><span class="p">);</span>
+<a name="line-423"></a>	<span class="n">sa</span><span class="p">.</span><span class="n">sa_handler</span><span class="o">=</span><span class="n">recsig</span><span class="p">;</span>
+<a name="line-424"></a><span class="cp">#endif</span>
+<a name="line-425"></a>
+<a name="line-426"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NX509_SIG</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-427"></a>		<span class="p">{</span>
+<a name="line-428"></a><span class="cp">#ifdef SIGUSR1</span>
+<a name="line-429"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">SIGUSR1</span><span class="p">)</span>
+<a name="line-430"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-431"></a><span class="cp">#endif</span>
+<a name="line-432"></a><span class="cp">#ifdef SIGUSR2</span>
+<a name="line-433"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">SIGUSR2</span><span class="p">)</span>
+<a name="line-434"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-435"></a><span class="cp">#endif</span>
+<a name="line-436"></a><span class="cp">#ifdef SIGACTION</span>
+<a name="line-437"></a>		<span class="n">sigaction</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="o">&amp;</span><span class="n">sa</span><span class="p">,</span><span class="o">&amp;</span><span class="n">savsig</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a name="line-438"></a><span class="cp">#else</span>
+<a name="line-439"></a>		<span class="n">savsig</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">signal</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">recsig</span><span class="p">);</span>
+<a name="line-440"></a><span class="cp">#endif</span>
+<a name="line-441"></a>		<span class="p">}</span>
+<a name="line-442"></a>
+<a name="line-443"></a><span class="cp">#ifdef SIGWINCH</span>
+<a name="line-444"></a>	<span class="n">signal</span><span class="p">(</span><span class="n">SIGWINCH</span><span class="p">,</span><span class="n">SIG_DFL</span><span class="p">);</span>
+<a name="line-445"></a><span class="cp">#endif</span>
+<a name="line-446"></a>	<span class="p">}</span>
+<a name="line-447"></a>
+<a name="line-448"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">popsig</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-449"></a>	<span class="p">{</span>
+<a name="line-450"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-451"></a>
+<a name="line-452"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NX509_SIG</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-453"></a>		<span class="p">{</span>
+<a name="line-454"></a><span class="cp">#ifdef SIGUSR1</span>
+<a name="line-455"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">SIGUSR1</span><span class="p">)</span>
+<a name="line-456"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-457"></a><span class="cp">#endif</span>
+<a name="line-458"></a><span class="cp">#ifdef SIGUSR2</span>
+<a name="line-459"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">SIGUSR2</span><span class="p">)</span>
+<a name="line-460"></a>			<span class="k">continue</span><span class="p">;</span>
+<a name="line-461"></a><span class="cp">#endif</span>
+<a name="line-462"></a><span class="cp">#ifdef SIGACTION</span>
+<a name="line-463"></a>		<span class="n">sigaction</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="o">&amp;</span><span class="n">savsig</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="nb">NULL</span><span class="p">);</span>
+<a name="line-464"></a><span class="cp">#else</span>
+<a name="line-465"></a>		<span class="n">signal</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">savsig</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a name="line-466"></a><span class="cp">#endif</span>
+<a name="line-467"></a>		<span class="p">}</span>
+<a name="line-468"></a>	<span class="p">}</span>
+<a name="line-469"></a>
+<a name="line-470"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">recsig</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<a name="line-471"></a>	<span class="p">{</span>
+<a name="line-472"></a>	<span class="n">longjmp</span><span class="p">(</span><span class="n">save</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-473"></a><span class="cp">#ifdef LINT</span>
+<a name="line-474"></a><span class="hll">	<span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">;</span><span class='error2'>&lt;--- Redundant assignment of 'i' to itself.</span>
+</span><a name="line-475"></a><span class="cp">#endif</span>
+<a name="line-476"></a>	<span class="p">}</span>
+<a name="line-477"></a>
+<a name="line-478"></a><span class="cp">#ifdef OPENSSL_SYS_MSDOS</span>
+<a name="line-479"></a><span class="k">static</span> <span class="kt">int</span> <span class="nf">noecho_fgets</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">tty</span><span class="p">)</span>
+<a name="line-480"></a>	<span class="p">{</span>
+<a name="line-481"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-482"></a>	<span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<a name="line-483"></a>
+<a name="line-484"></a>	<span class="n">p</span><span class="o">=</span><span class="n">buf</span><span class="p">;</span>
+<a name="line-485"></a>	<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-486"></a>		<span class="p">{</span>
+<a name="line-487"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-488"></a>			<span class="p">{</span>
+<a name="line-489"></a>			<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-490"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-491"></a>			<span class="p">}</span>
+<a name="line-492"></a>		<span class="n">size</span><span class="o">--</span><span class="p">;</span>
+<a name="line-493"></a><span class="cp">#ifdef WIN16TTY</span>
+<a name="line-494"></a>		<span class="n">i</span><span class="o">=</span><span class="n">_inchar</span><span class="p">();</span>
+<a name="line-495"></a><span class="cp">#else</span>
+<a name="line-496"></a>		<span class="n">i</span><span class="o">=</span><span class="n">getch</span><span class="p">();</span>
+<a name="line-497"></a><span class="cp">#endif</span>
+<a name="line-498"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="sc">&#39;\r&#39;</span><span class="p">)</span> <span class="n">i</span><span class="o">=</span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a name="line-499"></a>		<span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">++</span><span class="p">)</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
+<a name="line-500"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+<a name="line-501"></a>			<span class="p">{</span>
+<a name="line-502"></a>			<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a name="line-503"></a>			<span class="k">break</span><span class="p">;</span>
+<a name="line-504"></a>			<span class="p">}</span>
+<a name="line-505"></a>		<span class="p">}</span>
+<a name="line-506"></a><span class="cp">#ifdef WIN_CONSOLE_BUG</span>
+<a name="line-507"></a><span class="cm">/* Win95 has several evil console bugs: one of these is that the</span>
+<a name="line-508"></a><span class="cm"> * last character read using getch() is passed to the next read: this is</span>
+<a name="line-509"></a><span class="cm"> * usually a CR so this can be trouble. No STDIO fix seems to work but</span>
+<a name="line-510"></a><span class="cm"> * flushing the console appears to do the trick.</span>
+<a name="line-511"></a><span class="cm"> */</span>
+<a name="line-512"></a>		<span class="p">{</span>
+<a name="line-513"></a>			<span class="n">HANDLE</span> <span class="n">inh</span><span class="p">;</span>
+<a name="line-514"></a>			<span class="n">inh</span> <span class="o">=</span> <span class="n">GetStdHandle</span><span class="p">(</span><span class="n">STD_INPUT_HANDLE</span><span class="p">);</span>
+<a name="line-515"></a>			<span class="n">FlushConsoleInputBuffer</span><span class="p">(</span><span class="n">inh</span><span class="p">);</span>
+<a name="line-516"></a>		<span class="p">}</span>
+<a name="line-517"></a><span class="cp">#endif</span>
+<a name="line-518"></a>	<span class="k">return</span><span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">buf</span><span class="p">));</span>
+<a name="line-519"></a>	<span class="p">}</span>
+<a name="line-520"></a><span class="cp">#endif</span>
+<a name="line-521"></a><span class="cp">#endif </span><span class="cm">/* !OPENSSL_SYS_WINCE &amp;&amp; !WIN16 */</span><span class="cp"></span>
 </pre></div>
 </td></tr></table>
       </div>

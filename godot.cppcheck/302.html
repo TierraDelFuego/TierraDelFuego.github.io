@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/idea/i_cbc.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/rc4/rc4_enc.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> i_cbc.c</p>
-<a href='302.html#line-132'> unreadVariable 132</a><a href='302.html#line-132'> unreadVariable 132</a><a href='302.html#line-132'> unreadVariable 132</a><a href='302.html#line-132'> unreadVariable 132</a><a href='302.html#line-133'> unreadVariable 133</a>
+       <p id="filename"><a href="index.html">Defects:</a> rc4_enc.c</p>
+<a href='302.html#line-1'> ConfigurationNotChecked 1</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -281,8 +281,155 @@
 165
 166
 167
-168</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/idea/i_cbc.c */</span>
-<a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="hll"><span class="cm">/* crypto/rc4/rc4_enc.c */</span><span class='error2'>&lt;--- Skipping configuration 'RC4_CHUNK' since the value of 'RC4_CHUNK' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly.</span>
+</span><a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
 <a name="line-5"></a><span class="cm"> * This package is an SSL implementation written</span>
@@ -330,7 +477,7 @@
 <a name="line-47"></a><span class="cm"> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
 <a name="line-48"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</span>
 <a name="line-49"></a><span class="cm"> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</span>
-<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
+<a name="line-50"></a><span class="cm"> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</span>
 <a name="line-51"></a><span class="cm"> * SUCH DAMAGE.</span>
 <a name="line-52"></a><span class="cm"> * </span>
 <a name="line-53"></a><span class="cm"> * The licence and distribution terms for any publically available version or</span>
@@ -339,116 +486,263 @@
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
 <a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;openssl/idea.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &quot;idea_lcl.h&quot;</span>
+<a name="line-59"></a><span class="cp">#include &lt;openssl/rc4.h&gt;</span>
+<a name="line-60"></a><span class="cp">#include &quot;rc4_locl.h&quot;</span>
 <a name="line-61"></a>
-<a name="line-62"></a><span class="kt">void</span> <span class="nf">idea_cbc_encrypt</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">long</span> <span class="n">length</span><span class="p">,</span>
-<a name="line-63"></a>	     <span class="n">IDEA_KEY_SCHEDULE</span> <span class="o">*</span><span class="n">ks</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">,</span> <span class="kt">int</span> <span class="n">encrypt</span><span class="p">)</span>
-<a name="line-64"></a>	<span class="p">{</span>
-<a name="line-65"></a>	<span class="k">register</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-66"></a>	<span class="k">register</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">tout0</span><span class="p">,</span><span class="n">tout1</span><span class="p">,</span><span class="n">xor0</span><span class="p">,</span><span class="n">xor1</span><span class="p">;</span>
-<a name="line-67"></a>	<span class="k">register</span> <span class="kt">long</span> <span class="n">l</span><span class="o">=</span><span class="n">length</span><span class="p">;</span>
-<a name="line-68"></a>	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">tin</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-62"></a><span class="cm">/* RC4 as implemented from a posting from</span>
+<a name="line-63"></a><span class="cm"> * Newsgroups: sci.crypt</span>
+<a name="line-64"></a><span class="cm"> * From: sterndark@netcom.com (David Sterndark)</span>
+<a name="line-65"></a><span class="cm"> * Subject: RC4 Algorithm revealed.</span>
+<a name="line-66"></a><span class="cm"> * Message-ID: &lt;sternCvKL4B.Hyy@netcom.com&gt;</span>
+<a name="line-67"></a><span class="cm"> * Date: Wed, 14 Sep 1994 06:35:31 GMT</span>
+<a name="line-68"></a><span class="cm"> */</span>
 <a name="line-69"></a>
-<a name="line-70"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">encrypt</span><span class="p">)</span>
-<a name="line-71"></a>		<span class="p">{</span>
-<a name="line-72"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">tout0</span><span class="p">);</span>
-<a name="line-73"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">tout1</span><span class="p">);</span>
-<a name="line-74"></a>		<span class="n">iv</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-75"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span> <span class="n">l</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">)</span>
-<a name="line-76"></a>			<span class="p">{</span>
-<a name="line-77"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span>
-<a name="line-78"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span>
-<a name="line-79"></a>			<span class="n">tin0</span><span class="o">^=</span><span class="n">tout0</span><span class="p">;</span>
-<a name="line-80"></a>			<span class="n">tin1</span><span class="o">^=</span><span class="n">tout1</span><span class="p">;</span>
-<a name="line-81"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
-<a name="line-82"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-83"></a>			<span class="n">idea_encrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
-<a name="line-84"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-85"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-86"></a>			<span class="p">}</span>
-<a name="line-87"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
-<a name="line-88"></a>			<span class="p">{</span>
-<a name="line-89"></a>			<span class="n">n2ln</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">,</span><span class="n">tin1</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">8</span><span class="p">);</span>
-<a name="line-90"></a>			<span class="n">tin0</span><span class="o">^=</span><span class="n">tout0</span><span class="p">;</span>
-<a name="line-91"></a>			<span class="n">tin1</span><span class="o">^=</span><span class="n">tout1</span><span class="p">;</span>
-<a name="line-92"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
-<a name="line-93"></a>			<span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-94"></a>			<span class="n">idea_encrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
-<a name="line-95"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-96"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-97"></a>			<span class="p">}</span>
-<a name="line-98"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
-<a name="line-99"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
-<a name="line-100"></a>		<span class="p">}</span>
-<a name="line-101"></a>	<span class="k">else</span>
-<a name="line-102"></a>		<span class="p">{</span>
-<a name="line-103"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">xor0</span><span class="p">);</span>
-<a name="line-104"></a>		<span class="n">n2l</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span><span class="n">xor1</span><span class="p">);</span>
-<a name="line-105"></a>		<span class="n">iv</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
-<a name="line-106"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span> <span class="n">l</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">l</span><span class="o">-=</span><span class="mi">8</span><span class="p">)</span>
-<a name="line-107"></a>			<span class="p">{</span>
-<a name="line-108"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
-<a name="line-109"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-110"></a>			<span class="n">idea_encrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
-<a name="line-111"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">xor0</span><span class="p">;</span>
-<a name="line-112"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">xor1</span><span class="p">;</span>
-<a name="line-113"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-114"></a>			<span class="n">l2n</span><span class="p">(</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">);</span>
-<a name="line-115"></a>			<span class="n">xor0</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
-<a name="line-116"></a>			<span class="n">xor1</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-117"></a>			<span class="p">}</span>
-<a name="line-118"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">8</span><span class="p">)</span>
-<a name="line-119"></a>			<span class="p">{</span>
-<a name="line-120"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin0</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
-<a name="line-121"></a>			<span class="n">n2l</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">tin1</span><span class="p">);</span> <span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-122"></a>			<span class="n">idea_encrypt</span><span class="p">(</span><span class="n">tin</span><span class="p">,</span><span class="n">ks</span><span class="p">);</span>
-<a name="line-123"></a>			<span class="n">tout0</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">xor0</span><span class="p">;</span>
-<a name="line-124"></a>			<span class="n">tout1</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">xor1</span><span class="p">;</span>
-<a name="line-125"></a>			<span class="n">l2nn</span><span class="p">(</span><span class="n">tout0</span><span class="p">,</span><span class="n">tout1</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">8</span><span class="p">);</span>
-<a name="line-126"></a>			<span class="n">xor0</span><span class="o">=</span><span class="n">tin0</span><span class="p">;</span>
-<a name="line-127"></a>			<span class="n">xor1</span><span class="o">=</span><span class="n">tin1</span><span class="p">;</span>
-<a name="line-128"></a>			<span class="p">}</span>
-<a name="line-129"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">xor0</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
-<a name="line-130"></a>		<span class="n">l2n</span><span class="p">(</span><span class="n">xor1</span><span class="p">,</span><span class="n">iv</span><span class="p">);</span>
-<a name="line-131"></a>		<span class="p">}</span>
-<a name="line-132"></a><span class="hll">	<span class="n">tin0</span><span class="o">=</span><span class="n">tin1</span><span class="o">=</span><span class="n">tout0</span><span class="o">=</span><span class="n">tout1</span><span class="o">=</span><span class="n">xor0</span><span class="o">=</span><span class="n">xor1</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'tin0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tin1' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tout0' is assigned a value that is never used.</span><span class='error2'>&lt;--- Variable 'tout1' is assigned a value that is never used.</span>
-</span><a name="line-133"></a><span class="hll">	<span class="n">tin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">tin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'tin' is assigned a value that is never used.</span>
-</span><a name="line-134"></a>	<span class="p">}</span>
-<a name="line-135"></a>
-<a name="line-136"></a><span class="kt">void</span> <span class="nf">idea_encrypt</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="n">IDEA_KEY_SCHEDULE</span> <span class="o">*</span><span class="n">key</span><span class="p">)</span>
-<a name="line-137"></a>	<span class="p">{</span>
-<a name="line-138"></a>	<span class="k">register</span> <span class="n">IDEA_INT</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-<a name="line-139"></a>	<span class="k">register</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">ul</span><span class="p">;</span>
-<a name="line-140"></a>
-<a name="line-141"></a>	<span class="n">x2</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<a name="line-142"></a>	<span class="n">x1</span><span class="o">=</span><span class="p">(</span><span class="n">x2</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">);</span>
-<a name="line-143"></a>	<span class="n">x4</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-144"></a>	<span class="n">x3</span><span class="o">=</span><span class="p">(</span><span class="n">x4</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">);</span>
-<a name="line-145"></a>
-<a name="line-146"></a>	<span class="n">p</span><span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-<a name="line-147"></a>
-<a name="line-148"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-149"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-150"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-<a name="line-151"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-152"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
-<a name="line-153"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-<a name="line-154"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-<a name="line-155"></a>	<span class="n">E_IDEA</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-156"></a>
-<a name="line-157"></a>	<span class="n">x1</span><span class="o">&amp;=</span><span class="mh">0xffff</span><span class="p">;</span>
-<a name="line-158"></a>	<span class="n">idea_mul</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="n">ul</span><span class="p">);</span> <span class="n">p</span><span class="o">++</span><span class="p">;</span>
-<a name="line-159"></a>
-<a name="line-160"></a>	<span class="n">t0</span><span class="o">=</span> <span class="n">x3</span><span class="o">+</span> <span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">++</span><span class="p">);</span>
-<a name="line-161"></a>	<span class="n">t1</span><span class="o">=</span> <span class="n">x2</span><span class="o">+</span> <span class="o">*</span><span class="p">(</span><span class="n">p</span><span class="o">++</span><span class="p">);</span>
-<a name="line-162"></a>
-<a name="line-163"></a>	<span class="n">x4</span><span class="o">&amp;=</span><span class="mh">0xffff</span><span class="p">;</span>
-<a name="line-164"></a>	<span class="n">idea_mul</span><span class="p">(</span><span class="n">x4</span><span class="p">,</span><span class="n">x4</span><span class="p">,</span><span class="o">*</span><span class="n">p</span><span class="p">,</span><span class="n">ul</span><span class="p">);</span>
-<a name="line-165"></a>
-<a name="line-166"></a>	<span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">t0</span><span class="o">&amp;</span><span class="mh">0xffff</span><span class="p">)</span><span class="o">|</span><span class="p">((</span><span class="n">x1</span><span class="o">&amp;</span><span class="mh">0xffff</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">);</span>
-<a name="line-167"></a>	<span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">x4</span><span class="o">&amp;</span><span class="mh">0xffff</span><span class="p">)</span><span class="o">|</span><span class="p">((</span><span class="n">t1</span><span class="o">&amp;</span><span class="mh">0xffff</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">);</span>
-<a name="line-168"></a>	<span class="p">}</span>
+<a name="line-70"></a><span class="kt">void</span> <span class="nf">RC4</span><span class="p">(</span><span class="n">RC4_KEY</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">indata</span><span class="p">,</span>
+<a name="line-71"></a>	     <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">outdata</span><span class="p">)</span>
+<a name="line-72"></a>	<span class="p">{</span>
+<a name="line-73"></a>        <span class="k">register</span> <span class="n">RC4_INT</span> <span class="o">*</span><span class="n">d</span><span class="p">;</span>
+<a name="line-74"></a>        <span class="k">register</span> <span class="n">RC4_INT</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">tx</span><span class="p">,</span><span class="n">ty</span><span class="p">;</span>
+<a name="line-75"></a>	<span class="kt">size_t</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-76"></a>        
+<a name="line-77"></a>        <span class="n">x</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">;</span>     
+<a name="line-78"></a>        <span class="n">y</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">;</span>     
+<a name="line-79"></a>        <span class="n">d</span><span class="o">=</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span> 
+<a name="line-80"></a>
+<a name="line-81"></a><span class="cp">#if defined(RC4_CHUNK)</span>
+<a name="line-82"></a>	<span class="cm">/*</span>
+<a name="line-83"></a><span class="cm">	 * The original reason for implementing this(*) was the fact that</span>
+<a name="line-84"></a><span class="cm">	 * pre-21164a Alpha CPUs don&#39;t have byte load/store instructions</span>
+<a name="line-85"></a><span class="cm">	 * and e.g. a byte store has to be done with 64-bit load, shift,</span>
+<a name="line-86"></a><span class="cm">	 * and, or and finally 64-bit store. Peaking data and operating</span>
+<a name="line-87"></a><span class="cm">	 * at natural word size made it possible to reduce amount of</span>
+<a name="line-88"></a><span class="cm">	 * instructions as well as to perform early read-ahead without</span>
+<a name="line-89"></a><span class="cm">	 * suffering from RAW (read-after-write) hazard. This resulted</span>
+<a name="line-90"></a><span class="cm">	 * in ~40%(**) performance improvement on 21064 box with gcc.</span>
+<a name="line-91"></a><span class="cm">	 * But it&#39;s not only Alpha users who win here:-) Thanks to the</span>
+<a name="line-92"></a><span class="cm">	 * early-n-wide read-ahead this implementation also exhibits</span>
+<a name="line-93"></a><span class="cm">	 * &gt;40% speed-up on SPARC and 20-30% on 64-bit MIPS (depending</span>
+<a name="line-94"></a><span class="cm">	 * on sizeof(RC4_INT)).</span>
+<a name="line-95"></a><span class="cm">	 *</span>
+<a name="line-96"></a><span class="cm">	 * (*)	&quot;this&quot; means code which recognizes the case when input</span>
+<a name="line-97"></a><span class="cm">	 *	and output pointers appear to be aligned at natural CPU</span>
+<a name="line-98"></a><span class="cm">	 *	word boundary</span>
+<a name="line-99"></a><span class="cm">	 * (**)	i.e. according to &#39;apps/openssl speed rc4&#39; benchmark,</span>
+<a name="line-100"></a><span class="cm">	 *	crypto/rc4/rc4speed.c exhibits almost 70% speed-up...</span>
+<a name="line-101"></a><span class="cm">	 *</span>
+<a name="line-102"></a><span class="cm">	 * Cavets.</span>
+<a name="line-103"></a><span class="cm">	 *</span>
+<a name="line-104"></a><span class="cm">	 * - RC4_CHUNK=&quot;unsigned long long&quot; should be a #1 choice for</span>
+<a name="line-105"></a><span class="cm">	 *   UltraSPARC. Unfortunately gcc generates very slow code</span>
+<a name="line-106"></a><span class="cm">	 *   (2.5-3 times slower than one generated by Sun&#39;s WorkShop</span>
+<a name="line-107"></a><span class="cm">	 *   C) and therefore gcc (at least 2.95 and earlier) should</span>
+<a name="line-108"></a><span class="cm">	 *   always be told that RC4_CHUNK=&quot;unsigned long&quot;.</span>
+<a name="line-109"></a><span class="cm">	 *</span>
+<a name="line-110"></a><span class="cm">	 *					&lt;appro@fy.chalmers.se&gt;</span>
+<a name="line-111"></a><span class="cm">	 */</span>
+<a name="line-112"></a>
+<a name="line-113"></a><span class="cp"># define RC4_STEP	( \</span>
+<a name="line-114"></a><span class="cp">			x=(x+1) &amp;0xff,	\</span>
+<a name="line-115"></a><span class="cp">			tx=d[x],	\</span>
+<a name="line-116"></a><span class="cp">			y=(tx+y)&amp;0xff,	\</span>
+<a name="line-117"></a><span class="cp">			ty=d[y],	\</span>
+<a name="line-118"></a><span class="cp">			d[y]=tx,	\</span>
+<a name="line-119"></a><span class="cp">			d[x]=ty,	\</span>
+<a name="line-120"></a><span class="cp">			(RC4_CHUNK)d[(tx+ty)&amp;0xff]\</span>
+<a name="line-121"></a><span class="cp">			)</span>
+<a name="line-122"></a>
+<a name="line-123"></a>	<span class="k">if</span> <span class="p">(</span> <span class="p">(</span> <span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="n">indata</span>  <span class="o">&amp;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">|</span> 
+<a name="line-124"></a>	       <span class="p">((</span><span class="kt">size_t</span><span class="p">)</span><span class="n">outdata</span> <span class="o">&amp;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+<a name="line-125"></a>		<span class="p">{</span>
+<a name="line-126"></a>		<span class="n">RC4_CHUNK</span> <span class="n">ichunk</span><span class="p">,</span><span class="n">otp</span><span class="p">;</span>
+<a name="line-127"></a>		<span class="k">const</span> <span class="k">union</span> <span class="p">{</span> <span class="kt">long</span> <span class="n">one</span><span class="p">;</span> <span class="kt">char</span> <span class="n">little</span><span class="p">;</span> <span class="p">}</span> <span class="n">is_endian</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+<a name="line-128"></a>
+<a name="line-129"></a>		<span class="cm">/*</span>
+<a name="line-130"></a><span class="cm">		 * I reckon we can afford to implement both endian</span>
+<a name="line-131"></a><span class="cm">		 * cases and to decide which way to take at run-time</span>
+<a name="line-132"></a><span class="cm">		 * because the machine code appears to be very compact</span>
+<a name="line-133"></a><span class="cm">		 * and redundant 1-2KB is perfectly tolerable (i.e.</span>
+<a name="line-134"></a><span class="cm">		 * in case the compiler fails to eliminate it:-). By</span>
+<a name="line-135"></a><span class="cm">		 * suggestion from Terrel Larson &lt;terr@terralogic.net&gt;</span>
+<a name="line-136"></a><span class="cm">		 * who also stands for the is_endian union:-)</span>
+<a name="line-137"></a><span class="cm">		 *</span>
+<a name="line-138"></a><span class="cm">		 * Special notes.</span>
+<a name="line-139"></a><span class="cm">		 *</span>
+<a name="line-140"></a><span class="cm">		 * - is_endian is declared automatic as doing otherwise</span>
+<a name="line-141"></a><span class="cm">		 *   (declaring static) prevents gcc from eliminating</span>
+<a name="line-142"></a><span class="cm">		 *   the redundant code;</span>
+<a name="line-143"></a><span class="cm">		 * - compilers (those I&#39;ve tried) don&#39;t seem to have</span>
+<a name="line-144"></a><span class="cm">		 *   problems eliminating either the operators guarded</span>
+<a name="line-145"></a><span class="cm">		 *   by &quot;if (sizeof(RC4_CHUNK)==8)&quot; or the condition</span>
+<a name="line-146"></a><span class="cm">		 *   expressions themselves so I&#39;ve got &#39;em to replace</span>
+<a name="line-147"></a><span class="cm">		 *   corresponding #ifdefs from the previous version;</span>
+<a name="line-148"></a><span class="cm">		 * - I chose to let the redundant switch cases when</span>
+<a name="line-149"></a><span class="cm">		 *   sizeof(RC4_CHUNK)!=8 be (were also #ifdefed</span>
+<a name="line-150"></a><span class="cm">		 *   before);</span>
+<a name="line-151"></a><span class="cm">		 * - in case you wonder &quot;&amp;(sizeof(RC4_CHUNK)*8-1)&quot; in</span>
+<a name="line-152"></a><span class="cm">		 *   [LB]ESHFT guards against &quot;shift is out of range&quot;</span>
+<a name="line-153"></a><span class="cm">		 *   warnings when sizeof(RC4_CHUNK)!=8 </span>
+<a name="line-154"></a><span class="cm">		 *</span>
+<a name="line-155"></a><span class="cm">		 *			&lt;appro@fy.chalmers.se&gt;</span>
+<a name="line-156"></a><span class="cm">		 */</span>
+<a name="line-157"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">is_endian</span><span class="p">.</span><span class="n">little</span><span class="p">)</span>
+<a name="line-158"></a>			<span class="p">{</span>	<span class="cm">/* BIG-ENDIAN CASE */</span>
+<a name="line-159"></a><span class="cp"># define BESHFT(c)	(((sizeof(RC4_CHUNK)-(c)-1)*8)&amp;(sizeof(RC4_CHUNK)*8-1))</span>
+<a name="line-160"></a>			<span class="k">for</span> <span class="p">(;</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">0</span><span class="o">-</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">));</span><span class="n">len</span><span class="o">-=</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">))</span>
+<a name="line-161"></a>				<span class="p">{</span>
+<a name="line-162"></a>				<span class="n">ichunk</span>  <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
+<a name="line-163"></a>				<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-164"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-165"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a name="line-166"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-167"></a>				<span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">==</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-168"></a>					<span class="p">{</span>
+<a name="line-169"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<a name="line-170"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<a name="line-171"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<a name="line-172"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">BESHFT</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-173"></a>					<span class="p">}</span>
+<a name="line-174"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">;</span>
+<a name="line-175"></a>				<span class="n">indata</span>  <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
+<a name="line-176"></a>				<span class="n">outdata</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
+<a name="line-177"></a>				<span class="p">}</span>
+<a name="line-178"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="p">)</span>
+<a name="line-179"></a>				<span class="p">{</span>
+<a name="line-180"></a>				<span class="n">RC4_CHUNK</span> <span class="n">mask</span><span class="o">=</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ochunk</span><span class="p">;</span>
+<a name="line-181"></a>
+<a name="line-182"></a>				<span class="n">ichunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
+<a name="line-183"></a>				<span class="n">ochunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span><span class="p">;</span>
+<a name="line-184"></a>				<span class="n">otp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-185"></a>				<span class="n">i</span> <span class="o">=</span> <span class="n">BESHFT</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-186"></a>				<span class="n">mask</span> <span class="o">&lt;&lt;=</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="n">len</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">;</span>
+<a name="line-187"></a>				<span class="k">switch</span> <span class="p">(</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<a name="line-188"></a>					<span class="p">{</span>
+<a name="line-189"></a>					<span class="k">case</span> <span class="mi">7</span><span class="o">:</span>	<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-190"></a>					<span class="k">case</span> <span class="mi">6</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-191"></a>					<span class="k">case</span> <span class="mi">5</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-192"></a>					<span class="k">case</span> <span class="mi">4</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-193"></a>					<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-194"></a>					<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-195"></a>					<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-196"></a>					<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="p">;</span> <span class="cm">/*</span>
+<a name="line-197"></a><span class="cm">						   * it&#39;s never the case,</span>
+<a name="line-198"></a><span class="cm">						   * but it has to be here</span>
+<a name="line-199"></a><span class="cm">						   * for ultrix?</span>
+<a name="line-200"></a><span class="cm">						   */</span>
+<a name="line-201"></a>					<span class="p">}</span>
+<a name="line-202"></a>				<span class="n">ochunk</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">mask</span><span class="p">;</span>
+<a name="line-203"></a>				<span class="n">ochunk</span> <span class="o">|=</span> <span class="p">(</span><span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">;</span>
+<a name="line-204"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">ochunk</span><span class="p">;</span>
+<a name="line-205"></a>				<span class="p">}</span>
+<a name="line-206"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>     
+<a name="line-207"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
+<a name="line-208"></a>			<span class="k">return</span><span class="p">;</span>
+<a name="line-209"></a>			<span class="p">}</span>
+<a name="line-210"></a>		<span class="k">else</span>
+<a name="line-211"></a>			<span class="p">{</span>	<span class="cm">/* LITTLE-ENDIAN CASE */</span>
+<a name="line-212"></a><span class="cp"># define LESHFT(c)	(((c)*8)&amp;(sizeof(RC4_CHUNK)*8-1))</span>
+<a name="line-213"></a>			<span class="k">for</span> <span class="p">(;</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">0</span><span class="o">-</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">));</span><span class="n">len</span><span class="o">-=</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">))</span>
+<a name="line-214"></a>				<span class="p">{</span>
+<a name="line-215"></a>				<span class="n">ichunk</span>  <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
+<a name="line-216"></a>				<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="p">;</span>
+<a name="line-217"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-218"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">;</span>
+<a name="line-219"></a>				<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="mi">24</span><span class="p">;</span>
+<a name="line-220"></a>				<span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">==</span><span class="mi">8</span><span class="p">)</span>
+<a name="line-221"></a>					<span class="p">{</span>
+<a name="line-222"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<a name="line-223"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<a name="line-224"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<a name="line-225"></a>					<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">LESHFT</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-226"></a>					<span class="p">}</span>
+<a name="line-227"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">;</span>
+<a name="line-228"></a>				<span class="n">indata</span>  <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
+<a name="line-229"></a>				<span class="n">outdata</span> <span class="o">+=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">);</span>
+<a name="line-230"></a>				<span class="p">}</span>
+<a name="line-231"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="p">)</span>
+<a name="line-232"></a>				<span class="p">{</span>
+<a name="line-233"></a>				<span class="n">RC4_CHUNK</span> <span class="n">mask</span><span class="o">=</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ochunk</span><span class="p">;</span>
+<a name="line-234"></a>
+<a name="line-235"></a>				<span class="n">ichunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">indata</span><span class="p">;</span>
+<a name="line-236"></a>				<span class="n">ochunk</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span><span class="p">;</span>
+<a name="line-237"></a>				<span class="n">otp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-238"></a>				<span class="n">i</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-239"></a>				<span class="n">mask</span> <span class="o">&gt;&gt;=</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="n">len</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">;</span>
+<a name="line-240"></a>				<span class="k">switch</span> <span class="p">(</span><span class="n">len</span><span class="o">&amp;</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">RC4_CHUNK</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<a name="line-241"></a>					<span class="p">{</span>
+<a name="line-242"></a>					<span class="k">case</span> <span class="mi">7</span><span class="o">:</span>	<span class="n">otp</span>  <span class="o">=</span> <span class="n">RC4_STEP</span><span class="p">,</span>    <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-243"></a>					<span class="k">case</span> <span class="mi">6</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-244"></a>					<span class="k">case</span> <span class="mi">5</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-245"></a>					<span class="k">case</span> <span class="mi">4</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-246"></a>					<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-247"></a>					<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-248"></a>					<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>	<span class="n">otp</span> <span class="o">|=</span> <span class="n">RC4_STEP</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-249"></a>					<span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="p">;</span> <span class="cm">/*</span>
+<a name="line-250"></a><span class="cm">						   * it&#39;s never the case,</span>
+<a name="line-251"></a><span class="cm">						   * but it has to be here</span>
+<a name="line-252"></a><span class="cm">						   * for ultrix?</span>
+<a name="line-253"></a><span class="cm">						   */</span>
+<a name="line-254"></a>					<span class="p">}</span>
+<a name="line-255"></a>				<span class="n">ochunk</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">mask</span><span class="p">;</span>
+<a name="line-256"></a>				<span class="n">ochunk</span> <span class="o">|=</span> <span class="p">(</span><span class="n">otp</span><span class="o">^</span><span class="n">ichunk</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">;</span>
+<a name="line-257"></a>				<span class="o">*</span><span class="p">(</span><span class="n">RC4_CHUNK</span> <span class="o">*</span><span class="p">)</span><span class="n">outdata</span> <span class="o">=</span> <span class="n">ochunk</span><span class="p">;</span>
+<a name="line-258"></a>				<span class="p">}</span>
+<a name="line-259"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>     
+<a name="line-260"></a>			<span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
+<a name="line-261"></a>			<span class="k">return</span><span class="p">;</span>
+<a name="line-262"></a>			<span class="p">}</span>
+<a name="line-263"></a>		<span class="p">}</span>
+<a name="line-264"></a><span class="cp">#endif</span>
+<a name="line-265"></a><span class="cp">#define LOOP(in,out) \</span>
+<a name="line-266"></a><span class="cp">		x=((x+1)&amp;0xff); \</span>
+<a name="line-267"></a><span class="cp">		tx=d[x]; \</span>
+<a name="line-268"></a><span class="cp">		y=(tx+y)&amp;0xff; \</span>
+<a name="line-269"></a><span class="cp">		d[x]=ty=d[y]; \</span>
+<a name="line-270"></a><span class="cp">		d[y]=tx; \</span>
+<a name="line-271"></a><span class="cp">		(out) = d[(tx+ty)&amp;0xff]^ (in);</span>
+<a name="line-272"></a>
+<a name="line-273"></a><span class="cp">#ifndef RC4_INDEX</span>
+<a name="line-274"></a><span class="cp">#define RC4_LOOP(a,b,i)	LOOP(*((a)++),*((b)++))</span>
+<a name="line-275"></a><span class="cp">#else</span>
+<a name="line-276"></a><span class="cp">#define RC4_LOOP(a,b,i)	LOOP(a[i],b[i])</span>
+<a name="line-277"></a><span class="cp">#endif</span>
+<a name="line-278"></a>
+<a name="line-279"></a>	<span class="n">i</span><span class="o">=</span><span class="n">len</span><span class="o">&gt;&gt;</span><span class="mi">3</span><span class="p">;</span>
+<a name="line-280"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a name="line-281"></a>		<span class="p">{</span>
+<a name="line-282"></a>		<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-283"></a>			<span class="p">{</span>
+<a name="line-284"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a name="line-285"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-286"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a name="line-287"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a name="line-288"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+<a name="line-289"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<a name="line-290"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+<a name="line-291"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
+<a name="line-292"></a><span class="cp">#ifdef RC4_INDEX</span>
+<a name="line-293"></a>			<span class="n">indata</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-294"></a>			<span class="n">outdata</span><span class="o">+=</span><span class="mi">8</span><span class="p">;</span>
+<a name="line-295"></a><span class="cp">#endif</span>
+<a name="line-296"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-297"></a>			<span class="p">}</span>
+<a name="line-298"></a>		<span class="p">}</span>
+<a name="line-299"></a>	<span class="n">i</span><span class="o">=</span><span class="n">len</span><span class="o">&amp;</span><span class="mh">0x07</span><span class="p">;</span>
+<a name="line-300"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a name="line-301"></a>		<span class="p">{</span>
+<a name="line-302"></a>		<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-303"></a>			<span class="p">{</span>
+<a name="line-304"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-305"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-306"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-307"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-308"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-309"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-310"></a>			<span class="n">RC4_LOOP</span><span class="p">(</span><span class="n">indata</span><span class="p">,</span><span class="n">outdata</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="o">--</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-311"></a>			<span class="p">}</span>
+<a name="line-312"></a>		<span class="p">}</span>               
+<a name="line-313"></a>	<span class="n">key</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">;</span>     
+<a name="line-314"></a>	<span class="n">key</span><span class="o">-&gt;</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
+<a name="line-315"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

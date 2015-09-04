@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/evp/evp_enc.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/rand/rand_win.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> evp_enc.c</p>
-<a href='294.html#line-119'> redundantCondition 119</a><a href='294.html#line-310'> variableScope 310</a><a href='294.html#line-503'> variableScope 503</a>
+       <p id="filename"><a href="index.html">Defects:</a> rand_win.c</p>
+<a href='294.html#line-197'> variableScope 197</a><a href='294.html#line-750'> variableScope 750</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -793,7 +793,134 @@
 677
 678
 679
-680</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/evp/evp_enc.c */</span>
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/rand/rand_win.c */</span>
 <a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -850,259 +977,146 @@
 <a name="line-55"></a><span class="cm"> * copied and put under another distribution licence</span>
 <a name="line-56"></a><span class="cm"> * [including the GNU Public Licence.]</span>
 <a name="line-57"></a><span class="cm"> */</span>
-<a name="line-58"></a>
-<a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
-<a name="line-60"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
-<a name="line-61"></a><span class="cp">#include &lt;openssl/evp.h&gt;</span>
-<a name="line-62"></a><span class="cp">#include &lt;openssl/err.h&gt;</span>
-<a name="line-63"></a><span class="cp">#include &lt;openssl/rand.h&gt;</span>
-<a name="line-64"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
-<a name="line-65"></a><span class="cp">#include &lt;openssl/engine.h&gt;</span>
-<a name="line-66"></a><span class="cp">#endif</span>
-<a name="line-67"></a><span class="cp">#ifdef OPENSSL_FIPS</span>
-<a name="line-68"></a><span class="cp">#include &lt;openssl/fips.h&gt;</span>
-<a name="line-69"></a><span class="cp">#endif</span>
-<a name="line-70"></a><span class="cp">#include &quot;evp_locl.h&quot;</span>
-<a name="line-71"></a>
-<a name="line-72"></a><span class="cp">#ifdef OPENSSL_FIPS</span>
-<a name="line-73"></a><span class="cp">#define M_do_cipher(ctx, out, in, inl) FIPS_cipher(ctx, out, in, inl)</span>
-<a name="line-74"></a><span class="cp">#else</span>
-<a name="line-75"></a><span class="cp">#define M_do_cipher(ctx, out, in, inl) ctx-&gt;cipher-&gt;do_cipher(ctx, out, in, inl)</span>
-<a name="line-76"></a><span class="cp">#endif</span>
-<a name="line-77"></a>
-<a name="line-78"></a>
-<a name="line-79"></a><span class="k">const</span> <span class="kt">char</span> <span class="n">EVP_version</span><span class="p">[]</span><span class="o">=</span><span class="s">&quot;EVP&quot;</span> <span class="n">OPENSSL_VERSION_PTEXT</span><span class="p">;</span>
-<a name="line-80"></a>
-<a name="line-81"></a><span class="kt">void</span> <span class="nf">EVP_CIPHER_CTX_init</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-82"></a>	<span class="p">{</span>
-<a name="line-83"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span><span class="p">));</span>
-<a name="line-84"></a>	<span class="cm">/* ctx-&gt;cipher=NULL; */</span>
-<a name="line-85"></a>	<span class="p">}</span>
-<a name="line-86"></a>
-<a name="line-87"></a><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="nf">EVP_CIPHER_CTX_new</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<a name="line-88"></a>	<span class="p">{</span>
-<a name="line-89"></a>	<span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="o">=</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="k">sizeof</span> <span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-90"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-91"></a>		<span class="n">EVP_CIPHER_CTX_init</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-92"></a>	<span class="k">return</span> <span class="n">ctx</span><span class="p">;</span>
-<a name="line-93"></a>	<span class="p">}</span>
-<a name="line-94"></a>
-<a name="line-95"></a><span class="kt">int</span> <span class="nf">EVP_CipherInit</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">cipher</span><span class="p">,</span>
-<a name="line-96"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">,</span> <span class="kt">int</span> <span class="n">enc</span><span class="p">)</span>
-<a name="line-97"></a>	<span class="p">{</span>
-<a name="line-98"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">cipher</span><span class="p">)</span>
-<a name="line-99"></a>		<span class="n">EVP_CIPHER_CTX_init</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-100"></a>	<span class="k">return</span> <span class="n">EVP_CipherInit_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">cipher</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">iv</span><span class="p">,</span><span class="n">enc</span><span class="p">);</span>
-<a name="line-101"></a>	<span class="p">}</span>
-<a name="line-102"></a>
-<a name="line-103"></a><span class="kt">int</span> <span class="nf">EVP_CipherInit_ex</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">cipher</span><span class="p">,</span> <span class="n">ENGINE</span> <span class="o">*</span><span class="n">impl</span><span class="p">,</span>
-<a name="line-104"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">,</span> <span class="kt">int</span> <span class="n">enc</span><span class="p">)</span>
-<a name="line-105"></a>	<span class="p">{</span>
-<a name="line-106"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">enc</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<a name="line-107"></a>		<span class="n">enc</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">encrypt</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="k">else</span>
-<a name="line-109"></a>		<span class="p">{</span>
-<a name="line-110"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">enc</span><span class="p">)</span>
-<a name="line-111"></a>			<span class="n">enc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-112"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">encrypt</span> <span class="o">=</span> <span class="n">enc</span><span class="p">;</span>
-<a name="line-113"></a>		<span class="p">}</span>
-<a name="line-114"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
-<a name="line-115"></a>	<span class="cm">/* Whether it&#39;s nice or not, &quot;Inits&quot; can be used on &quot;Final&quot;&#39;d contexts</span>
-<a name="line-116"></a><span class="cm">	 * so this context may already have an ENGINE! Try to avoid releasing</span>
-<a name="line-117"></a><span class="cm">	 * the previous handle, re-querying for an ENGINE, and having a</span>
-<a name="line-118"></a><span class="cm">	 * reinitialisation, when it may all be unecessary. */</span>
-<a name="line-119"></a><span class="hll">	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">engine</span> <span class="o">&amp;&amp;</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">cipher</span> <span class="o">||</span><span class='error2'>&lt;--- Redundant condition: cipher. '!cipher || (cipher && cipher.nid==ctx.cipher.nid)' is equivalent to '!cipher || cipher.nid==ctx.cipher.nid'</span>
-</span><a name="line-120"></a>			<span class="p">(</span><span class="n">cipher</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">nid</span> <span class="o">==</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">nid</span><span class="p">))))</span>
-<a name="line-121"></a>		<span class="k">goto</span> <span class="n">skip_to_init</span><span class="p">;</span>
-<a name="line-122"></a><span class="cp">#endif</span>
-<a name="line-123"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">cipher</span><span class="p">)</span>
-<a name="line-124"></a>		<span class="p">{</span>
-<a name="line-125"></a>		<span class="cm">/* Ensure a context left lying around from last time is cleared</span>
-<a name="line-126"></a><span class="cm">		 * (the previous check attempted to avoid this if the same</span>
-<a name="line-127"></a><span class="cm">		 * ENGINE and EVP_CIPHER could be used). */</span>
-<a name="line-128"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">)</span>
-<a name="line-129"></a>			<span class="p">{</span>
-<a name="line-130"></a>			<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span><span class="p">;</span>
-<a name="line-131"></a>			<span class="n">EVP_CIPHER_CTX_cleanup</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-132"></a>			<span class="cm">/* Restore encrypt and flags */</span>
-<a name="line-133"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">encrypt</span> <span class="o">=</span> <span class="n">enc</span><span class="p">;</span>
-<a name="line-134"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span><span class="p">;</span>
-<a name="line-135"></a>			<span class="p">}</span>
-<a name="line-136"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
-<a name="line-137"></a>		<span class="k">if</span><span class="p">(</span><span class="n">impl</span><span class="p">)</span>
-<a name="line-138"></a>			<span class="p">{</span>
-<a name="line-139"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ENGINE_init</span><span class="p">(</span><span class="n">impl</span><span class="p">))</span>
-<a name="line-140"></a>				<span class="p">{</span>
-<a name="line-141"></a>				<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHERINIT_EX</span><span class="p">,</span> <span class="n">EVP_R_INITIALIZATION_ERROR</span><span class="p">);</span>
-<a name="line-142"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-143"></a>				<span class="p">}</span>
-<a name="line-144"></a>			<span class="p">}</span>
-<a name="line-145"></a>		<span class="k">else</span>
-<a name="line-146"></a>			<span class="cm">/* Ask if an ENGINE is reserved for this job */</span>
-<a name="line-147"></a>			<span class="n">impl</span> <span class="o">=</span> <span class="n">ENGINE_get_cipher_engine</span><span class="p">(</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">nid</span><span class="p">);</span>
-<a name="line-148"></a>		<span class="k">if</span><span class="p">(</span><span class="n">impl</span><span class="p">)</span>
-<a name="line-149"></a>			<span class="p">{</span>
-<a name="line-150"></a>			<span class="cm">/* There&#39;s an ENGINE for this job ... (apparently) */</span>
-<a name="line-151"></a>			<span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="n">ENGINE_get_cipher</span><span class="p">(</span><span class="n">impl</span><span class="p">,</span> <span class="n">cipher</span><span class="o">-&gt;</span><span class="n">nid</span><span class="p">);</span>
-<a name="line-152"></a>			<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">c</span><span class="p">)</span>
-<a name="line-153"></a>				<span class="p">{</span>
-<a name="line-154"></a>				<span class="cm">/* One positive side-effect of US&#39;s export</span>
-<a name="line-155"></a><span class="cm">				 * control history, is that we should at least</span>
-<a name="line-156"></a><span class="cm">				 * be able to avoid using US mispellings of</span>
-<a name="line-157"></a><span class="cm">				 * &quot;initialisation&quot;? */</span>
-<a name="line-158"></a>				<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHERINIT_EX</span><span class="p">,</span> <span class="n">EVP_R_INITIALIZATION_ERROR</span><span class="p">);</span>
-<a name="line-159"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-160"></a>				<span class="p">}</span>
-<a name="line-161"></a>			<span class="cm">/* We&#39;ll use the ENGINE&#39;s private cipher definition */</span>
-<a name="line-162"></a>			<span class="n">cipher</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
-<a name="line-163"></a>			<span class="cm">/* Store the ENGINE functional reference so we know</span>
-<a name="line-164"></a><span class="cm">			 * &#39;cipher&#39; came from an ENGINE and we need to release</span>
-<a name="line-165"></a><span class="cm">			 * it when done. */</span>
-<a name="line-166"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">engine</span> <span class="o">=</span> <span class="n">impl</span><span class="p">;</span>
-<a name="line-167"></a>			<span class="p">}</span>
-<a name="line-168"></a>		<span class="k">else</span>
-<a name="line-169"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">engine</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-170"></a><span class="cp">#endif</span>
-<a name="line-171"></a>
-<a name="line-172"></a><span class="cp">#ifdef OPENSSL_FIPS</span>
-<a name="line-173"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">FIPS_mode</span><span class="p">())</span>
-<a name="line-174"></a>			<span class="k">return</span> <span class="n">FIPS_cipherinit</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cipher</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">enc</span><span class="p">);</span>
-<a name="line-175"></a><span class="cp">#endif</span>
-<a name="line-176"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">=</span><span class="n">cipher</span><span class="p">;</span>
-<a name="line-177"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctx_size</span><span class="p">)</span>
-<a name="line-178"></a>			<span class="p">{</span>
-<a name="line-179"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="o">=</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctx_size</span><span class="p">);</span>
-<a name="line-180"></a>			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">)</span>
-<a name="line-181"></a>				<span class="p">{</span>
-<a name="line-182"></a>				<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHERINIT_EX</span><span class="p">,</span> <span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-183"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-184"></a>				<span class="p">}</span>
-<a name="line-185"></a>			<span class="p">}</span>
-<a name="line-186"></a>		<span class="k">else</span>
-<a name="line-187"></a>			<span class="p">{</span>
-<a name="line-188"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher_data</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-189"></a>			<span class="p">}</span>
-<a name="line-190"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">key_len</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">-&gt;</span><span class="n">key_len</span><span class="p">;</span>
-<a name="line-191"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-192"></a>		<span class="k">if</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_CTRL_INIT</span><span class="p">)</span>
-<a name="line-193"></a>			<span class="p">{</span>
-<a name="line-194"></a>			<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">EVP_CIPHER_CTX_ctrl</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">EVP_CTRL_INIT</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-195"></a>				<span class="p">{</span>
-<a name="line-196"></a>				<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHERINIT_EX</span><span class="p">,</span> <span class="n">EVP_R_INITIALIZATION_ERROR</span><span class="p">);</span>
-<a name="line-197"></a>				<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-198"></a>				<span class="p">}</span>
-<a name="line-199"></a>			<span class="p">}</span>
-<a name="line-200"></a>		<span class="p">}</span>
-<a name="line-201"></a>	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">)</span>
-<a name="line-202"></a>		<span class="p">{</span>
-<a name="line-203"></a>		<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHERINIT_EX</span><span class="p">,</span> <span class="n">EVP_R_NO_CIPHER_SET</span><span class="p">);</span>
-<a name="line-204"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-205"></a>		<span class="p">}</span>
-<a name="line-206"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
-<a name="line-207"></a><span class="nl">skip_to_init</span><span class="p">:</span>
-<a name="line-208"></a><span class="cp">#endif</span>
-<a name="line-209"></a><span class="cp">#ifdef OPENSSL_FIPS</span>
-<a name="line-210"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">FIPS_mode</span><span class="p">())</span>
-<a name="line-211"></a>		<span class="k">return</span> <span class="n">FIPS_cipherinit</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cipher</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">enc</span><span class="p">);</span>
-<a name="line-212"></a><span class="cp">#endif</span>
-<a name="line-213"></a>	<span class="cm">/* we assume block size is a power of 2 in *cryptUpdate */</span>
-<a name="line-214"></a>	<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span> <span class="o">==</span> <span class="mi">1</span>
-<a name="line-215"></a>	    <span class="o">||</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span> <span class="o">==</span> <span class="mi">8</span>
-<a name="line-216"></a>	    <span class="o">||</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span> <span class="o">==</span> <span class="mi">16</span><span class="p">);</span>
-<a name="line-217"></a>
-<a name="line-218"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX_flags</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_CUSTOM_IV</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-219"></a>		<span class="k">switch</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX_mode</span><span class="p">(</span><span class="n">ctx</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-220"></a>
-<a name="line-221"></a>			<span class="k">case</span> <span class="nl">EVP_CIPH_STREAM_CIPHER</span><span class="p">:</span>
-<a name="line-222"></a>			<span class="k">case</span> <span class="nl">EVP_CIPH_ECB_MODE</span><span class="p">:</span>
-<a name="line-223"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-224"></a>
-<a name="line-225"></a>			<span class="k">case</span> <span class="nl">EVP_CIPH_CFB_MODE</span><span class="p">:</span>
-<a name="line-226"></a>			<span class="k">case</span> <span class="nl">EVP_CIPH_OFB_MODE</span><span class="p">:</span>
-<a name="line-227"></a>
-<a name="line-228"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-229"></a>			<span class="cm">/* fall-through */</span>
-<a name="line-230"></a>
-<a name="line-231"></a>			<span class="k">case</span> <span class="nl">EVP_CIPH_CBC_MODE</span><span class="p">:</span>
-<a name="line-232"></a>
-<a name="line-233"></a>			<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX_iv_length</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span> <span class="o">&lt;=</span>
-<a name="line-234"></a>					<span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">iv</span><span class="p">));</span>
-<a name="line-235"></a>			<span class="k">if</span><span class="p">(</span><span class="n">iv</span><span class="p">)</span> <span class="n">memcpy</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">oiv</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">EVP_CIPHER_CTX_iv_length</span><span class="p">(</span><span class="n">ctx</span><span class="p">));</span>
-<a name="line-236"></a>			<span class="n">memcpy</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">iv</span><span class="p">,</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">oiv</span><span class="p">,</span> <span class="n">EVP_CIPHER_CTX_iv_length</span><span class="p">(</span><span class="n">ctx</span><span class="p">));</span>
-<a name="line-237"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-238"></a>
-<a name="line-239"></a>			<span class="k">case</span> <span class="nl">EVP_CIPH_CTR_MODE</span><span class="p">:</span>
-<a name="line-240"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-241"></a>			<span class="cm">/* Don&#39;t reuse IV for CTR mode */</span>
-<a name="line-242"></a>			<span class="k">if</span><span class="p">(</span><span class="n">iv</span><span class="p">)</span>
-<a name="line-243"></a>				<span class="n">memcpy</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">iv</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">EVP_CIPHER_CTX_iv_length</span><span class="p">(</span><span class="n">ctx</span><span class="p">));</span>
-<a name="line-244"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-245"></a>
-<a name="line-246"></a>			<span class="k">default</span><span class="o">:</span>
-<a name="line-247"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-248"></a>			<span class="k">break</span><span class="p">;</span>
-<a name="line-249"></a>		<span class="p">}</span>
-<a name="line-250"></a>	<span class="p">}</span>
-<a name="line-251"></a>
-<a name="line-252"></a>	<span class="k">if</span><span class="p">(</span><span class="n">key</span> <span class="o">||</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_ALWAYS_CALL_INIT</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-253"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">iv</span><span class="p">,</span><span class="n">enc</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-254"></a>	<span class="p">}</span>
-<a name="line-255"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-256"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final_used</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-257"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">block_mask</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-258"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-259"></a>	<span class="p">}</span>
-<a name="line-260"></a>
-<a name="line-261"></a><span class="kt">int</span> <span class="nf">EVP_CipherUpdate</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">,</span>
-<a name="line-262"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
-<a name="line-263"></a>	<span class="p">{</span>
-<a name="line-264"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">encrypt</span><span class="p">)</span>
-<a name="line-265"></a>		<span class="k">return</span> <span class="n">EVP_EncryptUpdate</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
-<a name="line-266"></a>	<span class="k">else</span>	<span class="k">return</span> <span class="n">EVP_DecryptUpdate</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
-<a name="line-267"></a>	<span class="p">}</span>
-<a name="line-268"></a>
-<a name="line-269"></a><span class="kt">int</span> <span class="nf">EVP_CipherFinal_ex</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-270"></a>	<span class="p">{</span>
-<a name="line-271"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">encrypt</span><span class="p">)</span>
-<a name="line-272"></a>		<span class="k">return</span> <span class="n">EVP_EncryptFinal_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">);</span>
-<a name="line-273"></a>	<span class="k">else</span>	<span class="k">return</span> <span class="n">EVP_DecryptFinal_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">);</span>
-<a name="line-274"></a>	<span class="p">}</span>
-<a name="line-275"></a>
-<a name="line-276"></a><span class="kt">int</span> <span class="nf">EVP_CipherFinal</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-277"></a>	<span class="p">{</span>
-<a name="line-278"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">encrypt</span><span class="p">)</span>
-<a name="line-279"></a>		<span class="k">return</span> <span class="n">EVP_EncryptFinal</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">);</span>
-<a name="line-280"></a>	<span class="k">else</span>	<span class="k">return</span> <span class="n">EVP_DecryptFinal</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">);</span>
-<a name="line-281"></a>	<span class="p">}</span>
-<a name="line-282"></a>
-<a name="line-283"></a><span class="kt">int</span> <span class="nf">EVP_EncryptInit</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">cipher</span><span class="p">,</span>
-<a name="line-284"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">)</span>
-<a name="line-285"></a>	<span class="p">{</span>
-<a name="line-286"></a>	<span class="k">return</span> <span class="n">EVP_CipherInit</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cipher</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-287"></a>	<span class="p">}</span>
-<a name="line-288"></a>
-<a name="line-289"></a><span class="kt">int</span> <span class="nf">EVP_EncryptInit_ex</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">cipher</span><span class="p">,</span> <span class="n">ENGINE</span> <span class="o">*</span><span class="n">impl</span><span class="p">,</span>
-<a name="line-290"></a>		<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">)</span>
-<a name="line-291"></a>	<span class="p">{</span>
-<a name="line-292"></a>	<span class="k">return</span> <span class="n">EVP_CipherInit_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cipher</span><span class="p">,</span> <span class="n">impl</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<a name="line-293"></a>	<span class="p">}</span>
-<a name="line-294"></a>
-<a name="line-295"></a><span class="kt">int</span> <span class="nf">EVP_DecryptInit</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">cipher</span><span class="p">,</span>
-<a name="line-296"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">)</span>
-<a name="line-297"></a>	<span class="p">{</span>
-<a name="line-298"></a>	<span class="k">return</span> <span class="n">EVP_CipherInit</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cipher</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-299"></a>	<span class="p">}</span>
-<a name="line-300"></a>
-<a name="line-301"></a><span class="kt">int</span> <span class="nf">EVP_DecryptInit_ex</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_CIPHER</span> <span class="o">*</span><span class="n">cipher</span><span class="p">,</span> <span class="n">ENGINE</span> <span class="o">*</span><span class="n">impl</span><span class="p">,</span>
-<a name="line-302"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">)</span>
-<a name="line-303"></a>	<span class="p">{</span>
-<a name="line-304"></a>	<span class="k">return</span> <span class="n">EVP_CipherInit_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cipher</span><span class="p">,</span> <span class="n">impl</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-305"></a>	<span class="p">}</span>
-<a name="line-306"></a>
-<a name="line-307"></a><span class="kt">int</span> <span class="nf">EVP_EncryptUpdate</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">,</span>
-<a name="line-308"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
-<a name="line-309"></a>	<span class="p">{</span>
-<a name="line-310"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">bl</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'j' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;j&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+<a name="line-58"></a><span class="cm">/* ====================================================================</span>
+<a name="line-59"></a><span class="cm"> * Copyright (c) 1998-2000 The OpenSSL Project.  All rights reserved.</span>
+<a name="line-60"></a><span class="cm"> *</span>
+<a name="line-61"></a><span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<a name="line-62"></a><span class="cm"> * modification, are permitted provided that the following conditions</span>
+<a name="line-63"></a><span class="cm"> * are met:</span>
+<a name="line-64"></a><span class="cm"> *</span>
+<a name="line-65"></a><span class="cm"> * 1. Redistributions of source code must retain the above copyright</span>
+<a name="line-66"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer. </span>
+<a name="line-67"></a><span class="cm"> *</span>
+<a name="line-68"></a><span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright</span>
+<a name="line-69"></a><span class="cm"> *    notice, this list of conditions and the following disclaimer in</span>
+<a name="line-70"></a><span class="cm"> *    the documentation and/or other materials provided with the</span>
+<a name="line-71"></a><span class="cm"> *    distribution.</span>
+<a name="line-72"></a><span class="cm"> *</span>
+<a name="line-73"></a><span class="cm"> * 3. All advertising materials mentioning features or use of this</span>
+<a name="line-74"></a><span class="cm"> *    software must display the following acknowledgment:</span>
+<a name="line-75"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-76"></a><span class="cm"> *    for use in the OpenSSL Toolkit. (http://www.openssl.org/)&quot;</span>
+<a name="line-77"></a><span class="cm"> *</span>
+<a name="line-78"></a><span class="cm"> * 4. The names &quot;OpenSSL Toolkit&quot; and &quot;OpenSSL Project&quot; must not be used to</span>
+<a name="line-79"></a><span class="cm"> *    endorse or promote products derived from this software without</span>
+<a name="line-80"></a><span class="cm"> *    prior written permission. For written permission, please contact</span>
+<a name="line-81"></a><span class="cm"> *    openssl-core@openssl.org.</span>
+<a name="line-82"></a><span class="cm"> *</span>
+<a name="line-83"></a><span class="cm"> * 5. Products derived from this software may not be called &quot;OpenSSL&quot;</span>
+<a name="line-84"></a><span class="cm"> *    nor may &quot;OpenSSL&quot; appear in their names without prior written</span>
+<a name="line-85"></a><span class="cm"> *    permission of the OpenSSL Project.</span>
+<a name="line-86"></a><span class="cm"> *</span>
+<a name="line-87"></a><span class="cm"> * 6. Redistributions of any form whatsoever must retain the following</span>
+<a name="line-88"></a><span class="cm"> *    acknowledgment:</span>
+<a name="line-89"></a><span class="cm"> *    &quot;This product includes software developed by the OpenSSL Project</span>
+<a name="line-90"></a><span class="cm"> *    for use in the OpenSSL Toolkit (http://www.openssl.org/)&quot;</span>
+<a name="line-91"></a><span class="cm"> *</span>
+<a name="line-92"></a><span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS&#39;&#39; AND ANY</span>
+<a name="line-93"></a><span class="cm"> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<a name="line-94"></a><span class="cm"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</span>
+<a name="line-95"></a><span class="cm"> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</span>
+<a name="line-96"></a><span class="cm"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</span>
+<a name="line-97"></a><span class="cm"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</span>
+<a name="line-98"></a><span class="cm"> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<a name="line-99"></a><span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span>
+<a name="line-100"></a><span class="cm"> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span>
+<a name="line-101"></a><span class="cm"> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
+<a name="line-102"></a><span class="cm"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</span>
+<a name="line-103"></a><span class="cm"> * OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<a name="line-104"></a><span class="cm"> * ====================================================================</span>
+<a name="line-105"></a><span class="cm"> *</span>
+<a name="line-106"></a><span class="cm"> * This product includes cryptographic software written by Eric Young</span>
+<a name="line-107"></a><span class="cm"> * (eay@cryptsoft.com).  This product includes software written by Tim</span>
+<a name="line-108"></a><span class="cm"> * Hudson (tjh@cryptsoft.com).</span>
+<a name="line-109"></a><span class="cm"> *</span>
+<a name="line-110"></a><span class="cm"> */</span>
+<a name="line-111"></a>
+<a name="line-112"></a><span class="cp">#include &quot;cryptlib.h&quot;</span>
+<a name="line-113"></a><span class="cp">#include &lt;openssl/rand.h&gt;</span>
+<a name="line-114"></a><span class="cp">#include &quot;rand_lcl.h&quot;</span>
+<a name="line-115"></a>
+<a name="line-116"></a><span class="cp">#if defined(OPENSSL_SYS_WINDOWS) || defined(OPENSSL_SYS_WIN32)</span>
+<a name="line-117"></a><span class="cp">#include &lt;windows.h&gt;</span>
+<a name="line-118"></a><span class="cp">#ifndef _WIN32_WINNT</span>
+<a name="line-119"></a><span class="cp"># define _WIN32_WINNT 0x0400</span>
+<a name="line-120"></a><span class="cp">#endif</span>
+<a name="line-121"></a><span class="cp">#include &lt;wincrypt.h&gt;</span>
+<a name="line-122"></a><span class="cp">#include &lt;tlhelp32.h&gt;</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="cm">/* Limit the time spent walking through the heap, processes, threads and modules to</span>
+<a name="line-125"></a><span class="cm">   a maximum of 1000 miliseconds each, unless CryptoGenRandom failed */</span>
+<a name="line-126"></a><span class="cp">#define MAXDELAY 1000</span>
+<a name="line-127"></a>
+<a name="line-128"></a><span class="cm">/* Intel hardware RNG CSP -- available from</span>
+<a name="line-129"></a><span class="cm"> * http://developer.intel.com/design/security/rng/redist_license.htm</span>
+<a name="line-130"></a><span class="cm"> */</span>
+<a name="line-131"></a><span class="cp">#define PROV_INTEL_SEC 22</span>
+<a name="line-132"></a><span class="cp">#define INTEL_DEF_PROV L&quot;Intel Hardware Cryptographic Service Provider&quot;</span>
+<a name="line-133"></a>
+<a name="line-134"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">readtimer</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="line-135"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">readscreen</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<a name="line-136"></a>
+<a name="line-137"></a><span class="cm">/* It appears like CURSORINFO, PCURSORINFO and LPCURSORINFO are only defined</span>
+<a name="line-138"></a><span class="cm">   when WINVER is 0x0500 and up, which currently only happens on Win2000.</span>
+<a name="line-139"></a><span class="cm">   Unfortunately, those are typedefs, so they&#39;re a little bit difficult to</span>
+<a name="line-140"></a><span class="cm">   detect properly.  On the other hand, the macro CURSOR_SHOWING is defined</span>
+<a name="line-141"></a><span class="cm">   within the same conditional, so it can be use to detect the absence of said</span>
+<a name="line-142"></a><span class="cm">   typedefs. */</span>
+<a name="line-143"></a>
+<a name="line-144"></a><span class="cp">#ifndef CURSOR_SHOWING</span>
+<a name="line-145"></a><span class="cm">/*</span>
+<a name="line-146"></a><span class="cm"> * Information about the global cursor.</span>
+<a name="line-147"></a><span class="cm"> */</span>
+<a name="line-148"></a><span class="k">typedef</span> <span class="k">struct</span> <span class="n">tagCURSORINFO</span>
+<a name="line-149"></a><span class="p">{</span>
+<a name="line-150"></a>    <span class="n">DWORD</span>   <span class="n">cbSize</span><span class="p">;</span>
+<a name="line-151"></a>    <span class="n">DWORD</span>   <span class="n">flags</span><span class="p">;</span>
+<a name="line-152"></a>    <span class="n">HCURSOR</span> <span class="n">hCursor</span><span class="p">;</span>
+<a name="line-153"></a>    <span class="n">POINT</span>   <span class="n">ptScreenPos</span><span class="p">;</span>
+<a name="line-154"></a><span class="p">}</span> <span class="n">CURSORINFO</span><span class="p">,</span> <span class="o">*</span><span class="n">PCURSORINFO</span><span class="p">,</span> <span class="o">*</span><span class="n">LPCURSORINFO</span><span class="p">;</span>
+<a name="line-155"></a>
+<a name="line-156"></a><span class="cp">#define CURSOR_SHOWING     0x00000001</span>
+<a name="line-157"></a><span class="cp">#endif </span><span class="cm">/* CURSOR_SHOWING */</span><span class="cp"></span>
+<a name="line-158"></a>
+<a name="line-159"></a><span class="cp">#if !defined(OPENSSL_SYS_WINCE)</span>
+<a name="line-160"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CRYPTACQUIRECONTEXTW</span><span class="p">)(</span><span class="n">HCRYPTPROV</span> <span class="o">*</span><span class="p">,</span> <span class="n">LPCWSTR</span><span class="p">,</span> <span class="n">LPCWSTR</span><span class="p">,</span>
+<a name="line-161"></a>				    <span class="n">DWORD</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">);</span>
+<a name="line-162"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CRYPTGENRANDOM</span><span class="p">)(</span><span class="n">HCRYPTPROV</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">,</span> <span class="n">BYTE</span> <span class="o">*</span><span class="p">);</span>
+<a name="line-163"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CRYPTRELEASECONTEXT</span><span class="p">)(</span><span class="n">HCRYPTPROV</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">);</span>
+<a name="line-164"></a>
+<a name="line-165"></a><span class="k">typedef</span> <span class="nf">HWND</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">GETFOREGROUNDWINDOW</span><span class="p">)(</span><span class="n">VOID</span><span class="p">);</span>
+<a name="line-166"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">GETCURSORINFO</span><span class="p">)(</span><span class="n">PCURSORINFO</span><span class="p">);</span>
+<a name="line-167"></a><span class="k">typedef</span> <span class="nf">DWORD</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">GETQUEUESTATUS</span><span class="p">)(</span><span class="n">UINT</span><span class="p">);</span>
+<a name="line-168"></a>
+<a name="line-169"></a><span class="k">typedef</span> <span class="nf">HANDLE</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CREATETOOLHELP32SNAPSHOT</span><span class="p">)(</span><span class="n">DWORD</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">);</span>
+<a name="line-170"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">);</span>
+<a name="line-171"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">HEAP32FIRST</span><span class="p">)(</span><span class="n">LPHEAPENTRY32</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>
+<a name="line-172"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">HEAP32NEXT</span><span class="p">)(</span><span class="n">LPHEAPENTRY32</span><span class="p">);</span>
+<a name="line-173"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">HEAP32LIST</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">,</span> <span class="n">LPHEAPLIST32</span><span class="p">);</span>
+<a name="line-174"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">PROCESS32</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">,</span> <span class="n">LPPROCESSENTRY32</span><span class="p">);</span>
+<a name="line-175"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">THREAD32</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">,</span> <span class="n">LPTHREADENTRY32</span><span class="p">);</span>
+<a name="line-176"></a><span class="k">typedef</span> <span class="nf">BOOL</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">MODULE32</span><span class="p">)(</span><span class="n">HANDLE</span><span class="p">,</span> <span class="n">LPMODULEENTRY32</span><span class="p">);</span>
+<a name="line-177"></a>
+<a name="line-178"></a><span class="cp">#include &lt;lmcons.h&gt;</span>
+<a name="line-179"></a><span class="cp">#include &lt;lmstats.h&gt;</span>
+<a name="line-180"></a><span class="cp">#if 1 </span><span class="cm">/* The NET API is Unicode only.  It requires the use of the UNICODE</span>
+<a name="line-181"></a><span class="cm">       * macro.  When UNICODE is defined LPTSTR becomes LPWSTR.  LMSTR was</span>
+<a name="line-182"></a><span class="cm">       * was added to the Platform SDK to allow the NET API to be used in</span>
+<a name="line-183"></a><span class="cm">       * non-Unicode applications provided that Unicode strings were still</span>
+<a name="line-184"></a><span class="cm">       * used for input.  LMSTR is defined as LPWSTR.</span>
+<a name="line-185"></a><span class="cm">       */</span><span class="cp"></span>
+<a name="line-186"></a><span class="k">typedef</span> <span class="nf">NET_API_STATUS</span> <span class="p">(</span><span class="n">NET_API_FUNCTION</span> <span class="o">*</span> <span class="n">NETSTATGET</span><span class="p">)</span>
+<a name="line-187"></a>        <span class="p">(</span><span class="n">LPWSTR</span><span class="p">,</span> <span class="n">LPWSTR</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">,</span> <span class="n">DWORD</span><span class="p">,</span> <span class="n">LPBYTE</span><span class="o">*</span><span class="p">);</span>
+<a name="line-188"></a><span class="k">typedef</span> <span class="nf">NET_API_STATUS</span> <span class="p">(</span><span class="n">NET_API_FUNCTION</span> <span class="o">*</span> <span class="n">NETFREE</span><span class="p">)(</span><span class="n">LPBYTE</span><span class="p">);</span>
+<a name="line-189"></a><span class="cp">#endif </span><span class="cm">/* 1 */</span><span class="cp"></span>
+<a name="line-190"></a><span class="cp">#endif </span><span class="cm">/* !OPENSSL_SYS_WINCE */</span><span class="cp"></span>
+<a name="line-191"></a>
+<a name="line-192"></a><span class="kt">int</span> <span class="nf">RAND_poll</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-193"></a><span class="p">{</span>
+<a name="line-194"></a>	<span class="n">MEMORYSTATUS</span> <span class="n">m</span><span class="p">;</span>
+<a name="line-195"></a>	<span class="n">HCRYPTPROV</span> <span class="n">hProvider</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-196"></a>	<span class="n">DWORD</span> <span class="n">w</span><span class="p">;</span>
+<a name="line-197"></a><span class="hll">	<span class="kt">int</span> <span class="n">good</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'good' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;good&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
 void f(int x)
 {
     int i = 0;
@@ -1115,199 +1129,559 @@ void f(int x)
     }
 }
 When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-311"></a>
-<a name="line-312"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_FLAG_CUSTOM_CIPHER</span><span class="p">)</span>
-<a name="line-313"></a>		<span class="p">{</span>
-<a name="line-314"></a>		<span class="n">i</span> <span class="o">=</span> <span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">in</span><span class="p">,</span> <span class="n">inl</span><span class="p">);</span>
-<a name="line-315"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-316"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-317"></a>		<span class="k">else</span>
-<a name="line-318"></a>			<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-319"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-320"></a>		<span class="p">}</span>
-<a name="line-321"></a>
-<a name="line-322"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">inl</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-323"></a>		<span class="p">{</span>
-<a name="line-324"></a>		<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-325"></a>		<span class="k">return</span> <span class="n">inl</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-326"></a>		<span class="p">}</span>
-<a name="line-327"></a>
-<a name="line-328"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">inl</span><span class="o">&amp;</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">block_mask</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-329"></a>		<span class="p">{</span>
-<a name="line-330"></a>		<span class="k">if</span><span class="p">(</span><span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">))</span>
-<a name="line-331"></a>			<span class="p">{</span>
-<a name="line-332"></a>			<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">inl</span><span class="p">;</span>
-<a name="line-333"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-334"></a>			<span class="p">}</span>
-<a name="line-335"></a>		<span class="k">else</span>
-<a name="line-336"></a>			<span class="p">{</span>
-<a name="line-337"></a>			<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-338"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-339"></a>			<span class="p">}</span>
-<a name="line-340"></a>		<span class="p">}</span>
-<a name="line-341"></a>	<span class="n">i</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="p">;</span>
-<a name="line-342"></a>	<span class="n">bl</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span><span class="p">;</span>
-<a name="line-343"></a>	<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">bl</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">));</span>
-<a name="line-344"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-345"></a>		<span class="p">{</span>
-<a name="line-346"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">inl</span> <span class="o">&lt;</span> <span class="n">bl</span><span class="p">)</span>
-<a name="line-347"></a>			<span class="p">{</span>
-<a name="line-348"></a>			<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">);</span>
-<a name="line-349"></a>			<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="o">+=</span><span class="n">inl</span><span class="p">;</span>
-<a name="line-350"></a>			<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-351"></a>			<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-352"></a>			<span class="p">}</span>
-<a name="line-353"></a>		<span class="k">else</span>
-<a name="line-354"></a>			<span class="p">{</span>
-<a name="line-355"></a>			<span class="n">j</span><span class="o">=</span><span class="n">bl</span><span class="o">-</span><span class="n">i</span><span class="p">;</span>
-<a name="line-356"></a>			<span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">in</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
-<a name="line-357"></a>			<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">,</span><span class="n">bl</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-358"></a>			<span class="n">inl</span><span class="o">-=</span><span class="n">j</span><span class="p">;</span>
-<a name="line-359"></a>			<span class="n">in</span><span class="o">+=</span><span class="n">j</span><span class="p">;</span>
-<a name="line-360"></a>			<span class="n">out</span><span class="o">+=</span><span class="n">bl</span><span class="p">;</span>
-<a name="line-361"></a>			<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">bl</span><span class="p">;</span>
-<a name="line-362"></a>			<span class="p">}</span>
-<a name="line-363"></a>		<span class="p">}</span>
-<a name="line-364"></a>	<span class="k">else</span>
-<a name="line-365"></a>		<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-366"></a>	<span class="n">i</span><span class="o">=</span><span class="n">inl</span><span class="o">&amp;</span><span class="p">(</span><span class="n">bl</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-367"></a>	<span class="n">inl</span><span class="o">-=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-368"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">inl</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-369"></a>		<span class="p">{</span>
-<a name="line-370"></a>		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-371"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">+=</span><span class="n">inl</span><span class="p">;</span>
-<a name="line-372"></a>		<span class="p">}</span>
-<a name="line-373"></a>
-<a name="line-374"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-375"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">,</span><span class="o">&amp;</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="n">inl</span><span class="p">]),</span><span class="n">i</span><span class="p">);</span>
-<a name="line-376"></a>	<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="o">=</span><span class="n">i</span><span class="p">;</span>
-<a name="line-377"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-378"></a>	<span class="p">}</span>
-<a name="line-379"></a>
-<a name="line-380"></a><span class="kt">int</span> <span class="nf">EVP_EncryptFinal</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-381"></a>	<span class="p">{</span>
-<a name="line-382"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-383"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">EVP_EncryptFinal_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">outl</span><span class="p">);</span>
-<a name="line-384"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-385"></a>	<span class="p">}</span>
-<a name="line-386"></a>
-<a name="line-387"></a><span class="kt">int</span> <span class="nf">EVP_EncryptFinal_ex</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-388"></a>	<span class="p">{</span>
-<a name="line-389"></a>	<span class="kt">int</span> <span class="n">n</span><span class="p">,</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-390"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">bl</span><span class="p">;</span>
-<a name="line-391"></a>
-<a name="line-392"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_FLAG_CUSTOM_CIPHER</span><span class="p">)</span>
-<a name="line-393"></a>		<span class="p">{</span>
-<a name="line-394"></a>		<span class="n">ret</span> <span class="o">=</span> <span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-395"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-396"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-397"></a>		<span class="k">else</span> 
-<a name="line-398"></a>			<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-399"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-400"></a>		<span class="p">}</span>
-<a name="line-401"></a>
-<a name="line-402"></a>	<span class="n">b</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span><span class="p">;</span>
-<a name="line-403"></a>	<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="k">sizeof</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">);</span>
-<a name="line-404"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-405"></a>		<span class="p">{</span>
-<a name="line-406"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-407"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-408"></a>		<span class="p">}</span>
-<a name="line-409"></a>	<span class="n">bl</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="p">;</span>
-<a name="line-410"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_NO_PADDING</span><span class="p">)</span>
-<a name="line-411"></a>		<span class="p">{</span>
-<a name="line-412"></a>		<span class="k">if</span><span class="p">(</span><span class="n">bl</span><span class="p">)</span>
-<a name="line-413"></a>			<span class="p">{</span>
-<a name="line-414"></a>			<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_ENCRYPTFINAL_EX</span><span class="p">,</span><span class="n">EVP_R_DATA_NOT_MULTIPLE_OF_BLOCK_LENGTH</span><span class="p">);</span>
-<a name="line-415"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-416"></a>			<span class="p">}</span>
-<a name="line-417"></a>		<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-418"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-419"></a>		<span class="p">}</span>
-<a name="line-420"></a>
-<a name="line-421"></a>	<span class="n">n</span><span class="o">=</span><span class="n">b</span><span class="o">-</span><span class="n">bl</span><span class="p">;</span>
-<a name="line-422"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">bl</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">b</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-423"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
-<a name="line-424"></a>	<span class="n">ret</span><span class="o">=</span><span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
-<a name="line-425"></a>
-<a name="line-426"></a>
-<a name="line-427"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-<a name="line-428"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">b</span><span class="p">;</span>
-<a name="line-429"></a>
-<a name="line-430"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-431"></a>	<span class="p">}</span>
-<a name="line-432"></a>
-<a name="line-433"></a><span class="kt">int</span> <span class="nf">EVP_DecryptUpdate</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">,</span>
-<a name="line-434"></a>	     <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inl</span><span class="p">)</span>
-<a name="line-435"></a>	<span class="p">{</span>
-<a name="line-436"></a>	<span class="kt">int</span> <span class="n">fix_len</span><span class="p">;</span>
-<a name="line-437"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
-<a name="line-438"></a>
-<a name="line-439"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_FLAG_CUSTOM_CIPHER</span><span class="p">)</span>
-<a name="line-440"></a>		<span class="p">{</span>
-<a name="line-441"></a>		<span class="n">fix_len</span> <span class="o">=</span> <span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">in</span><span class="p">,</span> <span class="n">inl</span><span class="p">);</span>
-<a name="line-442"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">fix_len</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-443"></a>			<span class="p">{</span>
-<a name="line-444"></a>			<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-445"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-446"></a>			<span class="p">}</span>
-<a name="line-447"></a>		<span class="k">else</span>
-<a name="line-448"></a>			<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="n">fix_len</span><span class="p">;</span>
-<a name="line-449"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-450"></a>		<span class="p">}</span>
-<a name="line-451"></a>
-<a name="line-452"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">inl</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-453"></a>		<span class="p">{</span>
-<a name="line-454"></a>		<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-455"></a>		<span class="k">return</span> <span class="n">inl</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-456"></a>		<span class="p">}</span>
-<a name="line-457"></a>
-<a name="line-458"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_NO_PADDING</span><span class="p">)</span>
-<a name="line-459"></a>		<span class="k">return</span> <span class="n">EVP_EncryptUpdate</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">outl</span><span class="p">,</span> <span class="n">in</span><span class="p">,</span> <span class="n">inl</span><span class="p">);</span>
+</span><a name="line-198"></a>
+<a name="line-199"></a>	<span class="cm">/* Determine the OS version we are on so we can turn off things </span>
+<a name="line-200"></a><span class="cm">	 * that do not work properly.</span>
+<a name="line-201"></a><span class="cm">	 */</span>
+<a name="line-202"></a>        <span class="n">OSVERSIONINFO</span> <span class="n">osverinfo</span> <span class="p">;</span>
+<a name="line-203"></a>        <span class="n">osverinfo</span><span class="p">.</span><span class="n">dwOSVersionInfoSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">OSVERSIONINFO</span><span class="p">)</span> <span class="p">;</span>
+<a name="line-204"></a>        <span class="n">GetVersionEx</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">osverinfo</span> <span class="p">)</span> <span class="p">;</span>
+<a name="line-205"></a>
+<a name="line-206"></a><span class="cp">#if defined(OPENSSL_SYS_WINCE)</span>
+<a name="line-207"></a><span class="cp"># if defined(_WIN32_WCE) &amp;&amp; _WIN32_WCE&gt;=300</span>
+<a name="line-208"></a><span class="cm">/* Even though MSDN says _WIN32_WCE&gt;=210, it doesn&#39;t seem to be available</span>
+<a name="line-209"></a><span class="cm"> * in commonly available implementations prior 300... */</span>
+<a name="line-210"></a>	<span class="p">{</span>
+<a name="line-211"></a>	<span class="n">BYTE</span> <span class="n">buf</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<a name="line-212"></a>	<span class="cm">/* poll the CryptoAPI PRNG */</span>
+<a name="line-213"></a>	<span class="cm">/* The CryptoAPI returns sizeof(buf) bytes of randomness */</span>
+<a name="line-214"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">CryptAcquireContextW</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hProvider</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">PROV_RSA_FULL</span><span class="p">,</span>
+<a name="line-215"></a>				<span class="n">CRYPT_VERIFYCONTEXT</span><span class="p">))</span>
+<a name="line-216"></a>		<span class="p">{</span>
+<a name="line-217"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">CryptGenRandom</span><span class="p">(</span><span class="n">hProvider</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">buf</span><span class="p">))</span>
+<a name="line-218"></a>			<span class="n">RAND_add</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">));</span>
+<a name="line-219"></a>		<span class="n">CryptReleaseContext</span><span class="p">(</span><span class="n">hProvider</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> 
+<a name="line-220"></a>		<span class="p">}</span>
+<a name="line-221"></a>	<span class="p">}</span>
+<a name="line-222"></a><span class="cp"># endif</span>
+<a name="line-223"></a><span class="cp">#else	</span><span class="cm">/* OPENSSL_SYS_WINCE */</span><span class="cp"></span>
+<a name="line-224"></a>	<span class="cm">/*</span>
+<a name="line-225"></a><span class="cm">	 * None of below libraries are present on Windows CE, which is</span>
+<a name="line-226"></a><span class="cm">	 * why we #ifndef the whole section. This also excuses us from</span>
+<a name="line-227"></a><span class="cm">	 * handling the GetProcAddress issue. The trouble is that in</span>
+<a name="line-228"></a><span class="cm">	 * real Win32 API GetProcAddress is available in ANSI flavor</span>
+<a name="line-229"></a><span class="cm">	 * only. In WinCE on the other hand GetProcAddress is a macro</span>
+<a name="line-230"></a><span class="cm">	 * most commonly defined as GetProcAddressW, which accepts</span>
+<a name="line-231"></a><span class="cm">	 * Unicode argument. If we were to call GetProcAddress under</span>
+<a name="line-232"></a><span class="cm">	 * WinCE, I&#39;d recommend to either redefine GetProcAddress as</span>
+<a name="line-233"></a><span class="cm">	 * GetProcAddressA (there seem to be one in common CE spec) or</span>
+<a name="line-234"></a><span class="cm">	 * implement own shim routine, which would accept ANSI argument</span>
+<a name="line-235"></a><span class="cm">	 * and expand it to Unicode.</span>
+<a name="line-236"></a><span class="cm">	 */</span>
+<a name="line-237"></a>	<span class="p">{</span>
+<a name="line-238"></a>	<span class="cm">/* load functions dynamically - not available on all systems */</span>
+<a name="line-239"></a>	<span class="n">HMODULE</span> <span class="n">advapi</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;ADVAPI32.DLL&quot;</span><span class="p">));</span>
+<a name="line-240"></a>	<span class="n">HMODULE</span> <span class="n">kernel</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;KERNEL32.DLL&quot;</span><span class="p">));</span>
+<a name="line-241"></a>	<span class="n">HMODULE</span> <span class="n">user</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-242"></a>	<span class="n">HMODULE</span> <span class="n">netapi</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;NETAPI32.DLL&quot;</span><span class="p">));</span>
+<a name="line-243"></a>	<span class="n">CRYPTACQUIRECONTEXTW</span> <span class="n">acquire</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-244"></a>	<span class="n">CRYPTGENRANDOM</span> <span class="n">gen</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-245"></a>	<span class="n">CRYPTRELEASECONTEXT</span> <span class="n">release</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-246"></a>	<span class="n">NETSTATGET</span> <span class="n">netstatget</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-247"></a>	<span class="n">NETFREE</span> <span class="n">netfree</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-248"></a>	<span class="n">BYTE</span> <span class="n">buf</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<a name="line-249"></a>
+<a name="line-250"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">netapi</span><span class="p">)</span>
+<a name="line-251"></a>		<span class="p">{</span>
+<a name="line-252"></a>		<span class="n">netstatget</span> <span class="o">=</span> <span class="p">(</span><span class="n">NETSTATGET</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">netapi</span><span class="p">,</span><span class="s">&quot;NetStatisticsGet&quot;</span><span class="p">);</span>
+<a name="line-253"></a>		<span class="n">netfree</span> <span class="o">=</span> <span class="p">(</span><span class="n">NETFREE</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">netapi</span><span class="p">,</span><span class="s">&quot;NetApiBufferFree&quot;</span><span class="p">);</span>
+<a name="line-254"></a>		<span class="p">}</span>
+<a name="line-255"></a>
+<a name="line-256"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">netstatget</span> <span class="o">&amp;&amp;</span> <span class="n">netfree</span><span class="p">)</span>
+<a name="line-257"></a>		<span class="p">{</span>
+<a name="line-258"></a>		<span class="n">LPBYTE</span> <span class="n">outbuf</span><span class="p">;</span>
+<a name="line-259"></a>		<span class="cm">/* NetStatisticsGet() is a Unicode only function</span>
+<a name="line-260"></a><span class="cm"> 		 * STAT_WORKSTATION_0 contains 45 fields and STAT_SERVER_0</span>
+<a name="line-261"></a><span class="cm">		 * contains 17 fields.  We treat each field as a source of</span>
+<a name="line-262"></a><span class="cm">		 * one byte of entropy.</span>
+<a name="line-263"></a><span class="cm">                 */</span>
+<a name="line-264"></a>
+<a name="line-265"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">netstatget</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="s">L&quot;LanmanWorkstation&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">outbuf</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-266"></a>			<span class="p">{</span>
+<a name="line-267"></a>			<span class="n">RAND_add</span><span class="p">(</span><span class="n">outbuf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">STAT_WORKSTATION_0</span><span class="p">),</span> <span class="mi">45</span><span class="p">);</span>
+<a name="line-268"></a>			<span class="n">netfree</span><span class="p">(</span><span class="n">outbuf</span><span class="p">);</span>
+<a name="line-269"></a>			<span class="p">}</span>
+<a name="line-270"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">netstatget</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="s">L&quot;LanmanServer&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">outbuf</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-271"></a>			<span class="p">{</span>
+<a name="line-272"></a>			<span class="n">RAND_add</span><span class="p">(</span><span class="n">outbuf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">STAT_SERVER_0</span><span class="p">),</span> <span class="mi">17</span><span class="p">);</span>
+<a name="line-273"></a>			<span class="n">netfree</span><span class="p">(</span><span class="n">outbuf</span><span class="p">);</span>
+<a name="line-274"></a>			<span class="p">}</span>
+<a name="line-275"></a>		<span class="p">}</span>
+<a name="line-276"></a>
+<a name="line-277"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">netapi</span><span class="p">)</span>
+<a name="line-278"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">netapi</span><span class="p">);</span>
+<a name="line-279"></a>
+<a name="line-280"></a>        <span class="cm">/* It appears like this can cause an exception deep within ADVAPI32.DLL</span>
+<a name="line-281"></a><span class="cm">         * at random times on Windows 2000.  Reported by Jeffrey Altman.  </span>
+<a name="line-282"></a><span class="cm">         * Only use it on NT.</span>
+<a name="line-283"></a><span class="cm">	 */</span>
+<a name="line-284"></a>	<span class="cm">/* Wolfgang Marczy &lt;WMarczy@topcall.co.at&gt; reports that</span>
+<a name="line-285"></a><span class="cm">	 * the RegQueryValueEx call below can hang on NT4.0 (SP6).</span>
+<a name="line-286"></a><span class="cm">	 * So we don&#39;t use this at all for now. */</span>
+<a name="line-287"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-288"></a><span class="c">        if ( osverinfo.dwPlatformId == VER_PLATFORM_WIN32_NT &amp;&amp;</span>
+<a name="line-289"></a><span class="c">		osverinfo.dwMajorVersion &lt; 5)</span>
+<a name="line-290"></a><span class="c">		{</span>
+<a name="line-291"></a><span class="c">		/* Read Performance Statistics from NT/2000 registry</span>
+<a name="line-292"></a><span class="c">		 * The size of the performance data can vary from call</span>
+<a name="line-293"></a><span class="c">		 * to call so we must guess the size of the buffer to use</span>
+<a name="line-294"></a><span class="c">		 * and increase its size if we get an ERROR_MORE_DATA</span>
+<a name="line-295"></a><span class="c">		 * return instead of ERROR_SUCCESS.</span>
+<a name="line-296"></a><span class="c">		 */</span>
+<a name="line-297"></a><span class="c">		LONG   rc=ERROR_MORE_DATA;</span>
+<a name="line-298"></a><span class="c">		char * buf=NULL;</span>
+<a name="line-299"></a><span class="c">		DWORD bufsz=0;</span>
+<a name="line-300"></a><span class="c">		DWORD length;</span>
+<a name="line-301"></a>
+<a name="line-302"></a><span class="c">		while (rc == ERROR_MORE_DATA)</span>
+<a name="line-303"></a><span class="c">			{</span>
+<a name="line-304"></a><span class="c">			buf = realloc(buf,bufsz+8192);</span>
+<a name="line-305"></a><span class="c">			if (!buf)</span>
+<a name="line-306"></a><span class="c">				break;</span>
+<a name="line-307"></a><span class="c">			bufsz += 8192;</span>
+<a name="line-308"></a>
+<a name="line-309"></a><span class="c">			length = bufsz;</span>
+<a name="line-310"></a><span class="c">			rc = RegQueryValueEx(HKEY_PERFORMANCE_DATA, TEXT(&quot;Global&quot;),</span>
+<a name="line-311"></a><span class="c">				NULL, NULL, buf, &amp;length);</span>
+<a name="line-312"></a><span class="c">			}</span>
+<a name="line-313"></a><span class="c">		if (rc == ERROR_SUCCESS)</span>
+<a name="line-314"></a><span class="c">			{</span>
+<a name="line-315"></a><span class="c">                        /* For entropy count assume only least significant</span>
+<a name="line-316"></a><span class="c">			 * byte of each DWORD is random.</span>
+<a name="line-317"></a><span class="c">			 */</span>
+<a name="line-318"></a><span class="c">			RAND_add(&amp;length, sizeof(length), 0);</span>
+<a name="line-319"></a><span class="c">			RAND_add(buf, length, length / 4.0);</span>
+<a name="line-320"></a>
+<a name="line-321"></a><span class="c">			/* Close the Registry Key to allow Windows to cleanup/close</span>
+<a name="line-322"></a><span class="c">			 * the open handle</span>
+<a name="line-323"></a><span class="c">			 * Note: The &#39;HKEY_PERFORMANCE_DATA&#39; key is implicitly opened</span>
+<a name="line-324"></a><span class="c">			 *       when the RegQueryValueEx above is done.  However, if</span>
+<a name="line-325"></a><span class="c">			 *       it is not explicitly closed, it can cause disk</span>
+<a name="line-326"></a><span class="c">			 *       partition manipulation problems.</span>
+<a name="line-327"></a><span class="c">			 */</span>
+<a name="line-328"></a><span class="c">			RegCloseKey(HKEY_PERFORMANCE_DATA);</span>
+<a name="line-329"></a><span class="c">			}</span>
+<a name="line-330"></a><span class="c">		if (buf)</span>
+<a name="line-331"></a><span class="c">			free(buf);</span>
+<a name="line-332"></a><span class="c">		}</span>
+<a name="line-333"></a><span class="cp">#endif</span>
+<a name="line-334"></a>
+<a name="line-335"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">advapi</span><span class="p">)</span>
+<a name="line-336"></a>		<span class="p">{</span>
+<a name="line-337"></a>		<span class="cm">/*</span>
+<a name="line-338"></a><span class="cm">		 * If it&#39;s available, then it&#39;s available in both ANSI</span>
+<a name="line-339"></a><span class="cm">		 * and UNICODE flavors even in Win9x, documentation says.</span>
+<a name="line-340"></a><span class="cm">		 * We favor Unicode...</span>
+<a name="line-341"></a><span class="cm">		 */</span>
+<a name="line-342"></a>		<span class="n">acquire</span> <span class="o">=</span> <span class="p">(</span><span class="n">CRYPTACQUIRECONTEXTW</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">advapi</span><span class="p">,</span>
+<a name="line-343"></a>			<span class="s">&quot;CryptAcquireContextW&quot;</span><span class="p">);</span>
+<a name="line-344"></a>		<span class="n">gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">CRYPTGENRANDOM</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">advapi</span><span class="p">,</span>
+<a name="line-345"></a>			<span class="s">&quot;CryptGenRandom&quot;</span><span class="p">);</span>
+<a name="line-346"></a>		<span class="n">release</span> <span class="o">=</span> <span class="p">(</span><span class="n">CRYPTRELEASECONTEXT</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">advapi</span><span class="p">,</span>
+<a name="line-347"></a>			<span class="s">&quot;CryptReleaseContext&quot;</span><span class="p">);</span>
+<a name="line-348"></a>		<span class="p">}</span>
+<a name="line-349"></a>
+<a name="line-350"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">acquire</span> <span class="o">&amp;&amp;</span> <span class="n">gen</span> <span class="o">&amp;&amp;</span> <span class="n">release</span><span class="p">)</span>
+<a name="line-351"></a>		<span class="p">{</span>
+<a name="line-352"></a>		<span class="cm">/* poll the CryptoAPI PRNG */</span>
+<a name="line-353"></a>                <span class="cm">/* The CryptoAPI returns sizeof(buf) bytes of randomness */</span>
+<a name="line-354"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hProvider</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">PROV_RSA_FULL</span><span class="p">,</span>
+<a name="line-355"></a>			<span class="n">CRYPT_VERIFYCONTEXT</span><span class="p">))</span>
+<a name="line-356"></a>			<span class="p">{</span>
+<a name="line-357"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">gen</span><span class="p">(</span><span class="n">hProvider</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">buf</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-358"></a>				<span class="p">{</span>
+<a name="line-359"></a>				<span class="n">RAND_add</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-360"></a>				<span class="n">good</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-361"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-362"></a><span class="c">				printf(&quot;randomness from PROV_RSA_FULL\n&quot;);</span>
+<a name="line-363"></a><span class="cp">#endif</span>
+<a name="line-364"></a>				<span class="p">}</span>
+<a name="line-365"></a>			<span class="n">release</span><span class="p">(</span><span class="n">hProvider</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> 
+<a name="line-366"></a>			<span class="p">}</span>
+<a name="line-367"></a>		
+<a name="line-368"></a>		<span class="cm">/* poll the Pentium PRG with CryptoAPI */</span>
+<a name="line-369"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hProvider</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">INTEL_DEF_PROV</span><span class="p">,</span> <span class="n">PROV_INTEL_SEC</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<a name="line-370"></a>			<span class="p">{</span>
+<a name="line-371"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">gen</span><span class="p">(</span><span class="n">hProvider</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">buf</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-372"></a>				<span class="p">{</span>
+<a name="line-373"></a>				<span class="n">RAND_add</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">));</span>
+<a name="line-374"></a>				<span class="n">good</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-375"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-376"></a><span class="c">				printf(&quot;randomness from PROV_INTEL_SEC\n&quot;);</span>
+<a name="line-377"></a><span class="cp">#endif</span>
+<a name="line-378"></a>				<span class="p">}</span>
+<a name="line-379"></a>			<span class="n">release</span><span class="p">(</span><span class="n">hProvider</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-380"></a>			<span class="p">}</span>
+<a name="line-381"></a>		<span class="p">}</span>
+<a name="line-382"></a>
+<a name="line-383"></a>        <span class="k">if</span> <span class="p">(</span><span class="n">advapi</span><span class="p">)</span>
+<a name="line-384"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">advapi</span><span class="p">);</span>
+<a name="line-385"></a>
+<a name="line-386"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">osverinfo</span><span class="p">.</span><span class="n">dwPlatformId</span> <span class="o">!=</span> <span class="n">VER_PLATFORM_WIN32_NT</span> <span class="o">||</span>
+<a name="line-387"></a>	     <span class="o">!</span><span class="n">OPENSSL_isservice</span><span class="p">())</span> <span class="o">&amp;&amp;</span>
+<a name="line-388"></a>	    <span class="p">(</span><span class="n">user</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;USER32.DLL&quot;</span><span class="p">))))</span>
+<a name="line-389"></a>		<span class="p">{</span>
+<a name="line-390"></a>		<span class="n">GETCURSORINFO</span> <span class="n">cursor</span><span class="p">;</span>
+<a name="line-391"></a>		<span class="n">GETFOREGROUNDWINDOW</span> <span class="n">win</span><span class="p">;</span>
+<a name="line-392"></a>		<span class="n">GETQUEUESTATUS</span> <span class="n">queue</span><span class="p">;</span>
+<a name="line-393"></a>
+<a name="line-394"></a>		<span class="n">win</span> <span class="o">=</span> <span class="p">(</span><span class="n">GETFOREGROUNDWINDOW</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;GetForegroundWindow&quot;</span><span class="p">);</span>
+<a name="line-395"></a>		<span class="n">cursor</span> <span class="o">=</span> <span class="p">(</span><span class="n">GETCURSORINFO</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;GetCursorInfo&quot;</span><span class="p">);</span>
+<a name="line-396"></a>		<span class="n">queue</span> <span class="o">=</span> <span class="p">(</span><span class="n">GETQUEUESTATUS</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;GetQueueStatus&quot;</span><span class="p">);</span>
+<a name="line-397"></a>
+<a name="line-398"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<a name="line-399"></a>			<span class="p">{</span>
+<a name="line-400"></a>			<span class="cm">/* window handle */</span>
+<a name="line-401"></a>			<span class="n">HWND</span> <span class="n">h</span> <span class="o">=</span> <span class="n">win</span><span class="p">();</span>
+<a name="line-402"></a>			<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">h</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-403"></a>			<span class="p">}</span>
+<a name="line-404"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+<a name="line-405"></a>			<span class="p">{</span>
+<a name="line-406"></a>			<span class="cm">/* unfortunately, its not safe to call GetCursorInfo()</span>
+<a name="line-407"></a><span class="cm">			 * on NT4 even though it exists in SP3 (or SP6) and</span>
+<a name="line-408"></a><span class="cm">			 * higher.</span>
+<a name="line-409"></a><span class="cm">			 */</span>
+<a name="line-410"></a>			<span class="k">if</span> <span class="p">(</span> <span class="n">osverinfo</span><span class="p">.</span><span class="n">dwPlatformId</span> <span class="o">==</span> <span class="n">VER_PLATFORM_WIN32_NT</span> <span class="o">&amp;&amp;</span>
+<a name="line-411"></a>				<span class="n">osverinfo</span><span class="p">.</span><span class="n">dwMajorVersion</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">)</span>
+<a name="line-412"></a>				<span class="n">cursor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-413"></a>			<span class="p">}</span>
+<a name="line-414"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+<a name="line-415"></a>			<span class="p">{</span>
+<a name="line-416"></a>			<span class="cm">/* cursor position */</span>
+<a name="line-417"></a>                        <span class="cm">/* assume 2 bytes of entropy */</span>
+<a name="line-418"></a>			<span class="n">CURSORINFO</span> <span class="n">ci</span><span class="p">;</span>
+<a name="line-419"></a>			<span class="n">ci</span><span class="p">.</span><span class="n">cbSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">CURSORINFO</span><span class="p">);</span>
+<a name="line-420"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">cursor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ci</span><span class="p">))</span>
+<a name="line-421"></a>				<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ci</span><span class="p">,</span> <span class="n">ci</span><span class="p">.</span><span class="n">cbSize</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<a name="line-422"></a>			<span class="p">}</span>
+<a name="line-423"></a>
+<a name="line-424"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<a name="line-425"></a>			<span class="p">{</span>
+<a name="line-426"></a>			<span class="cm">/* message queue status */</span>
+<a name="line-427"></a>                        <span class="cm">/* assume 1 byte of entropy */</span>
+<a name="line-428"></a>			<span class="n">w</span> <span class="o">=</span> <span class="n">queue</span><span class="p">(</span><span class="n">QS_ALLEVENTS</span><span class="p">);</span>
+<a name="line-429"></a>			<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-430"></a>			<span class="p">}</span>
+<a name="line-431"></a>
+<a name="line-432"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<a name="line-433"></a>		<span class="p">}</span>
+<a name="line-434"></a>
+<a name="line-435"></a>	<span class="cm">/* Toolhelp32 snapshot: enumerate processes, threads, modules and heap</span>
+<a name="line-436"></a><span class="cm">	 * http://msdn.microsoft.com/library/psdk/winbase/toolhelp_5pfd.htm</span>
+<a name="line-437"></a><span class="cm">	 * (Win 9x and 2000 only, not available on NT)</span>
+<a name="line-438"></a><span class="cm">	 *</span>
+<a name="line-439"></a><span class="cm">	 * This seeding method was proposed in Peter Gutmann, Software</span>
+<a name="line-440"></a><span class="cm">	 * Generation of Practically Strong Random Numbers,</span>
+<a name="line-441"></a><span class="cm">	 * http://www.usenix.org/publications/library/proceedings/sec98/gutmann.html</span>
+<a name="line-442"></a><span class="cm">	 * revised version at http://www.cryptoengines.com/~peter/06_random.pdf</span>
+<a name="line-443"></a><span class="cm">	 * (The assignment of entropy estimates below is arbitrary, but based</span>
+<a name="line-444"></a><span class="cm">	 * on Peter&#39;s analysis the full poll appears to be safe. Additional</span>
+<a name="line-445"></a><span class="cm">	 * interactive seeding is encouraged.)</span>
+<a name="line-446"></a><span class="cm">	 */</span>
+<a name="line-447"></a>
+<a name="line-448"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+<a name="line-449"></a>		<span class="p">{</span>
+<a name="line-450"></a>		<span class="n">CREATETOOLHELP32SNAPSHOT</span> <span class="n">snap</span><span class="p">;</span>
+<a name="line-451"></a>		<span class="n">CLOSETOOLHELP32SNAPSHOT</span> <span class="n">close_snap</span><span class="p">;</span>
+<a name="line-452"></a>		<span class="n">HANDLE</span> <span class="n">handle</span><span class="p">;</span>
+<a name="line-453"></a>
+<a name="line-454"></a>		<span class="n">HEAP32FIRST</span> <span class="n">heap_first</span><span class="p">;</span>
+<a name="line-455"></a>		<span class="n">HEAP32NEXT</span> <span class="n">heap_next</span><span class="p">;</span>
+<a name="line-456"></a>		<span class="n">HEAP32LIST</span> <span class="n">heaplist_first</span><span class="p">,</span> <span class="n">heaplist_next</span><span class="p">;</span>
+<a name="line-457"></a>		<span class="n">PROCESS32</span> <span class="n">process_first</span><span class="p">,</span> <span class="n">process_next</span><span class="p">;</span>
+<a name="line-458"></a>		<span class="n">THREAD32</span> <span class="n">thread_first</span><span class="p">,</span> <span class="n">thread_next</span><span class="p">;</span>
+<a name="line-459"></a>		<span class="n">MODULE32</span> <span class="n">module_first</span><span class="p">,</span> <span class="n">module_next</span><span class="p">;</span>
 <a name="line-460"></a>
-<a name="line-461"></a>	<span class="n">b</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span><span class="p">;</span>
-<a name="line-462"></a>	<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="k">sizeof</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">);</span>
-<a name="line-463"></a>
-<a name="line-464"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final_used</span><span class="p">)</span>
-<a name="line-465"></a>		<span class="p">{</span>
-<a name="line-466"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
-<a name="line-467"></a>		<span class="n">out</span><span class="o">+=</span><span class="n">b</span><span class="p">;</span>
-<a name="line-468"></a>		<span class="n">fix_len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-469"></a>		<span class="p">}</span>
-<a name="line-470"></a>	<span class="k">else</span>
-<a name="line-471"></a>		<span class="n">fix_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-472"></a>
-<a name="line-473"></a>
-<a name="line-474"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">EVP_EncryptUpdate</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="n">out</span><span class="p">,</span><span class="n">outl</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="n">inl</span><span class="p">))</span>
-<a name="line-475"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-476"></a>
-<a name="line-477"></a>	<span class="cm">/* if we have &#39;decrypted&#39; a multiple of block size, make sure</span>
-<a name="line-478"></a><span class="cm">	 * we have a copy of this last block */</span>
-<a name="line-479"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="p">)</span>
-<a name="line-480"></a>		<span class="p">{</span>
-<a name="line-481"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">-=</span><span class="n">b</span><span class="p">;</span>
-<a name="line-482"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final_used</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-483"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">,</span><span class="o">&amp;</span><span class="n">out</span><span class="p">[</span><span class="o">*</span><span class="n">outl</span><span class="p">],</span><span class="n">b</span><span class="p">);</span>
-<a name="line-484"></a>		<span class="p">}</span>
-<a name="line-485"></a>	<span class="k">else</span>
-<a name="line-486"></a>		<span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final_used</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-487"></a>
-<a name="line-488"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">fix_len</span><span class="p">)</span>
-<a name="line-489"></a>		<span class="o">*</span><span class="n">outl</span> <span class="o">+=</span> <span class="n">b</span><span class="p">;</span>
-<a name="line-490"></a>		
-<a name="line-491"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-492"></a>	<span class="p">}</span>
-<a name="line-493"></a>
-<a name="line-494"></a><span class="kt">int</span> <span class="nf">EVP_DecryptFinal</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-495"></a>	<span class="p">{</span>
-<a name="line-496"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-497"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">EVP_DecryptFinal_ex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">outl</span><span class="p">);</span>
-<a name="line-498"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-499"></a>	<span class="p">}</span>
-<a name="line-500"></a>
-<a name="line-501"></a><span class="kt">int</span> <span class="nf">EVP_DecryptFinal_ex</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">outl</span><span class="p">)</span>
-<a name="line-502"></a>	<span class="p">{</span>
-<a name="line-503"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">n</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'n' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;n&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+<a name="line-461"></a>		<span class="n">HEAPLIST32</span> <span class="n">hlist</span><span class="p">;</span>
+<a name="line-462"></a>		<span class="n">HEAPENTRY32</span> <span class="n">hentry</span><span class="p">;</span>
+<a name="line-463"></a>		<span class="n">PROCESSENTRY32</span> <span class="n">p</span><span class="p">;</span>
+<a name="line-464"></a>		<span class="n">THREADENTRY32</span> <span class="n">t</span><span class="p">;</span>
+<a name="line-465"></a>		<span class="n">MODULEENTRY32</span> <span class="n">m</span><span class="p">;</span>
+<a name="line-466"></a>		<span class="n">DWORD</span> <span class="n">starttime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-467"></a>
+<a name="line-468"></a>		<span class="n">snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CREATETOOLHELP32SNAPSHOT</span><span class="p">)</span>
+<a name="line-469"></a>			<span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;CreateToolhelp32Snapshot&quot;</span><span class="p">);</span>
+<a name="line-470"></a>		<span class="n">close_snap</span> <span class="o">=</span> <span class="p">(</span><span class="n">CLOSETOOLHELP32SNAPSHOT</span><span class="p">)</span>
+<a name="line-471"></a>			<span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;CloseToolhelp32Snapshot&quot;</span><span class="p">);</span>
+<a name="line-472"></a>		<span class="n">heap_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">HEAP32FIRST</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Heap32First&quot;</span><span class="p">);</span>
+<a name="line-473"></a>		<span class="n">heap_next</span> <span class="o">=</span> <span class="p">(</span><span class="n">HEAP32NEXT</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Heap32Next&quot;</span><span class="p">);</span>
+<a name="line-474"></a>		<span class="n">heaplist_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">HEAP32LIST</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Heap32ListFirst&quot;</span><span class="p">);</span>
+<a name="line-475"></a>		<span class="n">heaplist_next</span> <span class="o">=</span> <span class="p">(</span><span class="n">HEAP32LIST</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Heap32ListNext&quot;</span><span class="p">);</span>
+<a name="line-476"></a>		<span class="n">process_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">PROCESS32</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Process32First&quot;</span><span class="p">);</span>
+<a name="line-477"></a>		<span class="n">process_next</span> <span class="o">=</span> <span class="p">(</span><span class="n">PROCESS32</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Process32Next&quot;</span><span class="p">);</span>
+<a name="line-478"></a>		<span class="n">thread_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">THREAD32</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Thread32First&quot;</span><span class="p">);</span>
+<a name="line-479"></a>		<span class="n">thread_next</span> <span class="o">=</span> <span class="p">(</span><span class="n">THREAD32</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Thread32Next&quot;</span><span class="p">);</span>
+<a name="line-480"></a>		<span class="n">module_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">MODULE32</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Module32First&quot;</span><span class="p">);</span>
+<a name="line-481"></a>		<span class="n">module_next</span> <span class="o">=</span> <span class="p">(</span><span class="n">MODULE32</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="s">&quot;Module32Next&quot;</span><span class="p">);</span>
+<a name="line-482"></a>
+<a name="line-483"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">snap</span> <span class="o">&amp;&amp;</span> <span class="n">heap_first</span> <span class="o">&amp;&amp;</span> <span class="n">heap_next</span> <span class="o">&amp;&amp;</span> <span class="n">heaplist_first</span> <span class="o">&amp;&amp;</span>
+<a name="line-484"></a>			<span class="n">heaplist_next</span> <span class="o">&amp;&amp;</span> <span class="n">process_first</span> <span class="o">&amp;&amp;</span> <span class="n">process_next</span> <span class="o">&amp;&amp;</span>
+<a name="line-485"></a>			<span class="n">thread_first</span> <span class="o">&amp;&amp;</span> <span class="n">thread_next</span> <span class="o">&amp;&amp;</span> <span class="n">module_first</span> <span class="o">&amp;&amp;</span>
+<a name="line-486"></a>			<span class="n">module_next</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">handle</span> <span class="o">=</span> <span class="n">snap</span><span class="p">(</span><span class="n">TH32CS_SNAPALL</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<a name="line-487"></a>			<span class="o">!=</span> <span class="n">INVALID_HANDLE_VALUE</span><span class="p">)</span>
+<a name="line-488"></a>			<span class="p">{</span>
+<a name="line-489"></a>			<span class="cm">/* heap list and heap walking */</span>
+<a name="line-490"></a>                        <span class="cm">/* HEAPLIST32 contains 3 fields that will change with</span>
+<a name="line-491"></a><span class="cm">                         * each entry.  Consider each field a source of 1 byte</span>
+<a name="line-492"></a><span class="cm">                         * of entropy.</span>
+<a name="line-493"></a><span class="cm">                         * HEAPENTRY32 contains 5 fields that will change with </span>
+<a name="line-494"></a><span class="cm">                         * each entry.  Consider each field a source of 1 byte</span>
+<a name="line-495"></a><span class="cm">                         * of entropy.</span>
+<a name="line-496"></a><span class="cm">                         */</span>
+<a name="line-497"></a>			<span class="n">ZeroMemory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hlist</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HEAPLIST32</span><span class="p">));</span>
+<a name="line-498"></a>			<span class="n">hlist</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HEAPLIST32</span><span class="p">);</span>		
+<a name="line-499"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">good</span><span class="p">)</span> <span class="n">starttime</span> <span class="o">=</span> <span class="n">GetTickCount</span><span class="p">();</span>
+<a name="line-500"></a><span class="cp">#ifdef _MSC_VER</span>
+<a name="line-501"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">heaplist_first</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hlist</span><span class="p">))</span>
+<a name="line-502"></a>				<span class="p">{</span>
+<a name="line-503"></a>				<span class="cm">/*</span>
+<a name="line-504"></a><span class="cm">				   following discussion on dev ML, exception on WinCE (or other Win</span>
+<a name="line-505"></a><span class="cm">				   platform) is theoretically of unknown origin; prevent infinite</span>
+<a name="line-506"></a><span class="cm">				   loop here when this theoretical case occurs; otherwise cope with</span>
+<a name="line-507"></a><span class="cm">				   the expected (MSDN documented) exception-throwing behaviour of</span>
+<a name="line-508"></a><span class="cm">				   Heap32Next() on WinCE.</span>
+<a name="line-509"></a>
+<a name="line-510"></a><span class="cm">				   based on patch in original message by Tanguy Fautré (2009/03/02)</span>
+<a name="line-511"></a><span class="cm">			           Subject: RAND_poll() and CreateToolhelp32Snapshot() stability</span>
+<a name="line-512"></a><span class="cm">			     */</span>
+<a name="line-513"></a>				<span class="kt">int</span> <span class="n">ex_cnt_limit</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> 
+<a name="line-514"></a>				<span class="k">do</span>
+<a name="line-515"></a>					<span class="p">{</span>
+<a name="line-516"></a>					<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hlist</span><span class="p">,</span> <span class="n">hlist</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<a name="line-517"></a>					<span class="kr">__try</span>
+<a name="line-518"></a>						<span class="p">{</span>
+<a name="line-519"></a>						<span class="n">ZeroMemory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HEAPENTRY32</span><span class="p">));</span>
+<a name="line-520"></a>					<span class="n">hentry</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HEAPENTRY32</span><span class="p">);</span>
+<a name="line-521"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">heap_first</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">,</span>
+<a name="line-522"></a>						<span class="n">hlist</span><span class="p">.</span><span class="n">th32ProcessID</span><span class="p">,</span>
+<a name="line-523"></a>						<span class="n">hlist</span><span class="p">.</span><span class="n">th32HeapID</span><span class="p">))</span>
+<a name="line-524"></a>						<span class="p">{</span>
+<a name="line-525"></a>						<span class="kt">int</span> <span class="n">entrycnt</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span>
+<a name="line-526"></a>						<span class="k">do</span>
+<a name="line-527"></a>							<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">,</span>
+<a name="line-528"></a>								<span class="n">hentry</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<a name="line-529"></a>						<span class="k">while</span> <span class="p">(</span><span class="n">heap_next</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">)</span>
+<a name="line-530"></a>						<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">good</span> <span class="o">||</span> <span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span><span class="o">-</span><span class="n">starttime</span><span class="p">)</span><span class="o">&lt;</span><span class="n">MAXDELAY</span><span class="p">)</span>
+<a name="line-531"></a>							<span class="o">&amp;&amp;</span> <span class="o">--</span><span class="n">entrycnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-532"></a>						<span class="p">}</span>
+<a name="line-533"></a>						<span class="p">}</span>
+<a name="line-534"></a>					<span class="kr">__except</span> <span class="p">(</span><span class="n">EXCEPTION_EXECUTE_HANDLER</span><span class="p">)</span>
+<a name="line-535"></a>						<span class="p">{</span>
+<a name="line-536"></a>							<span class="cm">/* ignore access violations when walking the heap list */</span>
+<a name="line-537"></a>							<span class="n">ex_cnt_limit</span><span class="o">--</span><span class="p">;</span>
+<a name="line-538"></a>						<span class="p">}</span>
+<a name="line-539"></a>					<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">heaplist_next</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hlist</span><span class="p">)</span> 
+<a name="line-540"></a>						<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">good</span> <span class="o">||</span> <span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span><span class="o">-</span><span class="n">starttime</span><span class="p">)</span><span class="o">&lt;</span><span class="n">MAXDELAY</span><span class="p">)</span>
+<a name="line-541"></a>						<span class="o">&amp;&amp;</span> <span class="n">ex_cnt_limit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-542"></a>				<span class="p">}</span>
+<a name="line-543"></a>
+<a name="line-544"></a><span class="cp">#else</span>
+<a name="line-545"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">heaplist_first</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hlist</span><span class="p">))</span>
+<a name="line-546"></a>				<span class="p">{</span>
+<a name="line-547"></a>				<span class="k">do</span>
+<a name="line-548"></a>					<span class="p">{</span>
+<a name="line-549"></a>					<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hlist</span><span class="p">,</span> <span class="n">hlist</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<a name="line-550"></a>					<span class="n">hentry</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HEAPENTRY32</span><span class="p">);</span>
+<a name="line-551"></a>					<span class="k">if</span> <span class="p">(</span><span class="n">heap_first</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">,</span>
+<a name="line-552"></a>						<span class="n">hlist</span><span class="p">.</span><span class="n">th32ProcessID</span><span class="p">,</span>
+<a name="line-553"></a>						<span class="n">hlist</span><span class="p">.</span><span class="n">th32HeapID</span><span class="p">))</span>
+<a name="line-554"></a>						<span class="p">{</span>
+<a name="line-555"></a>						<span class="kt">int</span> <span class="n">entrycnt</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span>
+<a name="line-556"></a>						<span class="k">do</span>
+<a name="line-557"></a>							<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">,</span>
+<a name="line-558"></a>								<span class="n">hentry</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<a name="line-559"></a>						<span class="k">while</span> <span class="p">(</span><span class="n">heap_next</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hentry</span><span class="p">)</span>
+<a name="line-560"></a>							<span class="o">&amp;&amp;</span> <span class="o">--</span><span class="n">entrycnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-561"></a>						<span class="p">}</span>
+<a name="line-562"></a>					<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">heaplist_next</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hlist</span><span class="p">)</span> 
+<a name="line-563"></a>						<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">good</span> <span class="o">||</span> <span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span><span class="o">-</span><span class="n">starttime</span><span class="p">)</span><span class="o">&lt;</span><span class="n">MAXDELAY</span><span class="p">));</span>
+<a name="line-564"></a>				<span class="p">}</span>
+<a name="line-565"></a><span class="cp">#endif</span>
+<a name="line-566"></a>
+<a name="line-567"></a>			<span class="cm">/* process walking */</span>
+<a name="line-568"></a>                        <span class="cm">/* PROCESSENTRY32 contains 9 fields that will change</span>
+<a name="line-569"></a><span class="cm">                         * with each entry.  Consider each field a source of</span>
+<a name="line-570"></a><span class="cm">                         * 1 byte of entropy.</span>
+<a name="line-571"></a><span class="cm">                         */</span>
+<a name="line-572"></a>			<span class="n">p</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">PROCESSENTRY32</span><span class="p">);</span>
+<a name="line-573"></a>		
+<a name="line-574"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">good</span><span class="p">)</span> <span class="n">starttime</span> <span class="o">=</span> <span class="n">GetTickCount</span><span class="p">();</span>
+<a name="line-575"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">process_first</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">))</span>
+<a name="line-576"></a>				<span class="k">do</span>
+<a name="line-577"></a>					<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<a name="line-578"></a>				<span class="k">while</span> <span class="p">(</span><span class="n">process_next</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">good</span> <span class="o">||</span> <span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span><span class="o">-</span><span class="n">starttime</span><span class="p">)</span><span class="o">&lt;</span><span class="n">MAXDELAY</span><span class="p">));</span>
+<a name="line-579"></a>
+<a name="line-580"></a>			<span class="cm">/* thread walking */</span>
+<a name="line-581"></a>                        <span class="cm">/* THREADENTRY32 contains 6 fields that will change</span>
+<a name="line-582"></a><span class="cm">                         * with each entry.  Consider each field a source of</span>
+<a name="line-583"></a><span class="cm">                         * 1 byte of entropy.</span>
+<a name="line-584"></a><span class="cm">                         */</span>
+<a name="line-585"></a>			<span class="n">t</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">THREADENTRY32</span><span class="p">);</span>
+<a name="line-586"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">good</span><span class="p">)</span> <span class="n">starttime</span> <span class="o">=</span> <span class="n">GetTickCount</span><span class="p">();</span>
+<a name="line-587"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">thread_first</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">))</span>
+<a name="line-588"></a>				<span class="k">do</span>
+<a name="line-589"></a>					<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+<a name="line-590"></a>				<span class="k">while</span> <span class="p">(</span><span class="n">thread_next</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">good</span> <span class="o">||</span> <span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span><span class="o">-</span><span class="n">starttime</span><span class="p">)</span><span class="o">&lt;</span><span class="n">MAXDELAY</span><span class="p">));</span>
+<a name="line-591"></a>
+<a name="line-592"></a>			<span class="cm">/* module walking */</span>
+<a name="line-593"></a>                        <span class="cm">/* MODULEENTRY32 contains 9 fields that will change</span>
+<a name="line-594"></a><span class="cm">                         * with each entry.  Consider each field a source of</span>
+<a name="line-595"></a><span class="cm">                         * 1 byte of entropy.</span>
+<a name="line-596"></a><span class="cm">                         */</span>
+<a name="line-597"></a>			<span class="n">m</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">MODULEENTRY32</span><span class="p">);</span>
+<a name="line-598"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">good</span><span class="p">)</span> <span class="n">starttime</span> <span class="o">=</span> <span class="n">GetTickCount</span><span class="p">();</span>
+<a name="line-599"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">module_first</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">))</span>
+<a name="line-600"></a>				<span class="k">do</span>
+<a name="line-601"></a>					<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="n">dwSize</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<a name="line-602"></a>				<span class="k">while</span> <span class="p">(</span><span class="n">module_next</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span>
+<a name="line-603"></a>					       	<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">good</span> <span class="o">||</span> <span class="p">(</span><span class="n">GetTickCount</span><span class="p">()</span><span class="o">-</span><span class="n">starttime</span><span class="p">)</span><span class="o">&lt;</span><span class="n">MAXDELAY</span><span class="p">));</span>
+<a name="line-604"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">close_snap</span><span class="p">)</span>
+<a name="line-605"></a>				<span class="n">close_snap</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<a name="line-606"></a>			<span class="k">else</span>
+<a name="line-607"></a>				<span class="n">CloseHandle</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<a name="line-608"></a>
+<a name="line-609"></a>			<span class="p">}</span>
+<a name="line-610"></a>
+<a name="line-611"></a>		<span class="n">FreeLibrary</span><span class="p">(</span><span class="n">kernel</span><span class="p">);</span>
+<a name="line-612"></a>		<span class="p">}</span>
+<a name="line-613"></a>	<span class="p">}</span>
+<a name="line-614"></a><span class="cp">#endif </span><span class="cm">/* !OPENSSL_SYS_WINCE */</span><span class="cp"></span>
+<a name="line-615"></a>
+<a name="line-616"></a>	<span class="cm">/* timer data */</span>
+<a name="line-617"></a>	<span class="n">readtimer</span><span class="p">();</span>
+<a name="line-618"></a>	
+<a name="line-619"></a>	<span class="cm">/* memory usage statistics */</span>
+<a name="line-620"></a>	<span class="n">GlobalMemoryStatus</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
+<a name="line-621"></a>	<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-622"></a>
+<a name="line-623"></a>	<span class="cm">/* process ID */</span>
+<a name="line-624"></a>	<span class="n">w</span> <span class="o">=</span> <span class="n">GetCurrentProcessId</span><span class="p">();</span>
+<a name="line-625"></a>	<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-626"></a>
+<a name="line-627"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-628"></a><span class="c">	printf(&quot;Exiting RAND_poll\n&quot;);</span>
+<a name="line-629"></a><span class="cp">#endif</span>
+<a name="line-630"></a>
+<a name="line-631"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-632"></a><span class="p">}</span>
+<a name="line-633"></a>
+<a name="line-634"></a><span class="kt">int</span> <span class="nf">RAND_event</span><span class="p">(</span><span class="n">UINT</span> <span class="n">iMsg</span><span class="p">,</span> <span class="n">WPARAM</span> <span class="n">wParam</span><span class="p">,</span> <span class="n">LPARAM</span> <span class="n">lParam</span><span class="p">)</span>
+<a name="line-635"></a>        <span class="p">{</span>
+<a name="line-636"></a>        <span class="kt">double</span> <span class="n">add_entropy</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-637"></a>
+<a name="line-638"></a>        <span class="k">switch</span> <span class="p">(</span><span class="n">iMsg</span><span class="p">)</span>
+<a name="line-639"></a>                <span class="p">{</span>
+<a name="line-640"></a>        <span class="k">case</span> <span class="nl">WM_KEYDOWN</span><span class="p">:</span>
+<a name="line-641"></a>                        <span class="p">{</span>
+<a name="line-642"></a>                        <span class="k">static</span> <span class="n">WPARAM</span> <span class="n">key</span><span class="p">;</span>
+<a name="line-643"></a>                        <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="n">wParam</span><span class="p">)</span>
+<a name="line-644"></a>                                <span class="n">add_entropy</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">;</span>
+<a name="line-645"></a>                        <span class="n">key</span> <span class="o">=</span> <span class="n">wParam</span><span class="p">;</span>
+<a name="line-646"></a>                        <span class="p">}</span>
+<a name="line-647"></a>                        <span class="k">break</span><span class="p">;</span>
+<a name="line-648"></a>	<span class="k">case</span> <span class="nl">WM_MOUSEMOVE</span><span class="p">:</span>
+<a name="line-649"></a>                        <span class="p">{</span>
+<a name="line-650"></a>                        <span class="k">static</span> <span class="kt">int</span> <span class="n">lastx</span><span class="p">,</span><span class="n">lasty</span><span class="p">,</span><span class="n">lastdx</span><span class="p">,</span><span class="n">lastdy</span><span class="p">;</span>
+<a name="line-651"></a>                        <span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">dx</span><span class="p">,</span><span class="n">dy</span><span class="p">;</span>
+<a name="line-652"></a>
+<a name="line-653"></a>                        <span class="n">x</span><span class="o">=</span><span class="n">LOWORD</span><span class="p">(</span><span class="n">lParam</span><span class="p">);</span>
+<a name="line-654"></a>                        <span class="n">y</span><span class="o">=</span><span class="n">HIWORD</span><span class="p">(</span><span class="n">lParam</span><span class="p">);</span>
+<a name="line-655"></a>                        <span class="n">dx</span><span class="o">=</span><span class="n">lastx</span><span class="o">-</span><span class="n">x</span><span class="p">;</span>
+<a name="line-656"></a>                        <span class="n">dy</span><span class="o">=</span><span class="n">lasty</span><span class="o">-</span><span class="n">y</span><span class="p">;</span>
+<a name="line-657"></a>                        <span class="k">if</span> <span class="p">(</span><span class="n">dx</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">dy</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">dx</span><span class="o">-</span><span class="n">lastdx</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">dy</span><span class="o">-</span><span class="n">lastdy</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-658"></a>                                <span class="n">add_entropy</span><span class="o">=</span><span class="mf">.2</span><span class="p">;</span>
+<a name="line-659"></a>                        <span class="n">lastx</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">lasty</span><span class="o">=</span><span class="n">y</span><span class="p">;</span>
+<a name="line-660"></a>                        <span class="n">lastdx</span><span class="o">=</span><span class="n">dx</span><span class="p">,</span> <span class="n">lastdy</span><span class="o">=</span><span class="n">dy</span><span class="p">;</span>
+<a name="line-661"></a>                        <span class="p">}</span>
+<a name="line-662"></a>		<span class="k">break</span><span class="p">;</span>
+<a name="line-663"></a>		<span class="p">}</span>
+<a name="line-664"></a>
+<a name="line-665"></a>	<span class="n">readtimer</span><span class="p">();</span>
+<a name="line-666"></a>        <span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">iMsg</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">iMsg</span><span class="p">),</span> <span class="n">add_entropy</span><span class="p">);</span>
+<a name="line-667"></a>	<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wParam</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">wParam</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-668"></a>	<span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lParam</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">lParam</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-669"></a> 
+<a name="line-670"></a>	<span class="k">return</span> <span class="p">(</span><span class="n">RAND_status</span><span class="p">());</span>
+<a name="line-671"></a>	<span class="p">}</span>
+<a name="line-672"></a>
+<a name="line-673"></a>
+<a name="line-674"></a><span class="kt">void</span> <span class="nf">RAND_screen</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="cm">/* function available for backward compatibility */</span>
+<a name="line-675"></a><span class="p">{</span>
+<a name="line-676"></a>	<span class="n">RAND_poll</span><span class="p">();</span>
+<a name="line-677"></a>	<span class="n">readscreen</span><span class="p">();</span>
+<a name="line-678"></a><span class="p">}</span>
+<a name="line-679"></a>
+<a name="line-680"></a>
+<a name="line-681"></a><span class="cm">/* feed timing information to the PRNG */</span>
+<a name="line-682"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">readtimer</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-683"></a><span class="p">{</span>
+<a name="line-684"></a>	<span class="n">DWORD</span> <span class="n">w</span><span class="p">;</span>
+<a name="line-685"></a>	<span class="n">LARGE_INTEGER</span> <span class="n">l</span><span class="p">;</span>
+<a name="line-686"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">have_perfc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-687"></a><span class="cp">#if defined(_MSC_VER) &amp;&amp; defined(_M_X86)</span>
+<a name="line-688"></a>	<span class="k">static</span> <span class="kt">int</span> <span class="n">have_tsc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<a name="line-689"></a>	<span class="n">DWORD</span> <span class="n">cyclecount</span><span class="p">;</span>
+<a name="line-690"></a>
+<a name="line-691"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">have_tsc</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-692"></a>	  <span class="kr">__try</span> <span class="p">{</span>
+<a name="line-693"></a>	    <span class="kr">__asm</span> <span class="p">{</span>
+<a name="line-694"></a>	      <span class="n">_emit</span> <span class="mh">0x0f</span>
+<a name="line-695"></a>	      <span class="n">_emit</span> <span class="mh">0x31</span>
+<a name="line-696"></a>	      <span class="n">mov</span> <span class="n">cyclecount</span><span class="p">,</span> <span class="n">eax</span>
+<a name="line-697"></a>	      <span class="p">}</span>
+<a name="line-698"></a>	    <span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cyclecount</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">cyclecount</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<a name="line-699"></a>	  <span class="p">}</span> <span class="kr">__except</span><span class="p">(</span><span class="n">EXCEPTION_EXECUTE_HANDLER</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-700"></a>	    <span class="n">have_tsc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-701"></a>	  <span class="p">}</span>
+<a name="line-702"></a>	<span class="p">}</span>
+<a name="line-703"></a><span class="cp">#else</span>
+<a name="line-704"></a><span class="cp"># define have_tsc 0</span>
+<a name="line-705"></a><span class="cp">#endif</span>
+<a name="line-706"></a>
+<a name="line-707"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">have_perfc</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-708"></a>	  <span class="k">if</span> <span class="p">(</span><span class="n">QueryPerformanceCounter</span><span class="p">(</span><span class="o">&amp;</span><span class="n">l</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<a name="line-709"></a>	    <span class="n">have_perfc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<a name="line-710"></a>	  <span class="k">else</span>
+<a name="line-711"></a>	    <span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">l</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-712"></a>	<span class="p">}</span>
+<a name="line-713"></a>
+<a name="line-714"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">have_tsc</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">have_perfc</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-715"></a>	  <span class="n">w</span> <span class="o">=</span> <span class="n">GetTickCount</span><span class="p">();</span>
+<a name="line-716"></a>	  <span class="n">RAND_add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-717"></a>	<span class="p">}</span>
+<a name="line-718"></a><span class="p">}</span>
+<a name="line-719"></a>
+<a name="line-720"></a><span class="cm">/* feed screen contents to PRNG */</span>
+<a name="line-721"></a><span class="cm">/*****************************************************************************</span>
+<a name="line-722"></a><span class="cm"> *</span>
+<a name="line-723"></a><span class="cm"> * Created 960901 by Gertjan van Oosten, gertjan@West.NL, West Consulting B.V.</span>
+<a name="line-724"></a><span class="cm"> *</span>
+<a name="line-725"></a><span class="cm"> * Code adapted from</span>
+<a name="line-726"></a><span class="cm"> * &lt;URL:http://support.microsoft.com/default.aspx?scid=kb;[LN];97193&gt;;</span>
+<a name="line-727"></a><span class="cm"> * the original copyright message is:</span>
+<a name="line-728"></a><span class="cm"> *</span>
+<a name="line-729"></a><span class="cm"> *   (C) Copyright Microsoft Corp. 1993.  All rights reserved.</span>
+<a name="line-730"></a><span class="cm"> *</span>
+<a name="line-731"></a><span class="cm"> *   You have a royalty-free right to use, modify, reproduce and</span>
+<a name="line-732"></a><span class="cm"> *   distribute the Sample Files (and/or any modified version) in</span>
+<a name="line-733"></a><span class="cm"> *   any way you find useful, provided that you agree that</span>
+<a name="line-734"></a><span class="cm"> *   Microsoft has no warranty obligations or liability for any</span>
+<a name="line-735"></a><span class="cm"> *   Sample Application Files which are modified.</span>
+<a name="line-736"></a><span class="cm"> */</span>
+<a name="line-737"></a>
+<a name="line-738"></a><span class="k">static</span> <span class="kt">void</span> <span class="nf">readscreen</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a name="line-739"></a><span class="p">{</span>
+<a name="line-740"></a><span class="cp">#if !defined(OPENSSL_SYS_WINCE) &amp;&amp; !defined(OPENSSL_SYS_WIN32_CYGWIN)</span>
+<a name="line-741"></a>  <span class="n">HDC</span>		<span class="n">hScrDC</span><span class="p">;</span>		<span class="cm">/* screen DC */</span>
+<a name="line-742"></a>  <span class="n">HDC</span>		<span class="n">hMemDC</span><span class="p">;</span>		<span class="cm">/* memory DC */</span>
+<a name="line-743"></a>  <span class="n">HBITMAP</span>	<span class="n">hBitmap</span><span class="p">;</span>	<span class="cm">/* handle for our bitmap */</span>
+<a name="line-744"></a>  <span class="n">HBITMAP</span>	<span class="n">hOldBitmap</span><span class="p">;</span>	<span class="cm">/* handle for previous bitmap */</span>
+<a name="line-745"></a>  <span class="n">BITMAP</span>	<span class="n">bm</span><span class="p">;</span>		<span class="cm">/* bitmap properties */</span>
+<a name="line-746"></a>  <span class="kt">unsigned</span> <span class="kt">int</span>	<span class="n">size</span><span class="p">;</span>		<span class="cm">/* size of bitmap */</span>
+<a name="line-747"></a>  <span class="kt">char</span>		<span class="o">*</span><span class="n">bmbits</span><span class="p">;</span>	<span class="cm">/* contents of bitmap */</span>
+<a name="line-748"></a>  <span class="kt">int</span>		<span class="n">w</span><span class="p">;</span>		<span class="cm">/* screen width */</span>
+<a name="line-749"></a>  <span class="kt">int</span>		<span class="n">h</span><span class="p">;</span>		<span class="cm">/* screen height */</span>
+<a name="line-750"></a><span class="hll">  <span class="kt">int</span>		<span class="n">y</span><span class="p">;</span>		<span class="cm">/* y-coordinate of screen lines to grab */</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'y' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;y&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
 void f(int x)
 {
     int i = 0;
@@ -1320,183 +1694,63 @@ void f(int x)
     }
 }
 When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-504"></a>	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
-<a name="line-505"></a>	<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-506"></a>
-<a name="line-507"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_FLAG_CUSTOM_CIPHER</span><span class="p">)</span>
-<a name="line-508"></a>		<span class="p">{</span>
-<a name="line-509"></a>		<span class="n">i</span> <span class="o">=</span> <span class="n">M_do_cipher</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<a name="line-510"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-511"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-512"></a>		<span class="k">else</span>
-<a name="line-513"></a>			<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-514"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-515"></a>		<span class="p">}</span>
-<a name="line-516"></a>
-<a name="line-517"></a>	<span class="n">b</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span><span class="p">;</span>
-<a name="line-518"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_NO_PADDING</span><span class="p">)</span>
-<a name="line-519"></a>		<span class="p">{</span>
-<a name="line-520"></a>		<span class="k">if</span><span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span><span class="p">)</span>
-<a name="line-521"></a>			<span class="p">{</span>
-<a name="line-522"></a>			<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_DECRYPTFINAL_EX</span><span class="p">,</span><span class="n">EVP_R_DATA_NOT_MULTIPLE_OF_BLOCK_LENGTH</span><span class="p">);</span>
-<a name="line-523"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-524"></a>			<span class="p">}</span>
-<a name="line-525"></a>		<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-526"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-527"></a>		<span class="p">}</span>
-<a name="line-528"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
-<a name="line-529"></a>		<span class="p">{</span>
-<a name="line-530"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">buf_len</span> <span class="o">||</span> <span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final_used</span><span class="p">)</span>
-<a name="line-531"></a>			<span class="p">{</span>
-<a name="line-532"></a>			<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_DECRYPTFINAL_EX</span><span class="p">,</span><span class="n">EVP_R_WRONG_FINAL_BLOCK_LENGTH</span><span class="p">);</span>
-<a name="line-533"></a>			<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-534"></a>			<span class="p">}</span>
-<a name="line-535"></a>		<span class="n">OPENSSL_assert</span><span class="p">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="k">sizeof</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">);</span>
-<a name="line-536"></a>		<span class="n">n</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">[</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-537"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">b</span><span class="p">)</span>
-<a name="line-538"></a>			<span class="p">{</span>
-<a name="line-539"></a>			<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_DECRYPTFINAL_EX</span><span class="p">,</span><span class="n">EVP_R_BAD_DECRYPT</span><span class="p">);</span>
-<a name="line-540"></a>			<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-541"></a>			<span class="p">}</span>
-<a name="line-542"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-543"></a>			<span class="p">{</span>
-<a name="line-544"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">[</span><span class="o">--</span><span class="n">b</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n</span><span class="p">)</span>
-<a name="line-545"></a>				<span class="p">{</span>
-<a name="line-546"></a>				<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_DECRYPTFINAL_EX</span><span class="p">,</span><span class="n">EVP_R_BAD_DECRYPT</span><span class="p">);</span>
-<a name="line-547"></a>				<span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-548"></a>				<span class="p">}</span>
-<a name="line-549"></a>			<span class="p">}</span>
-<a name="line-550"></a>		<span class="n">n</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">block_size</span><span class="o">-</span><span class="n">n</span><span class="p">;</span>
-<a name="line-551"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-552"></a>			<span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">final</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-553"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
-<a name="line-554"></a>		<span class="p">}</span>
-<a name="line-555"></a>	<span class="k">else</span>
-<a name="line-556"></a>		<span class="o">*</span><span class="n">outl</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-557"></a>	<span class="k">return</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-558"></a>	<span class="p">}</span>
-<a name="line-559"></a>
-<a name="line-560"></a><span class="kt">void</span> <span class="nf">EVP_CIPHER_CTX_free</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-561"></a>	<span class="p">{</span>
-<a name="line-562"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
-<a name="line-563"></a>		<span class="p">{</span>
-<a name="line-564"></a>		<span class="n">EVP_CIPHER_CTX_cleanup</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-565"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
-<a name="line-566"></a>		<span class="p">}</span>
-<a name="line-567"></a>	<span class="p">}</span>
-<a name="line-568"></a>
-<a name="line-569"></a><span class="kt">int</span> <span class="nf">EVP_CIPHER_CTX_cleanup</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">c</span><span class="p">)</span>
-<a name="line-570"></a>	<span class="p">{</span>
-<a name="line-571"></a><span class="cp">#ifndef OPENSSL_FIPS</span>
-<a name="line-572"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-573"></a>		<span class="p">{</span>
-<a name="line-574"></a>		<span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">cleanup</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">cleanup</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-<a name="line-575"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-576"></a>		<span class="cm">/* Cleanse cipher context data */</span>
-<a name="line-577"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">)</span>
-<a name="line-578"></a>			<span class="n">OPENSSL_cleanse</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">,</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctx_size</span><span class="p">);</span>
-<a name="line-579"></a>		<span class="p">}</span>
-<a name="line-580"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">)</span>
-<a name="line-581"></a>		<span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">);</span>
-<a name="line-582"></a><span class="cp">#endif</span>
-<a name="line-583"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
-<a name="line-584"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">engine</span><span class="p">)</span>
-<a name="line-585"></a>		<span class="cm">/* The EVP_CIPHER we used belongs to an ENGINE, release the</span>
-<a name="line-586"></a><span class="cm">		 * functional reference we held for this reason. */</span>
-<a name="line-587"></a>		<span class="n">ENGINE_finish</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">engine</span><span class="p">);</span>
-<a name="line-588"></a><span class="cp">#endif</span>
-<a name="line-589"></a><span class="cp">#ifdef OPENSSL_FIPS</span>
-<a name="line-590"></a>	<span class="n">FIPS_cipher_ctx_cleanup</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
-<a name="line-591"></a><span class="cp">#endif</span>
-<a name="line-592"></a>	<span class="n">memset</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span><span class="p">));</span>
-<a name="line-593"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-594"></a>	<span class="p">}</span>
-<a name="line-595"></a>
-<a name="line-596"></a><span class="kt">int</span> <span class="nf">EVP_CIPHER_CTX_set_key_length</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">keylen</span><span class="p">)</span>
-<a name="line-597"></a>	<span class="p">{</span>
-<a name="line-598"></a>	<span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_CUSTOM_KEY_LENGTH</span><span class="p">)</span> 
-<a name="line-599"></a>		<span class="k">return</span> <span class="n">EVP_CIPHER_CTX_ctrl</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">EVP_CTRL_SET_KEY_LENGTH</span><span class="p">,</span> <span class="n">keylen</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-600"></a>	<span class="k">if</span><span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">key_len</span> <span class="o">==</span> <span class="n">keylen</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-601"></a>	<span class="k">if</span><span class="p">((</span><span class="n">keylen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_VARIABLE_LENGTH</span><span class="p">))</span>
-<a name="line-602"></a>		<span class="p">{</span>
-<a name="line-603"></a>		<span class="n">c</span><span class="o">-&gt;</span><span class="n">key_len</span> <span class="o">=</span> <span class="n">keylen</span><span class="p">;</span>
-<a name="line-604"></a>		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-605"></a>		<span class="p">}</span>
-<a name="line-606"></a>	<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_SET_KEY_LENGTH</span><span class="p">,</span><span class="n">EVP_R_INVALID_KEY_LENGTH</span><span class="p">);</span>
-<a name="line-607"></a>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-608"></a>	<span class="p">}</span>
-<a name="line-609"></a>
-<a name="line-610"></a><span class="kt">int</span> <span class="nf">EVP_CIPHER_CTX_set_padding</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pad</span><span class="p">)</span>
-<a name="line-611"></a>	<span class="p">{</span>
-<a name="line-612"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">pad</span><span class="p">)</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">EVP_CIPH_NO_PADDING</span><span class="p">;</span>
-<a name="line-613"></a>	<span class="k">else</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">|=</span> <span class="n">EVP_CIPH_NO_PADDING</span><span class="p">;</span>
-<a name="line-614"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-615"></a>	<span class="p">}</span>
-<a name="line-616"></a>
-<a name="line-617"></a><span class="kt">int</span> <span class="nf">EVP_CIPHER_CTX_ctrl</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">arg</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">)</span>
-<a name="line-618"></a><span class="p">{</span>
-<a name="line-619"></a>	<span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-620"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-621"></a>		<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_CTRL</span><span class="p">,</span> <span class="n">EVP_R_NO_CIPHER_SET</span><span class="p">);</span>
-<a name="line-622"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-623"></a>	<span class="p">}</span>
-<a name="line-624"></a>
-<a name="line-625"></a>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctrl</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-626"></a>		<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_CTRL</span><span class="p">,</span> <span class="n">EVP_R_CTRL_NOT_IMPLEMENTED</span><span class="p">);</span>
-<a name="line-627"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-628"></a>	<span class="p">}</span>
-<a name="line-629"></a>
-<a name="line-630"></a>	<span class="n">ret</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctrl</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">ptr</span><span class="p">);</span>
-<a name="line-631"></a>	<span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-632"></a>		<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_CTRL</span><span class="p">,</span> <span class="n">EVP_R_CTRL_OPERATION_NOT_IMPLEMENTED</span><span class="p">);</span>
-<a name="line-633"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-634"></a>	<span class="p">}</span>
-<a name="line-635"></a>	<span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<a name="line-636"></a><span class="p">}</span>
-<a name="line-637"></a>
-<a name="line-638"></a><span class="kt">int</span> <span class="nf">EVP_CIPHER_CTX_rand_key</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">)</span>
-<a name="line-639"></a>	<span class="p">{</span>
-<a name="line-640"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_RAND_KEY</span><span class="p">)</span>
-<a name="line-641"></a>		<span class="k">return</span> <span class="n">EVP_CIPHER_CTX_ctrl</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">EVP_CTRL_RAND_KEY</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
-<a name="line-642"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">RAND_bytes</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">key_len</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-643"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-644"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-645"></a>	<span class="p">}</span>
-<a name="line-646"></a>
-<a name="line-647"></a><span class="kt">int</span> <span class="nf">EVP_CIPHER_CTX_copy</span><span class="p">(</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="n">in</span><span class="p">)</span>
-<a name="line-648"></a>	<span class="p">{</span>
-<a name="line-649"></a>	<span class="k">if</span> <span class="p">((</span><span class="n">in</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">))</span>
-<a name="line-650"></a>		<span class="p">{</span>
-<a name="line-651"></a>		<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_COPY</span><span class="p">,</span><span class="n">EVP_R_INPUT_NOT_INITIALIZED</span><span class="p">);</span>
-<a name="line-652"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-653"></a>		<span class="p">}</span>
-<a name="line-654"></a><span class="cp">#ifndef OPENSSL_NO_ENGINE</span>
-<a name="line-655"></a>	<span class="cm">/* Make sure it&#39;s safe to copy a cipher context using an ENGINE */</span>
-<a name="line-656"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">engine</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">ENGINE_init</span><span class="p">(</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">engine</span><span class="p">))</span>
-<a name="line-657"></a>		<span class="p">{</span>
-<a name="line-658"></a>		<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_COPY</span><span class="p">,</span><span class="n">ERR_R_ENGINE_LIB</span><span class="p">);</span>
-<a name="line-659"></a>		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-660"></a>		<span class="p">}</span>
-<a name="line-661"></a><span class="cp">#endif</span>
-<a name="line-662"></a>
-<a name="line-663"></a>	<span class="n">EVP_CIPHER_CTX_cleanup</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
-<a name="line-664"></a>	<span class="n">memcpy</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">in</span><span class="p">,</span><span class="k">sizeof</span> <span class="o">*</span><span class="n">out</span><span class="p">);</span>
-<a name="line-665"></a>
-<a name="line-666"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher_data</span> <span class="o">&amp;&amp;</span> <span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctx_size</span><span class="p">)</span>
-<a name="line-667"></a>		<span class="p">{</span>
-<a name="line-668"></a>		<span class="n">out</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="o">=</span><span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctx_size</span><span class="p">);</span>
-<a name="line-669"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">out</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">)</span>
-<a name="line-670"></a>			<span class="p">{</span>
-<a name="line-671"></a>			<span class="n">EVPerr</span><span class="p">(</span><span class="n">EVP_F_EVP_CIPHER_CTX_COPY</span><span class="p">,</span><span class="n">ERR_R_MALLOC_FAILURE</span><span class="p">);</span>
-<a name="line-672"></a>			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<a name="line-673"></a>			<span class="p">}</span>
-<a name="line-674"></a>		<span class="n">memcpy</span><span class="p">(</span><span class="n">out</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">,</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher_data</span><span class="p">,</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctx_size</span><span class="p">);</span>
-<a name="line-675"></a>		<span class="p">}</span>
-<a name="line-676"></a>
-<a name="line-677"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">EVP_CIPH_CUSTOM_COPY</span><span class="p">)</span>
-<a name="line-678"></a>		<span class="k">return</span> <span class="n">in</span><span class="o">-&gt;</span><span class="n">cipher</span><span class="o">-&gt;</span><span class="n">ctrl</span><span class="p">((</span><span class="n">EVP_CIPHER_CTX</span> <span class="o">*</span><span class="p">)</span><span class="n">in</span><span class="p">,</span> <span class="n">EVP_CTRL_COPY</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
-<a name="line-679"></a>	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<a name="line-680"></a>	<span class="p">}</span>
+</span><a name="line-751"></a>  <span class="kt">int</span>		<span class="n">n</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>		<span class="cm">/* number of screen lines to grab at a time */</span>
+<a name="line-752"></a>
+<a name="line-753"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">check_winnt</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">OPENSSL_isservice</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+<a name="line-754"></a>    <span class="k">return</span><span class="p">;</span>
+<a name="line-755"></a>
+<a name="line-756"></a>  <span class="cm">/* Create a screen DC and a memory DC compatible to screen DC */</span>
+<a name="line-757"></a>  <span class="n">hScrDC</span> <span class="o">=</span> <span class="n">CreateDC</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;DISPLAY&quot;</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-758"></a>  <span class="n">hMemDC</span> <span class="o">=</span> <span class="n">CreateCompatibleDC</span><span class="p">(</span><span class="n">hScrDC</span><span class="p">);</span>
+<a name="line-759"></a>
+<a name="line-760"></a>  <span class="cm">/* Get screen resolution */</span>
+<a name="line-761"></a>  <span class="n">w</span> <span class="o">=</span> <span class="n">GetDeviceCaps</span><span class="p">(</span><span class="n">hScrDC</span><span class="p">,</span> <span class="n">HORZRES</span><span class="p">);</span>
+<a name="line-762"></a>  <span class="n">h</span> <span class="o">=</span> <span class="n">GetDeviceCaps</span><span class="p">(</span><span class="n">hScrDC</span><span class="p">,</span> <span class="n">VERTRES</span><span class="p">);</span>
+<a name="line-763"></a>
+<a name="line-764"></a>  <span class="cm">/* Create a bitmap compatible with the screen DC */</span>
+<a name="line-765"></a>  <span class="n">hBitmap</span> <span class="o">=</span> <span class="n">CreateCompatibleBitmap</span><span class="p">(</span><span class="n">hScrDC</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<a name="line-766"></a>
+<a name="line-767"></a>  <span class="cm">/* Select new bitmap into memory DC */</span>
+<a name="line-768"></a>  <span class="n">hOldBitmap</span> <span class="o">=</span> <span class="n">SelectObject</span><span class="p">(</span><span class="n">hMemDC</span><span class="p">,</span> <span class="n">hBitmap</span><span class="p">);</span>
+<a name="line-769"></a>
+<a name="line-770"></a>  <span class="cm">/* Get bitmap properties */</span>
+<a name="line-771"></a>  <span class="n">GetObject</span><span class="p">(</span><span class="n">hBitmap</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">BITMAP</span><span class="p">),</span> <span class="p">(</span><span class="n">LPSTR</span><span class="p">)</span><span class="o">&amp;</span><span class="n">bm</span><span class="p">);</span>
+<a name="line-772"></a>  <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">bm</span><span class="p">.</span><span class="n">bmWidthBytes</span> <span class="o">*</span> <span class="n">bm</span><span class="p">.</span><span class="n">bmHeight</span> <span class="o">*</span> <span class="n">bm</span><span class="p">.</span><span class="n">bmPlanes</span><span class="p">;</span>
+<a name="line-773"></a>
+<a name="line-774"></a>  <span class="n">bmbits</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+<a name="line-775"></a>  <span class="k">if</span> <span class="p">(</span><span class="n">bmbits</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-776"></a>    <span class="cm">/* Now go through the whole screen, repeatedly grabbing n lines */</span>
+<a name="line-777"></a>    <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">h</span><span class="o">-</span><span class="n">n</span><span class="p">;</span> <span class="n">y</span> <span class="o">+=</span> <span class="n">n</span><span class="p">)</span>
+<a name="line-778"></a>    	<span class="p">{</span>
+<a name="line-779"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">md</span><span class="p">[</span><span class="n">MD_DIGEST_LENGTH</span><span class="p">];</span>
+<a name="line-780"></a>
+<a name="line-781"></a>	<span class="cm">/* Bitblt screen DC to memory DC */</span>
+<a name="line-782"></a>	<span class="n">BitBlt</span><span class="p">(</span><span class="n">hMemDC</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">hScrDC</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">SRCCOPY</span><span class="p">);</span>
+<a name="line-783"></a>
+<a name="line-784"></a>	<span class="cm">/* Copy bitmap bits from memory DC to bmbits */</span>
+<a name="line-785"></a>	<span class="n">GetBitmapBits</span><span class="p">(</span><span class="n">hBitmap</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bmbits</span><span class="p">);</span>
+<a name="line-786"></a>
+<a name="line-787"></a>	<span class="cm">/* Get the hash of the bitmap */</span>
+<a name="line-788"></a>	<span class="n">MD</span><span class="p">(</span><span class="n">bmbits</span><span class="p">,</span><span class="n">size</span><span class="p">,</span><span class="n">md</span><span class="p">);</span>
+<a name="line-789"></a>
+<a name="line-790"></a>	<span class="cm">/* Seed the random generator with the hash value */</span>
+<a name="line-791"></a>	<span class="n">RAND_add</span><span class="p">(</span><span class="n">md</span><span class="p">,</span> <span class="n">MD_DIGEST_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<a name="line-792"></a>	<span class="p">}</span>
+<a name="line-793"></a>
+<a name="line-794"></a>    <span class="n">OPENSSL_free</span><span class="p">(</span><span class="n">bmbits</span><span class="p">);</span>
+<a name="line-795"></a>  <span class="p">}</span>
+<a name="line-796"></a>
+<a name="line-797"></a>  <span class="cm">/* Select old bitmap back into memory DC */</span>
+<a name="line-798"></a>  <span class="n">hBitmap</span> <span class="o">=</span> <span class="n">SelectObject</span><span class="p">(</span><span class="n">hMemDC</span><span class="p">,</span> <span class="n">hOldBitmap</span><span class="p">);</span>
+<a name="line-799"></a>
+<a name="line-800"></a>  <span class="cm">/* Clean up */</span>
+<a name="line-801"></a>  <span class="n">DeleteObject</span><span class="p">(</span><span class="n">hBitmap</span><span class="p">);</span>
+<a name="line-802"></a>  <span class="n">DeleteDC</span><span class="p">(</span><span class="n">hMemDC</span><span class="p">);</span>
+<a name="line-803"></a>  <span class="n">DeleteDC</span><span class="p">(</span><span class="n">hScrDC</span><span class="p">);</span>
+<a name="line-804"></a><span class="cp">#endif </span><span class="cm">/* !OPENSSL_SYS_WINCE */</span><span class="cp"></span>
+<a name="line-805"></a><span class="p">}</span>
+<a name="line-806"></a>
+<a name="line-807"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

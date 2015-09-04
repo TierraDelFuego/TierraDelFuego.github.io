@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: modules/gdscript/gd_tokenizer.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/bin/tests/test_io.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> gd_tokenizer.h</p>
-<a href='2.html#line-153'> noConstructor 153</a>
+       <p id="filename"><a href="index.html">Defects:</a> test_io.cpp</p>
+<a href='2.html#line-49'> noConstructor 49</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -320,51 +320,8 @@
 204
 205
 206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  gd_tokenizer.h                                                       */</span>
+207</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  test_io.cpp                                                          */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -391,228 +348,185 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef GD_TOKENIZER_H</span>
-<a name="line-30"></a><span class="cp">#define GD_TOKENIZER_H</span>
-<a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;ustring.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;variant.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;string_db.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;gd_functions.h&quot;</span>
-<a name="line-36"></a><span class="cp">#include &quot;vmap.h&quot;</span>
-<a name="line-37"></a>
-<a name="line-38"></a><span class="n">class</span> <span class="n">GDTokenizer</span> <span class="p">{</span>
-<a name="line-39"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-40"></a>
-<a name="line-41"></a>	<span class="k">enum</span> <span class="n">Token</span> <span class="p">{</span>
-<a name="line-42"></a>
-<a name="line-43"></a>		<span class="n">TK_EMPTY</span><span class="p">,</span>
-<a name="line-44"></a>		<span class="n">TK_IDENTIFIER</span><span class="p">,</span>
-<a name="line-45"></a>		<span class="n">TK_CONSTANT</span><span class="p">,</span>
-<a name="line-46"></a>		<span class="n">TK_SELF</span><span class="p">,</span>
-<a name="line-47"></a>		<span class="n">TK_BUILT_IN_TYPE</span><span class="p">,</span>
-<a name="line-48"></a>		<span class="n">TK_BUILT_IN_FUNC</span><span class="p">,</span>
-<a name="line-49"></a>		<span class="n">TK_OP_IN</span><span class="p">,</span>
-<a name="line-50"></a>		<span class="n">TK_OP_EQUAL</span><span class="p">,</span>
-<a name="line-51"></a>		<span class="n">TK_OP_NOT_EQUAL</span><span class="p">,</span>
-<a name="line-52"></a>		<span class="n">TK_OP_LESS</span><span class="p">,</span>
-<a name="line-53"></a>		<span class="n">TK_OP_LESS_EQUAL</span><span class="p">,</span>
-<a name="line-54"></a>		<span class="n">TK_OP_GREATER</span><span class="p">,</span>
-<a name="line-55"></a>		<span class="n">TK_OP_GREATER_EQUAL</span><span class="p">,</span>
-<a name="line-56"></a>		<span class="n">TK_OP_AND</span><span class="p">,</span>
-<a name="line-57"></a>		<span class="n">TK_OP_OR</span><span class="p">,</span>
-<a name="line-58"></a>		<span class="n">TK_OP_NOT</span><span class="p">,</span>
-<a name="line-59"></a>		<span class="n">TK_OP_ADD</span><span class="p">,</span>
-<a name="line-60"></a>		<span class="n">TK_OP_SUB</span><span class="p">,</span>
-<a name="line-61"></a>		<span class="n">TK_OP_MUL</span><span class="p">,</span>
-<a name="line-62"></a>		<span class="n">TK_OP_DIV</span><span class="p">,</span>
-<a name="line-63"></a>		<span class="n">TK_OP_MOD</span><span class="p">,</span>
-<a name="line-64"></a>		<span class="n">TK_OP_SHIFT_LEFT</span><span class="p">,</span>
-<a name="line-65"></a>		<span class="n">TK_OP_SHIFT_RIGHT</span><span class="p">,</span>
-<a name="line-66"></a>		<span class="n">TK_OP_ASSIGN</span><span class="p">,</span>
-<a name="line-67"></a>		<span class="n">TK_OP_ASSIGN_ADD</span><span class="p">,</span>
-<a name="line-68"></a>		<span class="n">TK_OP_ASSIGN_SUB</span><span class="p">,</span>
-<a name="line-69"></a>		<span class="n">TK_OP_ASSIGN_MUL</span><span class="p">,</span>
-<a name="line-70"></a>		<span class="n">TK_OP_ASSIGN_DIV</span><span class="p">,</span>
-<a name="line-71"></a>		<span class="n">TK_OP_ASSIGN_MOD</span><span class="p">,</span>
-<a name="line-72"></a>		<span class="n">TK_OP_ASSIGN_SHIFT_LEFT</span><span class="p">,</span>
-<a name="line-73"></a>		<span class="n">TK_OP_ASSIGN_SHIFT_RIGHT</span><span class="p">,</span>
-<a name="line-74"></a>		<span class="n">TK_OP_ASSIGN_BIT_AND</span><span class="p">,</span>
-<a name="line-75"></a>		<span class="n">TK_OP_ASSIGN_BIT_OR</span><span class="p">,</span>
-<a name="line-76"></a>		<span class="n">TK_OP_ASSIGN_BIT_XOR</span><span class="p">,</span>
-<a name="line-77"></a>		<span class="n">TK_OP_BIT_AND</span><span class="p">,</span>
-<a name="line-78"></a>		<span class="n">TK_OP_BIT_OR</span><span class="p">,</span>
-<a name="line-79"></a>		<span class="n">TK_OP_BIT_XOR</span><span class="p">,</span>
-<a name="line-80"></a>		<span class="n">TK_OP_BIT_INVERT</span><span class="p">,</span>
-<a name="line-81"></a>		<span class="c1">//TK_OP_PLUS_PLUS,</span>
-<a name="line-82"></a>		<span class="c1">//TK_OP_MINUS_MINUS,</span>
-<a name="line-83"></a>		<span class="n">TK_CF_IF</span><span class="p">,</span>
-<a name="line-84"></a>		<span class="n">TK_CF_ELIF</span><span class="p">,</span>
-<a name="line-85"></a>		<span class="n">TK_CF_ELSE</span><span class="p">,</span>
-<a name="line-86"></a>		<span class="n">TK_CF_FOR</span><span class="p">,</span>
-<a name="line-87"></a>		<span class="n">TK_CF_DO</span><span class="p">,</span>
-<a name="line-88"></a>		<span class="n">TK_CF_WHILE</span><span class="p">,</span>
-<a name="line-89"></a>		<span class="n">TK_CF_SWITCH</span><span class="p">,</span>
-<a name="line-90"></a>		<span class="n">TK_CF_CASE</span><span class="p">,</span>
-<a name="line-91"></a>		<span class="n">TK_CF_BREAK</span><span class="p">,</span>
-<a name="line-92"></a>		<span class="n">TK_CF_CONTINUE</span><span class="p">,</span>
-<a name="line-93"></a>		<span class="n">TK_CF_PASS</span><span class="p">,</span>
-<a name="line-94"></a>		<span class="n">TK_CF_RETURN</span><span class="p">,</span>
-<a name="line-95"></a>		<span class="n">TK_PR_FUNCTION</span><span class="p">,</span>
-<a name="line-96"></a>		<span class="n">TK_PR_CLASS</span><span class="p">,</span>
-<a name="line-97"></a>		<span class="n">TK_PR_EXTENDS</span><span class="p">,</span>
-<a name="line-98"></a>		<span class="n">TK_PR_TOOL</span><span class="p">,</span>
-<a name="line-99"></a>		<span class="n">TK_PR_STATIC</span><span class="p">,</span>
-<a name="line-100"></a>		<span class="n">TK_PR_EXPORT</span><span class="p">,</span>
-<a name="line-101"></a>		<span class="n">TK_PR_SETGET</span><span class="p">,</span>
-<a name="line-102"></a>		<span class="n">TK_PR_CONST</span><span class="p">,</span>
-<a name="line-103"></a>		<span class="n">TK_PR_VAR</span><span class="p">,</span>
-<a name="line-104"></a>		<span class="n">TK_PR_PRELOAD</span><span class="p">,</span>
-<a name="line-105"></a>		<span class="n">TK_PR_ASSERT</span><span class="p">,</span>
-<a name="line-106"></a>		<span class="n">TK_PR_YIELD</span><span class="p">,</span>
-<a name="line-107"></a>		<span class="n">TK_PR_SIGNAL</span><span class="p">,</span>
-<a name="line-108"></a>		<span class="n">TK_BRACKET_OPEN</span><span class="p">,</span>
-<a name="line-109"></a>		<span class="n">TK_BRACKET_CLOSE</span><span class="p">,</span>
-<a name="line-110"></a>		<span class="n">TK_CURLY_BRACKET_OPEN</span><span class="p">,</span>
-<a name="line-111"></a>		<span class="n">TK_CURLY_BRACKET_CLOSE</span><span class="p">,</span>
-<a name="line-112"></a>		<span class="n">TK_PARENTHESIS_OPEN</span><span class="p">,</span>
-<a name="line-113"></a>		<span class="n">TK_PARENTHESIS_CLOSE</span><span class="p">,</span>
-<a name="line-114"></a>		<span class="n">TK_COMMA</span><span class="p">,</span>
-<a name="line-115"></a>		<span class="n">TK_SEMICOLON</span><span class="p">,</span>
-<a name="line-116"></a>		<span class="n">TK_PERIOD</span><span class="p">,</span>
-<a name="line-117"></a>		<span class="n">TK_QUESTION_MARK</span><span class="p">,</span>
-<a name="line-118"></a>		<span class="n">TK_COLON</span><span class="p">,</span>
-<a name="line-119"></a>		<span class="n">TK_NEWLINE</span><span class="p">,</span>
-<a name="line-120"></a>		<span class="n">TK_ERROR</span><span class="p">,</span>
-<a name="line-121"></a>		<span class="n">TK_EOF</span><span class="p">,</span>
-<a name="line-122"></a>		<span class="n">TK_CURSOR</span><span class="p">,</span> <span class="c1">//used for code completion</span>
-<a name="line-123"></a>		<span class="n">TK_MAX</span>
-<a name="line-124"></a>	<span class="p">};</span>
-<a name="line-125"></a>
-<a name="line-126"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-29"></a><span class="cp">#include &quot;test_io.h&quot;</span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class="cp">#ifdef MINIZIP_ENABLED</span>
+<a name="line-32"></a>
+<a name="line-33"></a>
+<a name="line-34"></a>
+<a name="line-35"></a><span class="cp">#include &quot;os/main_loop.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;os/os.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;scene/resources/texture.h&quot;</span>
+<a name="line-38"></a><span class="cp">#include &quot;print_string.h&quot;</span>
+<a name="line-39"></a><span class="cp">#include &quot;io/resource_loader.h&quot;</span>
+<a name="line-40"></a><span class="cp">#include &quot;io/resource_saver.h&quot;</span>
+<a name="line-41"></a><span class="cp">#include &quot;os/dir_access.h&quot;</span>
+<a name="line-42"></a><span class="cp">#include &quot;core/globals.h&quot;</span>
+<a name="line-43"></a>
+<a name="line-44"></a><span class="cp">#include &quot;io/file_access_memory.h&quot;</span>
+<a name="line-45"></a>
+<a name="line-46"></a><span class="k">namespace</span> <span class="n">TestIO</span> <span class="p">{</span>
+<a name="line-47"></a>
+<a name="line-48"></a>
+<a name="line-49"></a><span class="hll"><span class="k">class</span> <span class="nc">TestMainLoop</span> <span class="o">:</span> <span class="k">public</span> <span class="n">MainLoop</span> <span class="p">{</span><div class='verbose expandable'><span class='error2'>&lt;--- The class 'TestMainLoop' does not have a constructor. <span class='marker'>[+]</span></span><div class='content'>The class &apos;TestMainLoop&apos; does not have a constructor although it has private member variables. Member variables of builtin types are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior.</div></div>
+</span><a name="line-50"></a>	
+<a name="line-51"></a>	
+<a name="line-52"></a>	<span class="kt">bool</span> <span class="n">quit</span><span class="p">;</span>
+<a name="line-53"></a>	
+<a name="line-54"></a><span class="k">public</span><span class="o">:</span>
+<a name="line-55"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">input_event</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-56"></a>		
+<a name="line-57"></a>		
+<a name="line-58"></a>	<span class="p">}</span>
+<a name="line-59"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">idle</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_time</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-60"></a>		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-61"></a>	<span class="p">}</span>
+<a name="line-62"></a>
+<a name="line-63"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">request_quit</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-64"></a>		
+<a name="line-65"></a>		<span class="n">quit</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-66"></a>		
+<a name="line-67"></a>	<span class="p">}</span>
+<a name="line-68"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-69"></a>
+<a name="line-70"></a>		<span class="n">quit</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-71"></a>	<span class="p">}</span>
+<a name="line-72"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iteration</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_time</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-73"></a>		
+<a name="line-74"></a>		<span class="k">return</span> <span class="n">quit</span><span class="p">;</span>
+<a name="line-75"></a>	<span class="p">}</span>
+<a name="line-76"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">finish</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-77"></a>		
+<a name="line-78"></a>	<span class="p">}</span>
+<a name="line-79"></a>	
+<a name="line-80"></a>	
+<a name="line-81"></a><span class="p">};</span>
+<a name="line-82"></a>
+<a name="line-83"></a>
+<a name="line-84"></a><span class="n">MainLoop</span><span class="o">*</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-85"></a>
+<a name="line-86"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;this is test io&quot;</span><span class="p">);</span>
+<a name="line-87"></a>	<span class="n">DirAccess</span><span class="o">*</span> <span class="n">da</span> <span class="o">=</span> <span class="n">DirAccess</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">DirAccess</span><span class="o">::</span><span class="n">ACCESS_FILESYSTEM</span><span class="p">);</span>
+<a name="line-88"></a>	<span class="n">da</span><span class="o">-&gt;</span><span class="n">change_dir</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">);</span>
+<a name="line-89"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;Opening current dir &quot;</span><span class="o">+</span> <span class="n">da</span><span class="o">-&gt;</span><span class="n">get_current_dir</span><span class="p">());</span>
+<a name="line-90"></a>	<span class="n">String</span> <span class="n">entry</span><span class="p">;</span>
+<a name="line-91"></a>	<span class="n">da</span><span class="o">-&gt;</span><span class="n">list_dir_begin</span><span class="p">();</span>
+<a name="line-92"></a>	<span class="k">while</span> <span class="p">(</span> <span class="p">(</span><span class="n">entry</span> <span class="o">=</span> <span class="n">da</span><span class="o">-&gt;</span><span class="n">get_next</span><span class="p">())</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-93"></a>
+<a name="line-94"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;entry &quot;</span><span class="o">+</span><span class="n">entry</span><span class="o">+</span><span class="s">&quot; is dir: &quot;</span> <span class="o">+</span> <span class="n">Variant</span><span class="p">(</span><span class="n">da</span><span class="o">-&gt;</span><span class="n">current_is_dir</span><span class="p">()));</span>
+<a name="line-95"></a>	<span class="p">};</span>
+<a name="line-96"></a>	<span class="n">da</span><span class="o">-&gt;</span><span class="n">list_dir_end</span><span class="p">();</span>
+<a name="line-97"></a>
+<a name="line-98"></a>	<span class="n">RES</span> <span class="n">texture</span> <span class="o">=</span> <span class="n">ResourceLoader</span><span class="o">::</span><span class="n">load</span><span class="p">(</span><span class="s">&quot;test_data/rock.png&quot;</span><span class="p">);</span>
+<a name="line-99"></a>	<span class="n">ERR_FAIL_COND_V</span><span class="p">(</span><span class="n">texture</span><span class="p">.</span><span class="n">is_null</span><span class="p">(),</span> <span class="nb">NULL</span><span class="p">);</span>
+<a name="line-100"></a>
+<a name="line-101"></a>	<span class="n">ResourceSaver</span><span class="o">::</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;test_data/rock.xml&quot;</span><span class="p">,</span><span class="n">texture</span><span class="p">);</span>
+<a name="line-102"></a>
+<a name="line-103"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;localize paths&quot;</span><span class="p">);</span>
+<a name="line-104"></a>	<span class="n">print_line</span><span class="p">(</span><span class="n">Globals</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">localize_path</span><span class="p">(</span><span class="s">&quot;algo.xml&quot;</span><span class="p">));</span>
+<a name="line-105"></a>	<span class="n">print_line</span><span class="p">(</span><span class="n">Globals</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">localize_path</span><span class="p">(</span><span class="s">&quot;c:</span><span class="se">\\</span><span class="s">windows</span><span class="se">\\</span><span class="s">algo.xml&quot;</span><span class="p">));</span>
+<a name="line-106"></a>	<span class="n">print_line</span><span class="p">(</span><span class="n">Globals</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">localize_path</span><span class="p">(</span><span class="n">Globals</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_resource_path</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;/something/something.xml&quot;</span><span class="p">));</span>
+<a name="line-107"></a>	<span class="n">print_line</span><span class="p">(</span><span class="n">Globals</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">localize_path</span><span class="p">(</span><span class="s">&quot;somedir/algo.xml&quot;</span><span class="p">));</span>
+<a name="line-108"></a>
+<a name="line-109"></a>	<span class="p">{</span>
+<a name="line-110"></a>
+<a name="line-111"></a>		<span class="n">FileAccess</span><span class="o">*</span> <span class="n">z</span> <span class="o">=</span> <span class="n">FileAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;test_data/archive.zip&quot;</span><span class="p">,</span> <span class="n">FileAccess</span><span class="o">::</span><span class="n">READ</span><span class="p">);</span>
+<a name="line-112"></a>		<span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">z</span><span class="o">-&gt;</span><span class="n">get_len</span><span class="p">();</span>
+<a name="line-113"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">zip</span><span class="p">;</span>
+<a name="line-114"></a>		<span class="n">zip</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+<a name="line-115"></a>		<span class="n">z</span><span class="o">-&gt;</span><span class="n">get_buffer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">zip</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">len</span><span class="p">);</span>
+<a name="line-116"></a>		<span class="n">z</span><span class="o">-&gt;</span><span class="n">close</span><span class="p">();</span>
+<a name="line-117"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">z</span><span class="p">);</span>
+<a name="line-118"></a>
+<a name="line-119"></a>		<span class="n">FileAccessMemory</span><span class="o">::</span><span class="n">register_file</span><span class="p">(</span><span class="s">&quot;a_package&quot;</span><span class="p">,</span> <span class="n">zip</span><span class="p">);</span>
+<a name="line-120"></a>		<span class="n">FileAccess</span><span class="o">::</span><span class="n">make_default</span><span class="o">&lt;</span><span class="n">FileAccessMemory</span><span class="o">&gt;</span><span class="p">(</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">ACCESS_RESOURCES</span><span class="p">);</span>
+<a name="line-121"></a>		<span class="n">FileAccess</span><span class="o">::</span><span class="n">make_default</span><span class="o">&lt;</span><span class="n">FileAccessMemory</span><span class="o">&gt;</span><span class="p">(</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">ACCESS_FILESYSTEM</span><span class="p">);</span>
+<a name="line-122"></a>		<span class="n">FileAccess</span><span class="o">::</span><span class="n">make_default</span><span class="o">&lt;</span><span class="n">FileAccessMemory</span><span class="o">&gt;</span><span class="p">(</span><span class="n">FileAccess</span><span class="o">::</span><span class="n">ACCESS_USERDATA</span><span class="p">);</span>
+<a name="line-123"></a>
+<a name="line-124"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;archive test&quot;</span><span class="p">);</span>
+<a name="line-125"></a><span class="cp">#if 0</span><span class="c"></span>
+<a name="line-126"></a><span class="c">		Archive arch;</span>
 <a name="line-127"></a>
-<a name="line-128"></a>	<span class="k">enum</span> <span class="n">StringMode</span> <span class="p">{</span>
-<a name="line-129"></a>		<span class="n">STRING_SINGLE_QUOTE</span><span class="p">,</span>
-<a name="line-130"></a>		<span class="n">STRING_DOUBLE_QUOTE</span><span class="p">,</span>
-<a name="line-131"></a>		<span class="n">STRING_MULTILINE</span>
-<a name="line-132"></a>	<span class="p">};</span>
-<a name="line-133"></a>
-<a name="line-134"></a>	<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">token_names</span><span class="p">[</span><span class="n">TK_MAX</span><span class="p">];</span>
-<a name="line-135"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-136"></a>	<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">get_token_name</span><span class="p">(</span><span class="n">Token</span> <span class="n">p_token</span><span class="p">);</span>
-<a name="line-137"></a>
-<a name="line-138"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">get_token_constant</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-139"></a>	<span class="n">virtual</span> <span class="n">Token</span> <span class="n">get_token</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-140"></a>	<span class="n">virtual</span> <span class="n">StringName</span> <span class="n">get_token_identifier</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-141"></a>	<span class="n">virtual</span> <span class="n">GDFunctions</span><span class="o">::</span><span class="n">Function</span> <span class="n">get_token_built_in_func</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-142"></a>	<span class="n">virtual</span> <span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">get_token_type</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-143"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-144"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_column</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-145"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_line_indent</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-146"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_token_error</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-147"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">advance</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_amount</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<a name="line-128"></a><span class="c">		Archive::get_singleton()-&gt;add_package(&quot;a_package&quot;);</span>
+<a name="line-129"></a><span class="c">		FileAccessArchive f;</span>
+<a name="line-130"></a>
+<a name="line-131"></a><span class="c">		print_line(&quot;opening for read&quot;);</span>
+<a name="line-132"></a><span class="c">		f._open(&quot;file.txt&quot;, FileAccess::READ);</span>
+<a name="line-133"></a><span class="c">		int pos = f.get_pos();</span>
+<a name="line-134"></a><span class="c">		printf(&quot;file has %i bytes, initial pos %i\n&quot;, (int)f.get_len(), pos);</span>
+<a name="line-135"></a>
+<a name="line-136"></a><span class="c">		do {</span>
+<a name="line-137"></a><span class="c">			printf(&quot;%c&quot;, f.get_8());</span>
+<a name="line-138"></a>
+<a name="line-139"></a><span class="c">		} while (!f.eof_reached());</span>
+<a name="line-140"></a>
+<a name="line-141"></a><span class="c">		print_line(&quot;opening for stored seek&quot;);</span>
+<a name="line-142"></a><span class="c">		f.open(&quot;seek.bin&quot;, FileAccess::READ);</span>
+<a name="line-143"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-144"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-145"></a><span class="c">		f.seek(128);</span>
+<a name="line-146"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-147"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
 <a name="line-148"></a>
-<a name="line-149"></a>	<span class="n">virtual</span> <span class="o">~</span><span class="n">GDTokenizer</span><span class="p">(){};</span>
-<a name="line-150"></a>
-<a name="line-151"></a><span class="p">};</span>
-<a name="line-152"></a>
-<a name="line-153"></a><span class="hll"><span class="n">class</span> <span class="nl">GDTokenizerText</span> <span class="p">:</span> <span class="n">public</span> <span class="n">GDTokenizer</span> <span class="p">{</span><div class='verbose expandable'><span class='error2'>&lt;--- The class 'GDTokenizerText' does not have a constructor. <span class='marker'>[+]</span></span><div class='content'>The class &apos;GDTokenizerText&apos; does not have a constructor although it has private member variables. Member variables of builtin types are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior.</div></div>
-</span><a name="line-154"></a>
-<a name="line-155"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-156"></a>		<span class="n">MAX_LOOKAHEAD</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-<a name="line-157"></a>		<span class="n">TK_RB_SIZE</span><span class="o">=</span><span class="n">MAX_LOOKAHEAD</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span>
-<a name="line-158"></a>
-<a name="line-159"></a>	<span class="p">};</span>
-<a name="line-160"></a>
-<a name="line-161"></a>	<span class="k">struct</span> <span class="n">TokenData</span> <span class="p">{</span>
-<a name="line-162"></a>		<span class="n">Token</span> <span class="n">type</span><span class="p">;</span>
-<a name="line-163"></a>		<span class="n">StringName</span> <span class="n">identifier</span><span class="p">;</span> <span class="c1">//for identifier types</span>
-<a name="line-164"></a>		<span class="n">Variant</span> <span class="n">constant</span><span class="p">;</span> <span class="c1">//for constant types</span>
-<a name="line-165"></a>		<span class="k">union</span> <span class="p">{</span>
-<a name="line-166"></a>			<span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">vtype</span><span class="p">;</span> <span class="c1">//for type types</span>
-<a name="line-167"></a>			<span class="n">GDFunctions</span><span class="o">::</span><span class="n">Function</span> <span class="n">func</span><span class="p">;</span> <span class="c1">//function for built in functions</span>
-<a name="line-168"></a>		<span class="p">};</span>
-<a name="line-169"></a>		<span class="kt">int</span> <span class="n">line</span><span class="p">,</span><span class="n">col</span><span class="p">;</span>
-<a name="line-170"></a>		<span class="n">TokenData</span><span class="p">()</span> <span class="p">{</span> <span class="n">type</span> <span class="o">=</span> <span class="n">TK_EMPTY</span><span class="p">;</span> <span class="n">line</span><span class="o">=</span><span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">vtype</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">NIL</span><span class="p">;</span> <span class="p">}</span>
-<a name="line-171"></a>	<span class="p">};</span>
-<a name="line-172"></a>
-<a name="line-173"></a>	<span class="kt">void</span> <span class="nf">_make_token</span><span class="p">(</span><span class="n">Token</span> <span class="n">p_type</span><span class="p">);</span>
-<a name="line-174"></a>	<span class="kt">void</span> <span class="nf">_make_newline</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_spaces</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-175"></a>	<span class="kt">void</span> <span class="nf">_make_identifier</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_identifier</span><span class="p">);</span>
-<a name="line-176"></a>	<span class="kt">void</span> <span class="nf">_make_built_in_func</span><span class="p">(</span><span class="n">GDFunctions</span><span class="o">::</span><span class="n">Function</span> <span class="n">p_func</span><span class="p">);</span>
-<a name="line-177"></a>	<span class="kt">void</span> <span class="nf">_make_constant</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">p_constant</span><span class="p">);</span>
-<a name="line-178"></a>	<span class="kt">void</span> <span class="nf">_make_type</span><span class="p">(</span><span class="k">const</span> <span class="n">Variant</span><span class="o">::</span><span class="n">Type</span><span class="o">&amp;</span> <span class="n">p_type</span><span class="p">);</span>
-<a name="line-179"></a>	<span class="kt">void</span> <span class="nf">_make_error</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_error</span><span class="p">);</span>
-<a name="line-180"></a>
-<a name="line-181"></a>	<span class="n">String</span> <span class="n">code</span><span class="p">;</span>
-<a name="line-182"></a>	<span class="kt">int</span> <span class="n">len</span><span class="p">;</span>
-<a name="line-183"></a>	<span class="kt">int</span> <span class="n">code_pos</span><span class="p">;</span>
-<a name="line-184"></a>	<span class="k">const</span> <span class="n">CharType</span> <span class="o">*</span><span class="n">_code</span><span class="p">;</span>
-<a name="line-185"></a>	<span class="kt">int</span> <span class="n">line</span><span class="p">;</span>
-<a name="line-186"></a>	<span class="kt">int</span> <span class="n">column</span><span class="p">;</span>
-<a name="line-187"></a>	<span class="n">TokenData</span> <span class="n">tk_rb</span><span class="p">[</span><span class="n">TK_RB_SIZE</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
-<a name="line-188"></a>	<span class="kt">int</span> <span class="n">tk_rb_pos</span><span class="p">;</span>
-<a name="line-189"></a>	<span class="n">String</span> <span class="n">last_error</span><span class="p">;</span>
-<a name="line-190"></a>	<span class="kt">bool</span> <span class="n">error_flag</span><span class="p">;</span>
+<a name="line-149"></a><span class="c">		print_line(&quot;opening for deflated seek&quot;);</span>
+<a name="line-150"></a><span class="c">		f.open(&quot;seek_deflated.bin&quot;, FileAccess::READ);</span>
+<a name="line-151"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-152"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-153"></a><span class="c">		f.seek(128);</span>
+<a name="line-154"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-155"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-156"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-157"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-158"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-159"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-160"></a><span class="c">		f.seek(256);</span>
+<a name="line-161"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-162"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-163"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-164"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-165"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-166"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-167"></a><span class="c">		f.seek(4);</span>
+<a name="line-168"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-169"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-170"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-171"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-172"></a><span class="c">		pos = f.get_pos();</span>
+<a name="line-173"></a><span class="c">		printf(&quot;byte at pos %i is %i\n&quot;, pos, (int)f.get_8());</span>
+<a name="line-174"></a>
+<a name="line-175"></a><span class="c">		f.close();</span>
+<a name="line-176"></a>
+<a name="line-177"></a><span class="c">		DirAccessArchive d;</span>
+<a name="line-178"></a><span class="c">		String dir = &quot;../blah1/blah2/blahask/../blah3/.//blah4/&quot;;</span>
+<a name="line-179"></a><span class="c">		printf(&quot;changing dir to %s\n&quot;, dir.utf8().get_data());</span>
+<a name="line-180"></a><span class="c">		d.change_dir(dir);</span>
+<a name="line-181"></a><span class="c">		printf(&quot;current dir is %s\n&quot;, d.get_current_dir().utf8().get_data());</span>
+<a name="line-182"></a>
+<a name="line-183"></a><span class="c">		FileAccessMemory::cleanup();</span>
+<a name="line-184"></a><span class="cp">#endif</span>
+<a name="line-185"></a>	<span class="p">};</span>
+<a name="line-186"></a>
+<a name="line-187"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;test done&quot;</span><span class="p">);</span>
+<a name="line-188"></a>
+<a name="line-189"></a>
+<a name="line-190"></a>	<span class="k">return</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">TestMainLoop</span> <span class="p">);</span>
 <a name="line-191"></a>
-<a name="line-192"></a>	<span class="kt">void</span> <span class="nf">_advance</span><span class="p">();</span>
-<a name="line-193"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-194"></a>
+<a name="line-192"></a><span class="p">}</span>
+<a name="line-193"></a>
+<a name="line-194"></a><span class="p">}</span>
 <a name="line-195"></a>
-<a name="line-196"></a>	<span class="kt">void</span> <span class="n">set_code</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">);</span>
-<a name="line-197"></a>	<span class="n">virtual</span> <span class="n">Token</span> <span class="n">get_token</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-198"></a>	<span class="n">virtual</span> <span class="n">StringName</span> <span class="n">get_token_identifier</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-199"></a>	<span class="n">virtual</span> <span class="n">GDFunctions</span><span class="o">::</span><span class="n">Function</span> <span class="n">get_token_built_in_func</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-200"></a>	<span class="n">virtual</span> <span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">get_token_type</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-201"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-202"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_column</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-203"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_line_indent</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-204"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">get_token_constant</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-205"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_token_error</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-206"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">advance</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_amount</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-207"></a><span class="p">};</span>
-<a name="line-208"></a>
-<a name="line-209"></a>
-<a name="line-210"></a>
-<a name="line-211"></a>
-<a name="line-212"></a><span class="n">class</span> <span class="nl">GDTokenizerBuffer</span> <span class="p">:</span> <span class="n">public</span> <span class="n">GDTokenizer</span> <span class="p">{</span>
-<a name="line-213"></a>
-<a name="line-214"></a>
-<a name="line-215"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-216"></a>
-<a name="line-217"></a>		<span class="n">TOKEN_BYTE_MASK</span><span class="o">=</span><span class="mh">0x80</span><span class="p">,</span>
-<a name="line-218"></a>		<span class="n">TOKEN_BITS</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-<a name="line-219"></a>		<span class="n">TOKEN_MASK</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">TOKEN_BITS</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-220"></a>		<span class="n">TOKEN_LINE_BITS</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
-<a name="line-221"></a>		<span class="n">TOKEN_LINE_MASK</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">TOKEN_LINE_BITS</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-<a name="line-222"></a>	<span class="p">};</span>
-<a name="line-223"></a>
-<a name="line-224"></a>
-<a name="line-225"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">identifiers</span><span class="p">;</span>
-<a name="line-226"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">constants</span><span class="p">;</span>
-<a name="line-227"></a>	<span class="n">VMap</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="p">,</span><span class="kt">uint32_t</span><span class="o">&gt;</span> <span class="n">lines</span><span class="p">;</span>
-<a name="line-228"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span> <span class="n">tokens</span><span class="p">;</span>
-<a name="line-229"></a>	<span class="n">Variant</span> <span class="n">nil</span><span class="p">;</span>
-<a name="line-230"></a>	<span class="kt">int</span> <span class="n">token</span><span class="p">;</span>
-<a name="line-231"></a>
-<a name="line-232"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-233"></a>
-<a name="line-234"></a>
-<a name="line-235"></a>	<span class="n">Error</span> <span class="n">set_code_buffer</span><span class="p">(</span><span class="k">const</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">p_buffer</span><span class="p">);</span>
-<a name="line-236"></a>	<span class="k">static</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">parse_code_string</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_code</span><span class="p">);</span>
-<a name="line-237"></a>	<span class="n">virtual</span> <span class="n">Token</span> <span class="n">get_token</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-238"></a>	<span class="n">virtual</span> <span class="n">StringName</span> <span class="n">get_token_identifier</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-239"></a>	<span class="n">virtual</span> <span class="n">GDFunctions</span><span class="o">::</span><span class="n">Function</span> <span class="n">get_token_built_in_func</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-240"></a>	<span class="n">virtual</span> <span class="n">Variant</span><span class="o">::</span><span class="n">Type</span> <span class="n">get_token_type</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-241"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_line</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-242"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_column</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-243"></a>	<span class="n">virtual</span> <span class="kt">int</span> <span class="n">get_token_line_indent</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-244"></a>	<span class="n">virtual</span> <span class="k">const</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">get_token_constant</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-245"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_token_error</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-<a name="line-246"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">advance</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_amount</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-247"></a>	<span class="n">GDTokenizerBuffer</span><span class="p">();</span>
-<a name="line-248"></a><span class="p">};</span>
-<a name="line-249"></a>
-<a name="line-250"></a><span class="cp">#endif </span><span class="c1">// TOKENIZER_H</span>
+<a name="line-196"></a><span class="cp">#else</span>
+<a name="line-197"></a>
+<a name="line-198"></a><span class="k">namespace</span> <span class="n">TestIO</span> <span class="p">{</span>
+<a name="line-199"></a>
+<a name="line-200"></a>
+<a name="line-201"></a><span class="n">MainLoop</span><span class="o">*</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-202"></a>
+<a name="line-203"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-204"></a><span class="p">}</span>
+<a name="line-205"></a>
+<a name="line-206"></a><span class="p">}</span>
+<a name="line-207"></a><span class="cp">#endif</span>
 </pre></div>
 </td></tr></table>
       </div>

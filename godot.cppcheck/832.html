@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: tools/editor/editor_dir_dialog.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/editor/progress_dialog.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> editor_dir_dialog.cpp</p>
-<a href='832.html#line-47'> variableScope 47</a><a href='832.html#line-140'> nullPointerRedundantCheck 140</a>
+       <p id="filename"><a href="index.html">Defects:</a> progress_dialog.cpp</p>
+<a href='832.html#line-56'> uninitStructMember 56</a><a href='832.html#line-56'> uninitStructMember 56</a><a href='832.html#line-124'> uninitvar 124</a><a href='832.html#line-129'> unreadVariable 129</a><a href='832.html#line-189'> uninitStructMember 189</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -345,11 +345,8 @@
 229
 230
 231
-232
-233
-234
-235</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  editor_dir_dialog.cpp                                                */</span>
+232</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  progress_dialog.cpp                                                  */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -376,225 +373,210 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;editor_dir_dialog.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;os/os.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;os/keyboard.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;tools/editor/editor_settings.h&quot;</span>
+<a name="line-29"></a><span class="cp">#include &quot;progress_dialog.h&quot;</span>
+<a name="line-30"></a><span class="cp">#include &quot;main/main.h&quot;</span>
+<a name="line-31"></a><span class="cp">#include &quot;message_queue.h&quot;</span>
+<a name="line-32"></a>
 <a name="line-33"></a>
-<a name="line-34"></a>
-<a name="line-35"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_update_dir</span><span class="p">(</span><span class="n">TreeItem</span><span class="o">*</span> <span class="n">p_item</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-36"></a>
-<a name="line-37"></a>	<span class="n">updating</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-38"></a>	<span class="n">p_item</span><span class="o">-&gt;</span><span class="n">clear_children</span><span class="p">();</span>
-<a name="line-39"></a>	<span class="n">DirAccess</span> <span class="o">*</span><span class="n">da</span> <span class="o">=</span> <span class="n">DirAccess</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">DirAccess</span><span class="o">::</span><span class="n">ACCESS_RESOURCES</span><span class="p">);</span>
-<a name="line-40"></a>	<span class="n">String</span> <span class="n">cdir</span> <span class="o">=</span> <span class="n">p_item</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-41"></a>
-<a name="line-42"></a>	<span class="n">da</span><span class="o">-&gt;</span><span class="n">change_dir</span><span class="p">(</span><span class="n">cdir</span><span class="p">);</span>
-<a name="line-43"></a>	<span class="n">da</span><span class="o">-&gt;</span><span class="n">list_dir_begin</span><span class="p">();</span>
-<a name="line-44"></a>	<span class="n">String</span> <span class="n">p</span><span class="o">=</span><span class="n">da</span><span class="o">-&gt;</span><span class="n">get_next</span><span class="p">();</span>
-<a name="line-45"></a>
-<a name="line-46"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">dirs</span><span class="p">;</span>
-<a name="line-47"></a><span class="hll">	<span class="kt">bool</span> <span class="n">ishidden</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'ishidden' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;ishidden&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
-void f(int x)
-{
-    int i = 0;
-    if (x) {
-        // it&apos;s safe to move &apos;int i = 0;&apos; here
-        for (int n = 0; n &lt; 10; ++n) {
-            // it is possible but not safe to move &apos;int i = 0;&apos; here
-            do_something(&amp;i);
-        }
-    }
-}
-When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-48"></a>	<span class="kt">bool</span> <span class="n">show_hidden</span> <span class="o">=</span> <span class="n">EditorSettings</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;file_dialog/show_hidden_files&quot;</span><span class="p">);</span>
-<a name="line-49"></a>
-<a name="line-50"></a>	<span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="o">!=</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-51"></a>
-<a name="line-52"></a>		<span class="n">ishidden</span> <span class="o">=</span> <span class="n">da</span><span class="o">-&gt;</span><span class="n">current_is_hidden</span><span class="p">();</span>
+<a name="line-34"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_add_task</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_label</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_steps</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-35"></a>
+<a name="line-36"></a>	<span class="n">_THREAD_SAFE_METHOD_</span>
+<a name="line-37"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_task</span><span class="p">));</span>
+<a name="line-38"></a>	<span class="n">Task</span> <span class="n">t</span><span class="p">;</span>
+<a name="line-39"></a>	<span class="n">t</span><span class="p">.</span><span class="n">hb</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">HBoxContainer</span> <span class="p">);</span>
+<a name="line-40"></a>	<span class="n">Label</span> <span class="o">*</span><span class="n">l</span><span class="o">=</span><span class="n">memnew</span><span class="p">(</span> <span class="n">Label</span> <span class="p">);</span>
+<a name="line-41"></a>	<span class="n">l</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="n">p_label</span><span class="o">+</span><span class="s">&quot; &quot;</span><span class="p">);</span>
+<a name="line-42"></a>	<span class="n">t</span><span class="p">.</span><span class="n">hb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+<a name="line-43"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ProgressBar</span> <span class="p">);</span>
+<a name="line-44"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_max</span><span class="p">(</span><span class="n">p_steps</span><span class="p">);</span>
+<a name="line-45"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="n">p_steps</span><span class="p">);</span>
+<a name="line-46"></a>	<span class="n">Control</span> <span class="o">*</span><span class="n">ec</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Control</span> <span class="p">);</span>
+<a name="line-47"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">set_h_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
+<a name="line-48"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">set_v_size_flags</span><span class="p">(</span><span class="n">SIZE_EXPAND_FILL</span><span class="p">);</span>
+<a name="line-49"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_area_as_parent_rect</span><span class="p">();</span>
+<a name="line-50"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="p">);</span>
+<a name="line-51"></a>	<span class="n">ec</span><span class="o">-&gt;</span><span class="n">set_custom_minimum_size</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span><span class="mi">5</span><span class="p">));</span>
+<a name="line-52"></a>	<span class="n">t</span><span class="p">.</span><span class="n">hb</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
 <a name="line-53"></a>
-<a name="line-54"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">show_hidden</span> <span class="o">||</span> <span class="o">!</span><span class="n">ishidden</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-55"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">da</span><span class="o">-&gt;</span><span class="n">current_is_dir</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">p</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">))</span> <span class="p">{</span>
-<a name="line-56"></a>				<span class="n">dirs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<a name="line-57"></a>			<span class="p">}</span>
-<a name="line-58"></a>		<span class="p">}</span>
-<a name="line-59"></a>		<span class="n">p</span><span class="o">=</span><span class="n">da</span><span class="o">-&gt;</span><span class="n">get_next</span><span class="p">();</span>
-<a name="line-60"></a>	<span class="p">}</span>
+<a name="line-54"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">hb</span><span class="p">);</span>
+<a name="line-55"></a>
+<a name="line-56"></a><span class="hll">	<span class="n">tasks</span><span class="p">[</span><span class="n">p_task</span><span class="p">]</span><span class="o">=</span><span class="n">t</span><span class="p">;</span><span class='error2'>&lt;--- Uninitialized struct member: t.vb</span><span class='error2'>&lt;--- Uninitialized struct member: t.state</span>
+</span><a name="line-57"></a>
+<a name="line-58"></a><span class="p">}</span>
+<a name="line-59"></a>
+<a name="line-60"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_update</span><span class="p">()</span> <span class="p">{</span>
 <a name="line-61"></a>
-<a name="line-62"></a>	<span class="n">dirs</span><span class="p">.</span><span class="n">sort</span><span class="p">();</span>
+<a name="line-62"></a>	<span class="n">_THREAD_SAFE_METHOD_</span>
 <a name="line-63"></a>
-<a name="line-64"></a>	<span class="k">for</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">dirs</span><span class="p">.</span><span class="n">front</span><span class="p">();</span><span class="n">E</span><span class="p">;</span><span class="n">E</span><span class="o">=</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">())</span> <span class="p">{</span>
-<a name="line-65"></a>		<span class="n">TreeItem</span> <span class="o">*</span><span class="n">ti</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">(</span><span class="n">p_item</span><span class="p">);</span>
-<a name="line-66"></a>		<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">());</span>
-<a name="line-67"></a>		<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_icon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Folder&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">));</span>
-<a name="line-68"></a>		<span class="n">ti</span><span class="o">-&gt;</span><span class="n">set_collapsed</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<a name="line-69"></a>
-<a name="line-70"></a>	<span class="p">}</span>
-<a name="line-71"></a>
-<a name="line-72"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="n">da</span><span class="p">);</span>
-<a name="line-73"></a>	<span class="n">updating</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-64"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">E</span><span class="o">=</span><span class="n">updates</span><span class="p">.</span><span class="n">front</span><span class="p">();</span><span class="n">E</span><span class="p">;</span><span class="n">E</span><span class="o">=</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">())</span> <span class="p">{</span>
+<a name="line-65"></a>
+<a name="line-66"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">()))</span> <span class="p">{</span>
+<a name="line-67"></a>			<span class="n">_task_step</span><span class="p">(</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">(),</span><span class="n">E</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">());</span>
+<a name="line-68"></a>		<span class="p">}</span>
+<a name="line-69"></a>	<span class="p">}</span>
+<a name="line-70"></a>
+<a name="line-71"></a>	<span class="n">updates</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<a name="line-72"></a>
+<a name="line-73"></a>
 <a name="line-74"></a>
 <a name="line-75"></a><span class="p">}</span>
 <a name="line-76"></a>
 <a name="line-77"></a>
-<a name="line-78"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">reload</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-78"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_task_step</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_step</span><span class="p">){</span>
 <a name="line-79"></a>
-<a name="line-80"></a>	<span class="n">tree</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
-<a name="line-81"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">-&gt;</span><span class="n">create_item</span><span class="p">();</span>
-<a name="line-82"></a>	<span class="n">root</span><span class="o">-&gt;</span><span class="n">set_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;res://&quot;</span><span class="p">);</span>
-<a name="line-83"></a>	<span class="n">root</span><span class="o">-&gt;</span><span class="n">set_icon</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">get_icon</span><span class="p">(</span><span class="s">&quot;Folder&quot;</span><span class="p">,</span><span class="s">&quot;EditorIcons&quot;</span><span class="p">));</span>
-<a name="line-84"></a>	<span class="n">root</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
-<a name="line-85"></a>	<span class="n">_update_dir</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a name="line-86"></a>	<span class="n">_item_collapsed</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a name="line-87"></a><span class="p">}</span>
-<a name="line-88"></a>
-<a name="line-89"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-90"></a>
-<a name="line-91"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_what</span><span class="o">==</span><span class="n">NOTIFICATION_ENTER_TREE</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-92"></a>		<span class="n">reload</span><span class="p">();</span>
-<a name="line-93"></a>		<span class="n">tree</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;item_collapsed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_item_collapsed&quot;</span><span class="p">,</span><span class="n">varray</span><span class="p">(),</span><span class="n">CONNECT_DEFERRED</span><span class="p">);</span>
-<a name="line-94"></a>	<span class="p">}</span>
-<a name="line-95"></a><span class="p">}</span>
-<a name="line-96"></a>
-<a name="line-97"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_item_collapsed</span><span class="p">(</span><span class="n">Object</span><span class="o">*</span> <span class="n">_p_item</span><span class="p">){</span>
-<a name="line-98"></a>
-<a name="line-99"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">p_item</span><span class="o">=</span><span class="n">_p_item</span><span class="o">-&gt;</span><span class="n">cast_to</span><span class="o">&lt;</span><span class="n">TreeItem</span><span class="o">&gt;</span><span class="p">();</span>
-<a name="line-100"></a>
-<a name="line-101"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">updating</span> <span class="o">||</span> <span class="n">p_item</span><span class="o">-&gt;</span><span class="n">is_collapsed</span><span class="p">())</span>
-<a name="line-102"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-80"></a>	<span class="n">_THREAD_SAFE_METHOD_</span>
+<a name="line-81"></a>
+<a name="line-82"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_task</span><span class="p">));</span>
+<a name="line-83"></a>
+<a name="line-84"></a>	<span class="n">Task</span> <span class="o">&amp;</span><span class="n">t</span><span class="o">=</span><span class="n">tasks</span><span class="p">[</span><span class="n">p_task</span><span class="p">];</span>
+<a name="line-85"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_step</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+<a name="line-86"></a>		<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">get_val</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-87"></a>	<span class="k">else</span>
+<a name="line-88"></a>		<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="n">p_step</span><span class="p">);</span>
+<a name="line-89"></a>
+<a name="line-90"></a><span class="p">}</span>
+<a name="line-91"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_end_task</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">){</span>
+<a name="line-92"></a>
+<a name="line-93"></a>	<span class="n">_THREAD_SAFE_METHOD_</span>
+<a name="line-94"></a>
+<a name="line-95"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_task</span><span class="p">));</span>
+<a name="line-96"></a>	<span class="n">Task</span> <span class="o">&amp;</span><span class="n">t</span><span class="o">=</span><span class="n">tasks</span><span class="p">[</span><span class="n">p_task</span><span class="p">];</span>
+<a name="line-97"></a>
+<a name="line-98"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">hb</span><span class="p">);</span>
+<a name="line-99"></a>	<span class="n">tasks</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">p_task</span><span class="p">);</span>
+<a name="line-100"></a><span class="p">}</span>
+<a name="line-101"></a>
+<a name="line-102"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">(){</span>
 <a name="line-103"></a>
-<a name="line-104"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">ci</span> <span class="o">=</span> <span class="n">p_item</span><span class="o">-&gt;</span><span class="n">get_children</span><span class="p">();</span>
-<a name="line-105"></a>	<span class="k">while</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-106"></a>
-<a name="line-107"></a>		<span class="n">String</span> <span class="n">p</span> <span class="o">=</span><span class="n">ci</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-108"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-109"></a>			<span class="n">String</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p_item</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-110"></a>			<span class="n">ci</span><span class="o">-&gt;</span><span class="n">set_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">pp</span><span class="p">.</span><span class="n">plus_file</span><span class="p">(</span><span class="n">ci</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">(</span><span class="mi">0</span><span class="p">)));</span>
-<a name="line-111"></a>			<span class="n">_update_dir</span><span class="p">(</span><span class="n">ci</span><span class="p">);</span>
-<a name="line-112"></a>		<span class="p">}</span>
-<a name="line-113"></a>		<span class="n">ci</span><span class="o">=</span><span class="n">ci</span><span class="o">-&gt;</span><span class="n">get_next</span><span class="p">();</span>
-<a name="line-114"></a>	<span class="p">}</span>
-<a name="line-115"></a>
-<a name="line-116"></a><span class="p">}</span>
-<a name="line-117"></a>
-<a name="line-118"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">set_current_path</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_path</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="n">reload</span><span class="p">();</span>
-<a name="line-121"></a>	<span class="n">String</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p_path</span><span class="p">;</span>
-<a name="line-122"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">begins_with</span><span class="p">(</span><span class="s">&quot;res://&quot;</span><span class="p">))</span>
-<a name="line-123"></a>		<span class="n">p</span><span class="p">.</span><span class="n">replace_first</span><span class="p">(</span><span class="s">&quot;res://&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">dirs</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">);</span>
+<a name="line-104"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_add_task&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_add_task</span><span class="p">);</span>
+<a name="line-105"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_task_step&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_task_step</span><span class="p">);</span>
+<a name="line-106"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_end_task&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_end_task</span><span class="p">);</span>
+<a name="line-107"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="s">&quot;_update&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">_update</span><span class="p">);</span>
+<a name="line-108"></a>
+<a name="line-109"></a><span class="p">}</span>
+<a name="line-110"></a>
+<a name="line-111"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">add_task</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_label</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_steps</span><span class="p">){</span>
+<a name="line-112"></a>
+<a name="line-113"></a>	<span class="n">MessageQueue</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">push_call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_add_task&quot;</span><span class="p">,</span><span class="n">p_task</span><span class="p">,</span><span class="n">p_label</span><span class="p">,</span><span class="n">p_steps</span><span class="p">);</span>
+<a name="line-114"></a><span class="p">}</span>
+<a name="line-115"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">task_step</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_step</span><span class="p">){</span>
+<a name="line-116"></a>
+<a name="line-117"></a>	<span class="c1">//this code is weird, but it prevents deadlock.</span>
+<a name="line-118"></a>	<span class="kt">bool</span> <span class="n">no_updates</span><span class="p">;</span>
+<a name="line-119"></a>	<span class="p">{</span>
+<a name="line-120"></a>		<span class="n">_THREAD_SAFE_METHOD_</span>
+<a name="line-121"></a>		<span class="n">no_updates</span><span class="o">=</span><span class="n">updates</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>
+<a name="line-122"></a>	<span class="p">}</span>
+<a name="line-123"></a>
+<a name="line-124"></a><span class="hll">	<span class="k">if</span> <span class="p">(</span><span class="n">no_updates</span><span class="p">)</span><span class='error2'>&lt;--- Uninitialized variable: no_updates</span>
+</span><a name="line-125"></a>		<span class="n">MessageQueue</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">push_call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_update&quot;</span><span class="p">);</span>
 <a name="line-126"></a>
-<a name="line-127"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">r</span><span class="o">=</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_root</span><span class="p">();</span>
-<a name="line-128"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">dirs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-129"></a>
-<a name="line-130"></a>		<span class="n">String</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-<a name="line-131"></a>		<span class="n">TreeItem</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">r</span><span class="o">-&gt;</span><span class="n">get_children</span><span class="p">();</span>
-<a name="line-132"></a>		<span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-127"></a>	<span class="p">{</span>
+<a name="line-128"></a>		<span class="n">_THREAD_SAFE_METHOD_</span>
+<a name="line-129"></a><span class="hll">		<span class="n">updates</span><span class="p">[</span><span class="n">p_task</span><span class="p">]</span><span class="o">=</span><span class="n">p_step</span><span class="p">;</span><span class='error2'>&lt;--- Variable 'updates' is assigned a value that is never used.</span>
+</span><a name="line-130"></a>	<span class="p">}</span>
+<a name="line-131"></a>
+<a name="line-132"></a><span class="p">}</span>
 <a name="line-133"></a>
-<a name="line-134"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">==</span><span class="n">d</span><span class="p">)</span>
-<a name="line-135"></a>				<span class="k">break</span><span class="p">;</span>
-<a name="line-136"></a>			<span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">get_next</span><span class="p">();</span>
-<a name="line-137"></a>		<span class="p">}</span>
-<a name="line-138"></a>
-<a name="line-139"></a>		<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">p</span><span class="p">);</span>
-<a name="line-140"></a><span class="hll">		<span class="n">String</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class='inconclusive2'>&lt;--- Either the condition 'p' is redundant or there is possible null pointer dereference: p.</span>
-</span><a name="line-141"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">pp</span><span class="o">==</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-142"></a>			<span class="n">_update_dir</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<a name="line-143"></a>			<span class="n">updating</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-144"></a>			<span class="n">p</span><span class="o">-&gt;</span><span class="n">set_collapsed</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-145"></a>			<span class="n">updating</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-146"></a>			<span class="n">_item_collapsed</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-<a name="line-147"></a>
-<a name="line-148"></a>		<span class="p">}</span>
-<a name="line-149"></a>		<span class="n">r</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
-<a name="line-150"></a>	<span class="p">}</span>
+<a name="line-134"></a><span class="kt">void</span> <span class="n">BackgroundProgress</span><span class="o">::</span><span class="n">end_task</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">){</span>
+<a name="line-135"></a>
+<a name="line-136"></a>	<span class="n">MessageQueue</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">push_call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_end_task&quot;</span><span class="p">,</span><span class="n">p_task</span><span class="p">);</span>
+<a name="line-137"></a>
+<a name="line-138"></a><span class="p">}</span>
+<a name="line-139"></a>
+<a name="line-140"></a>
+<a name="line-141"></a><span class="c1">////////////////////////////////////////////////</span>
+<a name="line-142"></a>
+<a name="line-143"></a><span class="kt">void</span> <span class="n">ProgressDialog</span><span class="o">::</span><span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-144"></a>
+<a name="line-145"></a>	<span class="k">switch</span><span class="p">(</span><span class="n">p_what</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-146"></a>
+<a name="line-147"></a>		<span class="k">case</span> <span class="nl">NOTIFICATION_DRAW</span><span class="p">:</span> <span class="p">{</span>
+<a name="line-148"></a>
+<a name="line-149"></a>			<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">style</span> <span class="o">=</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;panel&quot;</span><span class="p">,</span><span class="s">&quot;PopupMenu&quot;</span><span class="p">);</span>
+<a name="line-150"></a>			<span class="n">draw_style_box</span><span class="p">(</span><span class="n">style</span><span class="p">,</span><span class="n">Rect2</span><span class="p">(</span><span class="n">Point2</span><span class="p">(),</span><span class="n">get_size</span><span class="p">()));</span>
 <a name="line-151"></a>
-<a name="line-152"></a>	<span class="n">r</span><span class="o">-&gt;</span><span class="n">select</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-153"></a>
+<a name="line-152"></a>		<span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-153"></a>	<span class="p">}</span>
 <a name="line-154"></a><span class="p">}</span>
 <a name="line-155"></a>
-<a name="line-156"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">ok_pressed</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-157"></a>
-<a name="line-158"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">ti</span><span class="o">=</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_selected</span><span class="p">();</span>
-<a name="line-159"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ti</span><span class="p">)</span>
-<a name="line-160"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-156"></a>
+<a name="line-157"></a><span class="kt">void</span> <span class="n">ProgressDialog</span><span class="o">::</span><span class="n">_popup</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-158"></a>
+<a name="line-159"></a>	<span class="n">Size2</span> <span class="n">ms</span> <span class="o">=</span> <span class="n">main</span><span class="o">-&gt;</span><span class="n">get_combined_minimum_size</span><span class="p">();</span>
+<a name="line-160"></a>	<span class="n">ms</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">MAX</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="n">ms</span><span class="p">.</span><span class="n">width</span><span class="p">);</span>
 <a name="line-161"></a>
-<a name="line-162"></a>	<span class="n">String</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">ti</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-163"></a>	<span class="n">emit_signal</span><span class="p">(</span><span class="s">&quot;dir_selected&quot;</span><span class="p">,</span><span class="n">dir</span><span class="p">);</span>
-<a name="line-164"></a>	<span class="n">hide</span><span class="p">();</span>
-<a name="line-165"></a><span class="p">}</span>
-<a name="line-166"></a>
-<a name="line-167"></a>
-<a name="line-168"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_make_dir</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-169"></a>
-<a name="line-170"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">ti</span><span class="o">=</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_selected</span><span class="p">();</span>
-<a name="line-171"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ti</span><span class="p">)</span>
-<a name="line-172"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-173"></a>
-<a name="line-174"></a>	<span class="n">makedialog</span><span class="o">-&gt;</span><span class="n">popup_centered_minsize</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">80</span><span class="p">));</span>
-<a name="line-175"></a><span class="p">}</span>
-<a name="line-176"></a>
-<a name="line-177"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_make_dir_confirm</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-178"></a>
-<a name="line-179"></a>	<span class="n">TreeItem</span> <span class="o">*</span><span class="n">ti</span><span class="o">=</span><span class="n">tree</span><span class="o">-&gt;</span><span class="n">get_selected</span><span class="p">();</span>
-<a name="line-180"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ti</span><span class="p">)</span>
-<a name="line-181"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-182"></a>
-<a name="line-183"></a>	<span class="n">String</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">ti</span><span class="o">-&gt;</span><span class="n">get_metadata</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-184"></a>	<span class="n">DirAccess</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="n">DirAccess</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">dir</span><span class="p">);</span>
-<a name="line-185"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">d</span><span class="p">);</span>
-<a name="line-186"></a>	<span class="n">Error</span> <span class="n">err</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">make_dir</span><span class="p">(</span><span class="n">makedirname</span><span class="o">-&gt;</span><span class="n">get_text</span><span class="p">());</span>
-<a name="line-187"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="o">!=</span><span class="n">OK</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-188"></a>		<span class="n">mkdirerr</span><span class="o">-&gt;</span><span class="n">popup_centered_minsize</span><span class="p">(</span><span class="n">Size2</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">80</span><span class="p">));</span>
-<a name="line-189"></a>	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-190"></a>		<span class="n">reload</span><span class="p">();</span>
-<a name="line-191"></a>	<span class="p">}</span>
+<a name="line-162"></a>
+<a name="line-163"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">StyleBox</span><span class="o">&gt;</span> <span class="n">style</span> <span class="o">=</span> <span class="n">get_stylebox</span><span class="p">(</span><span class="s">&quot;panel&quot;</span><span class="p">,</span><span class="s">&quot;PopupMenu&quot;</span><span class="p">);</span>
+<a name="line-164"></a>	<span class="n">ms</span><span class="o">+=</span><span class="n">style</span><span class="o">-&gt;</span><span class="n">get_minimum_size</span><span class="p">();</span>
+<a name="line-165"></a>	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-166"></a>		<span class="n">main</span><span class="o">-&gt;</span><span class="n">set_margin</span><span class="p">(</span><span class="n">Margin</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">style</span><span class="o">-&gt;</span><span class="n">get_margin</span><span class="p">(</span><span class="n">Margin</span><span class="p">(</span><span class="n">i</span><span class="p">)));</span>
+<a name="line-167"></a>	<span class="p">}</span>
+<a name="line-168"></a>
+<a name="line-169"></a>	<span class="n">popup_centered</span><span class="p">(</span><span class="n">ms</span><span class="p">);</span>
+<a name="line-170"></a>
+<a name="line-171"></a><span class="p">}</span>
+<a name="line-172"></a>
+<a name="line-173"></a><span class="kt">void</span> <span class="n">ProgressDialog</span><span class="o">::</span><span class="n">add_task</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">,</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_label</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_steps</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-174"></a>
+<a name="line-175"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_task</span><span class="p">));</span>
+<a name="line-176"></a>	<span class="n">Task</span> <span class="n">t</span><span class="p">;</span>
+<a name="line-177"></a>	<span class="n">t</span><span class="p">.</span><span class="n">vb</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
+<a name="line-178"></a>	<span class="n">VBoxContainer</span> <span class="o">*</span><span class="n">vb2</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
+<a name="line-179"></a>	<span class="n">t</span><span class="p">.</span><span class="n">vb</span><span class="o">-&gt;</span><span class="n">add_margin_child</span><span class="p">(</span><span class="n">p_label</span><span class="p">,</span><span class="n">vb2</span><span class="p">);</span>
+<a name="line-180"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ProgressBar</span> <span class="p">);</span>
+<a name="line-181"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_max</span><span class="p">(</span><span class="n">p_steps</span><span class="p">);</span>
+<a name="line-182"></a>	<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="n">p_steps</span><span class="p">);</span>
+<a name="line-183"></a>	<span class="n">vb2</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="p">);</span>
+<a name="line-184"></a>	<span class="n">t</span><span class="p">.</span><span class="n">state</span><span class="o">=</span><span class="n">memnew</span><span class="p">(</span> <span class="n">Label</span> <span class="p">);</span>
+<a name="line-185"></a>	<span class="n">t</span><span class="p">.</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">set_clip_text</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-186"></a>	<span class="n">vb2</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">state</span><span class="p">);</span>
+<a name="line-187"></a>	<span class="n">main</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">vb</span><span class="p">);</span>
+<a name="line-188"></a>
+<a name="line-189"></a><span class="hll">	<span class="n">tasks</span><span class="p">[</span><span class="n">p_task</span><span class="p">]</span><span class="o">=</span><span class="n">t</span><span class="p">;</span><span class='error2'>&lt;--- Uninitialized struct member: t.hb</span>
+</span><a name="line-190"></a>	<span class="n">_popup</span><span class="p">();</span>
+<a name="line-191"></a>
 <a name="line-192"></a><span class="p">}</span>
 <a name="line-193"></a>
-<a name="line-194"></a>
-<a name="line-195"></a><span class="kt">void</span> <span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_bind_methods</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-196"></a>
-<a name="line-197"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_item_collapsed&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_item_collapsed</span><span class="p">);</span>
-<a name="line-198"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_make_dir&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_make_dir</span><span class="p">);</span>
-<a name="line-199"></a>	<span class="n">ObjectTypeDB</span><span class="o">::</span><span class="n">bind_method</span><span class="p">(</span><span class="n">_MD</span><span class="p">(</span><span class="s">&quot;_make_dir_confirm&quot;</span><span class="p">),</span><span class="o">&amp;</span><span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">_make_dir_confirm</span><span class="p">);</span>
-<a name="line-200"></a>
-<a name="line-201"></a>	<span class="n">ADD_SIGNAL</span><span class="p">(</span><span class="n">MethodInfo</span><span class="p">(</span><span class="s">&quot;dir_selected&quot;</span><span class="p">,</span><span class="n">PropertyInfo</span><span class="p">(</span><span class="n">Variant</span><span class="o">::</span><span class="n">STRING</span><span class="p">,</span><span class="s">&quot;dir&quot;</span><span class="p">)));</span>
-<a name="line-202"></a><span class="p">}</span>
+<a name="line-194"></a><span class="kt">void</span> <span class="n">ProgressDialog</span><span class="o">::</span><span class="n">task_step</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">,</span> <span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_state</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p_step</span><span class="p">){</span>
+<a name="line-195"></a>
+<a name="line-196"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_task</span><span class="p">));</span>
+<a name="line-197"></a>
+<a name="line-198"></a>	<span class="n">Task</span> <span class="o">&amp;</span><span class="n">t</span><span class="o">=</span><span class="n">tasks</span><span class="p">[</span><span class="n">p_task</span><span class="p">];</span>
+<a name="line-199"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">p_step</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+<a name="line-200"></a>		<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">get_val</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<a name="line-201"></a>	<span class="k">else</span>
+<a name="line-202"></a>		<span class="n">t</span><span class="p">.</span><span class="n">progress</span><span class="o">-&gt;</span><span class="n">set_val</span><span class="p">(</span><span class="n">p_step</span><span class="p">);</span>
 <a name="line-203"></a>
-<a name="line-204"></a>
-<a name="line-205"></a>
-<a name="line-206"></a><span class="n">EditorDirDialog</span><span class="o">::</span><span class="n">EditorDirDialog</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-207"></a>
-<a name="line-208"></a>	<span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Choose a Directory&quot;</span><span class="p">);</span>
-<a name="line-209"></a>	<span class="n">tree</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">Tree</span> <span class="p">);</span>
-<a name="line-210"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-211"></a>	<span class="n">set_child_rect</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
-<a name="line-212"></a>	<span class="n">updating</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-213"></a>	<span class="n">get_ok</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Choose&quot;</span><span class="p">);</span>
-<a name="line-214"></a>	<span class="n">set_hide_on_ok</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-<a name="line-215"></a>
-<a name="line-216"></a>
+<a name="line-204"></a>	<span class="n">t</span><span class="p">.</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="n">p_state</span><span class="p">);</span>
+<a name="line-205"></a>	<span class="n">Main</span><span class="o">::</span><span class="n">iteration</span><span class="p">();</span> <span class="c1">// this will not work on a lot of platforms, so it&#39;s only meant for the editor</span>
+<a name="line-206"></a>
+<a name="line-207"></a><span class="p">}</span>
+<a name="line-208"></a>
+<a name="line-209"></a>
+<a name="line-210"></a><span class="kt">void</span> <span class="n">ProgressDialog</span><span class="o">::</span><span class="n">end_task</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_task</span><span class="p">){</span>
+<a name="line-211"></a>
+<a name="line-212"></a>	<span class="n">ERR_FAIL_COND</span><span class="p">(</span><span class="o">!</span><span class="n">tasks</span><span class="p">.</span><span class="n">has</span><span class="p">(</span><span class="n">p_task</span><span class="p">));</span>
+<a name="line-213"></a>	<span class="n">Task</span> <span class="o">&amp;</span><span class="n">t</span><span class="o">=</span><span class="n">tasks</span><span class="p">[</span><span class="n">p_task</span><span class="p">];</span>
+<a name="line-214"></a>
+<a name="line-215"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">vb</span><span class="p">);</span>
+<a name="line-216"></a>	<span class="n">tasks</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">p_task</span><span class="p">);</span>
 <a name="line-217"></a>
-<a name="line-218"></a>	<span class="n">makedir</span> <span class="o">=</span> <span class="n">add_button</span><span class="p">(</span><span class="s">&quot;Create Folder&quot;</span><span class="p">,</span><span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_swap_ok_cancel</span><span class="p">()</span><span class="o">?</span><span class="nb">true</span><span class="o">:</span><span class="nb">false</span><span class="p">,</span><span class="s">&quot;makedir&quot;</span><span class="p">);</span>
-<a name="line-219"></a>	<span class="n">makedir</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;pressed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_make_dir&quot;</span><span class="p">);</span>
-<a name="line-220"></a>
-<a name="line-221"></a>	<span class="n">makedialog</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">ConfirmationDialog</span> <span class="p">);</span>
-<a name="line-222"></a>	<span class="n">makedialog</span><span class="o">-&gt;</span><span class="n">set_title</span><span class="p">(</span><span class="s">&quot;Create Folder&quot;</span><span class="p">);</span>
-<a name="line-223"></a>	<span class="n">VBoxContainer</span> <span class="o">*</span><span class="n">makevb</span><span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
-<a name="line-224"></a>	<span class="n">makedialog</span><span class="o">-&gt;</span><span class="n">add_child</span><span class="p">(</span><span class="n">makevb</span><span class="p">);</span>
-<a name="line-225"></a>	<span class="n">makedialog</span><span class="o">-&gt;</span><span class="n">set_child_rect</span><span class="p">(</span><span class="n">makevb</span><span class="p">);</span>
-<a name="line-226"></a>	<span class="n">makedirname</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">LineEdit</span> <span class="p">);</span>
-<a name="line-227"></a>	<span class="n">makevb</span><span class="o">-&gt;</span><span class="n">add_margin_child</span><span class="p">(</span><span class="s">&quot;Name:&quot;</span><span class="p">,</span><span class="n">makedirname</span><span class="p">);</span>
-<a name="line-228"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">makedialog</span><span class="p">);</span>
-<a name="line-229"></a>	<span class="n">makedialog</span><span class="o">-&gt;</span><span class="n">register_text_enter</span><span class="p">(</span><span class="n">makedirname</span><span class="p">);</span>
-<a name="line-230"></a>	<span class="n">makedialog</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;confirmed&quot;</span><span class="p">,</span><span class="k">this</span><span class="p">,</span><span class="s">&quot;_make_dir_confirm&quot;</span><span class="p">);</span>
-<a name="line-231"></a>	<span class="n">mkdirerr</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">AcceptDialog</span> <span class="p">);</span>
-<a name="line-232"></a>	<span class="n">mkdirerr</span><span class="o">-&gt;</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Could not create folder.&quot;</span><span class="p">);</span>
-<a name="line-233"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">mkdirerr</span><span class="p">);</span>
-<a name="line-234"></a>
-<a name="line-235"></a><span class="p">}</span>
+<a name="line-218"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+<a name="line-219"></a>		<span class="n">hide</span><span class="p">();</span>
+<a name="line-220"></a>	<span class="k">else</span>
+<a name="line-221"></a>		<span class="nf">_popup</span><span class="p">();</span>
+<a name="line-222"></a><span class="p">}</span>
+<a name="line-223"></a>
+<a name="line-224"></a>
+<a name="line-225"></a>
+<a name="line-226"></a><span class="n">ProgressDialog</span><span class="o">::</span><span class="n">ProgressDialog</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-227"></a>
+<a name="line-228"></a>	<span class="n">main</span> <span class="o">=</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
+<a name="line-229"></a>	<span class="n">add_child</span><span class="p">(</span><span class="n">main</span><span class="p">);</span>
+<a name="line-230"></a>	<span class="n">main</span><span class="o">-&gt;</span><span class="n">set_area_as_parent_rect</span><span class="p">();</span>
+<a name="line-231"></a>	<span class="n">set_exclusive</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-232"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

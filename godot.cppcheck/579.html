@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/theora/x86_vc/mmxstate.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/platform/android/java_class_wrapper.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> mmxstate.c</p>
-<a href='579.html#line-204'> syntaxError 204</a><a href='579.html#line-204'> syntaxError 204</a><a href='579.html#line-204'> syntaxError 204</a>
+       <p id="filename"><a href="index.html">Defects:</a> java_class_wrapper.h</p>
+<a href='579.html#line-165'> noExplicitConstructor 165</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -281,260 +281,174 @@
 165
 166
 167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/********************************************************************</span>
-<a name="line-2"></a><span class="cm"> *                                                                  *</span>
-<a name="line-3"></a><span class="cm"> * THIS FILE IS PART OF THE OggTheora SOFTWARE CODEC SOURCE CODE.   *</span>
-<a name="line-4"></a><span class="cm"> * USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     *</span>
-<a name="line-5"></a><span class="cm"> * GOVERNED BY A BSD-STYLE SOURCE LICENSE INCLUDED WITH THIS SOURCE *</span>
-<a name="line-6"></a><span class="cm"> * IN &#39;COPYING&#39;. PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       *</span>
-<a name="line-7"></a><span class="cm"> *                                                                  *</span>
-<a name="line-8"></a><span class="cm"> * THE Theora SOURCE CODE IS COPYRIGHT (C) 2002-2009                *</span>
-<a name="line-9"></a><span class="cm"> * by the Xiph.Org Foundation and contributors http://www.xiph.org/ *</span>
-<a name="line-10"></a><span class="cm"> *                                                                  *</span>
-<a name="line-11"></a><span class="cm"> ********************************************************************</span>
-<a name="line-12"></a>
-<a name="line-13"></a><span class="cm">  function:</span>
-<a name="line-14"></a><span class="cm">    last mod: $Id: mmxstate.c 16584 2009-09-26 19:35:55Z tterribe $</span>
+168</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cp">#ifndef JAVA_CLASS_WRAPPER_H</span>
+<a name="line-2"></a><span class="cp">#define JAVA_CLASS_WRAPPER_H</span>
+<a name="line-3"></a>
+<a name="line-4"></a><span class="cp">#include &quot;reference.h&quot;</span>
+<a name="line-5"></a><span class="cp">#include &lt;jni.h&gt;</span>
+<a name="line-6"></a><span class="cp">#include &lt;android/log.h&gt;</span>
+<a name="line-7"></a>
+<a name="line-8"></a><span class="n">class</span> <span class="n">JavaObject</span><span class="p">;</span>
+<a name="line-9"></a>
+<a name="line-10"></a><span class="n">class</span> <span class="nl">JavaClass</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Reference</span> <span class="p">{</span>
+<a name="line-11"></a>
+<a name="line-12"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">JavaClass</span><span class="p">,</span><span class="n">Reference</span><span class="p">);</span>
+<a name="line-13"></a>
+<a name="line-14"></a>	<span class="k">enum</span> <span class="n">ArgumentType</span> <span class="p">{</span>
 <a name="line-15"></a>
-<a name="line-16"></a><span class="cm"> ********************************************************************/</span>
-<a name="line-17"></a>
-<a name="line-18"></a><span class="cm">/*MMX acceleration of complete fragment reconstruction algorithm.</span>
-<a name="line-19"></a><span class="cm">  Originally written by Rudolf Marek.*/</span>
-<a name="line-20"></a><span class="cp">#include &lt;string.h&gt;</span>
-<a name="line-21"></a><span class="cp">#include &quot;x86int.h&quot;</span>
-<a name="line-22"></a><span class="cp">#include &quot;mmxfrag.h&quot;</span>
-<a name="line-23"></a><span class="cp">#include &quot;mmxloop.h&quot;</span>
-<a name="line-24"></a>
-<a name="line-25"></a><span class="cp">#if defined(OC_X86_ASM)</span>
-<a name="line-26"></a>
-<a name="line-27"></a><span class="kt">void</span> <span class="nf">oc_state_frag_recon_mmx</span><span class="p">(</span><span class="k">const</span> <span class="n">oc_theora_state</span> <span class="o">*</span><span class="n">_state</span><span class="p">,</span><span class="kt">ptrdiff_t</span> <span class="n">_fragi</span><span class="p">,</span>
-<a name="line-28"></a> <span class="kt">int</span> <span class="n">_pli</span><span class="p">,</span><span class="kt">ogg_int16_t</span> <span class="n">_dct_coeffs</span><span class="p">[</span><span class="mi">64</span><span class="p">],</span><span class="kt">int</span> <span class="n">_last_zzi</span><span class="p">,</span><span class="kt">ogg_uint16_t</span> <span class="n">_dc_quant</span><span class="p">){</span>
-<a name="line-29"></a>  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">dst</span><span class="p">;</span>
-<a name="line-30"></a>  <span class="kt">ptrdiff_t</span>      <span class="n">frag_buf_off</span><span class="p">;</span>
-<a name="line-31"></a>  <span class="kt">int</span>            <span class="n">ystride</span><span class="p">;</span>
-<a name="line-32"></a>  <span class="kt">int</span>            <span class="n">mb_mode</span><span class="p">;</span>
-<a name="line-33"></a>  <span class="cm">/*Apply the inverse transform.*/</span>
-<a name="line-34"></a>  <span class="cm">/*Special case only having a DC component.*/</span>
-<a name="line-35"></a>  <span class="k">if</span><span class="p">(</span><span class="n">_last_zzi</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">){</span>
-<a name="line-36"></a>    <span class="cm">/*Note that this value must be unsigned, to keep the __asm__ block from</span>
-<a name="line-37"></a><span class="cm">       sign-extending it when it puts it in a register.*/</span>
-<a name="line-38"></a>    <span class="kt">ogg_uint16_t</span> <span class="n">p</span><span class="p">;</span>
-<a name="line-39"></a>    <span class="cm">/*We round this dequant product (and not any of the others) because there&#39;s</span>
-<a name="line-40"></a><span class="cm">       no iDCT rounding.*/</span>
-<a name="line-41"></a>    <span class="n">p</span><span class="o">=</span><span class="p">(</span><span class="kt">ogg_int16_t</span><span class="p">)(</span><span class="n">_dct_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="kt">ogg_int32_t</span><span class="p">)</span><span class="n">_dc_quant</span><span class="o">+</span><span class="mi">15</span><span class="o">&gt;&gt;</span><span class="mi">5</span><span class="p">);</span>
-<a name="line-42"></a>    <span class="cm">/*Fill _dct_coeffs with p.*/</span>
-<a name="line-43"></a>    <span class="kr">__asm</span><span class="p">{</span>
-<a name="line-44"></a><span class="cp">#define Y eax</span>
-<a name="line-45"></a><span class="cp">#define P ecx</span>
-<a name="line-46"></a>      <span class="n">mov</span> <span class="n">Y</span><span class="p">,</span><span class="n">_dct_coeffs</span>
-<a name="line-47"></a>      <span class="n">movzx</span> <span class="n">P</span><span class="p">,</span><span class="n">p</span>
-<a name="line-48"></a>      <span class="cm">/*mm0=0000 0000 0000 AAAA*/</span>
-<a name="line-49"></a>      <span class="n">movd</span> <span class="n">mm0</span><span class="p">,</span><span class="n">P</span>
-<a name="line-50"></a>      <span class="cm">/*mm0=0000 0000 AAAA AAAA*/</span>
-<a name="line-51"></a>      <span class="n">punpcklwd</span> <span class="n">mm0</span><span class="p">,</span><span class="n">mm0</span>
-<a name="line-52"></a>      <span class="cm">/*mm0=AAAA AAAA AAAA AAAA*/</span>
-<a name="line-53"></a>      <span class="n">punpckldq</span> <span class="n">mm0</span><span class="p">,</span><span class="n">mm0</span>
-<a name="line-54"></a>      <span class="n">movq</span> <span class="p">[</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-55"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">8</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-56"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">16</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-57"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">24</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-58"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">32</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-59"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">40</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-60"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">48</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-61"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">56</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-62"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">64</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-63"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">72</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-64"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">80</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-65"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">88</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-66"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">96</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-67"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">104</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-68"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">112</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-69"></a>      <span class="n">movq</span> <span class="p">[</span><span class="mi">120</span><span class="o">+</span><span class="n">Y</span><span class="p">],</span><span class="n">mm0</span>
-<a name="line-70"></a><span class="cp">#undef Y</span>
-<a name="line-71"></a><span class="cp">#undef P</span>
-<a name="line-72"></a>    <span class="p">}</span>
-<a name="line-73"></a>  <span class="p">}</span>
-<a name="line-74"></a>  <span class="k">else</span><span class="p">{</span>
-<a name="line-75"></a>    <span class="cm">/*Dequantize the DC coefficient.*/</span>
-<a name="line-76"></a>    <span class="n">_dct_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="kt">ogg_int16_t</span><span class="p">)(</span><span class="n">_dct_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">_dc_quant</span><span class="p">);</span>
-<a name="line-77"></a>    <span class="n">oc_idct8x8_mmx</span><span class="p">(</span><span class="n">_dct_coeffs</span><span class="p">,</span><span class="n">_last_zzi</span><span class="p">);</span>
-<a name="line-78"></a>  <span class="p">}</span>
-<a name="line-79"></a>  <span class="cm">/*Fill in the target buffer.*/</span>
-<a name="line-80"></a>  <span class="n">frag_buf_off</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">frag_buf_offs</span><span class="p">[</span><span class="n">_fragi</span><span class="p">];</span>
-<a name="line-81"></a>  <span class="n">mb_mode</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">frags</span><span class="p">[</span><span class="n">_fragi</span><span class="p">].</span><span class="n">mb_mode</span><span class="p">;</span>
-<a name="line-82"></a>  <span class="n">ystride</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_ystride</span><span class="p">[</span><span class="n">_pli</span><span class="p">];</span>
-<a name="line-83"></a>  <span class="n">dst</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_data</span><span class="p">[</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_idx</span><span class="p">[</span><span class="n">OC_FRAME_SELF</span><span class="p">]]</span><span class="o">+</span><span class="n">frag_buf_off</span><span class="p">;</span>
-<a name="line-84"></a>  <span class="k">if</span><span class="p">(</span><span class="n">mb_mode</span><span class="o">==</span><span class="n">OC_MODE_INTRA</span><span class="p">)</span><span class="n">oc_frag_recon_intra_mmx</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span><span class="n">ystride</span><span class="p">,</span><span class="n">_dct_coeffs</span><span class="p">);</span>
-<a name="line-85"></a>  <span class="k">else</span><span class="p">{</span>
-<a name="line-86"></a>    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ref</span><span class="p">;</span>
-<a name="line-87"></a>    <span class="kt">int</span>                  <span class="n">mvoffsets</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<a name="line-88"></a>    <span class="n">ref</span><span class="o">=</span>
-<a name="line-89"></a>     <span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_data</span><span class="p">[</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_idx</span><span class="p">[</span><span class="n">OC_FRAME_FOR_MODE</span><span class="p">(</span><span class="n">mb_mode</span><span class="p">)]]</span>
-<a name="line-90"></a>     <span class="o">+</span><span class="n">frag_buf_off</span><span class="p">;</span>
-<a name="line-91"></a>    <span class="k">if</span><span class="p">(</span><span class="n">oc_state_get_mv_offsets</span><span class="p">(</span><span class="n">_state</span><span class="p">,</span><span class="n">mvoffsets</span><span class="p">,</span><span class="n">_pli</span><span class="p">,</span>
-<a name="line-92"></a>     <span class="n">_state</span><span class="o">-&gt;</span><span class="n">frag_mvs</span><span class="p">[</span><span class="n">_fragi</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">frag_mvs</span><span class="p">[</span><span class="n">_fragi</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">){</span>
-<a name="line-93"></a>      <span class="n">oc_frag_recon_inter2_mmx</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span><span class="n">ref</span><span class="o">+</span><span class="n">mvoffsets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ref</span><span class="o">+</span><span class="n">mvoffsets</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">ystride</span><span class="p">,</span>
-<a name="line-94"></a>       <span class="n">_dct_coeffs</span><span class="p">);</span>
-<a name="line-95"></a>    <span class="p">}</span>
-<a name="line-96"></a>    <span class="k">else</span> <span class="n">oc_frag_recon_inter_mmx</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span><span class="n">ref</span><span class="o">+</span><span class="n">mvoffsets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ystride</span><span class="p">,</span><span class="n">_dct_coeffs</span><span class="p">);</span>
-<a name="line-97"></a>  <span class="p">}</span>
-<a name="line-98"></a><span class="p">}</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class="cm">/*We copy these entire function to inline the actual MMX routines so that we</span>
-<a name="line-101"></a><span class="cm">   use only a single indirect call.*/</span>
+<a name="line-16"></a>		<span class="n">ARG_TYPE_VOID</span><span class="p">,</span>
+<a name="line-17"></a>		<span class="n">ARG_TYPE_BOOLEAN</span><span class="p">,</span>
+<a name="line-18"></a>		<span class="n">ARG_TYPE_BYTE</span><span class="p">,</span>
+<a name="line-19"></a>		<span class="n">ARG_TYPE_CHAR</span><span class="p">,</span>
+<a name="line-20"></a>		<span class="n">ARG_TYPE_SHORT</span><span class="p">,</span>
+<a name="line-21"></a>		<span class="n">ARG_TYPE_INT</span><span class="p">,</span>
+<a name="line-22"></a>		<span class="n">ARG_TYPE_LONG</span><span class="p">,</span>
+<a name="line-23"></a>		<span class="n">ARG_TYPE_FLOAT</span><span class="p">,</span>
+<a name="line-24"></a>		<span class="n">ARG_TYPE_DOUBLE</span><span class="p">,</span>
+<a name="line-25"></a>		<span class="n">ARG_TYPE_STRING</span><span class="p">,</span> <span class="c1">//special case</span>
+<a name="line-26"></a>		<span class="n">ARG_TYPE_CLASS</span><span class="p">,</span>
+<a name="line-27"></a>		<span class="n">ARG_ARRAY_BIT</span><span class="o">=</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">,</span>
+<a name="line-28"></a>		<span class="n">ARG_NUMBER_CLASS_BIT</span><span class="o">=</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">17</span><span class="p">,</span>
+<a name="line-29"></a>		<span class="n">ARG_TYPE_MASK</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">16</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+<a name="line-30"></a>	<span class="p">};</span>
+<a name="line-31"></a>
+<a name="line-32"></a>
+<a name="line-33"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">Variant</span><span class="o">&gt;</span> <span class="n">constant_map</span><span class="p">;</span>
+<a name="line-34"></a>
+<a name="line-35"></a>	<span class="k">struct</span> <span class="n">MethodInfo</span> <span class="p">{</span>
+<a name="line-36"></a>
+<a name="line-37"></a>		<span class="kt">bool</span> <span class="n">_static</span><span class="p">;</span>
+<a name="line-38"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span> <span class="n">param_types</span><span class="p">;</span>
+<a name="line-39"></a>		<span class="n">Vector</span><span class="o">&lt;</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">param_sigs</span><span class="p">;</span>
+<a name="line-40"></a>		<span class="kt">uint32_t</span> <span class="n">return_type</span><span class="p">;</span>
+<a name="line-41"></a>		<span class="n">jmethodID</span> <span class="n">method</span><span class="p">;</span>
+<a name="line-42"></a>
+<a name="line-43"></a>	<span class="p">};</span>
+<a name="line-44"></a>
+<a name="line-45"></a>	<span class="n">_FORCE_INLINE_</span> <span class="k">static</span> <span class="kt">void</span> <span class="nf">_convert_to_variant_type</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_sig</span><span class="p">,</span> <span class="n">Variant</span><span class="o">::</span><span class="n">Type</span><span class="o">&amp;</span> <span class="n">r_type</span><span class="p">,</span> <span class="kt">float</span><span class="o">&amp;</span> <span class="n">likelyhood</span><span class="p">)</span>  <span class="p">{</span>
+<a name="line-46"></a>
+<a name="line-47"></a>		<span class="n">likelyhood</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span>
+<a name="line-48"></a>		<span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">NIL</span><span class="p">;</span>
+<a name="line-49"></a>
+<a name="line-50"></a>		<span class="k">switch</span><span class="p">(</span><span class="n">p_sig</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-51"></a>
+<a name="line-52"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_VOID</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">NIL</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-53"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_BOOLEAN</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-54"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_BOOLEAN</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">BOOL</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-55"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_BYTE</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-56"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_BYTE</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-57"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_CHAR</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-58"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_CHAR</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.2</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-59"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_SHORT</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-60"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_SHORT</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.3</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-61"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_INT</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-62"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_INT</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-63"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_LONG</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-64"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_LONG</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.5</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-65"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_FLOAT</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-66"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_FLOAT</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">REAL</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-67"></a>			<span class="k">case</span> <span class="n">ARG_TYPE_DOUBLE</span><span class="o">|</span><span class="nl">ARG_NUMBER_CLASS_BIT</span><span class="p">:</span>
+<a name="line-68"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_DOUBLE</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">REAL</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.5</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-69"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_STRING</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">STRING</span><span class="p">;</span>  <span class="k">break</span><span class="p">;</span>
+<a name="line-70"></a>			<span class="k">case</span> <span class="nl">ARG_TYPE_CLASS</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">OBJECT</span><span class="p">;</span>  <span class="k">break</span><span class="p">;</span>
+<a name="line-71"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_VOID</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">NIL</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-72"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_BOOLEAN</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">ARRAY</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-73"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_BYTE</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">RAW_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-74"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_CHAR</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">RAW_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.5</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-75"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_SHORT</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.3</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-76"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_INT</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-77"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_LONG</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">INT_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.5</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-78"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_FLOAT</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">REAL_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">1.0</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-79"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_DOUBLE</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">REAL_ARRAY</span><span class="p">;</span> <span class="n">likelyhood</span><span class="o">=</span><span class="mf">0.5</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-80"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_STRING</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">STRING_ARRAY</span><span class="p">;</span>  <span class="k">break</span><span class="p">;</span>
+<a name="line-81"></a>			<span class="k">case</span> <span class="n">ARG_ARRAY_BIT</span><span class="o">|</span><span class="nl">ARG_TYPE_CLASS</span><span class="p">:</span> <span class="n">r_type</span><span class="o">=</span><span class="n">Variant</span><span class="o">::</span><span class="n">ARRAY</span><span class="p">;</span>  <span class="k">break</span><span class="p">;</span>
+<a name="line-82"></a>		<span class="p">}</span>
+<a name="line-83"></a>	<span class="p">}</span>
+<a name="line-84"></a>
+<a name="line-85"></a>	<span class="n">_FORCE_INLINE_</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">_convert_object_to_variant</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span> <span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="n">Variant</span><span class="o">&amp;</span> <span class="n">var</span><span class="p">,</span><span class="kt">uint32_t</span> <span class="n">p_sig</span><span class="p">);</span>
+<a name="line-86"></a>
+<a name="line-87"></a>
+<a name="line-88"></a>
+<a name="line-89"></a>	<span class="kt">bool</span> <span class="nf">_call_method</span><span class="p">(</span><span class="n">JavaObject</span><span class="o">*</span> <span class="n">p_instance</span><span class="p">,</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span> <span class="o">&amp;</span><span class="n">r_error</span><span class="p">,</span><span class="n">Variant</span><span class="o">&amp;</span> <span class="n">ret</span><span class="p">);</span>
+<a name="line-90"></a>
+<a name="line-91"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">JavaClassWrapper</span><span class="p">;</span>
+<a name="line-92"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">MethodInfo</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">methods</span><span class="p">;</span>
+<a name="line-93"></a>	<span class="n">jclass</span> <span class="n">_class</span><span class="p">;</span>
+<a name="line-94"></a>
+<a name="line-95"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-96"></a>
+<a name="line-97"></a>	<span class="n">virtual</span> <span class="n">Variant</span> <span class="n">call</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span> <span class="o">&amp;</span><span class="n">r_error</span><span class="p">);</span>
+<a name="line-98"></a>
+<a name="line-99"></a>	<span class="n">JavaClass</span><span class="p">();</span>
+<a name="line-100"></a>
+<a name="line-101"></a><span class="p">};</span>
 <a name="line-102"></a>
-<a name="line-103"></a><span class="cm">/*Copies the fragments specified by the lists of fragment indices from one</span>
-<a name="line-104"></a><span class="cm">   frame to another.</span>
-<a name="line-105"></a><span class="cm">  _fragis:    A pointer to a list of fragment indices.</span>
-<a name="line-106"></a><span class="cm">  _nfragis:   The number of fragment indices to copy.</span>
-<a name="line-107"></a><span class="cm">  _dst_frame: The reference frame to copy to.</span>
-<a name="line-108"></a><span class="cm">  _src_frame: The reference frame to copy from.</span>
-<a name="line-109"></a><span class="cm">  _pli:       The color plane the fragments lie in.*/</span>
-<a name="line-110"></a><span class="kt">void</span> <span class="nf">oc_state_frag_copy_list_mmx</span><span class="p">(</span><span class="k">const</span> <span class="n">oc_theora_state</span> <span class="o">*</span><span class="n">_state</span><span class="p">,</span>
-<a name="line-111"></a> <span class="k">const</span> <span class="kt">ptrdiff_t</span> <span class="o">*</span><span class="n">_fragis</span><span class="p">,</span><span class="kt">ptrdiff_t</span> <span class="n">_nfragis</span><span class="p">,</span>
-<a name="line-112"></a> <span class="kt">int</span> <span class="n">_dst_frame</span><span class="p">,</span><span class="kt">int</span> <span class="n">_src_frame</span><span class="p">,</span><span class="kt">int</span> <span class="n">_pli</span><span class="p">){</span>
-<a name="line-113"></a>  <span class="k">const</span> <span class="kt">ptrdiff_t</span>     <span class="o">*</span><span class="n">frag_buf_offs</span><span class="p">;</span>
-<a name="line-114"></a>  <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src_frame_data</span><span class="p">;</span>
-<a name="line-115"></a>  <span class="kt">unsigned</span> <span class="kt">char</span>       <span class="o">*</span><span class="n">dst_frame_data</span><span class="p">;</span>
-<a name="line-116"></a>  <span class="kt">ptrdiff_t</span>            <span class="n">fragii</span><span class="p">;</span>
-<a name="line-117"></a>  <span class="kt">int</span>                  <span class="n">ystride</span><span class="p">;</span>
-<a name="line-118"></a>  <span class="n">dst_frame_data</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_data</span><span class="p">[</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_idx</span><span class="p">[</span><span class="n">_dst_frame</span><span class="p">]];</span>
-<a name="line-119"></a>  <span class="n">src_frame_data</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_data</span><span class="p">[</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_idx</span><span class="p">[</span><span class="n">_src_frame</span><span class="p">]];</span>
-<a name="line-120"></a>  <span class="n">ystride</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_ystride</span><span class="p">[</span><span class="n">_pli</span><span class="p">];</span>
-<a name="line-121"></a>  <span class="n">frag_buf_offs</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">frag_buf_offs</span><span class="p">;</span>
-<a name="line-122"></a>  <span class="k">for</span><span class="p">(</span><span class="n">fragii</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">fragii</span><span class="o">&lt;</span><span class="n">_nfragis</span><span class="p">;</span><span class="n">fragii</span><span class="o">++</span><span class="p">){</span>
-<a name="line-123"></a>    <span class="kt">ptrdiff_t</span> <span class="n">frag_buf_off</span><span class="p">;</span>
-<a name="line-124"></a>    <span class="n">frag_buf_off</span><span class="o">=</span><span class="n">frag_buf_offs</span><span class="p">[</span><span class="n">_fragis</span><span class="p">[</span><span class="n">fragii</span><span class="p">]];</span>
-<a name="line-125"></a><span class="cp">#define SRC edx</span>
-<a name="line-126"></a><span class="cp">#define DST eax</span>
-<a name="line-127"></a><span class="cp">#define YSTRIDE ecx</span>
-<a name="line-128"></a><span class="cp">#define YSTRIDE3 edi</span>
-<a name="line-129"></a>    <span class="n">OC_FRAG_COPY_MMX</span><span class="p">(</span><span class="n">dst_frame_data</span><span class="o">+</span><span class="n">frag_buf_off</span><span class="p">,</span>
-<a name="line-130"></a>     <span class="n">src_frame_data</span><span class="o">+</span><span class="n">frag_buf_off</span><span class="p">,</span><span class="n">ystride</span><span class="p">);</span>
-<a name="line-131"></a><span class="cp">#undef SRC</span>
-<a name="line-132"></a><span class="cp">#undef DST</span>
-<a name="line-133"></a><span class="cp">#undef YSTRIDE</span>
-<a name="line-134"></a><span class="cp">#undef YSTRIDE3</span>
-<a name="line-135"></a>  <span class="p">}</span>
-<a name="line-136"></a><span class="p">}</span>
-<a name="line-137"></a>
-<a name="line-138"></a><span class="cm">/*Apply the loop filter to a given set of fragment rows in the given plane.</span>
-<a name="line-139"></a><span class="cm">  The filter may be run on the bottom edge, affecting pixels in the next row of</span>
-<a name="line-140"></a><span class="cm">   fragments, so this row also needs to be available.</span>
-<a name="line-141"></a><span class="cm">  _bv:        The bounding values array.</span>
-<a name="line-142"></a><span class="cm">  _refi:      The index of the frame buffer to filter.</span>
-<a name="line-143"></a><span class="cm">  _pli:       The color plane to filter.</span>
-<a name="line-144"></a><span class="cm">  _fragy0:    The Y coordinate of the first fragment row to filter.</span>
-<a name="line-145"></a><span class="cm">  _fragy_end: The Y coordinate of the fragment row to stop filtering at.*/</span>
-<a name="line-146"></a><span class="kt">void</span> <span class="nf">oc_state_loop_filter_frag_rows_mmx</span><span class="p">(</span><span class="k">const</span> <span class="n">oc_theora_state</span> <span class="o">*</span><span class="n">_state</span><span class="p">,</span>
-<a name="line-147"></a> <span class="kt">int</span> <span class="n">_bv</span><span class="p">[</span><span class="mi">256</span><span class="p">],</span><span class="kt">int</span> <span class="n">_refi</span><span class="p">,</span><span class="kt">int</span> <span class="n">_pli</span><span class="p">,</span><span class="kt">int</span> <span class="n">_fragy0</span><span class="p">,</span><span class="kt">int</span> <span class="n">_fragy_end</span><span class="p">){</span>
-<a name="line-148"></a>  <span class="n">OC_ALIGN8</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span>  <span class="n">ll</span><span class="p">[</span><span class="mi">8</span><span class="p">]);</span>
-<a name="line-149"></a>  <span class="k">const</span> <span class="n">oc_fragment_plane</span> <span class="o">*</span><span class="n">fplane</span><span class="p">;</span>
-<a name="line-150"></a>  <span class="k">const</span> <span class="n">oc_fragment</span>       <span class="o">*</span><span class="n">frags</span><span class="p">;</span>
-<a name="line-151"></a>  <span class="k">const</span> <span class="kt">ptrdiff_t</span>         <span class="o">*</span><span class="n">frag_buf_offs</span><span class="p">;</span>
-<a name="line-152"></a>  <span class="kt">unsigned</span> <span class="kt">char</span>           <span class="o">*</span><span class="n">ref_frame_data</span><span class="p">;</span>
-<a name="line-153"></a>  <span class="kt">ptrdiff_t</span>                <span class="n">fragi_top</span><span class="p">;</span>
-<a name="line-154"></a>  <span class="kt">ptrdiff_t</span>                <span class="n">fragi_bot</span><span class="p">;</span>
-<a name="line-155"></a>  <span class="kt">ptrdiff_t</span>                <span class="n">fragi0</span><span class="p">;</span>
-<a name="line-156"></a>  <span class="kt">ptrdiff_t</span>                <span class="n">fragi0_end</span><span class="p">;</span>
-<a name="line-157"></a>  <span class="kt">int</span>                      <span class="n">ystride</span><span class="p">;</span>
-<a name="line-158"></a>  <span class="kt">int</span>                      <span class="n">nhfrags</span><span class="p">;</span>
-<a name="line-159"></a>  <span class="n">memset</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">loop_filter_limits</span><span class="p">[</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">qis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ll</span><span class="p">));</span>
-<a name="line-160"></a>  <span class="n">fplane</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">fplanes</span><span class="o">+</span><span class="n">_pli</span><span class="p">;</span>
-<a name="line-161"></a>  <span class="n">nhfrags</span><span class="o">=</span><span class="n">fplane</span><span class="o">-&gt;</span><span class="n">nhfrags</span><span class="p">;</span>
-<a name="line-162"></a>  <span class="n">fragi_top</span><span class="o">=</span><span class="n">fplane</span><span class="o">-&gt;</span><span class="n">froffset</span><span class="p">;</span>
-<a name="line-163"></a>  <span class="n">fragi_bot</span><span class="o">=</span><span class="n">fragi_top</span><span class="o">+</span><span class="n">fplane</span><span class="o">-&gt;</span><span class="n">nfrags</span><span class="p">;</span>
-<a name="line-164"></a>  <span class="n">fragi0</span><span class="o">=</span><span class="n">fragi_top</span><span class="o">+</span><span class="n">_fragy0</span><span class="o">*</span><span class="p">(</span><span class="kt">ptrdiff_t</span><span class="p">)</span><span class="n">nhfrags</span><span class="p">;</span>
-<a name="line-165"></a>  <span class="n">fragi0_end</span><span class="o">=</span><span class="n">fragi0</span><span class="o">+</span><span class="p">(</span><span class="n">_fragy_end</span><span class="o">-</span><span class="n">_fragy0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="kt">ptrdiff_t</span><span class="p">)</span><span class="n">nhfrags</span><span class="p">;</span>
-<a name="line-166"></a>  <span class="n">ystride</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_ystride</span><span class="p">[</span><span class="n">_pli</span><span class="p">];</span>
-<a name="line-167"></a>  <span class="n">frags</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">frags</span><span class="p">;</span>
-<a name="line-168"></a>  <span class="n">frag_buf_offs</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">frag_buf_offs</span><span class="p">;</span>
-<a name="line-169"></a>  <span class="n">ref_frame_data</span><span class="o">=</span><span class="n">_state</span><span class="o">-&gt;</span><span class="n">ref_frame_data</span><span class="p">[</span><span class="n">_refi</span><span class="p">];</span>
-<a name="line-170"></a>  <span class="cm">/*The following loops are constructed somewhat non-intuitively on purpose.</span>
-<a name="line-171"></a><span class="cm">    The main idea is: if a block boundary has at least one coded fragment on</span>
-<a name="line-172"></a><span class="cm">     it, the filter is applied to it.</span>
-<a name="line-173"></a><span class="cm">    However, the order that the filters are applied in matters, and VP3 chose</span>
-<a name="line-174"></a><span class="cm">     the somewhat strange ordering used below.*/</span>
-<a name="line-175"></a>  <span class="k">while</span><span class="p">(</span><span class="n">fragi0</span><span class="o">&lt;</span><span class="n">fragi0_end</span><span class="p">){</span>
-<a name="line-176"></a>    <span class="kt">ptrdiff_t</span> <span class="n">fragi</span><span class="p">;</span>
-<a name="line-177"></a>    <span class="kt">ptrdiff_t</span> <span class="n">fragi_end</span><span class="p">;</span>
-<a name="line-178"></a>    <span class="n">fragi</span><span class="o">=</span><span class="n">fragi0</span><span class="p">;</span>
-<a name="line-179"></a>    <span class="n">fragi_end</span><span class="o">=</span><span class="n">fragi</span><span class="o">+</span><span class="n">nhfrags</span><span class="p">;</span>
-<a name="line-180"></a>    <span class="k">while</span><span class="p">(</span><span class="n">fragi</span><span class="o">&lt;</span><span class="n">fragi_end</span><span class="p">){</span>
-<a name="line-181"></a>      <span class="k">if</span><span class="p">(</span><span class="n">frags</span><span class="p">[</span><span class="n">fragi</span><span class="p">].</span><span class="n">coded</span><span class="p">){</span>
-<a name="line-182"></a>        <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ref</span><span class="p">;</span>
-<a name="line-183"></a>        <span class="n">ref</span><span class="o">=</span><span class="n">ref_frame_data</span><span class="o">+</span><span class="n">frag_buf_offs</span><span class="p">[</span><span class="n">fragi</span><span class="p">];</span>
-<a name="line-184"></a><span class="cp">#define PIX eax</span>
-<a name="line-185"></a><span class="cp">#define YSTRIDE3 edi</span>
-<a name="line-186"></a><span class="cp">#define YSTRIDE ecx</span>
-<a name="line-187"></a><span class="cp">#define LL edx</span>
-<a name="line-188"></a><span class="cp">#define D esi</span>
-<a name="line-189"></a><span class="cp">#define D_WORD si</span>
-<a name="line-190"></a>        <span class="k">if</span><span class="p">(</span><span class="n">fragi</span><span class="o">&gt;</span><span class="n">fragi0</span><span class="p">)</span><span class="n">OC_LOOP_FILTER_H_MMX</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="n">ystride</span><span class="p">,</span><span class="n">ll</span><span class="p">);</span>
-<a name="line-191"></a>        <span class="k">if</span><span class="p">(</span><span class="n">fragi0</span><span class="o">&gt;</span><span class="n">fragi_top</span><span class="p">)</span><span class="n">OC_LOOP_FILTER_V_MMX</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="n">ystride</span><span class="p">,</span><span class="n">ll</span><span class="p">);</span>
-<a name="line-192"></a>        <span class="k">if</span><span class="p">(</span><span class="n">fragi</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">fragi_end</span><span class="o">&amp;&amp;!</span><span class="n">frags</span><span class="p">[</span><span class="n">fragi</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">coded</span><span class="p">){</span>
-<a name="line-193"></a>          <span class="n">OC_LOOP_FILTER_H_MMX</span><span class="p">(</span><span class="n">ref</span><span class="o">+</span><span class="mi">8</span><span class="p">,</span><span class="n">ystride</span><span class="p">,</span><span class="n">ll</span><span class="p">);</span>
-<a name="line-194"></a>        <span class="p">}</span>
-<a name="line-195"></a>        <span class="k">if</span><span class="p">(</span><span class="n">fragi</span><span class="o">+</span><span class="n">nhfrags</span><span class="o">&lt;</span><span class="n">fragi_bot</span><span class="o">&amp;&amp;!</span><span class="n">frags</span><span class="p">[</span><span class="n">fragi</span><span class="o">+</span><span class="n">nhfrags</span><span class="p">].</span><span class="n">coded</span><span class="p">){</span>
-<a name="line-196"></a>          <span class="n">OC_LOOP_FILTER_V_MMX</span><span class="p">(</span><span class="n">ref</span><span class="o">+</span><span class="p">(</span><span class="n">ystride</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">),</span><span class="n">ystride</span><span class="p">,</span><span class="n">ll</span><span class="p">);</span>
-<a name="line-197"></a>        <span class="p">}</span>
-<a name="line-198"></a><span class="cp">#undef PIX</span>
-<a name="line-199"></a><span class="cp">#undef YSTRIDE3</span>
-<a name="line-200"></a><span class="cp">#undef YSTRIDE</span>
-<a name="line-201"></a><span class="cp">#undef LL</span>
-<a name="line-202"></a><span class="cp">#undef D</span>
-<a name="line-203"></a><span class="cp">#undef D_WORD</span>
-<a name="line-204"></a><span class="hll">      <span class="p">}</span><span class='error2'>&lt;--- Invalid number of character '{' when these macros are defined: 'OC_X86_ASM'.</span><span class='error2'>&lt;--- Invalid number of character '{' when these macros are defined: 'OC_X86_ASM;_MSC_VER'.</span><span class='error2'>&lt;--- Invalid number of character '{' when these macros are defined: 'OC_X86_ASM;__GNUC__'.</span>
-</span><a name="line-205"></a>      <span class="n">fragi</span><span class="o">++</span><span class="p">;</span>
-<a name="line-206"></a>    <span class="p">}</span>
-<a name="line-207"></a>    <span class="n">fragi0</span><span class="o">+=</span><span class="n">nhfrags</span><span class="p">;</span>
-<a name="line-208"></a>  <span class="p">}</span>
-<a name="line-209"></a><span class="p">}</span>
-<a name="line-210"></a>
-<a name="line-211"></a><span class="cp">#endif</span>
+<a name="line-103"></a>
+<a name="line-104"></a><span class="n">class</span> <span class="nl">JavaObject</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Reference</span> <span class="p">{</span>
+<a name="line-105"></a>
+<a name="line-106"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">JavaObject</span><span class="p">,</span><span class="n">Reference</span><span class="p">);</span>
+<a name="line-107"></a>
+<a name="line-108"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">JavaClass</span><span class="o">&gt;</span> <span class="n">base_class</span><span class="p">;</span>
+<a name="line-109"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">JavaClass</span><span class="p">;</span>
+<a name="line-110"></a>
+<a name="line-111"></a>	<span class="n">jobject</span> <span class="n">instance</span><span class="p">;</span>
+<a name="line-112"></a>
+<a name="line-113"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-114"></a>
+<a name="line-115"></a>	<span class="n">virtual</span> <span class="n">Variant</span> <span class="n">call</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span><span class="k">const</span> <span class="n">Variant</span><span class="o">**</span> <span class="n">p_args</span><span class="p">,</span><span class="kt">int</span> <span class="n">p_argcount</span><span class="p">,</span><span class="n">Variant</span><span class="o">::</span><span class="n">CallError</span> <span class="o">&amp;</span><span class="n">r_error</span><span class="p">);</span>
+<a name="line-116"></a>
+<a name="line-117"></a>	<span class="n">JavaObject</span><span class="p">(</span><span class="k">const</span> <span class="n">Ref</span><span class="o">&lt;</span><span class="n">JavaClass</span><span class="o">&gt;&amp;</span> <span class="n">p_base</span><span class="p">,</span><span class="n">jobject</span> <span class="o">*</span><span class="n">p_instance</span><span class="p">);</span>
+<a name="line-118"></a>	<span class="o">~</span><span class="n">JavaObject</span><span class="p">();</span>
+<a name="line-119"></a>
+<a name="line-120"></a><span class="p">};</span>
+<a name="line-121"></a>
+<a name="line-122"></a>
+<a name="line-123"></a><span class="n">class</span> <span class="nl">JavaClassWrapper</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
+<a name="line-124"></a>
+<a name="line-125"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">JavaClassWrapper</span><span class="p">,</span><span class="n">Object</span><span class="p">);</span>
+<a name="line-126"></a>
+<a name="line-127"></a>
+<a name="line-128"></a>	<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">Ref</span><span class="o">&lt;</span><span class="n">JavaClass</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">class_cache</span><span class="p">;</span>
+<a name="line-129"></a><span class="n">friend</span> <span class="n">class</span> <span class="n">JavaClass</span><span class="p">;</span>
+<a name="line-130"></a>	<span class="n">jclass</span> <span class="n">activityClass</span><span class="p">;</span>
+<a name="line-131"></a>	<span class="n">jmethodID</span> <span class="n">findClass</span><span class="p">;</span>
+<a name="line-132"></a>	<span class="n">jmethodID</span> <span class="n">getDeclaredMethods</span><span class="p">;</span>
+<a name="line-133"></a>	<span class="n">jmethodID</span> <span class="n">getFields</span><span class="p">;</span>
+<a name="line-134"></a>	<span class="n">jmethodID</span> <span class="n">getParameterTypes</span><span class="p">;</span>
+<a name="line-135"></a>	<span class="n">jmethodID</span> <span class="n">getReturnType</span><span class="p">;</span>
+<a name="line-136"></a>	<span class="n">jmethodID</span> <span class="n">getModifiers</span><span class="p">;</span>
+<a name="line-137"></a>	<span class="n">jmethodID</span> <span class="n">getName</span><span class="p">;</span>
+<a name="line-138"></a>	<span class="n">jmethodID</span> <span class="n">Class_getName</span><span class="p">;</span>
+<a name="line-139"></a>	<span class="n">jmethodID</span> <span class="n">Field_getName</span><span class="p">;</span>
+<a name="line-140"></a>	<span class="n">jmethodID</span> <span class="n">Field_getModifiers</span><span class="p">;</span>
+<a name="line-141"></a>	<span class="n">jmethodID</span> <span class="n">Field_get</span><span class="p">;</span>
+<a name="line-142"></a>	<span class="n">jmethodID</span> <span class="n">Boolean_booleanValue</span><span class="p">;</span>
+<a name="line-143"></a>	<span class="n">jmethodID</span> <span class="n">Byte_byteValue</span><span class="p">;</span>
+<a name="line-144"></a>	<span class="n">jmethodID</span> <span class="n">Character_characterValue</span><span class="p">;</span>
+<a name="line-145"></a>	<span class="n">jmethodID</span> <span class="n">Short_shortValue</span><span class="p">;</span>
+<a name="line-146"></a>	<span class="n">jmethodID</span> <span class="n">Integer_integerValue</span><span class="p">;</span>
+<a name="line-147"></a>	<span class="n">jmethodID</span> <span class="n">Long_longValue</span><span class="p">;</span>
+<a name="line-148"></a>	<span class="n">jmethodID</span> <span class="n">Float_floatValue</span><span class="p">;</span>
+<a name="line-149"></a>	<span class="n">jmethodID</span> <span class="n">Double_doubleValue</span><span class="p">;</span>
+<a name="line-150"></a>	<span class="n">jobject</span> <span class="n">classLoader</span><span class="p">;</span>
+<a name="line-151"></a>
+<a name="line-152"></a>	<span class="kt">bool</span> <span class="nf">_get_type_sig</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">obj</span><span class="p">,</span> <span class="kt">uint32_t</span><span class="o">&amp;</span> <span class="n">sig</span><span class="p">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">strsig</span><span class="p">);</span>
+<a name="line-153"></a>
+<a name="line-154"></a>	<span class="k">static</span> <span class="n">JavaClassWrapper</span> <span class="o">*</span><span class="n">singleton</span><span class="p">;</span>
+<a name="line-155"></a>
+<a name="line-156"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-157"></a>
+<a name="line-158"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
+<a name="line-159"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-160"></a>
+<a name="line-161"></a>	<span class="k">static</span> <span class="n">JavaClassWrapper</span> <span class="o">*</span><span class="n">get_singleton</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">singleton</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-162"></a>
+<a name="line-163"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">JavaClass</span><span class="o">&gt;</span> <span class="n">wrap</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_class</span><span class="p">);</span>
+<a name="line-164"></a>
+<a name="line-165"></a><span class="hll">	<span class="n">JavaClassWrapper</span><span class="p">(</span><span class="n">jobject</span> <span class="n">p_activity</span><span class="o">=</span><span class="nb">NULL</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'JavaClassWrapper' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;JavaClassWrapper&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
+</span><a name="line-166"></a><span class="p">};</span>
+<a name="line-167"></a>
+<a name="line-168"></a><span class="cp">#endif </span><span class="c1">// JAVA_CLASS_WRAPPER_H</span>
 </pre></div>
 </td></tr></table>
       </div>

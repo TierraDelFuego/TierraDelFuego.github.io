@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: servers/audio/audio_driver_dummy.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/tools/editor/plugins/animation_player_editor_plugin.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> audio_driver_dummy.cpp</p>
-<a href='785.html#line-62'> cstyleCast 62</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a><a href='785.html#line-135'> uninitMemberVar 135</a>
+       <p id="filename"><a href="index.html">Defects:</a> animation_player_editor_plugin.h</p>
+<a href='785.html#line-162'> noExplicitConstructor 162</a><a href='785.html#line-183'> noExplicitConstructor 183</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -257,8 +257,52 @@
 141
 142
 143
-144</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  audio_driver_dummy.cpp                                               */</span>
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  animation_player_editor_plugin.h                                     */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -285,122 +329,166 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;audio_driver_dummy.h&quot;</span>
-<a name="line-30"></a>
-<a name="line-31"></a><span class="cp">#include &quot;globals.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;os/os.h&quot;</span>
-<a name="line-33"></a>
-<a name="line-34"></a>
-<a name="line-35"></a>
-<a name="line-36"></a><span class="n">Error</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">init</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-37"></a>
-<a name="line-38"></a>	<span class="n">active</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-39"></a>	<span class="n">thread_exited</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-40"></a>	<span class="n">exit_thread</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
-<a name="line-41"></a>	<span class="n">pcm_open</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-<a name="line-42"></a>	<span class="n">samples_in</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-43"></a>
+<a name="line-29"></a><span class="cp">#ifndef ANIMATION_PLAYER_EDITOR_PLUGIN_H</span>
+<a name="line-30"></a><span class="cp">#define ANIMATION_PLAYER_EDITOR_PLUGIN_H</span>
+<a name="line-31"></a>
+<a name="line-32"></a><span class="cp">#include &quot;tools/editor/editor_plugin.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;tools/editor/editor_node.h&quot;</span>
+<a name="line-34"></a><span class="cp">#include &quot;scene/animation/animation_player.h&quot;</span>
+<a name="line-35"></a><span class="cp">#include &quot;scene/gui/dialogs.h&quot;</span>
+<a name="line-36"></a><span class="cp">#include &quot;scene/gui/texture_button.h&quot;</span>
+<a name="line-37"></a><span class="cp">#include &quot;scene/gui/slider.h&quot;</span>
+<a name="line-38"></a><span class="cp">#include &quot;scene/gui/spin_box.h&quot;</span>
+<a name="line-39"></a>
+<a name="line-40"></a>
+<a name="line-41"></a><span class="cm">/**</span>
+<a name="line-42"></a><span class="cm">	@author Juan Linietsky &lt;reduzio@gmail.com&gt;</span>
+<a name="line-43"></a><span class="cm">*/</span>
 <a name="line-44"></a>
-<a name="line-45"></a>	<span class="n">mix_rate</span> <span class="o">=</span> <span class="mi">44100</span><span class="p">;</span>
-<a name="line-46"></a>	<span class="n">output_format</span> <span class="o">=</span> <span class="n">OUTPUT_STEREO</span><span class="p">;</span>
-<a name="line-47"></a>	<span class="n">channels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<a name="line-45"></a><span class="n">class</span> <span class="nl">AnimationPlayerEditor</span> <span class="p">:</span> <span class="n">public</span> <span class="n">VBoxContainer</span> <span class="p">{</span>
+<a name="line-46"></a>
+<a name="line-47"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span><span class="n">AnimationPlayerEditor</span><span class="p">,</span> <span class="n">VBoxContainer</span> <span class="p">);</span>
 <a name="line-48"></a>
-<a name="line-49"></a>	<span class="kt">int</span> <span class="n">latency</span> <span class="o">=</span> <span class="n">GLOBAL_DEF</span><span class="p">(</span><span class="s">&quot;audio/output_latency&quot;</span><span class="p">,</span><span class="mi">25</span><span class="p">);</span>
-<a name="line-50"></a>	<span class="n">buffer_size</span> <span class="o">=</span> <span class="n">nearest_power_of_2</span><span class="p">(</span> <span class="n">latency</span> <span class="o">*</span> <span class="n">mix_rate</span> <span class="o">/</span> <span class="mi">1000</span> <span class="p">);</span>
+<a name="line-49"></a>	<span class="n">EditorNode</span> <span class="o">*</span><span class="n">editor</span><span class="p">;</span>
+<a name="line-50"></a>	<span class="n">AnimationPlayer</span> <span class="o">*</span><span class="n">player</span><span class="p">;</span>
 <a name="line-51"></a>
-<a name="line-52"></a>	<span class="n">samples_in</span> <span class="o">=</span> <span class="n">memnew_arr</span><span class="p">(</span><span class="kt">int32_t</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">*</span><span class="n">channels</span><span class="p">);</span>
-<a name="line-53"></a>
-<a name="line-54"></a>	<span class="n">mutex</span><span class="o">=</span><span class="n">Mutex</span><span class="o">::</span><span class="n">create</span><span class="p">();</span>
-<a name="line-55"></a>	<span class="kr">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">thread_func</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<a name="line-56"></a>
-<a name="line-57"></a>	<span class="k">return</span> <span class="n">OK</span><span class="p">;</span>
-<a name="line-58"></a><span class="p">};</span>
-<a name="line-59"></a>
-<a name="line-60"></a><span class="kt">void</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">thread_func</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">p_udata</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class="hll">	<span class="n">AudioDriverDummy</span><span class="o">*</span> <span class="n">ad</span> <span class="o">=</span> <span class="p">(</span><span class="n">AudioDriverDummy</span><span class="o">*</span><span class="p">)</span><span class="n">p_udata</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div>
-</span><a name="line-63"></a>
-<a name="line-64"></a>	<span class="kt">uint64_t</span> <span class="n">usdelay</span> <span class="o">=</span> <span class="p">(</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">buffer_size</span> <span class="o">/</span> <span class="kt">float</span><span class="p">(</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">mix_rate</span><span class="p">))</span><span class="o">*</span><span class="mi">1000000</span><span class="p">;</span>
-<a name="line-65"></a>
-<a name="line-66"></a>
-<a name="line-67"></a>	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">exit_thread</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-68"></a>
-<a name="line-69"></a>
-<a name="line-70"></a>		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">active</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-71"></a>
-<a name="line-72"></a>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<a name="line-73"></a>
-<a name="line-74"></a>			<span class="n">ad</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">();</span>
-<a name="line-75"></a>
-<a name="line-76"></a>			<span class="n">ad</span><span class="o">-&gt;</span><span class="n">audio_server_process</span><span class="p">(</span><span class="n">ad</span><span class="o">-&gt;</span><span class="n">buffer_size</span><span class="p">,</span> <span class="n">ad</span><span class="o">-&gt;</span><span class="n">samples_in</span><span class="p">);</span>
-<a name="line-77"></a>
-<a name="line-78"></a>			<span class="n">ad</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
-<a name="line-79"></a>
-<a name="line-80"></a>		<span class="p">};</span>
-<a name="line-81"></a>
-<a name="line-82"></a>		<span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">delay_usec</span><span class="p">(</span><span class="n">usdelay</span><span class="p">);</span>
-<a name="line-83"></a>
-<a name="line-84"></a>	<span class="p">};</span>
-<a name="line-85"></a>
-<a name="line-86"></a>	<span class="n">ad</span><span class="o">-&gt;</span><span class="n">thread_exited</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-<a name="line-87"></a>
-<a name="line-88"></a><span class="p">};</span>
-<a name="line-89"></a>
-<a name="line-90"></a><span class="kt">void</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">start</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-91"></a>
-<a name="line-92"></a>	<span class="n">active</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-93"></a><span class="p">};</span>
+<a name="line-52"></a>	<span class="k">enum</span> <span class="p">{</span>
+<a name="line-53"></a>		<span class="n">TOOL_COPY_ANIM</span><span class="p">,</span>
+<a name="line-54"></a>		<span class="n">TOOL_PASTE_ANIM</span><span class="p">,</span>
+<a name="line-55"></a>		<span class="n">TOOL_EDIT_RESOURCE</span>
+<a name="line-56"></a>	<span class="p">};</span>
+<a name="line-57"></a>
+<a name="line-58"></a>	<span class="n">OptionButton</span> <span class="o">*</span><span class="n">animation</span><span class="p">;</span>
+<a name="line-59"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">stop</span><span class="p">;</span>
+<a name="line-60"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">play</span><span class="p">;</span>
+<a name="line-61"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">play_from</span><span class="p">;</span>
+<a name="line-62"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">play_bw</span><span class="p">;</span>
+<a name="line-63"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">play_bw_from</span><span class="p">;</span>
+<a name="line-64"></a>
+<a name="line-65"></a><span class="c1">//	Button *pause;</span>
+<a name="line-66"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">add_anim</span><span class="p">;</span>
+<a name="line-67"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">autoplay</span><span class="p">;</span>
+<a name="line-68"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">rename_anim</span><span class="p">;</span>
+<a name="line-69"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">duplicate_anim</span><span class="p">;</span>
+<a name="line-70"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">edit_anim</span><span class="p">;</span>
+<a name="line-71"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">resource_edit_anim</span><span class="p">;</span>
+<a name="line-72"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">load_anim</span><span class="p">;</span>
+<a name="line-73"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">blend_anim</span><span class="p">;</span>
+<a name="line-74"></a>	<span class="n">Button</span> <span class="o">*</span><span class="n">remove_anim</span><span class="p">;</span>
+<a name="line-75"></a>	<span class="n">MenuButton</span> <span class="o">*</span><span class="n">tool_anim</span><span class="p">;</span>
+<a name="line-76"></a>	<span class="n">TextureButton</span> <span class="o">*</span><span class="n">pin</span><span class="p">;</span>
+<a name="line-77"></a>	<span class="n">Label</span> <span class="o">*</span><span class="n">nodename</span><span class="p">;</span>
+<a name="line-78"></a>	<span class="n">SpinBox</span> <span class="o">*</span><span class="n">frame</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="n">HSlider</span> <span class="o">*</span><span class="n">seek</span><span class="p">;</span>
+<a name="line-80"></a>	<span class="n">LineEdit</span> <span class="o">*</span><span class="n">scale</span><span class="p">;</span>
+<a name="line-81"></a>	<span class="n">LineEdit</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<a name="line-82"></a>	<span class="n">Label</span> <span class="o">*</span><span class="n">name_title</span><span class="p">;</span>
+<a name="line-83"></a>	<span class="n">UndoRedo</span> <span class="o">*</span><span class="n">undo_redo</span><span class="p">;</span>
+<a name="line-84"></a>	<span class="n">Ref</span><span class="o">&lt;</span><span class="n">Texture</span><span class="o">&gt;</span> <span class="n">autoplay_icon</span><span class="p">;</span>
+<a name="line-85"></a>	<span class="kt">bool</span> <span class="n">last_active</span><span class="p">;</span>
+<a name="line-86"></a>
+<a name="line-87"></a>	<span class="n">EditorFileDialog</span> <span class="o">*</span><span class="n">file</span><span class="p">;</span>
+<a name="line-88"></a>
+<a name="line-89"></a>	<span class="k">struct</span> <span class="n">BlendEditor</span> <span class="p">{</span>
+<a name="line-90"></a>
+<a name="line-91"></a>		<span class="n">AcceptDialog</span> <span class="o">*</span> <span class="n">dialog</span><span class="p">;</span>
+<a name="line-92"></a>		<span class="n">Tree</span> <span class="o">*</span><span class="n">tree</span><span class="p">;</span>
+<a name="line-93"></a>		<span class="n">LineEdit</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
 <a name="line-94"></a>
-<a name="line-95"></a><span class="kt">int</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">get_mix_rate</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-95"></a>	<span class="p">}</span> <span class="n">blend_editor</span><span class="p">;</span>
 <a name="line-96"></a>
-<a name="line-97"></a>	<span class="k">return</span> <span class="n">mix_rate</span><span class="p">;</span>
-<a name="line-98"></a><span class="p">};</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class="n">AudioDriverSW</span><span class="o">::</span><span class="n">OutputFormat</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">get_output_format</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+<a name="line-97"></a>
+<a name="line-98"></a>	<span class="n">ConfirmationDialog</span> <span class="o">*</span><span class="n">name_dialog</span><span class="p">;</span>
+<a name="line-99"></a>	<span class="n">ConfirmationDialog</span> <span class="o">*</span><span class="n">error_dialog</span><span class="p">;</span>
+<a name="line-100"></a>	<span class="kt">bool</span> <span class="n">renaming</span><span class="p">;</span>
 <a name="line-101"></a>
-<a name="line-102"></a>	<span class="k">return</span> <span class="n">output_format</span><span class="p">;</span>
-<a name="line-103"></a><span class="p">};</span>
-<a name="line-104"></a><span class="kt">void</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">lock</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-102"></a>
+<a name="line-103"></a>	<span class="kt">bool</span> <span class="n">updating</span><span class="p">;</span>
+<a name="line-104"></a>	<span class="kt">bool</span> <span class="n">updating_blends</span><span class="p">;</span>
 <a name="line-105"></a>
-<a name="line-106"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">thread</span> <span class="o">||</span> <span class="o">!</span><span class="n">mutex</span><span class="p">)</span>
-<a name="line-107"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-108"></a>	<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">();</span>
-<a name="line-109"></a><span class="p">};</span>
-<a name="line-110"></a><span class="kt">void</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">unlock</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-111"></a>
-<a name="line-112"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">thread</span> <span class="o">||</span> <span class="o">!</span><span class="n">mutex</span><span class="p">)</span>
-<a name="line-113"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-114"></a>	<span class="n">mutex</span><span class="o">-&gt;</span><span class="n">unlock</span><span class="p">();</span>
-<a name="line-115"></a><span class="p">};</span>
-<a name="line-116"></a>
-<a name="line-117"></a><span class="kt">void</span> <span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">finish</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-118"></a>
-<a name="line-119"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">thread</span><span class="p">)</span>
-<a name="line-120"></a>		<span class="k">return</span><span class="p">;</span>
-<a name="line-121"></a>
-<a name="line-122"></a>	<span class="n">exit_thread</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<a name="line-123"></a>	<span class="n">Thread</span><span class="o">::</span><span class="n">wait_to_finish</span><span class="p">(</span><span class="kr">thread</span><span class="p">);</span>
-<a name="line-124"></a>
-<a name="line-125"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">samples_in</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-126"></a>		<span class="n">memdelete_arr</span><span class="p">(</span><span class="n">samples_in</span><span class="p">);</span>
-<a name="line-127"></a>	<span class="p">};</span>
-<a name="line-128"></a>
-<a name="line-129"></a>	<span class="n">memdelete</span><span class="p">(</span><span class="kr">thread</span><span class="p">);</span>
-<a name="line-130"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">mutex</span><span class="p">)</span>
-<a name="line-131"></a>		<span class="n">memdelete</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
-<a name="line-132"></a>	<span class="kr">thread</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-133"></a><span class="p">};</span>
+<a name="line-106"></a>	<span class="kt">void</span> <span class="nf">_select_anim_by_name</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_anim</span><span class="p">);</span>
+<a name="line-107"></a>	<span class="kt">void</span> <span class="nf">_play_pressed</span><span class="p">();</span>
+<a name="line-108"></a>	<span class="kt">void</span> <span class="nf">_play_from_pressed</span><span class="p">();</span>
+<a name="line-109"></a>	<span class="kt">void</span> <span class="nf">_play_bw_pressed</span><span class="p">();</span>
+<a name="line-110"></a>	<span class="kt">void</span> <span class="nf">_play_bw_from_pressed</span><span class="p">();</span>
+<a name="line-111"></a>	<span class="kt">void</span> <span class="nf">_autoplay_pressed</span><span class="p">();</span>
+<a name="line-112"></a>	<span class="kt">void</span> <span class="nf">_stop_pressed</span><span class="p">();</span>
+<a name="line-113"></a>	<span class="kt">void</span> <span class="nf">_pause_pressed</span><span class="p">();</span>
+<a name="line-114"></a>	<span class="kt">void</span> <span class="nf">_animation_selected</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_which</span><span class="p">);</span>
+<a name="line-115"></a>	<span class="kt">void</span> <span class="nf">_animation_new</span><span class="p">();</span>
+<a name="line-116"></a>	<span class="kt">void</span> <span class="nf">_animation_rename</span><span class="p">();</span>
+<a name="line-117"></a>	<span class="kt">void</span> <span class="nf">_animation_name_edited</span><span class="p">();</span>
+<a name="line-118"></a>	<span class="kt">void</span> <span class="nf">_animation_load</span><span class="p">();</span>
+<a name="line-119"></a>	<span class="kt">void</span> <span class="nf">_animation_remove</span><span class="p">();</span>
+<a name="line-120"></a>	<span class="kt">void</span> <span class="nf">_animation_blend</span><span class="p">();</span>
+<a name="line-121"></a>	<span class="kt">void</span> <span class="nf">_animation_edit</span><span class="p">();</span>
+<a name="line-122"></a>	<span class="kt">void</span> <span class="nf">_animation_duplicate</span><span class="p">();</span>
+<a name="line-123"></a>	<span class="kt">void</span> <span class="nf">_animation_resource_edit</span><span class="p">();</span>
+<a name="line-124"></a>	<span class="kt">void</span> <span class="nf">_scale_changed</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_scale</span><span class="p">);</span>
+<a name="line-125"></a>	<span class="kt">void</span> <span class="nf">_file_selected</span><span class="p">(</span><span class="n">String</span> <span class="n">p_file</span><span class="p">);</span>
+<a name="line-126"></a>	<span class="kt">void</span> <span class="nf">_seek_frame_changed</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_frame</span><span class="p">);</span>
+<a name="line-127"></a>	<span class="kt">void</span> <span class="nf">_seek_value_changed</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_value</span><span class="p">);</span>
+<a name="line-128"></a>	<span class="kt">void</span> <span class="nf">_blend_editor_next_changed</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">p_string</span><span class="p">);</span>
+<a name="line-129"></a>
+<a name="line-130"></a>	<span class="kt">void</span> <span class="nf">_list_changed</span><span class="p">();</span>
+<a name="line-131"></a>	<span class="kt">void</span> <span class="nf">_update_animation</span><span class="p">();</span>
+<a name="line-132"></a>	<span class="kt">void</span> <span class="nf">_update_player</span><span class="p">();</span>
+<a name="line-133"></a>	<span class="kt">void</span> <span class="nf">_blend_edited</span><span class="p">();</span>
 <a name="line-134"></a>
-<a name="line-135"></a><span class="hll"><span class="n">AudioDriverDummy</span><span class="o">::</span><span class="n">AudioDriverDummy</span><span class="p">()</span> <span class="p">{</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::samples_in' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::buffer_size' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::mix_rate' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::channels' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::active' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::thread_exited' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::exit_thread' is not initialized in the constructor.</span><span class='error2'>&lt;--- Member variable 'AudioDriverDummy::pcm_open' is not initialized in the constructor.</span>
-</span><a name="line-136"></a>
-<a name="line-137"></a>	<span class="n">mutex</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-138"></a>	<span class="kr">thread</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<a name="line-135"></a>
+<a name="line-136"></a>	<span class="kt">void</span> <span class="nf">_hide_anim_editors</span><span class="p">();</span>
+<a name="line-137"></a>
+<a name="line-138"></a>	<span class="kt">void</span> <span class="nf">_animation_player_changed</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_pl</span><span class="p">);</span>
 <a name="line-139"></a>
-<a name="line-140"></a><span class="p">};</span>
-<a name="line-141"></a>
-<a name="line-142"></a><span class="n">AudioDriverDummy</span><span class="o">::~</span><span class="n">AudioDriverDummy</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-143"></a>
-<a name="line-144"></a><span class="p">};</span>
+<a name="line-140"></a>	<span class="kt">void</span> <span class="nf">_animation_key_editor_seek</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_pos</span><span class="p">);</span>
+<a name="line-141"></a>	<span class="kt">void</span> <span class="nf">_animation_key_editor_anim_len_changed</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_new</span><span class="p">);</span>
+<a name="line-142"></a>	<span class="kt">void</span> <span class="nf">_unhandled_key_input</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_ev</span><span class="p">);</span>
+<a name="line-143"></a>	<span class="kt">void</span> <span class="nf">_animation_tool_menu</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_option</span><span class="p">);</span>
+<a name="line-144"></a>
+<a name="line-145"></a>	<span class="n">AnimationPlayerEditor</span><span class="p">();</span>
+<a name="line-146"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-147"></a>
+<a name="line-148"></a>	<span class="kt">void</span> <span class="n">_notification</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_what</span><span class="p">);</span>
+<a name="line-149"></a>	<span class="kt">void</span> <span class="nf">_input_event</span><span class="p">(</span><span class="n">InputEvent</span> <span class="n">p_event</span><span class="p">);</span>
+<a name="line-150"></a>	<span class="kt">void</span> <span class="nf">_node_removed</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">p_node</span><span class="p">);</span>
+<a name="line-151"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="nf">_bind_methods</span><span class="p">();</span>
+<a name="line-152"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-153"></a>
+<a name="line-154"></a>	<span class="n">Dictionary</span> <span class="n">get_state</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-155"></a>	<span class="kt">void</span> <span class="nf">set_state</span><span class="p">(</span><span class="k">const</span> <span class="n">Dictionary</span><span class="o">&amp;</span> <span class="n">p_state</span><span class="p">);</span>
+<a name="line-156"></a>
+<a name="line-157"></a>
+<a name="line-158"></a>	<span class="kt">void</span> <span class="nf">ensure_visibility</span><span class="p">();</span>
+<a name="line-159"></a>
+<a name="line-160"></a>	<span class="kt">void</span> <span class="nf">set_undo_redo</span><span class="p">(</span><span class="n">UndoRedo</span> <span class="o">*</span><span class="n">p_undo_redo</span><span class="p">)</span> <span class="p">{</span> <span class="n">undo_redo</span><span class="o">=</span><span class="n">p_undo_redo</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-161"></a>	<span class="kt">void</span> <span class="nf">edit</span><span class="p">(</span><span class="n">AnimationPlayer</span> <span class="o">*</span><span class="n">p_player</span><span class="p">);</span>
+<a name="line-162"></a><span class="hll">	<span class="n">AnimationPlayerEditor</span><span class="p">(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="n">p_editor</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'AnimationPlayerEditor' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;AnimationPlayerEditor&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
+</span><a name="line-163"></a><span class="p">};</span>
+<a name="line-164"></a>
+<a name="line-165"></a><span class="n">class</span> <span class="nl">AnimationPlayerEditorPlugin</span> <span class="p">:</span> <span class="n">public</span> <span class="n">EditorPlugin</span> <span class="p">{</span>
+<a name="line-166"></a>
+<a name="line-167"></a>	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">AnimationPlayerEditorPlugin</span><span class="p">,</span> <span class="n">EditorPlugin</span> <span class="p">);</span>
+<a name="line-168"></a>
+<a name="line-169"></a>	<span class="n">AnimationPlayerEditor</span> <span class="o">*</span><span class="n">anim_editor</span><span class="p">;</span>
+<a name="line-170"></a>	<span class="n">EditorNode</span> <span class="o">*</span><span class="n">editor</span><span class="p">;</span>
+<a name="line-171"></a>
+<a name="line-172"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-173"></a>
+<a name="line-174"></a>	<span class="n">virtual</span> <span class="n">Dictionary</span> <span class="n">get_state</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">anim_editor</span><span class="o">-&gt;</span><span class="n">get_state</span><span class="p">();</span> <span class="p">}</span>
+<a name="line-175"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">set_state</span><span class="p">(</span><span class="k">const</span> <span class="n">Dictionary</span><span class="o">&amp;</span> <span class="n">p_state</span><span class="p">)</span>  <span class="p">{</span> <span class="n">anim_editor</span><span class="o">-&gt;</span><span class="n">set_state</span><span class="p">(</span><span class="n">p_state</span><span class="p">);</span> <span class="p">}</span>
+<a name="line-176"></a>
+<a name="line-177"></a>	<span class="n">virtual</span> <span class="n">String</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Anim&quot;</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-178"></a>	<span class="kt">bool</span> <span class="n">has_main_screen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-179"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="n">edit</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_node</span><span class="p">);</span>
+<a name="line-180"></a>	<span class="n">virtual</span> <span class="kt">bool</span> <span class="n">handles</span><span class="p">(</span><span class="n">Object</span> <span class="o">*</span><span class="n">p_node</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-181"></a>	<span class="n">virtual</span> <span class="kt">void</span> <span class="nf">make_visible</span><span class="p">(</span><span class="kt">bool</span> <span class="n">p_visible</span><span class="p">);</span>
+<a name="line-182"></a>
+<a name="line-183"></a><span class="hll">	<span class="n">AnimationPlayerEditorPlugin</span><span class="p">(</span><span class="n">EditorNode</span> <span class="o">*</span><span class="n">p_node</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'AnimationPlayerEditorPlugin' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;AnimationPlayerEditorPlugin&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
+</span><a name="line-184"></a>	<span class="o">~</span><span class="n">AnimationPlayerEditorPlugin</span><span class="p">();</span>
+<a name="line-185"></a>
+<a name="line-186"></a><span class="p">};</span>
+<a name="line-187"></a>
+<a name="line-188"></a><span class="cp">#endif </span><span class="c1">// ANIMATION_PLAYER_EDITOR_PLUGIN_H</span>
 </pre></div>
 </td></tr></table>
       </div>

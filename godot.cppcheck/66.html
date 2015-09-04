@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: core/event_queue.h </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/core/input_map.h </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> event_queue.h</p>
-<a href='66.html#line-61'> noExplicitConstructor 61</a>
+       <p id="filename"><a href="index.html">Defects:</a> input_map.h</p>
+<a href='66.html#line-37'> cstyleCast 37</a><a href='66.html#line-37'> operatorEqVarError 37</a><a href='66.html#line-37'> operatorEqVarError 37</a><a href='66.html#line-37'> operatorEqVarError 37</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -179,8 +179,20 @@
 63
 64
 65
-66</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  event_queue.h                                                        */</span>
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  input_map.h                                                          */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -207,44 +219,56 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#ifndef EVENT_QUEUE_H</span>
-<a name="line-30"></a><span class="cp">#define EVENT_QUEUE_H</span>
+<a name="line-29"></a><span class="cp">#ifndef INPUT_MAP_H</span>
+<a name="line-30"></a><span class="cp">#define INPUT_MAP_H</span>
 <a name="line-31"></a>
-<a name="line-32"></a><span class="cp">#include &quot;object.h&quot;</span>
-<a name="line-33"></a><span class="cm">/**</span>
-<a name="line-34"></a><span class="cm">	@author Juan Linietsky &lt;reduzio@gmail.com&gt;</span>
-<a name="line-35"></a><span class="cm">*/</span>
-<a name="line-36"></a><span class="n">class</span> <span class="n">EventQueue</span> <span class="p">{</span>
-<a name="line-37"></a>
-<a name="line-38"></a>	<span class="k">enum</span> <span class="p">{</span>
-<a name="line-39"></a>	
-<a name="line-40"></a>		<span class="n">DEFAULT_EVENT_QUEUE_SIZE_KB</span><span class="o">=</span><span class="mi">256</span>
-<a name="line-41"></a>	<span class="p">};</span>
-<a name="line-42"></a>
-<a name="line-43"></a>	<span class="k">struct</span> <span class="n">Event</span> <span class="p">{</span>
-<a name="line-44"></a>	
-<a name="line-45"></a>		<span class="kt">uint32_t</span> <span class="n">instance_ID</span><span class="p">;</span>
-<a name="line-46"></a>		<span class="n">StringName</span> <span class="n">method</span><span class="p">;</span>
-<a name="line-47"></a>		<span class="kt">int</span> <span class="n">args</span><span class="p">;</span>
-<a name="line-48"></a>	<span class="p">};</span>
-<a name="line-49"></a>	
-<a name="line-50"></a>	
-<a name="line-51"></a>	<span class="kt">uint8_t</span> <span class="o">*</span><span class="n">event_buffer</span><span class="p">;</span>
-<a name="line-52"></a>	<span class="kt">uint32_t</span> <span class="n">buffer_end</span><span class="p">;</span>
-<a name="line-53"></a>	<span class="kt">uint32_t</span> <span class="n">buffer_max_used</span><span class="p">;</span>
-<a name="line-54"></a>	<span class="kt">uint32_t</span> <span class="n">buffer_size</span><span class="p">;</span>
-<a name="line-55"></a><span class="nl">public</span><span class="p">:</span>
-<a name="line-56"></a>
+<a name="line-32"></a>
+<a name="line-33"></a><span class="cp">#include &quot;object.h&quot;</span>
+<a name="line-34"></a>
+<a name="line-35"></a><span class="n">class</span> <span class="nl">InputMap</span> <span class="p">:</span> <span class="n">public</span> <span class="n">Object</span> <span class="p">{</span>
+<a name="line-36"></a>
+<a name="line-37"></a><span class="hll">	<span class="n">OBJ_TYPE</span><span class="p">(</span> <span class="n">InputMap</span><span class="p">,</span> <span class="n">Object</span> <span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- C-style pointer casting <span class='marker'>[+]</span></span><div class='content'>C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected. See also: https://www.securecoding.cert.org/confluence/display/cplusplus/EXP05-CPP.+Do+not+use+C-style+casts.</div></div><span class='error2'>&lt;--- Member variable 'InputMap::_type_name' is not assigned a value in 'InputMap::operator='.</span><span class='error2'>&lt;--- Member variable 'InputMap::input_map' is not assigned a value in 'InputMap::operator='.</span><span class='error2'>&lt;--- Member variable 'InputMap::input_id_map' is not assigned a value in 'InputMap::operator='.</span>
+</span><a name="line-38"></a>	<span class="k">static</span> <span class="n">InputMap</span> <span class="o">*</span><span class="n">singleton</span><span class="p">;</span>
+<a name="line-39"></a>
+<a name="line-40"></a>	<span class="k">struct</span> <span class="n">Action</span> <span class="p">{</span>
+<a name="line-41"></a>		<span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+<a name="line-42"></a>		<span class="n">List</span><span class="o">&lt;</span><span class="n">InputEvent</span><span class="o">&gt;</span> <span class="n">inputs</span><span class="p">;</span>
+<a name="line-43"></a>	<span class="p">};</span>
+<a name="line-44"></a>	<span class="n">mutable</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">StringName</span><span class="p">,</span> <span class="n">Action</span><span class="o">&gt;</span> <span class="n">input_map</span><span class="p">;</span>
+<a name="line-45"></a>	<span class="n">mutable</span> <span class="n">Map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">StringName</span><span class="o">&gt;</span> <span class="n">input_id_map</span><span class="p">;</span>
+<a name="line-46"></a>
+<a name="line-47"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">InputEvent</span><span class="o">&gt;::</span><span class="n">Element</span> <span class="o">*</span><span class="n">_find_event</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">InputEvent</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p_list</span><span class="p">,</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-48"></a>
+<a name="line-49"></a>	<span class="n">Array</span> <span class="nf">_get_action_list</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">);</span>
+<a name="line-50"></a>
+<a name="line-51"></a><span class="nl">protected</span><span class="p">:</span>
+<a name="line-52"></a>
+<a name="line-53"></a>	<span class="k">static</span> <span class="kt">void</span> <span class="n">_bind_methods</span><span class="p">();</span>
+<a name="line-54"></a><span class="nl">public</span><span class="p">:</span>
+<a name="line-55"></a>
+<a name="line-56"></a>	<span class="k">static</span> <span class="n">_FORCE_INLINE_</span> <span class="n">InputMap</span> <span class="o">*</span><span class="n">get_singleton</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">singleton</span><span class="p">;</span> <span class="p">}</span>
 <a name="line-57"></a>
-<a name="line-58"></a>	<span class="n">Error</span> <span class="n">push_call</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">p_instance_ID</span><span class="p">,</span> <span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_method</span><span class="p">,</span> <span class="n">VARIANT_ARG_LIST</span><span class="p">);</span>
-<a name="line-59"></a>	<span class="kt">void</span> <span class="nf">flush_events</span><span class="p">();</span>
-<a name="line-60"></a>	
-<a name="line-61"></a><span class="hll">	<span class="n">EventQueue</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">p_buffer_size</span><span class="o">=</span><span class="n">DEFAULT_EVENT_QUEUE_SIZE_KB</span><span class="o">*</span><span class="mi">1024</span><span class="p">);</span><div class='verbose expandable'><span class='error2'>&lt;--- Class 'EventQueue' has a constructor with 1 argument that is not explicit. <span class='marker'>[+]</span></span><div class='content'>Class &apos;EventQueue&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.</div></div>
-</span><a name="line-62"></a>	<span class="o">~</span><span class="n">EventQueue</span><span class="p">();</span>
-<a name="line-63"></a>
-<a name="line-64"></a><span class="p">};</span>
-<a name="line-65"></a>
-<a name="line-66"></a><span class="cp">#endif</span>
+<a name="line-58"></a>
+<a name="line-59"></a>	<span class="kt">bool</span> <span class="n">has_action</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-60"></a>	<span class="kt">int</span> <span class="n">get_action_id</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-61"></a>	<span class="n">StringName</span> <span class="n">get_action_from_id</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_id</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-62"></a>	<span class="kt">void</span> <span class="nf">add_action</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">);</span>
+<a name="line-63"></a>	<span class="kt">void</span> <span class="nf">erase_action</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">);</span>
+<a name="line-64"></a>
+<a name="line-65"></a>	<span class="kt">void</span> <span class="nf">action_add_event</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">,</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">);</span>
+<a name="line-66"></a>	<span class="kt">bool</span> <span class="nf">action_has_event</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">,</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">);</span>
+<a name="line-67"></a>	<span class="kt">void</span> <span class="nf">action_erase_event</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">,</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">);</span>
+<a name="line-68"></a>
+<a name="line-69"></a>	<span class="k">const</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">InputEvent</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">get_action_list</span><span class="p">(</span><span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">);</span>
+<a name="line-70"></a>	<span class="kt">bool</span> <span class="n">event_is_action</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">,</span> <span class="k">const</span> <span class="n">StringName</span><span class="o">&amp;</span> <span class="n">p_action</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<a name="line-71"></a>
+<a name="line-72"></a>
+<a name="line-73"></a>	<span class="kt">void</span> <span class="nf">load_from_globals</span><span class="p">();</span>
+<a name="line-74"></a>
+<a name="line-75"></a>	<span class="n">InputMap</span><span class="p">();</span>
+<a name="line-76"></a><span class="p">};</span>
+<a name="line-77"></a>
+<a name="line-78"></a><span class="cp">#endif </span><span class="c1">// INPUT_MAP_H</span>
 </pre></div>
 </td></tr></table>
       </div>

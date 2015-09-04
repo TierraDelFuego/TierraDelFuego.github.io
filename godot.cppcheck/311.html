@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: drivers/builtin_openssl2/crypto/md2/md2test.c </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/drivers/builtin_openssl2/crypto/ripemd/rmd160.c </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> md2test.c</p>
-<a href='311.html#line-105'> variableScope 105</a>
+       <p id="filename"><a href="index.html">Defects:</a> rmd160.c</p>
+<a href='311.html#line-73'> variableScope 73</a><a href='311.html#line-74'> variableScope 74</a><a href='311.html#line-104'> variableScope 104</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -239,24 +239,7 @@
 123
 124
 125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/md2/md2test.c */</span>
+126</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/* crypto/ripemd/rmd160.c */</span>
 <a name="line-2"></a><span class="cm">/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</span>
 <a name="line-3"></a><span class="cm"> * All rights reserved.</span>
 <a name="line-4"></a><span class="cm"> *</span>
@@ -316,51 +299,19 @@
 <a name="line-58"></a>
 <a name="line-59"></a><span class="cp">#include &lt;stdio.h&gt;</span>
 <a name="line-60"></a><span class="cp">#include &lt;stdlib.h&gt;</span>
-<a name="line-61"></a><span class="cp">#include &lt;string.h&gt;</span>
+<a name="line-61"></a><span class="cp">#include &lt;openssl/ripemd.h&gt;</span>
 <a name="line-62"></a>
-<a name="line-63"></a><span class="cp">#include &quot;../e_os.h&quot;</span>
+<a name="line-63"></a><span class="cp">#define BUFSIZE	1024*16</span>
 <a name="line-64"></a>
-<a name="line-65"></a><span class="cp">#ifdef OPENSSL_NO_MD2</span>
-<a name="line-66"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<a name="line-67"></a><span class="p">{</span>
-<a name="line-68"></a>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No MD2 support</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<a name="line-69"></a>    <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<a name="line-70"></a><span class="p">}</span>
-<a name="line-71"></a><span class="cp">#else</span>
-<a name="line-72"></a><span class="cp">#include &lt;openssl/evp.h&gt;</span>
-<a name="line-73"></a><span class="cp">#include &lt;openssl/md2.h&gt;</span>
-<a name="line-74"></a>
-<a name="line-75"></a><span class="cp">#ifdef CHARSET_EBCDIC</span>
-<a name="line-76"></a><span class="cp">#include &lt;openssl/ebcdic.h&gt;</span>
-<a name="line-77"></a><span class="cp">#endif</span>
-<a name="line-78"></a>
-<a name="line-79"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">test</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-80"></a>	<span class="s">&quot;&quot;</span><span class="p">,</span>
-<a name="line-81"></a>	<span class="s">&quot;a&quot;</span><span class="p">,</span>
-<a name="line-82"></a>	<span class="s">&quot;abc&quot;</span><span class="p">,</span>
-<a name="line-83"></a>	<span class="s">&quot;message digest&quot;</span><span class="p">,</span>
-<a name="line-84"></a>	<span class="s">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="p">,</span>
-<a name="line-85"></a>	<span class="s">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&quot;</span><span class="p">,</span>
-<a name="line-86"></a>	<span class="s">&quot;12345678901234567890123456789012345678901234567890123456789012345678901234567890&quot;</span><span class="p">,</span>
-<a name="line-87"></a>	<span class="nb">NULL</span><span class="p">,</span>
-<a name="line-88"></a>	<span class="p">};</span>
-<a name="line-89"></a>
-<a name="line-90"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ret</span><span class="p">[]</span><span class="o">=</span><span class="p">{</span>
-<a name="line-91"></a>	<span class="s">&quot;8350e5a3e24c153df2275c9f80692773&quot;</span><span class="p">,</span>
-<a name="line-92"></a>	<span class="s">&quot;32ec01ec4a6dac72c0ab96fb34c0b5d1&quot;</span><span class="p">,</span>
-<a name="line-93"></a>	<span class="s">&quot;da853b0d3f88d99b30283a69e6ded6bb&quot;</span><span class="p">,</span>
-<a name="line-94"></a>	<span class="s">&quot;ab4f496bfb2a530b219ff33031fe06b0&quot;</span><span class="p">,</span>
-<a name="line-95"></a>	<span class="s">&quot;4e8ddff3650292ab5a4108c3aa47940b&quot;</span><span class="p">,</span>
-<a name="line-96"></a>	<span class="s">&quot;da33def2a42df13975352846c30338cd&quot;</span><span class="p">,</span>
-<a name="line-97"></a>	<span class="s">&quot;d5976f79d83d3a0dc9806c3c66f3efd8&quot;</span><span class="p">,</span>
-<a name="line-98"></a>	<span class="p">};</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">pt</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">md</span><span class="p">);</span>
-<a name="line-101"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<a name="line-102"></a>	<span class="p">{</span>
-<a name="line-103"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">err</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<a name="line-104"></a>	<span class="kt">char</span> <span class="o">**</span><span class="n">P</span><span class="p">,</span><span class="o">**</span><span class="n">R</span><span class="p">;</span>
-<a name="line-105"></a><span class="hll">	<span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'p' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;p&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+<a name="line-65"></a><span class="kt">void</span> <span class="nf">do_fp</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">);</span>
+<a name="line-66"></a><span class="kt">void</span> <span class="nf">pt</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">md</span><span class="p">);</span>
+<a name="line-67"></a><span class="cp">#if !defined(_OSD_POSIX) &amp;&amp; !defined(__DJGPP__)</span>
+<a name="line-68"></a><span class="kt">int</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="p">);</span>
+<a name="line-69"></a><span class="cp">#endif</span>
+<a name="line-70"></a>
+<a name="line-71"></a><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<a name="line-72"></a>	<span class="p">{</span>
+<a name="line-73"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">err</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
 void f(int x)
 {
     int i = 0;
@@ -373,44 +324,83 @@ void f(int x)
     }
 }
 When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
-</span><a name="line-106"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">md</span><span class="p">[</span><span class="n">MD2_DIGEST_LENGTH</span><span class="p">];</span>
-<a name="line-107"></a>
-<a name="line-108"></a>	<span class="n">P</span><span class="o">=</span><span class="n">test</span><span class="p">;</span>
-<a name="line-109"></a>	<span class="n">R</span><span class="o">=</span><span class="n">ret</span><span class="p">;</span>
-<a name="line-110"></a>	<span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-111"></a>	<span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="n">P</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
-<a name="line-112"></a>		<span class="p">{</span>
-<a name="line-113"></a>		<span class="n">EVP_Digest</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="n">P</span><span class="p">,</span><span class="n">strlen</span><span class="p">(</span><span class="o">*</span><span class="n">P</span><span class="p">),</span><span class="n">md</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">EVP_md2</span><span class="p">(),</span> <span class="nb">NULL</span><span class="p">);</span>
-<a name="line-114"></a>		<span class="n">p</span><span class="o">=</span><span class="n">pt</span><span class="p">(</span><span class="n">md</span><span class="p">);</span>
-<a name="line-115"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="o">*</span><span class="n">R</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-<a name="line-116"></a>			<span class="p">{</span>
-<a name="line-117"></a>			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;error calculating MD2 on &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="o">*</span><span class="n">P</span><span class="p">);</span>
-<a name="line-118"></a>			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;got %s instead of %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="o">*</span><span class="n">R</span><span class="p">);</span>
-<a name="line-119"></a>			<span class="n">err</span><span class="o">++</span><span class="p">;</span>
-<a name="line-120"></a>			<span class="p">}</span>
-<a name="line-121"></a>		<span class="k">else</span>
-<a name="line-122"></a>			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;test %d ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
-<a name="line-123"></a>		<span class="n">i</span><span class="o">++</span><span class="p">;</span>
-<a name="line-124"></a>		<span class="n">R</span><span class="o">++</span><span class="p">;</span>
-<a name="line-125"></a>		<span class="n">P</span><span class="o">++</span><span class="p">;</span>
-<a name="line-126"></a>		<span class="p">}</span>
-<a name="line-127"></a><span class="cp">#ifdef OPENSSL_SYS_NETWARE</span>
-<a name="line-128"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;ERROR: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
-<a name="line-129"></a><span class="cp">#endif</span>
-<a name="line-130"></a>	<span class="n">EXIT</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
-<a name="line-131"></a>	<span class="k">return</span> <span class="n">err</span><span class="p">;</span>
-<a name="line-132"></a>	<span class="p">}</span>
-<a name="line-133"></a>
-<a name="line-134"></a><span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">pt</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">md</span><span class="p">)</span>
-<a name="line-135"></a>	<span class="p">{</span>
-<a name="line-136"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-<a name="line-137"></a>	<span class="k">static</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">80</span><span class="p">];</span>
-<a name="line-138"></a>
-<a name="line-139"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">MD2_DIGEST_LENGTH</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-<a name="line-140"></a>		<span class="n">sprintf</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">]),</span><span class="s">&quot;%02x&quot;</span><span class="p">,</span><span class="n">md</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-<a name="line-141"></a>	<span class="k">return</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
-<a name="line-142"></a>	<span class="p">}</span>
-<a name="line-143"></a><span class="cp">#endif</span>
+</span><a name="line-74"></a><span class="hll">	<span class="kt">FILE</span> <span class="o">*</span><span class="n">IN</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'IN' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;IN&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-75"></a>
+<a name="line-76"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<a name="line-77"></a>		<span class="p">{</span>
+<a name="line-78"></a>		<span class="n">do_fp</span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+<a name="line-79"></a>		<span class="p">}</span>
+<a name="line-80"></a>	<span class="k">else</span>
+<a name="line-81"></a>		<span class="p">{</span>
+<a name="line-82"></a>		<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">argc</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-83"></a>			<span class="p">{</span>
+<a name="line-84"></a>			<span class="n">IN</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<a name="line-85"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">IN</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+<a name="line-86"></a>				<span class="p">{</span>
+<a name="line-87"></a>				<span class="n">perror</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a name="line-88"></a>				<span class="n">err</span><span class="o">++</span><span class="p">;</span>
+<a name="line-89"></a>				<span class="k">continue</span><span class="p">;</span>
+<a name="line-90"></a>				<span class="p">}</span>
+<a name="line-91"></a>			<span class="n">printf</span><span class="p">(</span><span class="s">&quot;RIPEMD160(%s)= &quot;</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a name="line-92"></a>			<span class="n">do_fp</span><span class="p">(</span><span class="n">IN</span><span class="p">);</span>
+<a name="line-93"></a>			<span class="n">fclose</span><span class="p">(</span><span class="n">IN</span><span class="p">);</span>
+<a name="line-94"></a>			<span class="p">}</span>
+<a name="line-95"></a>		<span class="p">}</span>
+<a name="line-96"></a>	<span class="n">exit</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
+<a name="line-97"></a>	<span class="p">}</span>
+<a name="line-98"></a>
+<a name="line-99"></a><span class="kt">void</span> <span class="nf">do_fp</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">)</span>
+<a name="line-100"></a>	<span class="p">{</span>
+<a name="line-101"></a>	<span class="n">RIPEMD160_CTX</span> <span class="n">c</span><span class="p">;</span>
+<a name="line-102"></a>	<span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">md</span><span class="p">[</span><span class="n">RIPEMD160_DIGEST_LENGTH</span><span class="p">];</span>
+<a name="line-103"></a>	<span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
+<a name="line-104"></a><span class="hll">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span><div class='verbose expandable'><span class='error2'>&lt;--- The scope of the variable 'i' can be reduced. <span class='marker'>[+]</span></span><div class='content'>The scope of the variable &apos;i&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:
+void f(int x)
+{
+    int i = 0;
+    if (x) {
+        // it&apos;s safe to move &apos;int i = 0;&apos; here
+        for (int n = 0; n &lt; 10; ++n) {
+            // it is possible but not safe to move &apos;int i = 0;&apos; here
+            do_something(&amp;i);
+        }
+    }
+}
+When you see this message it is always safe to reduce the variable scope 1 level.</div></div>
+</span><a name="line-105"></a>	<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span>
+<a name="line-106"></a>
+<a name="line-107"></a>	<span class="n">fd</span><span class="o">=</span><span class="n">fileno</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+<a name="line-108"></a>	<span class="n">RIPEMD160_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+<a name="line-109"></a>	<span class="k">for</span> <span class="p">(;;)</span>
+<a name="line-110"></a>		<span class="p">{</span>
+<a name="line-111"></a>		<span class="n">i</span><span class="o">=</span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="n">buf</span><span class="p">,</span><span class="n">BUFSIZE</span><span class="p">);</span>
+<a name="line-112"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<a name="line-113"></a>		<span class="n">RIPEMD160_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="n">buf</span><span class="p">,(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">i</span><span class="p">);</span>
+<a name="line-114"></a>		<span class="p">}</span>
+<a name="line-115"></a>	<span class="n">RIPEMD160_Final</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+<a name="line-116"></a>	<span class="n">pt</span><span class="p">(</span><span class="n">md</span><span class="p">);</span>
+<a name="line-117"></a>	<span class="p">}</span>
+<a name="line-118"></a>
+<a name="line-119"></a><span class="kt">void</span> <span class="nf">pt</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">md</span><span class="p">)</span>
+<a name="line-120"></a>	<span class="p">{</span>
+<a name="line-121"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-122"></a>
+<a name="line-123"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">RIPEMD160_DIGEST_LENGTH</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-124"></a>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02x&quot;</span><span class="p">,</span><span class="n">md</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a name="line-125"></a>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a name="line-126"></a>	<span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>

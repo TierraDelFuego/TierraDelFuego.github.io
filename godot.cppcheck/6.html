@@ -107,11 +107,11 @@
   </head>
   <body onload="init_expandables()">
       <div id="header">
-        <h1>Cppcheck report - [project name]: bin/tests/test_math.cpp </h1>
+        <h1>Cppcheck report - [project name]: ../../godot/bin/tests/test_misc.cpp </h1>
       </div>
       <div id="menu" dir="rtl">
-       <p id="filename"><a href="index.html">Defects:</a> test_math.cpp</p>
-<a href='6.html#line-121'> unreachableCode 121</a><a href='6.html#line-152'> unreachableCode 152</a>
+       <p id="filename"><a href="index.html">Defects:</a> test_misc.cpp</p>
+<a href='6.html#line-283'> uninitStructMember 283</a><a href='6.html#line-285'> uninitStructMember 285</a><a href='6.html#line-294'> uninitStructMember 294</a><a href='6.html#line-352'> noConstructor 352</a>
       </div>
       <div id="content">
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -414,8 +414,203 @@
 298
 299
 300
-301</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-2"></a><span class="cm">/*  test_math.cpp                                                        */</span>
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496</pre></div></td><td class="code"><div class="highlight"><pre><a name="line-1"></a><span class="cm">/*************************************************************************/</span>
+<a name="line-2"></a><span class="cm">/*  test_misc.cpp                                                        */</span>
 <a name="line-3"></a><span class="cm">/*************************************************************************/</span>
 <a name="line-4"></a><span class="cm">/*                       This file is part of:                           */</span>
 <a name="line-5"></a><span class="cm">/*                           GODOT ENGINE                                */</span>
@@ -442,279 +637,474 @@
 <a name="line-26"></a><span class="cm">/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */</span>
 <a name="line-27"></a><span class="cm">/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */</span>
 <a name="line-28"></a><span class="cm">/*************************************************************************/</span>
-<a name="line-29"></a><span class="cp">#include &quot;test_math.h&quot;</span>
-<a name="line-30"></a><span class="cp">#include &quot;ustring.h&quot;</span>
-<a name="line-31"></a><span class="cp">#include &quot;print_string.h&quot;</span>
-<a name="line-32"></a><span class="cp">#include &quot;transform.h&quot;</span>
-<a name="line-33"></a><span class="cp">#include &quot;matrix3.h&quot;</span>
-<a name="line-34"></a><span class="cp">#include &quot;math_funcs.h&quot;</span>
-<a name="line-35"></a><span class="cp">#include &quot;camera_matrix.h&quot;</span>
-<a name="line-36"></a><span class="cp">#include &quot;scene/main/node.h&quot;</span>
-<a name="line-37"></a><span class="cp">#include &quot;variant.h&quot;</span>
-<a name="line-38"></a><span class="cp">#include &quot;servers/visual/shader_language.h&quot;</span>
-<a name="line-39"></a><span class="cp">#include &quot;os/keyboard.h&quot;</span>
-<a name="line-40"></a><span class="cp">#include &quot;scene/resources/texture.h&quot;</span>
-<a name="line-41"></a><span class="cp">#include &quot;vmap.h&quot;</span>
-<a name="line-42"></a><span class="cp">#include &quot;os/os.h&quot;</span>
-<a name="line-43"></a><span class="k">namespace</span> <span class="n">TestMath</span> <span class="p">{</span>
-<a name="line-44"></a>
-<a name="line-45"></a>
-<a name="line-46"></a><span class="kt">void</span> <span class="n">test_vec</span><span class="p">(</span><span class="n">Plane</span> <span class="n">p_vec</span><span class="p">)</span> <span class="p">{</span>
-<a name="line-47"></a>
+<a name="line-29"></a><span class="cp">#include &quot;test_misc.h&quot;</span>
+<a name="line-30"></a><span class="cp">#include &quot;servers/visual_server.h&quot;</span>
+<a name="line-31"></a><span class="cp">#include &quot;os/main_loop.h&quot;</span>
+<a name="line-32"></a><span class="cp">#include &quot;math_funcs.h&quot;</span>
+<a name="line-33"></a><span class="cp">#include &quot;print_string.h&quot;</span>
+<a name="line-34"></a>
+<a name="line-35"></a>
+<a name="line-36"></a><span class="k">namespace</span> <span class="n">TestMisc</span> <span class="p">{</span>
+<a name="line-37"></a>
+<a name="line-38"></a><span class="k">struct</span> <span class="n">ConvexTestResult</span>
+<a name="line-39"></a><span class="p">{</span>
+<a name="line-40"></a>
+<a name="line-41"></a>	<span class="n">Vector3</span> <span class="n">edgeA</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-42"></a>	<span class="n">Vector3</span> <span class="n">edgeB</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a name="line-43"></a>	<span class="kt">bool</span> <span class="n">valid</span><span class="p">;</span>
+<a name="line-44"></a>	<span class="n">Vector3</span> <span class="n">contactA</span><span class="p">;</span>
+<a name="line-45"></a>	<span class="n">Vector3</span> <span class="n">contactB</span><span class="p">;</span>
+<a name="line-46"></a>	<span class="n">Vector3</span> <span class="n">contactNormal</span><span class="p">;</span>
+<a name="line-47"></a>	<span class="kt">float</span> <span class="n">depth</span><span class="p">;</span>
 <a name="line-48"></a>
-<a name="line-49"></a>	<span class="n">CameraMatrix</span> <span class="n">cm</span><span class="p">;</span>
-<a name="line-50"></a>	<span class="n">cm</span><span class="p">.</span><span class="n">set_perspective</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
-<a name="line-51"></a>	<span class="n">Plane</span> <span class="n">v0</span><span class="o">=</span><span class="n">cm</span><span class="p">.</span><span class="n">xform4</span><span class="p">(</span><span class="n">p_vec</span><span class="p">);</span>
-<a name="line-52"></a>
-<a name="line-53"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;out: &quot;</span><span class="o">+</span><span class="n">v0</span><span class="p">);</span>
-<a name="line-54"></a>	<span class="n">v0</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">v0</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="mf">100.0</span> <span class="o">*</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">v0</span><span class="p">.</span><span class="n">d</span><span class="p">;</span>
-<a name="line-55"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;out_F: &quot;</span><span class="o">+</span><span class="n">v0</span><span class="p">);</span>
-<a name="line-56"></a>
-<a name="line-57"></a>
-<a name="line-58"></a><span class="cm">/*v0: 0, 0, -0.1, 0.1</span>
-<a name="line-59"></a><span class="cm">v1: 0, 0, 0, 0.1</span>
-<a name="line-60"></a><span class="cm">fix: 0, 0, 0, 0.1</span>
-<a name="line-61"></a><span class="cm">v0: 0, 0, 1.302803, 1.5</span>
-<a name="line-62"></a><span class="cm">v1: 0, 0, 1.401401, 1.5</span>
-<a name="line-63"></a><span class="cm">fix: 0, 0, 1.401401, 1.5</span>
-<a name="line-64"></a><span class="cm">v0: 0, 0, 25.851850, 26</span>
-<a name="line-65"></a><span class="cm">v1: 0, 0, 25.925926, 26</span>
-<a name="line-66"></a><span class="cm">fix: 0, 0, 25.925924, 26</span>
-<a name="line-67"></a><span class="cm">v0: 0, 0, 49.899902, 50</span>
-<a name="line-68"></a><span class="cm">v1: 0, 0, 49.949947, 50</span>
-<a name="line-69"></a><span class="cm">fix: 0, 0, 49.949951, 50</span>
-<a name="line-70"></a><span class="cm">v0: 0, 0, 100, 100</span>
-<a name="line-71"></a><span class="cm">v1: 0, 0, 100, 100</span>
-<a name="line-72"></a><span class="cm">fix: 0, 0, 100, 100</span>
-<a name="line-73"></a><span class="cm">*/</span>     
-<a name="line-74"></a>
-<a name="line-75"></a>
-<a name="line-76"></a><span class="p">}</span>
+<a name="line-49"></a>	<span class="cm">/*</span>
+<a name="line-50"></a><span class="cm">	Vector3 contactA;</span>
+<a name="line-51"></a><span class="cm">	Vector3 contactB;</span>
+<a name="line-52"></a><span class="cm">	Vector3 contactNormal;</span>
+<a name="line-53"></a><span class="cm">	Vector3 contactX;</span>
+<a name="line-54"></a><span class="cm">	Vector3 contactY;</span>
+<a name="line-55"></a><span class="cm">	Vector3 edgeA[2];</span>
+<a name="line-56"></a><span class="cm">	Vector3 edgeB[2];</span>
+<a name="line-57"></a><span class="cm">	float depth;</span>
+<a name="line-58"></a><span class="cm">	bool valid;</span>
+<a name="line-59"></a><span class="cm">	bool isEdgeEdge;</span>
+<a name="line-60"></a><span class="cm">	bool needTransform;</span>
+<a name="line-61"></a><span class="cm">	neBool ComputerEdgeContactPoint(ConvexTestResult &amp; res);</span>
+<a name="line-62"></a><span class="cm">	neBool ComputerEdgeContactPoint2(float &amp; au, float &amp; bu);</span>
+<a name="line-63"></a><span class="cm">	void Reverse()</span>
+<a name="line-64"></a><span class="cm">	{</span>
+<a name="line-65"></a><span class="cm">		neSwap(contactA, contactB);</span>
+<a name="line-66"></a><span class="cm">		contactNormal *= -1.0f;</span>
+<a name="line-67"></a><span class="cm">	}*/</span>
+<a name="line-68"></a>	<span class="kt">bool</span> <span class="nf">ComputerEdgeContactPoint2</span><span class="p">(</span><span class="kt">float</span> <span class="o">&amp;</span> <span class="n">au</span><span class="p">,</span> <span class="kt">float</span> <span class="o">&amp;</span> <span class="n">bu</span><span class="p">);</span>
+<a name="line-69"></a><span class="p">};</span>
+<a name="line-70"></a>
+<a name="line-71"></a>
+<a name="line-72"></a>
+<a name="line-73"></a><span class="kt">bool</span> <span class="n">ConvexTestResult</span><span class="o">::</span><span class="n">ComputerEdgeContactPoint2</span><span class="p">(</span><span class="kt">float</span> <span class="o">&amp;</span> <span class="n">au</span><span class="p">,</span> <span class="kt">float</span> <span class="o">&amp;</span> <span class="n">bu</span><span class="p">)</span>
+<a name="line-74"></a><span class="p">{</span>
+<a name="line-75"></a>	<span class="kt">float</span> <span class="n">d1343</span><span class="p">,</span> <span class="n">d4321</span><span class="p">,</span> <span class="n">d1321</span><span class="p">,</span> <span class="n">d4343</span><span class="p">,</span> <span class="n">d2121</span><span class="p">;</span>
+<a name="line-76"></a>	<span class="kt">float</span> <span class="n">numer</span><span class="p">,</span> <span class="n">denom</span><span class="p">;</span>
 <a name="line-77"></a>
-<a name="line-78"></a>
-<a name="line-79"></a><span class="n">MainLoop</span><span class="o">*</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
-<a name="line-80"></a>
-<a name="line-81"></a>	<span class="p">{</span>
+<a name="line-78"></a>	<span class="n">Vector3</span> <span class="n">p13</span><span class="p">;</span>
+<a name="line-79"></a>	<span class="n">Vector3</span> <span class="n">p43</span><span class="p">;</span>
+<a name="line-80"></a>	<span class="n">Vector3</span> <span class="n">p21</span><span class="p">;</span>
+<a name="line-81"></a>	<span class="n">Vector3</span> <span class="n">diff</span><span class="p">;</span>
 <a name="line-82"></a>
-<a name="line-83"></a>
-<a name="line-84"></a>	<span class="c1">//	print_line(&quot;NUM: &quot;+itos(237641278346127));</span>
-<a name="line-85"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;NUM: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">));</span>
-<a name="line-86"></a>		<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-87"></a>
-<a name="line-88"></a>	<span class="p">}</span>
-<a name="line-89"></a>
-<a name="line-90"></a>
-<a name="line-91"></a>	<span class="p">{</span>
-<a name="line-92"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-93"></a>		<span class="n">v</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
-<a name="line-94"></a>		<span class="kt">float</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.3</span><span class="p">;</span>
-<a name="line-95"></a>
-<a name="line-96"></a>		<span class="c1">//Quat q(v,a);</span>
-<a name="line-97"></a>		<span class="n">Matrix3</span> <span class="nf">m</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
-<a name="line-98"></a>
-<a name="line-99"></a>		<span class="n">Vector3</span> <span class="nf">v2</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a name="line-100"></a>		<span class="n">v2</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
-<a name="line-101"></a>		<span class="kt">float</span> <span class="n">a2</span><span class="o">=</span><span class="mf">0.8</span><span class="p">;</span>
-<a name="line-102"></a>
-<a name="line-103"></a>		<span class="c1">//Quat q(v,a);</span>
-<a name="line-104"></a>		<span class="n">Matrix3</span> <span class="nf">m2</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span><span class="n">a2</span><span class="p">);</span>
+<a name="line-83"></a>	<span class="n">p13</span> <span class="o">=</span> <span class="p">(</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-84"></a>	<span class="n">p43</span> <span class="o">=</span> <span class="p">(</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-85"></a>
+<a name="line-86"></a>	<span class="k">if</span> <span class="p">(</span> <span class="n">p43</span><span class="p">.</span><span class="n">length_squared</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">CMP_EPSILON2</span> <span class="p">)</span>
+<a name="line-87"></a>	<span class="p">{</span>
+<a name="line-88"></a>		<span class="n">valid</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-89"></a>		<span class="k">goto</span> <span class="n">ComputerEdgeContactPoint2_Exit</span><span class="p">;</span>
+<a name="line-90"></a>	<span class="p">}</span>
+<a name="line-91"></a>
+<a name="line-92"></a>	<span class="n">p21</span> <span class="o">=</span> <span class="p">(</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a name="line-93"></a>
+<a name="line-94"></a>	<span class="k">if</span> <span class="p">(</span> <span class="n">p21</span><span class="p">.</span><span class="n">length_squared</span><span class="p">()</span><span class="o">&lt;</span><span class="n">CMP_EPSILON2</span> <span class="p">)</span>
+<a name="line-95"></a>	<span class="p">{</span>
+<a name="line-96"></a>		<span class="n">valid</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-97"></a>		<span class="k">goto</span> <span class="n">ComputerEdgeContactPoint2_Exit</span><span class="p">;</span>
+<a name="line-98"></a>	<span class="p">}</span>
+<a name="line-99"></a>
+<a name="line-100"></a>	<span class="n">d1343</span> <span class="o">=</span> <span class="n">p13</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p43</span><span class="p">);</span>
+<a name="line-101"></a>	<span class="n">d4321</span> <span class="o">=</span> <span class="n">p43</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p21</span><span class="p">);</span>
+<a name="line-102"></a>	<span class="n">d1321</span> <span class="o">=</span> <span class="n">p13</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p21</span><span class="p">);</span>
+<a name="line-103"></a>	<span class="n">d4343</span> <span class="o">=</span> <span class="n">p43</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p43</span><span class="p">);</span>
+<a name="line-104"></a>	<span class="n">d2121</span> <span class="o">=</span> <span class="n">p21</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p21</span><span class="p">);</span>
 <a name="line-105"></a>
-<a name="line-106"></a>		<span class="n">Quat</span> <span class="n">q</span><span class="o">=</span><span class="n">m</span><span class="p">;</span>
-<a name="line-107"></a>		<span class="n">Quat</span> <span class="n">q2</span><span class="o">=</span><span class="n">m2</span><span class="p">;</span>
-<a name="line-108"></a>
-<a name="line-109"></a>		<span class="n">Matrix3</span> <span class="n">m3</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">m2</span><span class="p">;</span>
-<a name="line-110"></a>		<span class="n">Quat</span> <span class="n">q3</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span><span class="p">.</span><span class="n">inverse</span><span class="p">()</span> <span class="o">*</span> <span class="n">q2</span><span class="p">);</span><span class="c1">//.normalized();</span>
+<a name="line-106"></a>	<span class="n">denom</span> <span class="o">=</span> <span class="n">d2121</span> <span class="o">*</span> <span class="n">d4343</span> <span class="o">-</span> <span class="n">d4321</span> <span class="o">*</span> <span class="n">d4321</span><span class="p">;</span>
+<a name="line-107"></a>
+<a name="line-108"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">ABS</span><span class="p">(</span><span class="n">denom</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">CMP_EPSILON</span><span class="p">)</span>
+<a name="line-109"></a>	<span class="p">{</span>
+<a name="line-110"></a>		<span class="n">valid</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 <a name="line-111"></a>
-<a name="line-112"></a>		<span class="n">print_line</span><span class="p">(</span><span class="n">Quat</span><span class="p">(</span><span class="n">m3</span><span class="p">));</span>
-<a name="line-113"></a>		<span class="n">print_line</span><span class="p">(</span><span class="n">q3</span><span class="p">);</span>
+<a name="line-112"></a>		<span class="k">goto</span> <span class="n">ComputerEdgeContactPoint2_Exit</span><span class="p">;</span>
+<a name="line-113"></a>	<span class="p">}</span>
 <a name="line-114"></a>
-<a name="line-115"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;before v: &quot;</span><span class="o">+</span><span class="n">v</span><span class="o">+</span><span class="s">&quot; a: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">a</span><span class="p">));</span>
-<a name="line-116"></a>		<span class="n">q</span><span class="p">.</span><span class="n">get_axis_and_angle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">a</span><span class="p">);</span>
-<a name="line-117"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;after v: &quot;</span><span class="o">+</span><span class="n">v</span><span class="o">+</span><span class="s">&quot; a: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">a</span><span class="p">));</span>
-<a name="line-118"></a>	<span class="p">}</span>
-<a name="line-119"></a>
-<a name="line-120"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-121"></a><span class="hll">	<span class="n">String</span> <span class="n">ret</span><span class="p">;</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
-</span><a name="line-122"></a>
-<a name="line-123"></a>	<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">;</span>
-<a name="line-124"></a>	<span class="n">args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;-l&quot;</span><span class="p">);</span>
-<a name="line-125"></a>	<span class="n">Error</span> <span class="n">err</span> <span class="o">=</span> <span class="n">OS</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;/bin/ls&quot;</span><span class="p">,</span><span class="n">args</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="o">&amp;</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-126"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;error: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">err</span><span class="p">));</span>
-<a name="line-127"></a>	<span class="n">print_line</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
-<a name="line-128"></a>
-<a name="line-129"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-130"></a>	<span class="n">Matrix3</span> <span class="n">m3</span><span class="p">;</span>
-<a name="line-131"></a>	<span class="n">m3</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">0.2</span><span class="p">);</span>
-<a name="line-132"></a>	<span class="n">m3</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="mf">1.77</span><span class="p">);</span>
-<a name="line-133"></a>	<span class="n">m3</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mi">212</span><span class="p">);</span>
-<a name="line-134"></a>	<span class="n">Matrix3</span> <span class="n">m32</span><span class="p">;</span>
-<a name="line-135"></a>	<span class="n">m32</span><span class="p">.</span><span class="n">set_euler</span><span class="p">(</span><span class="n">m3</span><span class="p">.</span><span class="n">get_euler</span><span class="p">());</span>
-<a name="line-136"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;ELEULEEEEEEEEEEEEEEEEEER: &quot;</span><span class="o">+</span><span class="n">m3</span><span class="p">.</span><span class="n">get_euler</span><span class="p">()</span><span class="o">+</span><span class="s">&quot; vs &quot;</span><span class="o">+</span><span class="n">m32</span><span class="p">.</span><span class="n">get_euler</span><span class="p">());</span>
-<a name="line-137"></a>
-<a name="line-138"></a>
-<a name="line-139"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<a name="line-115"></a>	<span class="n">numer</span> <span class="o">=</span> <span class="n">d1343</span> <span class="o">*</span> <span class="n">d4321</span> <span class="o">-</span> <span class="n">d1321</span> <span class="o">*</span> <span class="n">d4343</span><span class="p">;</span>
+<a name="line-116"></a>	<span class="n">au</span> <span class="o">=</span> <span class="n">numer</span> <span class="o">/</span> <span class="n">denom</span><span class="p">;</span>
+<a name="line-117"></a>	<span class="n">bu</span> <span class="o">=</span> <span class="p">(</span><span class="n">d1343</span> <span class="o">+</span> <span class="n">d4321</span> <span class="o">*</span> <span class="p">(</span><span class="n">au</span><span class="p">))</span> <span class="o">/</span> <span class="n">d4343</span><span class="p">;</span>
+<a name="line-118"></a>
+<a name="line-119"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">au</span> <span class="o">&lt;</span> <span class="mf">0.0f</span> <span class="o">||</span> <span class="n">au</span> <span class="o">&gt;=</span> <span class="mf">1.0f</span><span class="p">)</span>
+<a name="line-120"></a>	<span class="p">{</span>
+<a name="line-121"></a>		<span class="n">valid</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-122"></a>	<span class="p">}</span>
+<a name="line-123"></a>	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">bu</span> <span class="o">&lt;</span> <span class="mf">0.0f</span> <span class="o">||</span> <span class="n">bu</span> <span class="o">&gt;=</span> <span class="mf">1.0f</span><span class="p">)</span>
+<a name="line-124"></a>	<span class="p">{</span>
+<a name="line-125"></a>		<span class="n">valid</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-126"></a>	<span class="p">}</span>
+<a name="line-127"></a>	<span class="k">else</span>
+<a name="line-128"></a>	<span class="p">{</span>
+<a name="line-129"></a>		<span class="n">valid</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-130"></a>	<span class="p">}</span>
+<a name="line-131"></a>	<span class="p">{</span>
+<a name="line-132"></a>		<span class="n">Vector3</span> <span class="n">tmpv</span><span class="p">;</span>
+<a name="line-133"></a>
+<a name="line-134"></a>		<span class="n">tmpv</span> <span class="o">=</span> <span class="n">p21</span> <span class="o">*</span> <span class="n">au</span><span class="p">;</span>
+<a name="line-135"></a>		<span class="n">contactA</span> <span class="o">=</span> <span class="p">(</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">tmpv</span><span class="p">;</span>
+<a name="line-136"></a>
+<a name="line-137"></a>		<span class="n">tmpv</span> <span class="o">=</span> <span class="n">p43</span> <span class="o">*</span> <span class="n">bu</span><span class="p">;</span>
+<a name="line-138"></a>		<span class="n">contactB</span> <span class="o">=</span> <span class="p">(</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">tmpv</span><span class="p">;</span>
+<a name="line-139"></a>	<span class="p">}</span>
 <a name="line-140"></a>
-<a name="line-141"></a>	<span class="p">{</span>
+<a name="line-141"></a>	<span class="n">diff</span> <span class="o">=</span> <span class="n">contactA</span> <span class="o">-</span> <span class="n">contactB</span><span class="p">;</span>
 <a name="line-142"></a>
-<a name="line-143"></a>		<span class="n">Dictionary</span> <span class="n">d</span><span class="p">;</span>
-<a name="line-144"></a>		<span class="n">d</span><span class="p">[</span><span class="s">&quot;momo&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-<a name="line-145"></a>		<span class="n">Dictionary</span> <span class="n">b</span><span class="o">=</span><span class="n">d</span><span class="p">;</span>
-<a name="line-146"></a>		<span class="n">b</span><span class="p">[</span><span class="s">&quot;44&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
-<a name="line-147"></a>	<span class="p">}</span>
+<a name="line-143"></a>	<span class="n">depth</span> <span class="o">=</span> <span class="n">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">diff</span><span class="p">));</span>
+<a name="line-144"></a>
+<a name="line-145"></a>	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-146"></a>
+<a name="line-147"></a><span class="nl">ComputerEdgeContactPoint2_Exit</span><span class="p">:</span>
 <a name="line-148"></a>
-<a name="line-149"></a>
-<a name="line-150"></a>
-<a name="line-151"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-152"></a><span class="hll">	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;inters: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Geometry</span><span class="o">::</span><span class="n">segment_intersects_circle</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">Vector2</span><span class="p">(),</span><span class="mf">1.0</span><span class="p">)));</span><span class='error2'>&lt;--- Statements following return, break, continue, goto or throw will never be executed.</span>
-</span><a name="line-153"></a>
-<a name="line-154"></a>
-<a name="line-155"></a>
-<a name="line-156"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;cross: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">cross</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)));</span>
-<a name="line-157"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;dot: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">dot</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-158"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;abs: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">).</span><span class="n">abs</span><span class="p">());</span>
-<a name="line-159"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;distance_to: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">distance_to</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-160"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;distance_squared_to: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">distance_squared_to</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-161"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;plus: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-162"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;minus: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-163"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;mul: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-164"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;div: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="n">Vector3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">))));</span>
-<a name="line-165"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;mul scalar: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">));</span>
-<a name="line-166"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;premul scalar: &quot;</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)));</span>
-<a name="line-167"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;div scalar: &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mf">3.0</span><span class="p">));</span>
-<a name="line-168"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;length: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">length</span><span class="p">()));</span>
-<a name="line-169"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;length squared: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">length_squared</span><span class="p">()));</span>
-<a name="line-170"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;normalized: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">normalized</span><span class="p">());</span>
-<a name="line-171"></a>	<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;inverse: &quot;</span><span class="o">+</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">).</span><span class="n">inverse</span><span class="p">());</span>
-<a name="line-172"></a>
-<a name="line-173"></a>	<span class="p">{</span>
-<a name="line-174"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-175"></a>		<span class="n">v</span><span class="p">.</span><span class="n">normalize</span><span class="p">();</span>
-<a name="line-176"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;normalize: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-177"></a>	<span class="p">}</span>
-<a name="line-178"></a>
-<a name="line-179"></a>	<span class="p">{</span>
-<a name="line-180"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-181"></a>		<span class="n">v</span><span class="o">+=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-182"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;+=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-183"></a>	<span class="p">}</span>
+<a name="line-149"></a>	<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-150"></a><span class="p">}</span>
+<a name="line-151"></a>
+<a name="line-152"></a><span class="k">struct</span> <span class="n">neCollisionResult</span> <span class="p">{</span>
+<a name="line-153"></a>
+<a name="line-154"></a>	<span class="kt">float</span> <span class="n">depth</span><span class="p">;</span>
+<a name="line-155"></a>	<span class="kt">bool</span> <span class="n">penetrate</span><span class="p">;</span>
+<a name="line-156"></a>	<span class="n">Matrix3</span> <span class="n">collisionFrame</span><span class="p">;</span>
+<a name="line-157"></a>	<span class="n">Vector3</span> <span class="n">contactA</span><span class="p">;</span>
+<a name="line-158"></a>	<span class="n">Vector3</span> <span class="n">contactB</span><span class="p">;</span>
+<a name="line-159"></a><span class="p">};</span>
+<a name="line-160"></a>
+<a name="line-161"></a>
+<a name="line-162"></a><span class="k">struct</span> <span class="n">TConvex</span> <span class="p">{</span>
+<a name="line-163"></a>
+<a name="line-164"></a>	<span class="kt">float</span> <span class="n">radius</span><span class="p">;</span>
+<a name="line-165"></a>	<span class="kt">float</span> <span class="n">half_height</span><span class="p">;</span>
+<a name="line-166"></a>	<span class="kt">float</span> <span class="n">CylinderRadius</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">radius</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-167"></a>	<span class="kt">float</span> <span class="n">CylinderHalfHeight</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">half_height</span><span class="p">;</span> <span class="p">}</span>
+<a name="line-168"></a><span class="p">};</span>
+<a name="line-169"></a>
+<a name="line-170"></a><span class="kt">float</span> <span class="nf">GetDistanceFromLine2</span><span class="p">(</span><span class="n">Vector3</span> <span class="n">v</span><span class="p">,</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">project</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">pointA</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">pointB</span><span class="p">)</span>
+<a name="line-171"></a><span class="p">{</span>
+<a name="line-172"></a>	<span class="n">Vector3</span> <span class="n">ba</span> <span class="o">=</span> <span class="n">pointB</span> <span class="o">-</span> <span class="n">pointA</span><span class="p">;</span>
+<a name="line-173"></a>
+<a name="line-174"></a>	<span class="kt">float</span> <span class="n">len</span> <span class="o">=</span> <span class="n">ba</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+<a name="line-175"></a>
+<a name="line-176"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="o">&lt;</span><span class="n">CMP_EPSILON</span><span class="p">)</span>
+<a name="line-177"></a>		<span class="n">ba</span><span class="o">=</span><span class="n">Vector3</span><span class="p">();</span>
+<a name="line-178"></a>	<span class="k">else</span>
+<a name="line-179"></a>		<span class="n">ba</span> <span class="o">*=</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">len</span><span class="p">;</span>
+<a name="line-180"></a>
+<a name="line-181"></a>	<span class="n">Vector3</span> <span class="n">pa</span> <span class="o">=</span> <span class="n">v</span> <span class="o">-</span> <span class="n">pointA</span><span class="p">;</span>
+<a name="line-182"></a>
+<a name="line-183"></a>	<span class="kt">float</span> <span class="n">k</span> <span class="o">=</span> <span class="n">pa</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ba</span><span class="p">);</span>
 <a name="line-184"></a>
-<a name="line-185"></a>	<span class="p">{</span>
-<a name="line-186"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-187"></a>		<span class="n">v</span><span class="o">-=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-188"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;-=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-189"></a>	<span class="p">}</span>
-<a name="line-190"></a>
-<a name="line-191"></a>	<span class="p">{</span>
-<a name="line-192"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-193"></a>		<span class="n">v</span><span class="o">*=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-194"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;*=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-195"></a>	<span class="p">}</span>
+<a name="line-185"></a>	<span class="n">project</span> <span class="o">=</span> <span class="n">pointA</span> <span class="o">+</span> <span class="n">ba</span> <span class="o">*</span> <span class="n">k</span><span class="p">;</span>
+<a name="line-186"></a>
+<a name="line-187"></a>	<span class="n">Vector3</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">v</span> <span class="o">-</span> <span class="n">project</span><span class="p">;</span>
+<a name="line-188"></a>
+<a name="line-189"></a>	<span class="k">return</span> <span class="n">diff</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+<a name="line-190"></a><span class="p">}</span>
+<a name="line-191"></a>
+<a name="line-192"></a><span class="kt">void</span> <span class="nf">TestCylinderVertEdge</span><span class="p">(</span><span class="n">neCollisionResult</span> <span class="o">&amp;</span> <span class="n">result</span><span class="p">,</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">edgeA1</span><span class="p">,</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">edgeA2</span><span class="p">,</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">vertB</span><span class="p">,</span>
+<a name="line-193"></a>						  <span class="n">TConvex</span> <span class="o">&amp;</span> <span class="n">cA</span><span class="p">,</span> <span class="n">TConvex</span> <span class="o">&amp;</span> <span class="n">cB</span><span class="p">,</span> <span class="n">Transform</span> <span class="o">&amp;</span> <span class="n">transA</span><span class="p">,</span> <span class="n">Transform</span> <span class="o">&amp;</span> <span class="n">transB</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flip</span><span class="p">)</span>
+<a name="line-194"></a><span class="p">{</span>
+<a name="line-195"></a>	<span class="n">Vector3</span> <span class="n">project</span><span class="p">;</span>
 <a name="line-196"></a>
-<a name="line-197"></a>	<span class="p">{</span>
-<a name="line-198"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-199"></a>		<span class="n">v</span><span class="o">/=</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
-<a name="line-200"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;/=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-201"></a>	<span class="p">}</span>
-<a name="line-202"></a>
-<a name="line-203"></a>	<span class="p">{</span>
-<a name="line-204"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-205"></a>		<span class="n">v</span><span class="o">*=</span><span class="mf">2.0</span><span class="p">;</span>
-<a name="line-206"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;scalar *=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-207"></a>	<span class="p">}</span>
+<a name="line-197"></a>	<span class="kt">float</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">GetDistanceFromLine2</span><span class="p">(</span><span class="n">vertB</span><span class="p">,</span><span class="n">project</span><span class="p">,</span> <span class="n">edgeA1</span><span class="p">,</span> <span class="n">edgeA2</span><span class="p">);</span>
+<a name="line-198"></a>
+<a name="line-199"></a>	<span class="kt">float</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">()</span> <span class="o">+</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">()</span> <span class="o">-</span> <span class="n">dist</span><span class="p">;</span>
+<a name="line-200"></a>
+<a name="line-201"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;=</span> <span class="mf">0.0f</span><span class="p">)</span>
+<a name="line-202"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-203"></a>
+<a name="line-204"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;=</span> <span class="n">result</span><span class="p">.</span><span class="n">depth</span><span class="p">)</span>
+<a name="line-205"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-206"></a>
+<a name="line-207"></a>	<span class="n">result</span><span class="p">.</span><span class="n">penetrate</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 <a name="line-208"></a>
-<a name="line-209"></a>	<span class="p">{</span>
-<a name="line-210"></a>		<span class="n">Vector3</span> <span class="n">v</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">);</span>
-<a name="line-211"></a>		<span class="n">v</span><span class="o">/=</span><span class="mf">2.0</span><span class="p">;</span>
-<a name="line-212"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;scalar /=: &quot;</span><span class="o">+</span><span class="n">v</span><span class="p">);</span>
-<a name="line-213"></a>	<span class="p">}</span>
+<a name="line-209"></a>	<span class="n">result</span><span class="p">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">;</span>
+<a name="line-210"></a>
+<a name="line-211"></a>	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">flip</span><span class="p">)</span>
+<a name="line-212"></a>	<span class="p">{</span>
+<a name="line-213"></a>		<span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">set_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">,(</span><span class="n">project</span> <span class="o">-</span> <span class="n">vertB</span><span class="p">).</span><span class="n">normalized</span><span class="p">());</span>
 <a name="line-214"></a>
-<a name="line-215"></a>
+<a name="line-215"></a>		<span class="n">result</span><span class="p">.</span><span class="n">contactA</span> <span class="o">=</span> <span class="n">project</span> <span class="o">-</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
 <a name="line-216"></a>
-<a name="line-217"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-218"></a><span class="c">	print_line(String(&quot;C:\\momo\\.\\popo\\..\\gongo&quot;).simplify_path());</span>
-<a name="line-219"></a><span class="c">	print_line(String(&quot;res://../popo/..//gongo&quot;).simplify_path());</span>
-<a name="line-220"></a><span class="c">	print_line(String(&quot;res://..&quot;).simplify_path());</span>
+<a name="line-217"></a>		<span class="n">result</span><span class="p">.</span><span class="n">contactB</span> <span class="o">=</span> <span class="n">vertB</span> <span class="o">+</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
+<a name="line-218"></a>	<span class="p">}</span>
+<a name="line-219"></a>	<span class="k">else</span>
+<a name="line-220"></a>	<span class="p">{</span>
 <a name="line-221"></a>
-<a name="line-222"></a>
-<a name="line-223"></a><span class="c">	DVector&lt;uint8_t&gt; a;</span>
-<a name="line-224"></a><span class="c">	DVector&lt;uint8_t&gt; b;</span>
+<a name="line-222"></a>		<span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">set_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">,(</span><span class="n">vertB</span> <span class="o">-</span> <span class="n">project</span><span class="p">).</span><span class="n">normalized</span><span class="p">());</span>
+<a name="line-223"></a>
+<a name="line-224"></a>		<span class="n">result</span><span class="p">.</span><span class="n">contactA</span> <span class="o">=</span> <span class="n">vertB</span> <span class="o">-</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
 <a name="line-225"></a>
-<a name="line-226"></a><span class="c">	a.resize(20);</span>
-<a name="line-227"></a><span class="c">	b=a;</span>
-<a name="line-228"></a><span class="c">	b.resize(30);</span>
-<a name="line-229"></a><span class="c">	a=b;</span>
-<a name="line-230"></a><span class="cp">#endif</span>
-<a name="line-231"></a>
-<a name="line-232"></a><span class="cp">#if 0</span><span class="c"></span>
-<a name="line-233"></a><span class="c">	String za = String::utf8(&quot;á&quot;);</span>
-<a name="line-234"></a><span class="c">	printf(&quot;unicode: %x\n&quot;,za[0]);</span>
-<a name="line-235"></a><span class="c">	CharString cs=za.utf8();</span>
-<a name="line-236"></a><span class="c">	for(int i=0;i&lt;cs.size();i++) {</span>
-<a name="line-237"></a><span class="c">		uint32_t v = uint8_t(cs[i]);</span>
-<a name="line-238"></a><span class="c">		printf(&quot;%i - %x\n&quot;,i,v);</span>
-<a name="line-239"></a><span class="c">	}</span>
-<a name="line-240"></a><span class="c">	return NULL;</span>
+<a name="line-226"></a>		<span class="n">result</span><span class="p">.</span><span class="n">contactB</span> <span class="o">=</span> <span class="n">project</span> <span class="o">+</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
+<a name="line-227"></a>	<span class="p">}</span>
+<a name="line-228"></a><span class="p">}</span>
+<a name="line-229"></a>
+<a name="line-230"></a><span class="kt">void</span> <span class="nf">TestCylinderVertVert</span><span class="p">(</span><span class="n">neCollisionResult</span> <span class="o">&amp;</span> <span class="n">result</span><span class="p">,</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">vertA</span><span class="p">,</span> <span class="n">Vector3</span> <span class="o">&amp;</span> <span class="n">vertB</span><span class="p">,</span>
+<a name="line-231"></a>						  <span class="n">TConvex</span> <span class="o">&amp;</span> <span class="n">cA</span><span class="p">,</span> <span class="n">TConvex</span> <span class="o">&amp;</span> <span class="n">cB</span><span class="p">,</span> <span class="n">Transform</span> <span class="o">&amp;</span> <span class="n">transA</span><span class="p">,</span> <span class="n">Transform</span> <span class="o">&amp;</span> <span class="n">transB</span><span class="p">)</span>
+<a name="line-232"></a><span class="p">{</span>
+<a name="line-233"></a>	<span class="n">Vector3</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">vertA</span> <span class="o">-</span> <span class="n">vertB</span><span class="p">;</span>
+<a name="line-234"></a>
+<a name="line-235"></a>	<span class="kt">float</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">diff</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+<a name="line-236"></a>
+<a name="line-237"></a>	<span class="kt">float</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">()</span> <span class="o">+</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">()</span> <span class="o">-</span> <span class="n">dist</span><span class="p">;</span>
+<a name="line-238"></a>
+<a name="line-239"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;=</span> <span class="mf">0.0f</span><span class="p">)</span>
+<a name="line-240"></a>		<span class="k">return</span><span class="p">;</span>
 <a name="line-241"></a>
-<a name="line-242"></a><span class="c">	print_line(String(&quot;C:\\window\\system\\momo&quot;).path_to(&quot;C:\\window\\momonga&quot;));</span>
-<a name="line-243"></a><span class="c">	print_line(String(&quot;res://momo/sampler&quot;).path_to(&quot;res://pindonga&quot;));</span>
-<a name="line-244"></a><span class="c">	print_line(String(&quot;/margarito/terere&quot;).path_to(&quot;/margarito/pilates&quot;));</span>
-<a name="line-245"></a><span class="c">	print_line(String(&quot;/algo&quot;).path_to(&quot;/algo&quot;));</span>
-<a name="line-246"></a><span class="c">	print_line(String(&quot;c:&quot;).path_to(&quot;c:\\&quot;));</span>
-<a name="line-247"></a><span class="c">	print_line(String(&quot;/&quot;).path_to(&quot;/&quot;));</span>
+<a name="line-242"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;=</span> <span class="n">result</span><span class="p">.</span><span class="n">depth</span><span class="p">)</span>
+<a name="line-243"></a>		<span class="k">return</span><span class="p">;</span>
+<a name="line-244"></a>
+<a name="line-245"></a>	<span class="n">result</span><span class="p">.</span><span class="n">penetrate</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-246"></a>
+<a name="line-247"></a>	<span class="n">result</span><span class="p">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">;</span>
 <a name="line-248"></a>
-<a name="line-249"></a>
-<a name="line-250"></a><span class="c">	print_line(itos(sizeof(Variant)));</span>
-<a name="line-251"></a><span class="c">	return NULL;</span>
+<a name="line-249"></a>	<span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">set_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">diff</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0f</span> <span class="o">/</span> <span class="n">dist</span><span class="p">));</span>
+<a name="line-250"></a>
+<a name="line-251"></a>	<span class="n">result</span><span class="p">.</span><span class="n">contactA</span> <span class="o">=</span> <span class="n">vertA</span> <span class="o">-</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
 <a name="line-252"></a>
-<a name="line-253"></a><span class="c">	Vector&lt;StringName&gt; path;</span>
-<a name="line-254"></a><span class="c">	path.push_back(&quot;three&quot;);</span>
-<a name="line-255"></a><span class="c">	path.push_back(&quot;two&quot;);</span>
-<a name="line-256"></a><span class="c">	path.push_back(&quot;one&quot;);</span>
-<a name="line-257"></a><span class="c">	path.push_back(&quot;comeon&quot;);</span>
-<a name="line-258"></a><span class="c">	path.revert();</span>
+<a name="line-253"></a>	<span class="n">result</span><span class="p">.</span><span class="n">contactB</span> <span class="o">=</span> <span class="n">vertB</span> <span class="o">+</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
+<a name="line-254"></a><span class="p">}</span>
+<a name="line-255"></a>
+<a name="line-256"></a><span class="kt">void</span> <span class="nf">Cylinder2CylinderTest</span><span class="p">(</span><span class="n">neCollisionResult</span> <span class="o">&amp;</span> <span class="n">result</span><span class="p">,</span> <span class="n">TConvex</span> <span class="o">&amp;</span> <span class="n">cA</span><span class="p">,</span> <span class="n">Transform</span> <span class="o">&amp;</span> <span class="n">transA</span><span class="p">,</span> <span class="n">TConvex</span> <span class="o">&amp;</span> <span class="n">cB</span><span class="p">,</span> <span class="n">Transform</span> <span class="o">&amp;</span> <span class="n">transB</span><span class="p">)</span>
+<a name="line-257"></a><span class="p">{</span>
+<a name="line-258"></a>	<span class="n">result</span><span class="p">.</span><span class="n">penetrate</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 <a name="line-259"></a>
-<a name="line-260"></a><span class="c">	NodePath np(path,true);</span>
+<a name="line-260"></a>	<span class="n">Vector3</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">transA</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">cross</span><span class="p">(</span><span class="n">transB</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
 <a name="line-261"></a>
-<a name="line-262"></a><span class="c">	print_line(np);</span>
+<a name="line-262"></a>	<span class="kt">float</span> <span class="n">len</span> <span class="o">=</span> <span class="n">dir</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
 <a name="line-263"></a>
-<a name="line-264"></a>
-<a name="line-265"></a><span class="c">	return NULL;</span>
-<a name="line-266"></a>
-<a name="line-267"></a><span class="c">	bool a=2;</span>
-<a name="line-268"></a>
-<a name="line-269"></a><span class="c">	print_line(Variant(a));</span>
-<a name="line-270"></a>
-<a name="line-271"></a>
-<a name="line-272"></a><span class="c">	Matrix32 mat2_1;</span>
-<a name="line-273"></a><span class="c">	mat2_1.rotate(0.5);</span>
-<a name="line-274"></a><span class="c">	Matrix32 mat2_2;</span>
-<a name="line-275"></a><span class="c">	mat2_2.translate(Vector2(1,2));</span>
-<a name="line-276"></a><span class="c">	Matrix32 mat2_3 = mat2_1 * mat2_2;</span>
-<a name="line-277"></a><span class="c">	mat2_3.affine_invert();</span>
-<a name="line-278"></a>
-<a name="line-279"></a><span class="c">	print_line(mat2_3.elements[0]);</span>
-<a name="line-280"></a><span class="c">	print_line(mat2_3.elements[1]);</span>
-<a name="line-281"></a><span class="c">	print_line(mat2_3.elements[2]);</span>
+<a name="line-264"></a><span class="c1">//	bool isParallel = len&lt;CMP_EPSILON;</span>
+<a name="line-265"></a>
+<a name="line-266"></a><span class="c1">//	int doVertCheck = 0;</span>
+<a name="line-267"></a>
+<a name="line-268"></a>	<span class="n">ConvexTestResult</span> <span class="n">cr</span><span class="p">;</span>
+<a name="line-269"></a>
+<a name="line-270"></a>	<span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">transA</span><span class="p">.</span><span class="n">origin</span> <span class="o">+</span> <span class="n">transA</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderHalfHeight</span><span class="p">();</span>
+<a name="line-271"></a>	<span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">transA</span><span class="p">.</span><span class="n">origin</span> <span class="o">-</span> <span class="n">transA</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderHalfHeight</span><span class="p">();</span>
+<a name="line-272"></a>	<span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">transB</span><span class="p">.</span><span class="n">origin</span> <span class="o">+</span> <span class="n">transB</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderHalfHeight</span><span class="p">();</span>
+<a name="line-273"></a>	<span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">transB</span><span class="p">.</span><span class="n">origin</span> <span class="o">-</span> <span class="n">transB</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderHalfHeight</span><span class="p">();</span>
+<a name="line-274"></a>
+<a name="line-275"></a><span class="c1">//	float dot = transA.basis.get_axis(1).dot(transB.basis.get_axis(1));</span>
+<a name="line-276"></a>
+<a name="line-277"></a>	<span class="k">if</span> <span class="p">(</span><span class="n">len</span><span class="o">&gt;</span><span class="n">CMP_EPSILON</span><span class="p">)</span>
+<a name="line-278"></a>	<span class="p">{</span>
+<a name="line-279"></a>		<span class="kt">float</span> <span class="n">au</span><span class="p">,</span> <span class="n">bu</span><span class="p">;</span>
+<a name="line-280"></a>
+<a name="line-281"></a>		<span class="n">cr</span><span class="p">.</span><span class="n">ComputerEdgeContactPoint2</span><span class="p">(</span><span class="n">au</span><span class="p">,</span> <span class="n">bu</span><span class="p">);</span>
 <a name="line-282"></a>
-<a name="line-283"></a>
-<a name="line-284"></a>
-<a name="line-285"></a><span class="c">	Transform mat3_1;</span>
-<a name="line-286"></a><span class="c">	mat3_1.basis.rotate(Vector3(0,0,1),0.5);</span>
-<a name="line-287"></a><span class="c">	Transform mat3_2;</span>
-<a name="line-288"></a><span class="c">	mat3_2.translate(Vector3(1,2,0));</span>
-<a name="line-289"></a><span class="c">	Transform mat3_3 = mat3_1 * mat3_2;</span>
-<a name="line-290"></a><span class="c">	mat3_3.affine_invert();</span>
+<a name="line-283"></a><span class="hll">		<span class="k">if</span> <span class="p">(</span><span class="n">cr</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class='error2'>&lt;--- Uninitialized struct member: cr.valid</span>
+</span><a name="line-284"></a>		<span class="p">{</span>
+<a name="line-285"></a><span class="hll">			<span class="kt">float</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">()</span> <span class="o">+</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">()</span> <span class="o">-</span> <span class="n">cr</span><span class="p">.</span><span class="n">depth</span><span class="p">;</span><span class='error2'>&lt;--- Uninitialized struct member: cr.depth</span>
+</span><a name="line-286"></a>
+<a name="line-287"></a>			<span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;=</span> <span class="mf">0.0f</span><span class="p">)</span>
+<a name="line-288"></a>				<span class="k">return</span><span class="p">;</span>
+<a name="line-289"></a>
+<a name="line-290"></a>			<span class="n">result</span><span class="p">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">;</span>
 <a name="line-291"></a>
-<a name="line-292"></a><span class="c">	print_line(mat3_3.basis.get_axis(0));</span>
-<a name="line-293"></a><span class="c">	print_line(mat3_3.basis.get_axis(1));</span>
-<a name="line-294"></a><span class="c">	print_line(mat3_3.origin);</span>
-<a name="line-295"></a>
-<a name="line-296"></a><span class="cp">#endif</span>
-<a name="line-297"></a>	<span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-<a name="line-298"></a>
-<a name="line-299"></a><span class="p">}</span>
-<a name="line-300"></a>
-<a name="line-301"></a><span class="p">}</span>
+<a name="line-292"></a>			<span class="n">result</span><span class="p">.</span><span class="n">penetrate</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<a name="line-293"></a>
+<a name="line-294"></a><span class="hll">			<span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">set_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">cr</span><span class="p">.</span><span class="n">contactA</span> <span class="o">-</span> <span class="n">cr</span><span class="p">.</span><span class="n">contactB</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0f</span> <span class="o">/</span> <span class="n">cr</span><span class="p">.</span><span class="n">depth</span><span class="p">));</span><span class='error2'>&lt;--- Uninitialized struct member: cr.depth</span>
+</span><a name="line-295"></a>
+<a name="line-296"></a>			<span class="n">result</span><span class="p">.</span><span class="n">contactA</span> <span class="o">=</span> <span class="n">cr</span><span class="p">.</span><span class="n">contactA</span> <span class="o">-</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cA</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
+<a name="line-297"></a>
+<a name="line-298"></a>			<span class="n">result</span><span class="p">.</span><span class="n">contactB</span> <span class="o">=</span> <span class="n">cr</span><span class="p">.</span><span class="n">contactB</span> <span class="o">+</span> <span class="n">result</span><span class="p">.</span><span class="n">collisionFrame</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderRadius</span><span class="p">();</span>
+<a name="line-299"></a>
+<a name="line-300"></a>			<span class="k">return</span><span class="p">;</span>
+<a name="line-301"></a>		<span class="p">}</span>
+<a name="line-302"></a>	<span class="p">}</span>
+<a name="line-303"></a>	<span class="n">result</span><span class="p">.</span><span class="n">depth</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0e6</span><span class="n">f</span><span class="p">;</span>
+<a name="line-304"></a>
+<a name="line-305"></a>	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<a name="line-306"></a>
+<a name="line-307"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-308"></a>	<span class="p">{</span>
+<a name="line-309"></a>		<span class="c1">//project onto edge b</span>
+<a name="line-310"></a>
+<a name="line-311"></a>		<span class="n">Vector3</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-312"></a>
+<a name="line-313"></a>		<span class="kt">float</span> <span class="n">dot</span> <span class="o">=</span> <span class="n">diff</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">transB</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+<a name="line-314"></a>
+<a name="line-315"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">dot</span> <span class="o">&lt;</span> <span class="mf">0.0f</span><span class="p">)</span>
+<a name="line-316"></a>		<span class="p">{</span>
+<a name="line-317"></a>			<span class="n">TestCylinderVertVert</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cA</span><span class="p">,</span> <span class="n">cB</span><span class="p">,</span> <span class="n">transA</span><span class="p">,</span> <span class="n">transB</span><span class="p">);</span>
+<a name="line-318"></a>		<span class="p">}</span>
+<a name="line-319"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dot</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">2.0f</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderHalfHeight</span><span class="p">()))</span>
+<a name="line-320"></a>		<span class="p">{</span>
+<a name="line-321"></a>			<span class="n">TestCylinderVertVert</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cA</span><span class="p">,</span> <span class="n">cB</span><span class="p">,</span> <span class="n">transA</span><span class="p">,</span> <span class="n">transB</span><span class="p">);</span>
+<a name="line-322"></a>		<span class="p">}</span>
+<a name="line-323"></a>		<span class="k">else</span>
+<a name="line-324"></a>		<span class="p">{</span>
+<a name="line-325"></a>			<span class="n">TestCylinderVertEdge</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cB</span><span class="p">,</span> <span class="n">cA</span><span class="p">,</span> <span class="n">transB</span><span class="p">,</span> <span class="n">transA</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<a name="line-326"></a>		<span class="p">}</span>
+<a name="line-327"></a>	<span class="p">}</span>
+<a name="line-328"></a>	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a name="line-329"></a>	<span class="p">{</span>
+<a name="line-330"></a>		<span class="c1">//project onto edge b</span>
+<a name="line-331"></a>
+<a name="line-332"></a>		<span class="n">Vector3</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<a name="line-333"></a>
+<a name="line-334"></a>		<span class="kt">float</span> <span class="n">dot</span> <span class="o">=</span> <span class="n">diff</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">transA</span><span class="p">.</span><span class="n">basis</span><span class="p">.</span><span class="n">get_axis</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+<a name="line-335"></a>
+<a name="line-336"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">dot</span> <span class="o">&lt;</span> <span class="mf">0.0f</span><span class="p">)</span>
+<a name="line-337"></a>		<span class="p">{</span>
+<a name="line-338"></a>			<span class="n">TestCylinderVertVert</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cA</span><span class="p">,</span> <span class="n">cB</span><span class="p">,</span> <span class="n">transA</span><span class="p">,</span> <span class="n">transB</span><span class="p">);</span>
+<a name="line-339"></a>		<span class="p">}</span>
+<a name="line-340"></a>		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dot</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">2.0f</span> <span class="o">*</span> <span class="n">cB</span><span class="p">.</span><span class="n">CylinderHalfHeight</span><span class="p">()))</span>
+<a name="line-341"></a>		<span class="p">{</span>
+<a name="line-342"></a>			<span class="n">TestCylinderVertVert</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cA</span><span class="p">,</span> <span class="n">cB</span><span class="p">,</span> <span class="n">transA</span><span class="p">,</span> <span class="n">transB</span><span class="p">);</span>
+<a name="line-343"></a>		<span class="p">}</span>
+<a name="line-344"></a>		<span class="k">else</span>
+<a name="line-345"></a>		<span class="p">{</span>
+<a name="line-346"></a>			<span class="n">TestCylinderVertEdge</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeA</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cr</span><span class="p">.</span><span class="n">edgeB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cA</span><span class="p">,</span> <span class="n">cB</span><span class="p">,</span> <span class="n">transA</span><span class="p">,</span> <span class="n">transB</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+<a name="line-347"></a>		<span class="p">}</span>
+<a name="line-348"></a>	<span class="p">}</span>
+<a name="line-349"></a><span class="p">}</span>
+<a name="line-350"></a>
+<a name="line-351"></a>
+<a name="line-352"></a><span class="hll"><span class="k">class</span> <span class="nc">TestMainLoop</span> <span class="o">:</span> <span class="k">public</span> <span class="n">MainLoop</span> <span class="p">{</span><div class='verbose expandable'><span class='error2'>&lt;--- The class 'TestMainLoop' does not have a constructor. <span class='marker'>[+]</span></span><div class='content'>The class &apos;TestMainLoop&apos; does not have a constructor although it has private member variables. Member variables of builtin types are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior.</div></div>
+</span><a name="line-353"></a>
+<a name="line-354"></a>	<span class="n">RID</span> <span class="n">meshA</span><span class="p">;</span>
+<a name="line-355"></a>	<span class="n">RID</span> <span class="n">meshB</span><span class="p">;</span>
+<a name="line-356"></a>	<span class="n">RID</span> <span class="n">poly</span><span class="p">;</span>
+<a name="line-357"></a>	<span class="n">RID</span> <span class="n">instance</span><span class="p">;</span>
+<a name="line-358"></a>	<span class="n">RID</span> <span class="n">camera</span><span class="p">;</span>
+<a name="line-359"></a>	<span class="n">RID</span> <span class="n">viewport</span><span class="p">;</span>
+<a name="line-360"></a>	<span class="n">RID</span> <span class="n">boxA</span><span class="p">;</span>
+<a name="line-361"></a>	<span class="n">RID</span> <span class="n">boxB</span><span class="p">;</span>
+<a name="line-362"></a>	<span class="n">RID</span> <span class="n">scenario</span><span class="p">;</span>
+<a name="line-363"></a>
+<a name="line-364"></a>	<span class="n">Transform</span> <span class="n">rot_a</span><span class="p">;</span>
+<a name="line-365"></a>	<span class="n">Transform</span> <span class="n">rot_b</span><span class="p">;</span>
+<a name="line-366"></a>
+<a name="line-367"></a>	<span class="kt">bool</span> <span class="n">quit</span><span class="p">;</span>
+<a name="line-368"></a><span class="k">public</span><span class="o">:</span>
+<a name="line-369"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">input_event</span><span class="p">(</span><span class="k">const</span> <span class="n">InputEvent</span><span class="o">&amp;</span> <span class="n">p_event</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-370"></a>
+<a name="line-371"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p_event</span><span class="p">.</span><span class="n">type</span><span class="o">==</span><span class="n">InputEvent</span><span class="o">::</span><span class="n">MOUSE_MOTION</span> <span class="o">&amp;&amp;</span> <span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">button_mask</span><span class="o">&amp;</span><span class="n">BUTTON_MASK_LEFT</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-372"></a>
+<a name="line-373"></a>			<span class="n">rot_b</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="o">+=-</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">relative_y</span><span class="o">/</span><span class="mf">100.0</span><span class="p">;</span>
+<a name="line-374"></a>			<span class="n">rot_b</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="o">+=</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">relative_x</span><span class="o">/</span><span class="mf">100.0</span><span class="p">;</span>
+<a name="line-375"></a>		<span class="p">}</span>
+<a name="line-376"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p_event</span><span class="p">.</span><span class="n">type</span><span class="o">==</span><span class="n">InputEvent</span><span class="o">::</span><span class="n">MOUSE_MOTION</span> <span class="o">&amp;&amp;</span> <span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">button_mask</span><span class="o">&amp;</span><span class="n">BUTTON_MASK_MIDDLE</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-377"></a>
+<a name="line-378"></a>			<span class="c1">//rot_b.origin.x+=-p_event.mouse_motion.relative_y/100.0;</span>
+<a name="line-379"></a>			<span class="n">rot_b</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">z</span><span class="o">+=</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">relative_x</span><span class="o">/</span><span class="mf">100.0</span><span class="p">;</span>
+<a name="line-380"></a>		<span class="p">}</span>
+<a name="line-381"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">p_event</span><span class="p">.</span><span class="n">type</span><span class="o">==</span><span class="n">InputEvent</span><span class="o">::</span><span class="n">MOUSE_MOTION</span> <span class="o">&amp;&amp;</span> <span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">button_mask</span><span class="o">&amp;</span><span class="n">BUTTON_MASK_RIGHT</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-382"></a>
+<a name="line-383"></a>			<span class="kt">float</span> <span class="n">rot_x</span><span class="o">=-</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">relative_y</span><span class="o">/</span><span class="mf">100.0</span><span class="p">;</span>
+<a name="line-384"></a>			<span class="kt">float</span> <span class="n">rot_y</span><span class="o">=</span><span class="n">p_event</span><span class="p">.</span><span class="n">mouse_motion</span><span class="p">.</span><span class="n">relative_x</span><span class="o">/</span><span class="mf">100.0</span><span class="p">;</span>
+<a name="line-385"></a>			<span class="n">rot_b</span><span class="p">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">rot_b</span><span class="p">.</span><span class="n">basis</span> <span class="o">*</span> <span class="n">Matrix3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">rot_x</span><span class="p">)</span> <span class="o">*</span> <span class="n">Matrix3</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">rot_y</span><span class="p">);</span>
+<a name="line-386"></a>		<span class="p">}</span>
+<a name="line-387"></a>
+<a name="line-388"></a>	<span class="p">}</span>
+<a name="line-389"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">request_quit</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-390"></a>
+<a name="line-391"></a>		<span class="n">quit</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+<a name="line-392"></a>	<span class="p">}</span>
+<a name="line-393"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-394"></a>
+<a name="line-395"></a>		<span class="n">VisualServer</span> <span class="o">*</span><span class="n">vs</span><span class="o">=</span><span class="n">VisualServer</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">();</span>
+<a name="line-396"></a>
+<a name="line-397"></a>		<span class="n">camera</span> <span class="o">=</span> <span class="n">vs</span><span class="o">-&gt;</span><span class="n">camera_create</span><span class="p">();</span>
+<a name="line-398"></a>
+<a name="line-399"></a>		<span class="n">viewport</span> <span class="o">=</span> <span class="n">vs</span><span class="o">-&gt;</span><span class="n">viewport_create</span><span class="p">();</span>
+<a name="line-400"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">viewport_attach_to_screen</span><span class="p">(</span><span class="n">viewport</span><span class="p">);</span>
+<a name="line-401"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">viewport_attach_camera</span><span class="p">(</span> <span class="n">viewport</span><span class="p">,</span> <span class="n">camera</span> <span class="p">);</span>
+<a name="line-402"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">camera_set_transform</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">Transform</span><span class="p">(</span> <span class="n">Matrix3</span><span class="p">(),</span> <span class="n">Vector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span> <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
+<a name="line-403"></a>
+<a name="line-404"></a>		<span class="cm">/* CONVEX SHAPE */</span>
+<a name="line-405"></a>
+<a name="line-406"></a>		<span class="n">DVector</span><span class="o">&lt;</span><span class="n">Plane</span><span class="o">&gt;</span> <span class="n">cylinder_planes</span> <span class="o">=</span> <span class="n">Geometry</span><span class="o">::</span><span class="n">build_cylinder_planes</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="n">Vector3</span><span class="o">::</span><span class="n">AXIS_Y</span><span class="p">);</span>
+<a name="line-407"></a>		<span class="n">RID</span> <span class="n">cylinder_material</span> <span class="o">=</span> <span class="n">vs</span><span class="o">-&gt;</span><span class="n">fixed_material_create</span><span class="p">();</span>
+<a name="line-408"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">fixed_material_set_param</span><span class="p">(</span> <span class="n">cylinder_material</span><span class="p">,</span> <span class="n">VisualServer</span><span class="o">::</span><span class="n">FIXED_MATERIAL_PARAM_DIFFUSE</span><span class="p">,</span> <span class="n">Color</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.9</span><span class="p">));</span>
+<a name="line-409"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">material_set_flag</span><span class="p">(</span> <span class="n">cylinder_material</span><span class="p">,</span> <span class="n">VisualServer</span><span class="o">::</span><span class="n">MATERIAL_FLAG_ONTOP</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-410"></a>		<span class="c1">//vs-&gt;material_set_flag( cylinder_material, VisualServer::MATERIAL_FLAG_WIREFRAME,true);</span>
+<a name="line-411"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">material_set_flag</span><span class="p">(</span> <span class="n">cylinder_material</span><span class="p">,</span> <span class="n">VisualServer</span><span class="o">::</span><span class="n">MATERIAL_FLAG_DOUBLE_SIDED</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-412"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">material_set_flag</span><span class="p">(</span> <span class="n">cylinder_material</span><span class="p">,</span> <span class="n">VisualServer</span><span class="o">::</span><span class="n">MATERIAL_FLAG_UNSHADED</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+<a name="line-413"></a>
+<a name="line-414"></a>		<span class="n">RID</span> <span class="n">cylinder_mesh</span> <span class="o">=</span> <span class="n">vs</span><span class="o">-&gt;</span><span class="n">mesh_create</span><span class="p">();</span>
+<a name="line-415"></a>		<span class="n">Geometry</span><span class="o">::</span><span class="n">MeshData</span> <span class="n">cylinder_data</span> <span class="o">=</span> <span class="n">Geometry</span><span class="o">::</span><span class="n">build_convex_mesh</span><span class="p">(</span><span class="n">cylinder_planes</span><span class="p">);</span>
+<a name="line-416"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">mesh_add_surface_from_mesh_data</span><span class="p">(</span><span class="n">cylinder_mesh</span><span class="p">,</span><span class="n">cylinder_data</span><span class="p">);</span>
+<a name="line-417"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">mesh_surface_set_material</span><span class="p">(</span> <span class="n">cylinder_mesh</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cylinder_material</span> <span class="p">);</span>
+<a name="line-418"></a>
+<a name="line-419"></a>		<span class="n">meshA</span><span class="o">=</span><span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_create2</span><span class="p">(</span><span class="n">cylinder_mesh</span><span class="p">,</span><span class="n">scenario</span><span class="p">);</span>
+<a name="line-420"></a>		<span class="n">meshB</span><span class="o">=</span><span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_create2</span><span class="p">(</span><span class="n">cylinder_mesh</span><span class="p">,</span><span class="n">scenario</span><span class="p">);</span>
+<a name="line-421"></a>		<span class="n">boxA</span><span class="o">=</span><span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_create2</span><span class="p">(</span><span class="n">vs</span><span class="o">-&gt;</span><span class="n">get_test_cube</span><span class="p">(),</span><span class="n">scenario</span><span class="p">);</span>
+<a name="line-422"></a>		<span class="n">boxB</span><span class="o">=</span><span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_create2</span><span class="p">(</span><span class="n">vs</span><span class="o">-&gt;</span><span class="n">get_test_cube</span><span class="p">(),</span><span class="n">scenario</span><span class="p">);</span>
+<a name="line-423"></a>
+<a name="line-424"></a>		<span class="cm">/*</span>
+<a name="line-425"></a><span class="cm">		RID lightaux = vs-&gt;light_create( VisualServer::LIGHT_OMNI );</span>
+<a name="line-426"></a><span class="cm">		vs-&gt;light_set_var( lightaux, VisualServer::LIGHT_VAR_RADIUS, 80 );</span>
+<a name="line-427"></a><span class="cm">		vs-&gt;light_set_var( lightaux, VisualServer::LIGHT_VAR_ATTENUATION, 1 );</span>
+<a name="line-428"></a><span class="cm">		vs-&gt;light_set_var( lightaux, VisualServer::LIGHT_VAR_ENERGY, 1.5 );</span>
+<a name="line-429"></a><span class="cm">		light = vs-&gt;instance_create2( lightaux );</span>
+<a name="line-430"></a><span class="cm">		*/</span>
+<a name="line-431"></a>		<span class="n">RID</span> <span class="n">lightaux</span> <span class="o">=</span> <span class="n">vs</span><span class="o">-&gt;</span><span class="n">light_create</span><span class="p">(</span> <span class="n">VisualServer</span><span class="o">::</span><span class="n">LIGHT_DIRECTIONAL</span> <span class="p">);</span>
+<a name="line-432"></a>		<span class="c1">//vs-&gt;light_set_color( lightaux, VisualServer::LIGHT_COLOR_AMBIENT, Color(0.0,0.0,0.0) );</span>
+<a name="line-433"></a>		<span class="c1">//vs-&gt;light_set_shadow( lightaux, true );</span>
+<a name="line-434"></a>		<span class="n">RID</span> <span class="n">light</span> <span class="o">=</span> <span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_create2</span><span class="p">(</span> <span class="n">lightaux</span><span class="p">,</span><span class="n">scenario</span> <span class="p">);</span>
+<a name="line-435"></a>
+<a name="line-436"></a>		<span class="c1">//rot_a=Transform(Matrix3(Vector3(1,0,0),Math_PI/2.0),Vector3());</span>
+<a name="line-437"></a>		<span class="n">rot_b</span><span class="o">=</span><span class="n">Transform</span><span class="p">(</span><span class="n">Matrix3</span><span class="p">(),</span><span class="n">Vector3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span>
+<a name="line-438"></a>
+<a name="line-439"></a>		<span class="c1">//rot_x=0;</span>
+<a name="line-440"></a>		<span class="c1">//rot_y=0;</span>
+<a name="line-441"></a>		<span class="n">quit</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+<a name="line-442"></a>	<span class="p">}</span>
+<a name="line-443"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">idle</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_time</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-444"></a>
+<a name="line-445"></a>		<span class="n">VisualServer</span> <span class="o">*</span><span class="n">vs</span><span class="o">=</span><span class="n">VisualServer</span><span class="o">::</span><span class="n">get_singleton</span><span class="p">();</span>
+<a name="line-446"></a>
+<a name="line-447"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_set_transform</span><span class="p">(</span><span class="n">meshA</span><span class="p">,</span><span class="n">rot_a</span><span class="p">);</span>
+<a name="line-448"></a>		<span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_set_transform</span><span class="p">(</span><span class="n">meshB</span><span class="p">,</span><span class="n">rot_b</span><span class="p">);</span>
+<a name="line-449"></a>
+<a name="line-450"></a>
+<a name="line-451"></a>		<span class="n">neCollisionResult</span> <span class="n">res</span><span class="p">;</span>
+<a name="line-452"></a>		<span class="n">TConvex</span> <span class="n">a</span><span class="p">;</span>
+<a name="line-453"></a>		<span class="n">a</span><span class="p">.</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">;</span>
+<a name="line-454"></a>		<span class="n">a</span><span class="p">.</span><span class="n">half_height</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<a name="line-455"></a>		<span class="n">Cylinder2CylinderTest</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">rot_a</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">rot_b</span><span class="p">);</span>
+<a name="line-456"></a>		<span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">penetrate</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-457"></a>
+<a name="line-458"></a>			<span class="n">Matrix3</span> <span class="n">scale</span><span class="p">;</span>
+<a name="line-459"></a>			<span class="n">scale</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">Vector3</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">));</span>
+<a name="line-460"></a>			<span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_set_transform</span><span class="p">(</span><span class="n">boxA</span><span class="p">,</span><span class="n">Transform</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span><span class="n">res</span><span class="p">.</span><span class="n">contactA</span><span class="p">));</span>
+<a name="line-461"></a>			<span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_set_transform</span><span class="p">(</span><span class="n">boxB</span><span class="p">,</span><span class="n">Transform</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span><span class="n">res</span><span class="p">.</span><span class="n">contactB</span><span class="p">));</span>
+<a name="line-462"></a>			<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;depth: &quot;</span><span class="o">+</span><span class="n">rtos</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">depth</span><span class="p">));</span>
+<a name="line-463"></a>		<span class="p">}</span> <span class="k">else</span>  <span class="p">{</span>
+<a name="line-464"></a>
+<a name="line-465"></a>			<span class="n">Matrix3</span> <span class="n">scale</span><span class="p">;</span>
+<a name="line-466"></a>			<span class="n">scale</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">Vector3</span><span class="p">());</span>
+<a name="line-467"></a>			<span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_set_transform</span><span class="p">(</span><span class="n">boxA</span><span class="p">,</span><span class="n">Transform</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span><span class="n">res</span><span class="p">.</span><span class="n">contactA</span><span class="p">));</span>
+<a name="line-468"></a>			<span class="n">vs</span><span class="o">-&gt;</span><span class="n">instance_set_transform</span><span class="p">(</span><span class="n">boxB</span><span class="p">,</span><span class="n">Transform</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span><span class="n">res</span><span class="p">.</span><span class="n">contactB</span><span class="p">));</span>
+<a name="line-469"></a>
+<a name="line-470"></a>		<span class="p">}</span>
+<a name="line-471"></a>		<span class="n">print_line</span><span class="p">(</span><span class="s">&quot;collided: &quot;</span><span class="o">+</span><span class="n">itos</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">penetrate</span><span class="p">));</span>
+<a name="line-472"></a>
+<a name="line-473"></a>		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<a name="line-474"></a>	<span class="p">}</span>
+<a name="line-475"></a>
+<a name="line-476"></a>
+<a name="line-477"></a>	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iteration</span><span class="p">(</span><span class="kt">float</span> <span class="n">p_time</span><span class="p">)</span> <span class="p">{</span>
+<a name="line-478"></a>
+<a name="line-479"></a>
+<a name="line-480"></a>
+<a name="line-481"></a>		<span class="k">return</span> <span class="n">quit</span><span class="p">;</span>
+<a name="line-482"></a>	<span class="p">}</span>
+<a name="line-483"></a>	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">finish</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-484"></a>
+<a name="line-485"></a>	<span class="p">}</span>
+<a name="line-486"></a>
+<a name="line-487"></a><span class="p">};</span>
+<a name="line-488"></a>
+<a name="line-489"></a>
+<a name="line-490"></a><span class="n">MainLoop</span><span class="o">*</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+<a name="line-491"></a>
+<a name="line-492"></a>	<span class="k">return</span> <span class="n">memnew</span><span class="p">(</span> <span class="n">TestMainLoop</span> <span class="p">);</span>
+<a name="line-493"></a>
+<a name="line-494"></a><span class="p">}</span>
+<a name="line-495"></a>
+<a name="line-496"></a><span class="p">}</span>
 </pre></div>
 </td></tr></table>
       </div>
